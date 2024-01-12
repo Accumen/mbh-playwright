@@ -14,64 +14,101 @@ export default class LabtypesPage{
     public uniqueCode;
     public gendered;
     public refMin;
+    public mRefMin;
+    public fRefMin;
     public refMax;
+    public mRefMax;
+    public fRefMax;
     public abnormalAbove;
+    public mAbnormalAbove;
+    public fAbnormalAbove;
     public abnormalBelow;
+    public mAbnormalBelow;
+    public fAbnormalBelow;
     public abovereportlabel;
+    public mAboveReportLabel;
+    public fAboveReportLabel;
+    public belowReportLabel;
+    public mBelowReportLabel;
+    public fBelowReportLabel;
     public refreportlabel;
 
     //select lab types from navigation menu
     async selectLabTypes(){
-        await this.page.getByRole('link', {name:'Lab Types'}).click({delay:30});
+        await this.page.getByRole('link', {name:'Lab Types'}).first().click({delay:30});
     }
-
+    
     //add lab type button
-    async addLabType(testname: string, unitOfMeasure: string, minValue:string, maxValue: string, uniqueCode: string, gendered: string,
-         refMin: string, refMax:string, abnormalAbove: string, abnormalBelow: string, abovereportlabel: string, refreportlabel: string  ){
+    async addLabType(testname: string, unitOfMeasure: string, minValue:string, maxValue: string, uniqueCode: string, labtypestatus: string, gendered: string,
+         refMin, refMax, abnormalAbove: string, abnormalBelow: string, abovereportlabel: string, refreportlabel: string, mRefMin?,mRefMax?,
+         mAbnormalAbove?,mAboveReportLabel?,mAbnormalBelow?,mBelowReportLabel?, fRefMin?,fRefMax?, fAbnormalAbove?, fAboveReportLabel?, fAbnormalBelow?, fBelowReportLabel?){
         await this.page.getByRole('button', {name:'Add Lab Type'}).click();
         
         //Test Name (fillable)
-        await this.page.getByLabel('Test Name').nth(3).click();
-        await this.page.getByLabel('Test Name').fill(testname)
+        await this.page.getByLabel('Test Name *').click();
+        await this.page.getByLabel('Test Name *').fill(testname)//testtype
         //Unit of Measure (fillable)
         await this.page.getByLabel('Unit of Measure *').click();
-        await this.page.getByLabel('Unit of Measure *').fill(unitOfMeasure);
+        await this.page.getByLabel('Unit of Measure *').fill(unitOfMeasure);//x10(9)/L
         //Minimum Value (fillable)
         await this.page.getByLabel('Minimum Value *').click();
-        await this.page.getByLabel('Minimum Value *').fill(minValue);
+        await this.page.getByLabel('Minimum Value *').fill(minValue);//1
         //Maximum Value (fillable)
         await this.page.getByLabel('Maximum Value *').click();
-        await this.page.getByLabel('Maximum Value *').fill(maxValue);
+        await this.page.getByLabel('Maximum Value *').fill(maxValue);//125
         //Unique Code (fillable)
         await this.page.getByLabel('Unique Code *').click();
-        await this.page.getByLabel('Unique Code *').fill(uniqueCode);
+        await this.page.getByLabel('Unique Code *').fill(uniqueCode);//tstp
         //Status (drop down) - active and inactive
         await this.page.getByLabel('Status').locator('div').nth(2).click();
-        await this.page.getByText(this.labtypestatus).click();
+        await this.page.getByText(labtypestatus,{exact: true}).click();//active
         //Gendered(drop down) - gendered and not gendered
         await this.page.getByLabel('Gendered').locator('div').nth(2).click();
-        await this.page.getByRole('option',{name:gendered, exact: true}).locator('span').click();
+        await this.page.getByRole('option',{name:gendered, exact: true}).locator('span').click();//gendered
         /**Gendered Key
          * Gendered
          * Not Gendered
          */
         if (gendered == 'Gendered'){
        //** Male section**
-
        //Reference Min (fillable)
-
+            await this.page.locator('#mat-input-6').click();
+            await this.page.locator('#mat-input-6').fill(mRefMin);//4.00
        //Reference Max (fillable)
+            await this.page.locator('#mat-input-7').click();
+            await this.page.locator('#mat-input-7').fill(mRefMax);//11.00
        //Abnormal Above (fillable)
+            await this.page.locator('#mat-input-8').click();
+            await this.page.locator('#mat-input-8').fill(mAbnormalAbove);//11.25
        //Above Report Label (fillable)
+            await this.page.locator('#mat-input-9').click();
+            await this.page.locator('#mat-input-9').fill(mAboveReportLabel);//2.50
        //Abnormal Below (fillable)
+            await this.page.locator('#mat-input-10').click();
+            await this.page.locator('#mat-input-10').fill(mAbnormalBelow);
        //Below Report Label (fillable)
+            await this.page.locator('#mat-input-11').click();
+            await this.page.locator('#mat-input-11').fill(mBelowReportLabel);
+
        //** Female section**
        //Reference Min (fillable)
+            await this.page.locator('#mat-input-12').click();
+            await this.page.locator('#mat-input-12').fill(fRefMin);
        //Reference Max (fillable)
+            await this.page.locator('#mat-input-13').click();
+            await this.page.locator('#mat-input-13').fill(fRefMax);
        //Abnormal Above (fillable)
+            await this.page.locator('#mat-input-14').click();
+            await this.page.locator('#mat-input-14').fill(fAbnormalAbove);
        //Above Report Label (fillable)
+            await this.page.locator('#mat-input-15').click();
+            await this.page.locator('#mat-input-15').fill(fAboveReportLabel);
        //Abnormal Below (fillable)
+            await this.page.locator('#mat-input-16').click();
+            await this.page.locator('#mat-input-16').fill(fAbnormalBelow);
        //Below Report Label (fillable)
+            await this.page.locator('#mat-input-17').click();
+            await this.page.locator('#mat-input-17').fill(fBelowReportLabel);
         }
         else{
        //**Not Gendered Section **
@@ -117,11 +154,12 @@ export default class LabtypesPage{
        //search (drop down)
        async searchStatus(labtypestatus: string){ 
         await this.page.getByLabel('Active').locator('div').nth(3).click();
-        await this.page.getByRole('option', {name: labtypestatus}).locator('span').click();
+        await this.page.getByRole('option', {name: labtypestatus, exact: true}).locator('span').click(); 
         /**drop down key
          * Active
          * Inactive
          */
+        
        }
 
         //Clear Selections button
@@ -131,7 +169,7 @@ export default class LabtypesPage{
 
         //Lab Type List (clickable)
         async clickLabTypeList(labtype: string){
-            await this.page.getByRole('option', {name:labtype}).click();
+            await this.page.getByRole('link', {name:labtype}).click();
         /**Lab Type Key
          * WBC
          * RBC
@@ -156,8 +194,133 @@ export default class LabtypesPage{
          * Lab 112154
          */
         }
+      
+     async editLabTypeName(testname: string){
+          await this.page.getByLabel('Test Name *').click();
+          await this.page.getByLabel('Test Name *').fill(testname);
+     }
 
+     async editLabTypeUoM(unitOfMeasure: string){
+          await this.page.getByLabel('Unit of Measure *').click();
+          await this.page.getByLabel('Unit of Measure *').fill(unitOfMeasure);
+     }
 
+     async editLabTypeMinValue(minValue: string){
+          await this.page.getByLabel('Minimum Value *').click();
+          await this.page.getByLabel('Minimum Value *').fill(minValue);
+     }
 
+     async editLabTypeMaxValue(maxValue: string){
+          await this.page.getByLabel('Maximum Value *').click();
+          await this.page.getByLabel('Maximum Value *').fill(maxValue);
+     }
 
+     async editLabTypeUniqueCode(uniqueCode: string){
+          await this.page.getByLabel('Unique Code *').click();
+          await this.page.getByLabel('Unique Code *').fill(uniqueCode);
+     }
+
+     async editLabTypeStatus(labtypestatus: string){
+          await this.page.getByLabel('Status').locator('div').nth(2).click();
+          await this.page.getByText(labtypestatus).click();
+     }
+
+     async editLabTypeGendered(gendered: string){
+          await this.page.getByLabel('Gendered').locator('div').nth(2).click();
+          await this.page.getByRole('option',{name:gendered, exact: true}).locator('span').click();
+        /**Gendered Key
+         * Gendered
+         * Not Gendered
+         */
+     }
+
+     async editMrefMin(mRefMin:string){
+          await this.page.locator('#mat-input-6').click();
+          await this.page.locator('#mat-input-6').fill(mRefMin);
+     }
+
+     async editMrefMax(mRefMax: string){
+          await this.page.locator('#mat-input-7').click();
+          await this.page.locator('#mat-input-6').fill(mRefMax);
+     }
+
+     async editmAbnomalAbove(mAbnormalAbove:string){
+          await this.page.locator('#mat-input-8').click();
+          await this.page.locator('#mat-input-8').fill(mAbnormalAbove);
+     }
+
+     async editmAbnormalAboveLabel(mAboveReportLabel:string){
+          await this.page.locator('#mat-input-9').click();
+          await this.page.locator('#mat-input-9').fill(mAboveReportLabel);
+     }
+
+     async editmAbnormalBelow(mAbnormalBelow:string){
+          await this.page.locator('#mat-input-10').click();
+          await this.page.locator('#mat-input-10').fill(mAbnormalBelow);
+     }
+
+     async editmAbnormalBelowLabel(mBelowReportLabel: string){
+          await this.page.locator('#mat-input-11').click();
+          await this.page.locator('#mat-input-11').fill(mBelowReportLabel);
+     }
+
+     async editfRefMin(fRefMin:string){
+          await this.page.locator('#mat-input-12').click();
+          await this.page.locator('#mat-input-12').fill(fRefMin);
+     }
+
+     async editfRefMax(fRefMax:string){
+          await this.page.locator('#mat-input-13').click();
+          await this.page.locator('#mat-input-13').fill(fRefMax);
+     }
+
+     async editfAbnormalAbove(fAbnormalAbove:string){
+          await this.page.locator('#mat-input-14').click();
+          await this.page.locator('#mat-input-14').fill(fAbnormalAbove);
+     }
+
+     async editfAbnormalAboveLabel(fAboveReportLabel:string){
+          await this.page.locator('#mat-input-15').click();
+          await this.page.locator('#mat-input-15').fill(fAboveReportLabel);
+     }
+
+     async editfAbnormalBelow(fAbnormalBelow:string){
+          await this.page.locator('#mat-input-16').click();
+          await this.page.locator('#mat-input-16').fill(fAbnormalBelow); 
+     }
+
+     async editfAbnormalBelowLabel(fBelowReportLabel:string){
+          await this.page.locator('#mat-input-17').click();
+          await this.page.locator('#mat-input-17').fill(fBelowReportLabel);
+     }
+
+     async editRefMin(refMin:string){
+          await this.page.getByLabel('Reference Min').click();
+          await this.page.getByLabel('Reference Min').fill(refMin);
+     }
+
+     async editRefMax(refMax:string){
+          await this.page.getByLabel('Reference Max').click();
+          await this.page.getByLabel('Reference Max').fill(refMax);
+     }
+
+     async editAbnormalAbove(abnormalAbove:string){
+          await this.page.getByLabel('Abnormal Above').click();
+          await this.page.getByLabel('Abnormal Above').fill(abnormalAbove);
+     }
+
+     async editAbnormalAboveLabel(abovereportlabel:string){
+          await this.page.getByLabel('Above Report Label').click();
+          await this.page.getByLabel('Above Report Label').fill(abovereportlabel);
+     }
+
+     async editAbnormalBelow(abnormalBelow:string){
+          await this.page.getByLabel('Abnormal Below').click();
+          await this.page.getByLabel('Abnormal Below').fill(abnormalBelow);
+     }
+
+     async editAbnormalBelowLabel(belowReportLabel:string){
+          await this.page.getByLabel('Below Report Label').click();
+          await this.page.getByLabel('Below Report Label').fill(belowReportLabel);
+     }
 }

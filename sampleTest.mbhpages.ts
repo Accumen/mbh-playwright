@@ -5,10 +5,11 @@ import DocumentsPage from "./classes/documentsPage"// connects the documents cla
 import WorklistPage from "./classes/worklistPage" // connect the worklist class to the test
 import FacilitiesPage from "./classes/facilitiesPage" // connect the facilities class to the test
 import CasetypesPage from "./classes/casetypesPage" // connect the case types class to the test
-import CasetypesmappingPage from "./classes/casetypesmappingPage"
+import CasetypesmappingPage from "./classes/casetypesmappingPage"//connect the case types mapping class to the test
+import LabtypesPage from "./classes/labtypesPage" //connects the lab types class to the test
 
-const email = ["mperez@accumen.com", "thisemail@gmail.com", "onetwothree@gmail.com"]
-const password = ["ThisShit2023!", "MostlyBs2020!", "Whoseon1st!"]
+//const email = ["mperez@accumen.com", "thisemail@gmail.com", "onetwothree@gmail.com"]
+//const password = ["ThisShit2023!", "MostlyBs2020!", "Whoseon1st!"]
 
 
 test("Sample test", async({page})=>{
@@ -16,8 +17,8 @@ test("Sample test", async({page})=>{
     const login = new LoginPage (page)
      await page.goto('https://qa.mybloodhealth.com/login')//will need to get this into a baseURL call
      //next two lines call to the array for email and password.  make sure the [#] matches for both unless intentionally setting login to fail.
-     await login.enterEmail(email[0])//email needs moved into the login class
-     await login.enterPassword(password[0])//password needs moved into the login class
+     await login.enterEmail('cts-secure@accumen.com')//email needs moved into the login class
+     await login.enterPassword('Iu$24680')//password needs moved into the login class
      await login.clickLoginBtn()
 //  Uncomment this to run tests within the dashboard page
      const dashboard = new DashboardPage (page)
@@ -85,6 +86,41 @@ test("Sample test", async({page})=>{
      //8await casetypesmapping.clickToMap('2838','ORTHO');
     //8await dashboard.clickLogout();
 
+    const labtypes = new LabtypesPage(page);
+    //8await labtypes.selectLabTypes(); 
+    //8await labtypes.searchLabType('Hct');
+    //8await labtypes.searchStatus('Active');
+    //8await labtypes.clearLabTypesSelection();
+    //8await labtypes.clickLabTypeList('Hct');
+    //8await labtypes.editLabTypeName('Hct2');
+    //8await labtypes.editLabTypeUoM('#');
+    //8await labtypes.editLabTypeMinValue('11.00');
+    //8await labtypes.editLabTypeMaxValue('61.00');
+    //8await labtypes.editLabTypeUoM('Hct');
+    //8await labtypes.editLabTypeStatus('INACTIVE');
+    //8await labtypes.editMrefMin('39.00');
+    //8await labtypes.editMrefMax('54.00');
+    //8await labtypes.editmAbnomalAbove('54.10');
+    //8await labtypes.editmAbnormalAboveLabel('Above this');
+    //8await labtypes.editmAbnormalBelow('38.99');
+    //8await labtypes.editmAbnormalBelowLabel('Below this');
+    //8await labtypes.editfRefMin('34.00');
+    //8await labtypes.editfRefMax('48.00');
+    //8await labtypes.editfAbnormalAbove('48.10');
+    //8await labtypes.editfAbnormalAboveLabel('Above that');
+    //8await labtypes.editfAbnormalBelow('33.99');
+    //8await labtypes.editfAbnormalBelowLabel('Below that');
+    //8await labtypes.editRefMin('5.00');
+    //8await labtypes.editRefMax('12.00');
+    //8await labtypes.editAbnormalAbove('12.75');
+    //8await labtypes.editAbnormalAboveLabel('Above this');
+    //8await labtypes.editAbnormalBelow('3.75');
+    //8await labtypes.editAbnormalBelowLabel('Below this');
+   //8await labtypes.addLabType('testtype','x10(9)/L', '1', '125','tstp', 'ACTIVE','Gendered','4.00', '11.00', '11.25', '3.50', 'Above', 'Below', '4.00', '11.00', '11.25','mAbove', '3.50', 'mBelow', 
+   //8'3.00', '12.00', '12.25','fAbove', '2.50', 'fBelow' );
+   //8await labtypes.labTypeBackArrow();
+   //8await labtypes.saveLabType();
+   //8 await dashboard.clickLogout();
 
      
 })
