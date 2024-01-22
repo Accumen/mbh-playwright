@@ -7,10 +7,7 @@ import FacilitiesPage from "./classes/facilitiesPage" // connect the facilities 
 import CasetypesPage from "./classes/casetypesPage" // connect the case types class to the test
 import CasetypesmappingPage from "./classes/casetypesmappingPage"//connect the case types mapping class to the test
 import LabtypesPage from "./classes/labtypesPage" //connects the lab types class to the test
-
-//const email = ["mperez@accumen.com", "thisemail@gmail.com", "onetwothree@gmail.com"]
-//const password = ["ThisShit2023!", "MostlyBs2020!", "Whoseon1st!"]
-
+import LabtypesmappingPage from "./classes/labtypesmappingPage" // connect the lab types mapping class to the test
 
 test("Sample test", async({page})=>{
     test.slow();//changes default timeout from 30000 ms to 90000 ms
@@ -121,6 +118,15 @@ test("Sample test", async({page})=>{
    //8await labtypes.labTypeBackArrow();
    //8await labtypes.saveLabType();
    //8 await dashboard.clickLogout();
+
+   const labtypesmapping = new LabtypesmappingPage (page);
+
+   await labtypesmapping.selectLabTypesMapping();
+   await labtypesmapping.searchLabCode('1525870');
+   await labtypesmapping.searchLabTypeDropDown('UNMAPPED');
+   await labtypesmapping.clearSelections();
+   await labtypesmapping.clickToMap('1525870','UNMAPPED')
+   await dashboard.clickLogout();
 
      
 })
