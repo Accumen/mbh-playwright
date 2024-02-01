@@ -5,12 +5,13 @@ export default class PatientsPage{
     constructor(public page: Page){}
 
     //variable
+    
 
     //add patients button
         /**all fillable fields
-         * first name
-         * middle name
-         * last name
+         * first name 
+         * middle name 
+         * last name 
          * title
          * suffix
          * credentials
