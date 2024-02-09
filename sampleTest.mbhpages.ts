@@ -8,6 +8,8 @@ import CasetypesPage from "./classes/casetypesPage" // connect the case types cl
 import CasetypesmappingPage from "./classes/casetypesmappingPage"//connect the case types mapping class to the test
 import LabtypesPage from "./classes/labtypesPage" //connects the lab types class to the test
 import LabtypesmappingPage from "./classes/labtypesmappingPage" // connect the lab types mapping class to the test
+import ProvidersPage from "./classes/providersPage"// connect the providers class to the test
+import PatientsPage from "./classes/patientsPage" //connect the patients class to the test
 
 test("Sample test", async({page})=>{
     test.slow();//changes default timeout from 30000 ms to 90000 ms
@@ -31,8 +33,9 @@ test("Sample test", async({page})=>{
      //8await dashboard.clickLogout();
 
 // Uncomment this to run tests within the worklist page
-    //8const worklist = new WorklistPage (page)
+    const worklist = new WorklistPage (page)
      //8await worklist.clickChronic();
+     //8await worklist.clickSurgical();
      //8await worklist.searchMRN('Scutts');
      //8await worklist.unselectAllCaseTypes();
      //8await worklist.selectCaseType("CHRONIC MEDICAL");// this function needs work as it is unable to exit the drop down menu only on the surgical worklist
@@ -42,7 +45,11 @@ test("Sample test", async({page})=>{
      //8await worklist.adjustRowCount("30");
      //8await worklist.clearExpiredVisits();
      //await worklist.exportVisits();//this function needs work to wait for the download to finish
-     //await worklist.scheduleVisit();//this function works but needs additional features to deal with the patient schedule screen that pops up
+     //await worklist.scheduleChronicVisit('New', 'Fred', 'R', 'Flinstone', 'email@gmail.com', '12655473','1992','MARCH','15',
+     //'8159152544','5674 True St','City','TX','76543', 'Male', 'yes','January 31', 'FEB', '22', 2,
+     //'CHRONIC MEDICAL', 'Surgeon');//this function works but needs additional features to deal with the patient schedule screen that pops up
+     //await worklist.backBtnSchVisitScreen();
+     //await worklist.saveScheduledVisit();
      //8await dashboard.clickLogout();
      
      //8const facilities = new FacilitiesPage(page);
@@ -121,12 +128,35 @@ test("Sample test", async({page})=>{
 
    const labtypesmapping = new LabtypesmappingPage (page);
 
-   await labtypesmapping.selectLabTypesMapping();
-   await labtypesmapping.searchLabCode('1525870');
-   await labtypesmapping.searchLabTypeDropDown('UNMAPPED');
-   await labtypesmapping.clearSelections();
-   await labtypesmapping.clickToMap('1525870','UNMAPPED')
-   await dashboard.clickLogout();
+   //8await labtypesmapping.selectLabTypesMapping();
+   //8await labtypesmapping.searchLabCode('1525870');
+   //8await labtypesmapping.searchLabTypeDropDown('UNMAPPED');
+   //8await labtypesmapping.clearSelections();
+   //8await labtypesmapping.clickToMap('1525870','UNMAPPED')
+   //8await dashboard.clickLogout();
 
-     
+   const providers = new ProvidersPage (page);
+   //8await providers.clickProviders();
+   //8await providers.searchProvider('sur');
+   //8await providers.providerStatus('Active');
+   //8await providers.clearSelections();  
+   //8await providers.selectProvider('Surgeon');
+   //8await providers.editAddProviderInfo('Surgeon','Test','email@aol.com','123456789','Active');
+   //8await providers.saveProvider();     
+   //8await providers.addProvider();
+   //8await providers.editAddProviderInfo('Primary', 'Provider','ppc@gmail.com','987654321','Inactive')
+   //8await providers.backArrow();
+
+   const patients = new PatientsPage(page);
+   await patients.selectPatients();
+   //8await patients.searchPatient('Smith');
+   //8await patients.selectPatientfromSearch('Smith');
+   //8await patients.viewAllLabs('WBC','2023','OCT','1','2024','JAN','31');
+   //8await patients.editSearchedLab('WBC','11.00','2024','Feb','7');
+   //await patients.saveEditedLab();
+   //8await patients.clearSelections();
+   //8await patients.addLabs('B 12','12.25','2024','FEB','8');
+   await patients.addPatient('Fred','Flinestone','1546687','2024','JAN','30','Male','1963','JUL','16','no');
+   await patients.savePatient();
+
 })
