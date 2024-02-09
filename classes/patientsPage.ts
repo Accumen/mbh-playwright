@@ -1,50 +1,182 @@
 import { Page} from "@playwright/test";
+import WorklistPage from "./worklistPage";
 
 export default class PatientsPage{
 
-    constructor(public page: Page){}
-
-    //variable
+    constructor(public page: Page){  }
+        
     
 
-    //add patients button
-        /**all fillable fields
-         * first name 
-         * middle name 
-         * last name 
-         * title
-         * suffix
-         * credentials
-         * mrn
-         * email
-         * height
-         * weight
-         * primary policy no
-         * primary insurance
-         * secondary policy no
-         * secondary insurance
-         * address
-         * city
-         * state
-         * postal code
-         * primary phone
-         * other phone
-         */
+    //variable
+    public patient;
+    public fname;
+    public lname;
+    public labtype;
+    public dobyear;
+    public dobmonth;
+    public dobday;
+    public mrn;
+    public hhYear;
+    public hhMonth;
+    public hhDay;
+    public gender;
+    public labvalue;
+    public resultyear;
+    public resultmonth;
+    public resultday;
+    public startyear;
+    public startmonth;
+    public startday;
+
+    // select patient from the navigation menu
+    async selectPatients(){
+        await this.page.getByRole('link', {name:'Patients'}).click({delay:100});
+    }
+  
+ 
+    //search patient name (fillable)
+    async searchPatient(patient){
+        await this.page.locator('id=mat-input-0').click();
+        await this.page.locator('id=mat-input-0').fill(patient);
+        await this.page.locator('id=mat-input-0').press('Enter');
+    }
+    //clear button
+    async clearSelections(){
+        await this.page.getByRole('button',{name:'CLEAR'}).click();
+    }
+    //select patient from search list
+    async selectPatientfromSearch(patient){
+        await this.page.getByRole('link',{name:patient}).click();
+    }
+    //view all labs button
+    async viewAllLabs(labtype,startyear,startmonth, startday,resultyear,resultmonth, resultday){
+        await this.page.getByRole('button',{name:'View All'}).click();
+        //lab type fillable
+        await this.page.getByLabel('Lab Type').click();
+        await this.page.getByLabel('Lab Type').fill(labtype);
+        //date range click
+            //start date (calendar)
+            await this.page.getByRole('button',{name:'Open calendar'}).click();
+            await this.page.getByLabel('Choose month and year').click();
+            while(await this.page.getByRole('button', {name:startyear, exact:false}).isHidden()){
+               await this.page.getByLabel('Previous 24 years').click();
+            }
+               await this.page.getByLabel(startyear).click();
+               await this.page.getByLabel(startmonth).click();
+               await this.page.getByText(startday,{exact:true}).click();    
+            //end date    (calendar) 
+            await this.page.getByLabel('Choose month and year').click();
+            while(await this.page.getByRole('button', {name:resultyear, exact:false}).isHidden()){
+               await this.page.getByLabel('Previous 24 years').click();
+            }
+               await this.page.getByLabel(resultyear).click();
+               await this.page.getByLabel(resultmonth).click();
+               await this.page.getByLabel(resultday).click();  
+        }        
+        //select from lab search results list
+        async editSearchedLab(labtype,result,resultyear,resultmonth,resultday){
+            //await this.page.getByRole('option',{name:labtype,exact:false}).locator('span').click();
+            //edit pencil
+            await this.page.getByRole('button', {name:'fas fa-pencil-alt editButton'}).click();
+                //result value
+                await this.page.getByLabel('Result Value *').click();
+                await this.page.getByLabel('Result Value *').fill(result);
+                //result date (calendar)
+                await this.page.locator('Result Date *').getByLabel('Open calendar').click();
+                await this.page.getByLabel('Choose month and year').click();
+                while(await this.page.getByRole('button', {name:resultyear, exact:false}).isHidden()){
+                    await this.page.getByLabel('Previous 24 years').click();
+                 }
+                    await this.page.getByLabel(resultyear).click();
+                    await this.page.getByLabel(resultmonth).click();
+                    await this.page.getByLabel(resultday).click();   
+        }  
+            //Save  
+            async saveEditedLab(){
+                await this.page.getByRole('button', {name:'Save'}).click();
+            }     
+            //delete trash can    
+            async deleteSearchedLab(labtype){
+                await this.page.getByRole('option',{name:labtype}).locator('span').click();
+            }
+        //red x close window button
+        async closeSearchListWindow(){
+            await this.page.getByRole('link', {name:''}).click();
+        }
+    
+    //add labs
+    async addLabs(labtype,labvalue,resultyear,resultmonth,resultday){
+        await this.page.getByRole('button',{name: 'Add'}).click();
+        await this.page.getByLabel('Choose Lab Type *').locator('span').click();
+        await this.page.getByRole('option', {name:labtype}).locator('span').click();
+        await this.page.getByLabel('Result Value *').click();
+        await this.page.getByLabel('Result Value *').fill(labvalue);
+        //await this.page.locator('id=mat-input-3').getByLabel('Open calendar').click();
+        await this.page.getByRole('button',{name:'Open calendar'}).click();
+        await this.page.getByLabel('Choose month and year').click();
+        while(await this.page.getByRole('button', {name:resultyear, exact:true}).isHidden()){
+           await this.page.getByLabel('Previous 24 years').click();
+        }
+           await this.page.getByLabel(resultyear).click();
+           await this.page.getByLabel(resultmonth).click();
+           await this.page.getByText(resultday,{exact:true}).click();
+           await this.page.locator('button').filter({hasText: 'done'}).click();
+           await this.page.getByRole('button',{name:'Add Lab'}).click();
+    }
+
+    //add patient
+    async addPatient(fname,lname,mrn,hhYear,hhMonth,hhDay,gender,dobyear,dobmonth,dobday,hippa){
+        //add patient button
+        await this.page.getByRole('button',{name:'Add Patients'}).click();
+         //Required fields only
+         //first name 
+        await this.page.getByLabel('First Name *').click();
+        await this.page.getByLabel('First Name *').fill(fname);
+         //last name 
+         await this.page.getByLabel('Last Name *').click();
+         await this.page.getByLabel('Last Name *').fill(lname); 
+         //mrn
+         await this.page.getByLabel('MRN *').click();
+         await this.page.getByLabel('MRN *').fill(mrn);
         //health history (calendar)
-            //check mark button
+        await this.page.locator('mat-form-field').filter({hasText: 'Health History Date'}).getByLabel('Open calendar').click();
+        await this.page.getByLabel('Choose month and year').click();
+        while(await this.page.getByRole('button', {name:hhYear, exact:true}).isHidden()){
+           await this.page.getByLabel('Previous 24 years').click();
+        }
+           await this.page.getByLabel(hhYear).click();
+           await this.page.getByLabel(hhMonth).click();
+           await this.page.getByLabel(hhDay).click();
+        //checkmark button to close the calendar
+        await this.page.locator('button').filter({hasText: 'done'}).click();
+            
         //gender drop down
-            /**
+        await this.page.getByLabel('Gender * *').locator('div').nth(3).click();
+        await this.page.getByText(gender,{exact:true}).click();
+            /**gender key
              * male
              * female
              */
         //date of birth (calendar)
+        await this.page.locator('mat-form-field').filter({hasText: 'Date of birth * *'}).getByLabel('Open calendar').click();
+        await this.page.getByLabel('Choose month and year').click();
+        while(await this.page.getByRole('button', {name:dobyear, exact:true}).isHidden()){
+           await this.page.getByLabel('Previous 24 years').click();
+        }
+           await this.page.getByLabel(dobyear).click();
+           await this.page.getByLabel(dobmonth).click();
+           await this.page.getByLabel(dobday).click();
         //hipaa received (checkbox)
-        //save button
-
-    //search patient name (fillable)
-
-    //clear button
-
-    
+        if(hippa != 'yes'){
+            await this.page.locator('id=mat-checkbox-3');
+            }
+            else{
+            await this.page.locator('id=mat-checkbox-3').click();
+            }
+    }
+        //save patient button
+        async savePatient(){
+            await this.page.getByRole('button', {name: 'Save'}).click();
+        }
 
 }
