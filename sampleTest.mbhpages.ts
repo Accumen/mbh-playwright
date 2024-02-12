@@ -148,7 +148,7 @@ test("Sample test", async({page})=>{
    //8await providers.backArrow();
 
    const patients = new PatientsPage(page);
-   await patients.selectPatients();
+   //8await patients.selectPatients();
    //8await patients.searchPatient('Smith');
    //8await patients.selectPatientfromSearch('Smith');
    //8await patients.viewAllLabs('WBC','2023','OCT','1','2024','JAN','31');
@@ -156,7 +156,7 @@ test("Sample test", async({page})=>{
    //await patients.saveEditedLab();
    //8await patients.clearSelections();
    //8await patients.addLabs('B 12','12.25','2024','FEB','8');
-   await patients.addPatient('Fred','Flinestone','1546687','2024','JAN','30','Male','1963','JUL','16','no');
-   await patients.savePatient();
+   //8await patients.addPatient('Fred','Flinestone','1546687','2024','JAN','30','Male','1963','JUL','16','no');
+   //8await patients.savePatient();
 
 })
