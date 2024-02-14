@@ -159,4 +159,14 @@ test("Sample test", async({page})=>{
    //8await patients.addPatient('Fred','Flinestone','1546687','2024','JAN','30','Male','1963','JUL','16','no');
    //8await patients.savePatient();
 
+   const documents = new DocumentsPage (page);
+   //8await documents.selectDocuments();
+  //8await documents.searchDoc('Invasive Anemia Treatment');
+   //8await documents.docStatusdropdown('Active');
+   //8await documents.selectDocFromList('Invasive Anemia Treatment');
+   //8await documents.previewdoc();
+   //8await documents.clearSelections();
+   //8await documents.addDocBtn();
+   //8await documents.addEditDoc('Test Document #3','Document for testing #3','Surgeon Letter','Chronic','Active','yes','yes','test section','section for testing','Content of test section','1212');
+
 })
