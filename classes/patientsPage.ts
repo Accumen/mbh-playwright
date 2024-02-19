@@ -75,21 +75,22 @@ export default class PatientsPage{
         }        
         //select from lab search results list
         async editSearchedLab(labtype,result,resultyear,resultmonth,resultday){
-            //await this.page.getByRole('option',{name:labtype,exact:false}).locator('span').click();
+            //await this.page.getByRole('row',{name:labtype,exact:false}).getByRole('link').first().click();
             //edit pencil
-            await this.page.getByRole('button', {name:'fas fa-pencil-alt editButton'}).click();
+            await this.page.getByRole('link',{name:'Edit Lab'}).first().click();//edit button with aria-label
                 //result value
                 await this.page.getByLabel('Result Value *').click();
                 await this.page.getByLabel('Result Value *').fill(result);
                 //result date (calendar)
-                await this.page.locator('Result Date *').getByLabel('Open calendar').click();
+                await this.page.locator('#mat-dialog-2').getByLabel('Open calendar').click();
                 await this.page.getByLabel('Choose month and year').click();
                 while(await this.page.getByRole('button', {name:resultyear, exact:false}).isHidden()){
                     await this.page.getByLabel('Previous 24 years').click();
                  }
                     await this.page.getByLabel(resultyear).click();
                     await this.page.getByLabel(resultmonth).click();
-                    await this.page.getByLabel(resultday).click();   
+                    await this.page.getByText(resultday,{exact:true}).click(); 
+                    await this.page.getByRole('button').filter({hasText:'done'}).click();  
         }  
             //Save  
             async saveEditedLab(){
@@ -97,11 +98,16 @@ export default class PatientsPage{
             }     
             //delete trash can    
             async deleteSearchedLab(labtype){
-                await this.page.getByRole('option',{name:labtype}).locator('span').click();
+                //await this.page.getByRole('option',{name:labtype,exact:false}).locator('span').click();
+                await this.page.getByRole('link',{name:'Delete Lab'}).first().click();//delete lab button with aria-label
+                this.page.once('dialog',dialog=>{
+                    console.log('Dialog message: ${dialog.message()}');
+                    dialog.dismiss().catch(()=>{})
+                })
             }
         //red x close window button
         async closeSearchListWindow(){
-            await this.page.getByRole('link', {name:''}).click();
+            await this.page.getByRole('button', {name:'Close View All Labs'}).click(); // close window button with aria label
         }
     
     //add labs
