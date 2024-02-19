@@ -10,6 +10,7 @@ import LabtypesPage from "./classes/labtypesPage" //connects the lab types class
 import LabtypesmappingPage from "./classes/labtypesmappingPage" // connect the lab types mapping class to the test
 import ProvidersPage from "./classes/providersPage"// connect the providers class to the test
 import PatientsPage from "./classes/patientsPage" //connect the patients class to the test
+import EmailtemplatesPage from "./classes/emailtemplatesPage"
 
 test("Sample test", async({page})=>{
     test.slow();//changes default timeout from 30000 ms to 90000 ms
@@ -148,10 +149,10 @@ test("Sample test", async({page})=>{
    //8await providers.backArrow();
 
    const patients = new PatientsPage(page);
-   await patients.selectPatients();
-   await patients.searchPatient('Smith');
-   await patients.selectPatientfromSearch('Smith');
-   await patients.viewAllLabs('WBC','2023','OCT','1','2024','FEB','15');
+   //8await patients.selectPatients();
+   //8await patients.searchPatient('Smith');
+   //8await patients.selectPatientfromSearch('Smith');
+   //8await patients.viewAllLabs('WBC','2023','OCT','1','2024','FEB','15');
    //8await patients.editSearchedLab('WBC','11.00','2024','Feb','7');
    //8await patients.closeSearchListWindow();
    //8await patients.deleteSearchedLab('WBC');
@@ -170,5 +171,12 @@ test("Sample test", async({page})=>{
    //8await documents.clearSelections();
    //8await documents.addDocBtn();
    //8await documents.addEditDoc('Test Document #3','Document for testing #3','Surgeon Letter','Chronic','Active','yes','yes','test section','section for testing','Content of test section','1212');
-
+   
+   const emailtemplates = new EmailtemplatesPage(page);
+   //8await emailtemplates.clickEmailTemplate();
+   //8await emailtemplates.searchEmailTemplate('Visit Doc');
+   //8await emailtemplates.selectEmailtemplate('Visit Doc');
+   //8await emailtemplates.editTemplate('Visit Doc Notification #2','Visit Doc','Mary Perez','visiturl.test.com','test visit documents','This is a test comment.');
+   //8await emailtemplates.backArrow();
+   //8await emailtemplates.saveTemplate();
 })
