@@ -35,6 +35,7 @@ export default class WorklistPage{
     public hippa;
     public hhMonthdd;
     public procedure;
+    public pYear;
     public pMonth;
     public pDay;
     public pclickcount; //24hr clock
@@ -42,16 +43,17 @@ export default class WorklistPage{
     public surgeon;
     public location;
 
-
+    //click Worklist from Side navigation menu
+    async clickWorklist(){
+        await this.page.getByRole('button', {name: 'Worklist'}).click();//clicks the side menu worklist option
+    }
     
     //surgical menu option
     async clickSurgical(){
-        await this.page.getByRole('button', {name: 'Worklist'}).click();//clicks the side menu worklist option
         await this.page.getByRole('link', {name: 'Surgical'}).click({delay:1000});// clicks the Surgical submenu from the worklist
     }
     //chronic menu option
     async clickChronic(){
-        await this.page.getByRole('button', {name: 'Worklist'}).click(); // clicks the side menu worklist option
         await this.page.getByRole('link', {name: 'Chronic'}).click({delay:1000}); // clicks the Chronic submenu from the worklist
     }
     /* The rest of the functions are the same no matter which menu is chosen (surgical or chronic) */
@@ -175,7 +177,7 @@ export default class WorklistPage{
     }
     //Schedule Visit
     async scheduleSurgicalVisit(patienttype: string, fname?, mname?, lname?, email?, mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
-        state?,zip?, gender?,hippa?,hhMonthdd?, pMonth?, pDay?, pclickcount?,
+        state?,zip?, gender?,hippa?,hhMonthdd?,pYear?, pMonth?, pDay?, pclickcount?,
         procedure?, surgeon?){
         //expect (this.page.locator('id=toast-container').getByText('Patients fetched successfully').isVisible);
         //await this.page.waitFor(3000);
@@ -184,7 +186,7 @@ export default class WorklistPage{
         //Opens the patient schedule screen
          //check box for new or existing patient
          //if statement for new or existing patient
-            if(patienttype = 'NEW'){
+            if(patienttype != 'Existing'){
          //*New */
          //select the new check box
          await this.page.locator('.mat-checkbox-inner-container').first().click();
@@ -256,10 +258,11 @@ export default class WorklistPage{
             else{
          //*Existing */
          //select the existing check box
-         await this.page.getByLabel('lPatient').locator('div').filter({hasText: 'Existing'}).nth(1).click();
+         await this.page.locator('#mat-checkbox-5 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
          //search field for patient or mrn
          await this.page.getByLabel('Patient / MRN').click();
-         await this.page.getByLabel('Patient / MRN').fill(mrn);
+         await this.page.getByRole('combobox', { name: 'Patient / MRN' }).fill(mrn);
+         await this.page.getByRole('combobox', { name: 'Patient / MRN' }).press('Enter');
          //searching produces a drop down if patient is found that needs to be clicked
          await this.page.getByText(mrn).click();
             }
@@ -268,11 +271,11 @@ export default class WorklistPage{
          //**Visit screen**
          //visit date (calendar and 24hr clock)
          await this.page.getByRole('button',{name:'Open calendar'}).click();
-         while(await this.page.getByRole('gridcell',{name: pMonth, exact: true}).isHidden()){//if statement needs a locator statement
-            await this.page.getByLabel('Next month').click();
-         }
-              await this.page.getByLabel(pDay).click();
-              await this.page.getByLabel('expand_less icon').first().click({clickCount: pclickcount});
+         await this.page.getByLabel('Choose month and year').click();
+         await this.page.getByRole('button',{name:pYear, exact:true}).click();
+         await this.page.getByRole('button',{name: pMonth, exact: false}).click();
+         await this.page.getByLabel(pDay).click();
+         await this.page.getByLabel('expand_less icon').first().click({clickCount: pclickcount});
               /**Click Count Key for 24hr clock
                * 1 = 1am
                * 2 = 2am
@@ -368,8 +371,8 @@ export default class WorklistPage{
         //Surgeon (fillable required field)
         await this.page.getByLabel('Surgeon', {exact:true}).click();
          await this.page.getByLabel('Surgeon', {exact:true}).fill('Sur');
-         //await this.page.getByLabel('Surgeon', {exact:true}).press('enter');
-         await expect (this.page.locator('id=mat-autocomplete-1')).toBeVisible();
+         await this.page.getByLabel('Surgeon',{exact:true}).press('Enter');
+         //await expect (this.page.locator('id=mat-autocomplete-1')).toBeVisible();
          await this.page.getByRole('option', {name: surgeon, exact: false}).click();
          //PCP (fillabe not required field)
          //Location(fillable not required field)
