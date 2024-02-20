@@ -19,10 +19,7 @@ test('surgical visit', async ({ page }) => {
     await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.scheduleSurgicalVisit('Existing', 'n/a', 'n/a', 'n/a', 'n/a', 'smith','n/a','n/a','n/a','n/a','n/a', 'n/a',
-    'n/a','n/a', 'n/a','n/a','n/a','2024', 'MAR', '15', 13,
-        'CARDIO', 'test');
+    'n/a','n/a', 'n/a','n/a','n/a','2024', 'MAR', '22', 10,
+        'SPINE', 'test');
     await worklist.saveScheduledVisit();
-
-
-
 })
