@@ -69,7 +69,6 @@ export default class WorklistPage{
     }
     //Select Case Type function
     async selectCaseType(casetype: string){
-        
         /**Case Type Key
          * CARDIO
          * Case 18
@@ -91,8 +90,7 @@ export default class WorklistPage{
          * 321 (ONLY LISTED IN CHRONIC)
          */
         await this.page.getByRole('option', {name:casetype}).locator('mat-pseudo-checkbox').click();//selects the case type from the drop down
-        await this.page.locator(".cdk-overlay-backdrop").click();//clicks the background to close out of the case type menu
-
+        await this.page.getByRole('option', {name:casetype}).locator('mat-pseudo-checkbox').press('Tab');
     }
     //Select Status
     async selectStatus(status: string){
@@ -105,7 +103,8 @@ export default class WorklistPage{
          * Cancelled
          * All
          */
-        await this.page.getByText(status).click();//selects the status you want the data filtered by
+        await this.page.getByLabel('Active').click();//selects the status you want the data filtered by
+        await this.page.getByText(status,{exact:true}).click();
     }
     //filter
     //new field built for MBHS-662
