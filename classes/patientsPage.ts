@@ -33,6 +33,7 @@ export default class PatientsPage{
     public pclickcount;
     public procedure;
     public surgeon;
+    public pFacility;
 
     // select patient from the navigation menu
     async selectPatients(){
@@ -192,7 +193,7 @@ export default class PatientsPage{
         }
 
           //schedule surgical visit
-          async patientschedulesurgical(pYear,pMonth,pDay,pclickcount,procedure,surgeon){
+          async patientschedulesurgical(pYear,pMonth,pDay,pclickcount,procedure,surgeon,pFacility){
             await this.page.getByRole('button',{name:'Schedule Surgical Visit'}).click();
                  //**Visit screen**
          //visit date (calendar and 24hr clock)
@@ -300,19 +301,23 @@ export default class PatientsPage{
          await this.page.getByLabel('Surgeon',{exact:true}).press('Enter');
          //await expect (this.page.locator('id=mat-autocomplete-1')).toBeVisible();
          await this.page.getByRole('option', {name: surgeon, exact: false}).click();
+         await this.page.getByLabel('Facility',{exact:true}).click();
+         await this.page.getByLabel('Facility',{exact:true}).fill(pFacility);
+         await this.page.getByLabel('Facility',{exact:true}).press('Enter');
+         await this.page.getByRole('option',{name:pFacility,exact:true}).click();
          await this.page.getByRole('button',{name:'Schedule Visit'}).click();
         }
         //schedule chronic visit
-        async patientsschedulechronic(pYear,pMonth,pDay,pclickcount,procedure,surgeon){
+        async patientsschedulechronic(pYear,pMonth,pDay,pclickcount,procedure,surgeon,pFacility){
             await this.page.getByRole('button',{name:'Schedule Chronic Visit'}).click();
              //**Visit screen**
          //visit date (calendar and 24hr clock)
          await this.page.getByRole('button',{name:'Open calendar'}).click();
-         while(await this.page.getByRole('gridcell',{name: pMonth, exact: true}).isHidden()){//if statement needs a locator statement
-            await this.page.getByLabel('Next month').click();
-         }
-              await this.page.getByLabel(pDay).click();
-              await this.page.getByLabel('expand_less icon').first().click({clickCount: pclickcount});
+         await this.page.getByLabel('Choose month and year').click();
+         await this.page.getByRole('button',{name:pYear, exact:true}).click();
+         await this.page.getByRole('button',{name: pMonth, exact: false}).click();
+         await this.page.getByText(pDay,{exact:true}).click();
+         await this.page.getByLabel('expand_less icon').first().click({clickCount: pclickcount});
               /**Click Count Key for 24hr clock
                * 1 = 1am
                * 2 = 2am
@@ -371,7 +376,11 @@ export default class PatientsPage{
          await this.page.getByRole('option', {name: surgeon, exact: false}).click();
          //PCP (fillabe not required field)
          //Location(fillable not required field)
-         //Facility(pre populated)
+         //Facility
+         await this.page.getByLabel('Facility',{exact:true}).click();
+         await this.page.getByLabel('Facility',{exact:true}).fill(pFacility);
+         await this.page.getByLabel('Facility',{exact:true}).press('Enter');
+         await this.page.getByRole('option',{name:pFacility,exact:true}).click();
          await this.page.getByRole('button',{name:'Schedule Visit'}).click();
         }    
 }
