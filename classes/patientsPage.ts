@@ -300,6 +300,7 @@ export default class PatientsPage{
          await this.page.getByLabel('Surgeon',{exact:true}).press('Enter');
          //await expect (this.page.locator('id=mat-autocomplete-1')).toBeVisible();
          await this.page.getByRole('option', {name: surgeon, exact: false}).click();
+         await this.page.getByRole('button',{name:'Schedule Visit'}).click();
         }
         //schedule chronic visit
         async patientsschedulechronic(pYear,pMonth,pDay,pclickcount,procedure,surgeon){
@@ -371,6 +372,6 @@ export default class PatientsPage{
          //PCP (fillabe not required field)
          //Location(fillable not required field)
          //Facility(pre populated)
-
+         await this.page.getByRole('button',{name:'Schedule Visit'}).click();
         }    
 }
