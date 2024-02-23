@@ -11,6 +11,7 @@ import LabtypesmappingPage from "./classes/labtypesmappingPage" // connect the l
 import ProvidersPage from "./classes/providersPage"// connect the providers class to the test
 import PatientsPage from "./classes/patientsPage" //connect the patients class to the test
 import EmailtemplatesPage from "./classes/emailtemplatesPage"
+import SmartsectionsPage from "./classes/smartsectionsPage"
 
 test("Sample test", async({page})=>{
     test.slow();//changes default timeout from 30000 ms to 90000 ms
@@ -34,7 +35,7 @@ test("Sample test", async({page})=>{
      //8await dashboard.clickLogout();
 
 // Uncomment this to run tests within the worklist page
-    const worklist = new WorklistPage (page)
+    //8const worklist = new WorklistPage (page)
      //8await worklist.clickChronic();
      //8await worklist.clickSurgical();
      //8await worklist.searchMRN('Scutts');
@@ -64,7 +65,7 @@ test("Sample test", async({page})=>{
      //8await facilities.newLocation('LocationTest', 'others','Inactive');
      //8await facilities.saveFacility();
      //8await dashboard.clickLogout();
-     const casetypes = new CasetypesPage(page);
+    //8 const casetypes = new CasetypesPage(page);
      //8await casetypes.selectCaseTypeMenu();
      //8await casetypes.searchCaseType("ORTHO");
      //await casetypes.statusDropDown("Active");
@@ -83,7 +84,7 @@ test("Sample test", async({page})=>{
      //8await casetypes.backArrow();
      //8await dashboard.clickLogout();
      
-     const casetypesmapping = new CasetypesmappingPage(page);
+     //8const casetypesmapping = new CasetypesmappingPage(page);
      //8await casetypesmapping.selectCaseTypesMapping();
      //8await casetypesmapping.searchCode('28');
      //8await casetypesmapping.searchTypeDropDown('ORTHO');
@@ -91,7 +92,7 @@ test("Sample test", async({page})=>{
      //8await casetypesmapping.clickToMap('2838','ORTHO');
     //8await dashboard.clickLogout();
 
-    const labtypes = new LabtypesPage(page);
+    //8const labtypes = new LabtypesPage(page);
     //8await labtypes.selectLabTypes(); 
     //8await labtypes.searchLabType('Hct');
     //8await labtypes.searchStatus('Active');
@@ -127,7 +128,7 @@ test("Sample test", async({page})=>{
    //8await labtypes.saveLabType();
    //8 await dashboard.clickLogout();
 
-   const labtypesmapping = new LabtypesmappingPage (page);
+   //8const labtypesmapping = new LabtypesmappingPage (page);
 
    //8await labtypesmapping.selectLabTypesMapping();
    //8await labtypesmapping.searchLabCode('1525870');
@@ -136,7 +137,7 @@ test("Sample test", async({page})=>{
    //8await labtypesmapping.clickToMap('1525870','UNMAPPED')
    //8await dashboard.clickLogout();
 
-   const providers = new ProvidersPage (page);
+   //8const providers = new ProvidersPage (page);
    //8await providers.clickProviders();
    //8await providers.searchProvider('sur');
    //8await providers.providerStatus('Active');
@@ -148,7 +149,7 @@ test("Sample test", async({page})=>{
    //8await providers.editAddProviderInfo('Primary', 'Provider','ppc@gmail.com','987654321','Inactive')
    //8await providers.backArrow();
 
-   const patients = new PatientsPage(page);
+   //8const patients = new PatientsPage(page);
    //8await patients.selectPatients();
    //8await patients.searchPatient('Smith');
    //8await patients.selectPatientfromSearch('Smith');
@@ -162,7 +163,7 @@ test("Sample test", async({page})=>{
    //8await patients.addPatient('Fred','Flinestone','1546687','2024','JAN','30','Male','1963','JUL','16','no');
    //8await patients.savePatient();
 
-   const documents = new DocumentsPage (page);
+   //8const documents = new DocumentsPage (page);
    //8await documents.selectDocuments();
   //8await documents.searchDoc('Invasive Anemia Treatment');
    //8await documents.docStatusdropdown('Active');
@@ -172,11 +173,21 @@ test("Sample test", async({page})=>{
    //8await documents.addDocBtn();
    //8await documents.addEditDoc('Test Document #3','Document for testing #3','Surgeon Letter','Chronic','Active','yes','yes','test section','section for testing','Content of test section','1212');
    
-   const emailtemplates = new EmailtemplatesPage(page);
+   //8const emailtemplates = new EmailtemplatesPage(page);
    //8await emailtemplates.clickEmailTemplate();
    //8await emailtemplates.searchEmailTemplate('Visit Doc');
    //8await emailtemplates.selectEmailtemplate('Visit Doc');
    //8await emailtemplates.editTemplate('Visit Doc Notification #2','Visit Doc','Mary Perez','visiturl.test.com','test visit documents','This is a test comment.');
    //8await emailtemplates.backArrow();
    //8await emailtemplates.saveTemplate();
+
+   //8const smartsection = new SmartsectionsPage(page);
+   //8await smartsection.selectSmartSections();
+   //8await smartsection.searchSmartSection('RCP Follow Up Options');
+   //8await smartsection.selectSmartStatus('Active');
+   //8await smartsection.clearSelections();
+   //8await smartsection.selectSearchResult('RCP Follow Up Options');
+   //8await smartsection.addSmartSection();
+   //8await smartsection.backArrow();
+   //8await smartsection.editSmartSection('Test Smart Section','Smart section test description','Active','Yes','Yes','Smart Option','Smart Option Test','This is a test.')
 })
