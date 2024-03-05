@@ -12,6 +12,8 @@ import ProvidersPage from "./classes/providersPage"// connect the providers clas
 import PatientsPage from "./classes/patientsPage" //connect the patients class to the test
 import EmailtemplatesPage from "./classes/emailtemplatesPage"
 import SmartsectionsPage from "./classes/smartsectionsPage"
+import ReportsPage from "./classes/reportsPage"
+
 
 test("Sample test", async({page})=>{
     test.slow();//changes default timeout from 30000 ms to 90000 ms
@@ -149,10 +151,10 @@ test("Sample test", async({page})=>{
    //8await providers.editAddProviderInfo('Primary', 'Provider','ppc@gmail.com','987654321','Inactive')
    //8await providers.backArrow();
 
-   //8const patients = new PatientsPage(page);
-   //8await patients.selectPatients();
-   //8await patients.searchPatient('Smith');
-   //8await patients.selectPatientfromSearch('Smith');
+   const patients = new PatientsPage(page);
+   await patients.selectPatients();
+   await patients.searchPatient('Flinestone');
+   await patients.selectPatientfromSearch('Flinestone');
    //8await patients.viewAllLabs('WBC','2023','OCT','1','2024','FEB','15');
    //8await patients.editSearchedLab('WBC','11.00','2024','Feb','7');
    //8await patients.closeSearchListWindow();
@@ -162,6 +164,10 @@ test("Sample test", async({page})=>{
    //8await patients.addLabs('B 12','12.25','2024','FEB','8');
    //8await patients.addPatient('Fred','Flinestone','1546687','2024','JAN','30','Male','1963','JUL','16','no');
    //8await patients.savePatient();
+   await patients.editPatientDetails('DOB Correction from 1996 to 1953');
+   await patients.editPatientDob('1953','August','15');
+   await patients.editPatientLname('Mosely');
+   await patients.saveEditPatient();
 
    //8const documents = new DocumentsPage (page);
    //8await documents.selectDocuments();
@@ -190,4 +196,18 @@ test("Sample test", async({page})=>{
    //8await smartsection.addSmartSection();
    //8await smartsection.backArrow();
    //8await smartsection.editSmartSection('Test Smart Section','Smart section test description','Active','Yes','Yes','Smart Option','Smart Option Test','This is a test.')
+    //8 const reports = new ReportsPage(page);
+     //8await reports.selectReports();
+     //8await reports.searchReport('Medication Revenue');
+     //8await reports.clearSelections();
+     //8await reports.chooseReport('Medication Revenue');
+     //8await reports.selectFacility('EH GI');
+     //await reports.selectProvider('Charles E Camacho MD');
+    //8await reports.selectCaseType('CARDIO');
+     //await reports.selectDateRange('Custom','2023','January','1','2024','February','15');
+     //8await reports.applyChanges();
+
+
+
+
 })

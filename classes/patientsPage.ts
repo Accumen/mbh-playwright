@@ -34,6 +34,12 @@ export default class PatientsPage{
     public procedure;
     public surgeon;
     public pFacility;
+    public changeDesc;
+    public street;
+    public city;
+    public state;
+    public zipcode;
+    public phone;
 
     // select patient from the navigation menu
     async selectPatients(){
@@ -53,7 +59,7 @@ export default class PatientsPage{
     }
     //select patient from search list
     async selectPatientfromSearch(patient){
-        await this.page.getByRole('link',{name:patient}).click();
+        await this.page.getByRole('link',{name:patient}).first().click();
     }
     //view all labs button
     async viewAllLabs(labtype,startyear,startmonth, startday,resultyear,resultmonth, resultday){
@@ -382,5 +388,95 @@ export default class PatientsPage{
          await this.page.getByLabel('Facility',{exact:true}).press('Enter');
          await this.page.getByRole('option',{name:pFacility,exact:true}).click();
          await this.page.getByRole('button',{name:'Schedule Visit'}).click();
-        }    
+        }  
+        //edit patient button
+    async editPatientDetails(changeDesc){
+        await this.page.getByRole('button',{name:'Edit Patient'}).click();
+         //change description note box
+        await this.page.getByLabel('Change Description *').click();
+        await this.page.getByLabel('Change Description *').fill(changeDesc)
+    }  
+    
+     //edit patient information
+     async editPatientFname(fname){
+         //first name 
+        await this.page.getByLabel('First Name *').click();
+        await this.page.getByLabel('First Name *').fill(fname);
+     }
+     async editPatientLname(lname){
+         //last name 
+         await this.page.getByLabel('Last Name *').click();
+         await this.page.getByLabel('Last Name *').fill(lname); 
+     }
+     async editPatientHH(hhYear, hhMonth, hhDay){
+        //health history (calendar)
+        await this.page.locator('mat-form-field').filter({hasText: 'Health History Date'}).getByLabel('Open calendar').click();
+        await this.page.getByLabel('Choose month and year').click();
+        while(await this.page.getByRole('button', {name:hhYear, exact:true}).isHidden()){
+           await this.page.getByLabel('Previous 24 years').click();
+        }
+           await this.page.getByLabel(hhYear).click();
+           await this.page.getByLabel(hhMonth).click();
+           await this.page.getByLabel(hhDay).click();
+        //checkmark button to close the calendar
+        await this.page.locator('button').filter({hasText: 'done'}).click();
+    }
+    async editPatientGender(gender){
+        //gender drop down
+        await this.page.getByLabel('Gender * *').locator('div').nth(3).click();
+        await this.page.getByText(gender,{exact:true}).click();
+            /**gender key
+             * male
+             * female
+             */
+    }
+    async editPatientDob(dobyear,dobmonth,dobday){
+        //date of birth (calendar)
+        await this.page.locator('mat-form-field').filter({hasText: 'Date of birth *'}).getByLabel('Open calendar').click();
+        await this.page.getByLabel('Choose month and year').click();
+        while(await this.page.getByRole('button', {name:dobyear, exact:true}).isHidden()){
+           await this.page.getByLabel('Previous 24 years').click();
+        }
+           await this.page.getByLabel(dobyear).click();
+           await this.page.getByLabel(dobmonth).click();
+           await this.page.getByLabel(dobday).click();
+    }
+    async editPatientHippa(hippa){
+        //hipaa received (checkbox)
+        if(hippa != 'yes'){
+            await this.page.locator('id=mat-checkbox-3');
+            }
+            else{
+            await this.page.locator('id=mat-checkbox-3').click();
+            }
+    }
+    async editPatientStreet(street){
+        //street address
+        await this.page.getByLabel('Street *').click();
+        await this.page.getByLabel('Street *').fill(street);
+    }
+    async editPatientCity(city){
+        //city
+        await this.page.getByLabel('City *').click();
+        await this.page.getByLabel('City *').fill(city);
+    }
+    async editPatientState(state){
+        //state
+        await this.page.getByLabel('State *').click();    
+        await this.page.getByLabel('State *').fill(state);
+    }
+    async editPatientZipcode(zipcode){
+        //zipcode
+        await this.page.getByLabel('PostalCode *').click();
+        await this.page.getByLabel('PostalCode *').fill(zipcode);
+    }
+    async editPatientPhone(phone){
+        //primary phone
+        await this.page.getByLabel('Primary Phone *').click();
+        await this.page.getByLabel('Primary Phone *').fill(phone);
+    }
+    async saveEditPatient(){      
+       //save button
+       await this.page.getByRole('button',{name:'Save'}).click();
+        }
 }
