@@ -13,6 +13,7 @@ import PatientsPage from "./classes/patientsPage" //connect the patients class t
 import EmailtemplatesPage from "./classes/emailtemplatesPage"
 import SmartsectionsPage from "./classes/smartsectionsPage"
 import ReportsPage from "./classes/reportsPage"
+import RegionsPage from "./classes/regionsPage"
 
 
 test("Sample test", async({page})=>{
@@ -86,10 +87,11 @@ test("Sample test", async({page})=>{
      //8await casetypes.backArrow();
      //8await dashboard.clickLogout();
      
-     //8const casetypesmapping = new CasetypesmappingPage(page);
-     //8await casetypesmapping.selectCaseTypesMapping();
-     //8await casetypesmapping.searchCode('28');
-     //8await casetypesmapping.searchTypeDropDown('ORTHO');
+     const casetypesmapping = new CasetypesmappingPage(page);
+     await casetypesmapping.selectCaseTypesMapping();
+     await casetypesmapping.searchCode('28');
+     //8await casetypesmapping.searchTypeDropDown('EXCLUDE');
+     await casetypesmapping.overrideMapping('ORTHO');
      //8await casetypesmapping.clearSelections();
      //8await casetypesmapping.clickToMap('2838','ORTHO');
     //8await dashboard.clickLogout();
@@ -151,10 +153,10 @@ test("Sample test", async({page})=>{
    //8await providers.editAddProviderInfo('Primary', 'Provider','ppc@gmail.com','987654321','Inactive')
    //8await providers.backArrow();
 
-   const patients = new PatientsPage(page);
-   await patients.selectPatients();
-   await patients.searchPatient('Flinestone');
-   await patients.selectPatientfromSearch('Flinestone');
+   //8const patients = new PatientsPage(page);
+   //8await patients.selectPatients();
+   //8await patients.searchPatient('Flinestone');
+   //8await patients.selectPatientfromSearch('Flinestone');
    //8await patients.viewAllLabs('WBC','2023','OCT','1','2024','FEB','15');
    //8await patients.editSearchedLab('WBC','11.00','2024','Feb','7');
    //8await patients.closeSearchListWindow();
@@ -164,10 +166,10 @@ test("Sample test", async({page})=>{
    //8await patients.addLabs('B 12','12.25','2024','FEB','8');
    //8await patients.addPatient('Fred','Flinestone','1546687','2024','JAN','30','Male','1963','JUL','16','no');
    //8await patients.savePatient();
-   await patients.editPatientDetails('DOB Correction from 1996 to 1953');
-   await patients.editPatientDob('1953','August','15');
-   await patients.editPatientLname('Mosely');
-   await patients.saveEditPatient();
+   //8await patients.editPatientDetails('DOB Correction from 1953 to 1952');
+   //8await patients.editPatientDob('1952','August','15');
+   //8await patients.editPatientLname('Mosely');
+   //8await patients.saveEditPatient();
 
    //8const documents = new DocumentsPage (page);
    //8await documents.selectDocuments();
@@ -206,6 +208,18 @@ test("Sample test", async({page})=>{
     //8await reports.selectCaseType('CARDIO');
      //await reports.selectDateRange('Custom','2023','January','1','2024','February','15');
      //8await reports.applyChanges();
+
+     const regions = new RegionsPage(page);
+     //8await regions.selectRegionsMenu();
+     //8await regions.selectRegion('Texas');
+     //8await regions.editRegionName('Tennessee');
+     //8await regions.editRegionCode('658');
+     //8await regions.editRegionStatus('Inactive');
+     //await regions.backArrow();
+     //8await regions.addRegion();
+     //8await regions.newRegion('Tennessee','658','Active');
+     //8await regions.saveRegion();
+
 
 
 

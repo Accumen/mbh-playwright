@@ -32,6 +32,7 @@ export default class CasetypesmappingPage{
     async searchCode(searchCaseCode: string){
         await this.page.getByLabel('Search Code, Description').click();
         await this.page.getByLabel('Search Code, Description').fill(searchCaseCode);
+        await this.page.getByLabel('Search Code, Description').press('Enter');
     }
 
     //case type drop down  (74 items)
@@ -116,10 +117,12 @@ export default class CasetypesmappingPage{
      * new sub
      * 
     */
+    await this.page.getByText(casetype).press('Enter');
    }
    //Select case to map
    async selectCaseToMap(searchCaseCode: string){
     await this.page.getByText(searchCaseCode).click();
+    await this.page.getByText(searchCaseCode).press('Enter');
    }
 
    //click mapping dropdown
@@ -133,6 +136,19 @@ export default class CasetypesmappingPage{
     async clearSelections(){
         await this.page.getByRole('button', {name: 'CLEAR'}).click();
     }
+
+    async overrideMapping(casetype){
+        await this.page.getByTitle('Override Mapping').first().click();
+        await this.page.getByText('No override').click();
+        await this.page.getByRole('option',{name:casetype}).click();
+        await this.page.getByRole('button',{name:'Save Overrides'}).click();
+
+    }
+    async fullPageVerify(){
+        await this.page.getByTitle('Mapping Overrides: 1').screenshot({path:'verification.png'})
+    }
+
+
     //page navigation
     //row counter
     /**
