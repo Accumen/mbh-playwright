@@ -144,7 +144,7 @@ export default class PatientsPage{
     }
 
     //add patient
-    async addPatient(fname,lname,mrn,hhYear,hhMonth,hhDay,gender,dobyear,dobmonth,dobday,hippa){
+    async addPatient(fname,lname,mrn,hhYear,hhMonth,hhDay,gender,dobyear,dobmonth,dobday,hippa,phone,street,city,state,zipcode){
         //add patient button
         await this.page.getByRole('button',{name:'Add Patients'}).click();
          //Required fields only
@@ -192,6 +192,22 @@ export default class PatientsPage{
             else{
             await this.page.locator('id=mat-checkbox-3').click();
             }
+        //phone number
+        await this.page.getByLabel('Primary Phone *').click();
+        await this.page.getByLabel('Primary Phone *').fill(phone);
+        //street
+        await this.page.getByLabel('Address *').click();
+        await this.page.getByLabel('Address *').fill(street);
+        //apt/unit
+        //city
+        await this.page.getByLabel('City *').click();
+        await this.page.getByLabel('City *').fill(city);
+        //state
+        await this.page.getByLabel('State *').click();
+        await this.page.getByLabel('State *').fill(state);
+        //zip
+        await this.page.getByLabel('PostalCode *').click();
+        await this.page.getByLabel('PostalCode *').fill(zipcode);
     }
         //save patient button
         async savePatient(){

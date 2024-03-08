@@ -546,6 +546,10 @@ export default class WorklistPage{
         await this.page.getByRole('button',{name: 'Schedule Visit'}).click();
     }     
          //Back Arrow (takes you back to the worklist)
+    
+    async verifyVisit(){
+        await this.page.screenshot({path:'verifiedvisit.png',fullPage:true});
+    }
 
 
 }
