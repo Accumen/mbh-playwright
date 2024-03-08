@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
-import ProviderPage from './classes/providersPage';
 import ProvidersPage from './classes/providersPage';
 
 test('addprovider', async ({ page }) => {
