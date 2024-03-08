@@ -378,7 +378,7 @@ export default class WorklistPage{
          //Facility(pre populated)
     }
 
-    async scheduleChronicVisit(patienttype: string, fname?, mname?, lname?, email?, mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
+    async scheduleChronicVisit(patienttype: string, fname?, lname?, email?, mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
         state?,zip?, gender?,hippa?,hhMonthdd?, pYear?, pMonth?, pDay?, pclickcount?,
         procedure?, surgeon?){
         //expect (this.page.locator('id=toast-container').getByText('Patients fetched successfully').isVisible);
@@ -395,9 +395,6 @@ export default class WorklistPage{
          //first name
          await this.page.getByLabel('First Name *').click();
          await this.page.getByLabel('First Name *').fill(fname);
-         //middle name
-         await this.page.getByLabel('Middle Name').click();
-         await this.page.getByLabel('Middle Name').fill(mname);
          //last name
          await this.page.getByLabel('Last Name *').click();
          await this.page.getByLabel('Last Name *').fill(lname);

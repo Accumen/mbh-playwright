@@ -18,8 +18,8 @@ test('surgical visit', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.scheduleSurgicalVisit('Existing', 'n/a', 'n/a', 'n/a', 'n/a', 'smith','n/a','n/a','n/a','n/a','n/a', 'n/a',
-    'n/a','n/a', 'n/a','n/a','n/a','2024', 'MAR', '22', 10,
+    await worklist.scheduleSurgicalVisit('Existing', 'n/a', 'n/a', 'n/a', 'n/a', '657984','n/a','n/a','n/a','n/a','n/a', 'n/a',
+    'n/a','n/a', 'n/a','n/a','n/a','2024', 'MAY', '5', 15,
         'SPINE', 'test');
     await worklist.saveScheduledVisit();
 })

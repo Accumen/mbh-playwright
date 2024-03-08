@@ -18,8 +18,10 @@ test('chronic visit', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.scheduleChronicVisit('Existing', 'n/a', 'n/a', 'n/a', 'n/a', 'smith','n/a','n/a','n/a','n/a','n/a', 'n/a',
-    'n/a','n/a', 'n/a','n/a','n/a', '2024','MAR', '25', 10,
+    await worklist.scheduleChronicVisit('New', 'Jack', 'Black', 'jblack@gmail.com', '657984','1986','JUN','16','5656678945','951 Cadillac ave', 'Las Vegas',
+    'NV','47562', 'Male','yes','March 6', '2024','MAR', '25', 10,
         'CHRONIC MEDICAL', 'test')
     await worklist.saveScheduledVisit();
+    
+    
 })

@@ -479,4 +479,8 @@ export default class PatientsPage{
        //save button
        await this.page.getByRole('button',{name:'Save'}).click();
         }
+
+    async patientVerify(patient){
+        await this.page.screenshot({path:'patientverify.png', fullPage: true});
+    }
 }
