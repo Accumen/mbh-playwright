@@ -147,6 +147,10 @@ export default class WorklistPage{
         await this.page.getByText(sortBy,{exact:true}).click();//selects the method to which you want the data sorted
     }  
     //Calendar option for date filter
+    // select patient visit from worklist
+    async selectPatientfromSearch(patient){
+        await this.page.getByText(patient,{exact:true}).first().click();
+    }
 
       //clear button
     async clearSelections(){
@@ -551,5 +555,66 @@ export default class WorklistPage{
         await this.page.screenshot({path:'verifiedvisit.png',fullPage:true});
     }
 
+    //complete visit
+    async completeVisit(completeType,treatment?,untreatedtype?,followup?,specialty?,fyear?,fmonth?,fday?){
+        await this.page.getByRole('button', {name: 'Complete Case'}).click();
+        await this.page.locator('div').filter({ hasText: /^TreatedComplete Case Type \*$/ }).nth(1).click();
+        await this.page.getByRole('option',{name:completeType,exact:true}).click();
+        /**completeType
+         * Treated
+         * Not Treated
+         */
+        if(completeType != 'Treated'){
+            await this.page.getByText(untreatedtype,{exact:true}).click();
+            /**untreatedtype
+             * Does not meet criteria for treatment
+             * Insurance delayed treatment
+             * Insurance denied treatment
+             * No contact from patient
+             * Patient declines treatment
+             * Physician declines treatment of anemic patient
+             * Scheduling delayed for infusion
+             * Timing too close to surgery date
+             */
+        
+        }
+        else{
+            await this.page.getByRole('option',{name:treatment,exact:true}).click();
+            /**treatment
+             * B12
+             * EPO
+             * IV Iron
+             * Oral Iron
+             */ 
+        }
+        if(followup != 'yes'){
 
+            await this.page.getByRole('button',{name:'Confirm'}).click();
+        }
+        else{
+            await this.page.locator('.mat-radio-outer-circle').first().click();
+            await this.page.getByRole('button',{name:'Continue'}).click();    
+        
+        
+            await this.page.getByText(specialty,{exact:true}).click();
+            /**specialty
+            * 321
+            * CHRONIC MEDICAL
+            * WOMEN'S HEALTH- CHRONIC
+            */
+            await this.page.getByRole('button',{name:'Open calendar'}).click();
+            await this.page.getByLabel('Choose month and year').click();
+            await this.page.getByRole('button',{name:fyear, exact:true}).click();
+            await this.page.getByRole('button',{name: fmonth, exact: false}).click();
+            await this.page.getByLabel(fday).click();
+            await this.page.getByRole('button',{name:'Confirm'}).click();
+        }
+
+        //await this.page.getByRole('button',{name:'Activate'}).click();
+    }
+    //chronic follow up screenshot
+    async followUpScnsht(){
+        await this.page.getByTitle('Follow Up',{exact:true}).first().screenshot({path:'followupicon.png'});
+    }
+    //add communication
 }
