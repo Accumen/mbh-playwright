@@ -215,7 +215,8 @@ export default class WorklistPage{
             await this.page.getByLabel('Previous 24 years').click();
          }
             await this.page.getByLabel(dobyear).click();
-            await this.page.getByLabel(dobMonth).click();
+            await this.page.getByRole('button',{name: dobMonth, exact: false}).click();
+            //await this.page.getByLabel(dobMonth).click(); MBHS-892
             await this.page.getByLabel(dobDay).click();
          //phone number
          await this.page.getByLabel('Phone No *').click();
