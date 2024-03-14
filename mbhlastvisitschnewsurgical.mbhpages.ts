@@ -27,6 +27,6 @@ test('surgical visit', async ({ page }) => {
     const patients = new PatientsPage(page);
     await patients.selectPatients();
     await patients.searchPatient('123654789');
-    await patients.patientVerify('June Smith');
+    await patients.patientVerify();
 
 })
