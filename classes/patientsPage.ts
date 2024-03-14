@@ -52,6 +52,7 @@ export default class PatientsPage{
         await this.page.locator('id=mat-input-0').click();
         await this.page.locator('id=mat-input-0').fill(patient);
         await this.page.locator('id=mat-input-0').press('Enter');
+        await this.page.getByText(patient).focus();
     }
     //clear button
     async clearSelections(){
@@ -496,7 +497,7 @@ export default class PatientsPage{
        await this.page.getByRole('button',{name:'Save'}).click();
         }
 
-    async patientVerify(patient){
+    async patientVerify(){
         await this.page.screenshot({path:'patientverify.png', fullPage: true});
     }
 }
