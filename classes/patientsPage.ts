@@ -52,7 +52,6 @@ export default class PatientsPage{
         await this.page.locator('id=mat-input-0').click();
         await this.page.locator('id=mat-input-0').fill(patient);
         await this.page.locator('id=mat-input-0').press('Enter');
-        await this.page.getByText(patient).focus();
     }
     //clear button
     async clearSelections(){
@@ -63,11 +62,13 @@ export default class PatientsPage{
         await this.page.getByRole('link',{name:patient}).first().click();
     }
     //view all labs button
-    async viewAllLabs(labtype,startyear,startmonth, startday,resultyear,resultmonth, resultday){
+    async viewAllLabs(labtype?,startyear?,startmonth?, startday?,resultyear?,resultmonth?, resultday?){
         await this.page.getByRole('button',{name:'View All'}).click();
         //lab type fillable
         await this.page.getByLabel('Lab Type').click();
         await this.page.getByLabel('Lab Type').fill(labtype);
+        
+        if(startyear != 'NULL'){
         //date range click
             //start date (calendar)
             await this.page.getByRole('button',{name:'Open calendar'}).click();
@@ -85,7 +86,8 @@ export default class PatientsPage{
             }
                await this.page.getByLabel(resultyear).click();
                await this.page.getByLabel(resultmonth).click();
-               await this.page.getByLabel(resultday).click();  
+               await this.page.getByLabel(resultday).first().click();}
+               
         }        
         //select from lab search results list
         async editSearchedLab(labtype,result,resultyear,resultmonth,resultday){
