@@ -84,9 +84,9 @@ export default class PatientsPage{
             while(await this.page.getByRole('button', {name:resultyear, exact:false}).isHidden()){
                await this.page.getByLabel('Previous 24 years').click();
             }
-               await this.page.getByLabel(resultyear).click();
+               await this.page.getByLabel(resultyear,{exact:true}).click();
                await this.page.getByLabel(resultmonth).click();
-               await this.page.getByLabel(resultday).first().click();}
+               await this.page.getByText(resultday,{exact:true}).click();}
                
         }        
         //select from lab search results list
