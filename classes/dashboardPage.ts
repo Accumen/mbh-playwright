@@ -28,7 +28,7 @@ export default class DashboardPage{
          * Test Client
          * TJUH
          */
-        await this.page.getByRole('option',{name: optionClient}).click();//selects the client from the drop down list
+        await this.page.getByRole('option',{name: optionClient,exact:true}).click();//selects the client from the drop down list
         await this.page.getByRole('button', {name: 'Change'}).click({delay:90}); //this clicks the change button to "select" the client for MBH.
         //await this.page.waitForLoadState();// call to wait for the page to load after the change button is selected
     }
