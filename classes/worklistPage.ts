@@ -238,8 +238,9 @@ export default class WorklistPage{
          await this.page.getByLabel('Gender').locator('div').nth(2).click();
          await this.page.getByText(gender, {exact:true}).click();
          //hippa checkbox
-         if(hippa = 'yes'){
-         await this.page.locator('#mat-checkbox-6 > .mat-checkbox-layout > .mat-checkbox-inner-container').click()
+         if(hippa == 'yes'){
+         //await this.page.locator('#mat-checkbox-6 > .mat-checkbox-layout > .mat-checkbox-inner-container').click()
+            await this.page.locator('id=mat-checkbox-5-input').click();
          }
          else{
             //no need to check the box
