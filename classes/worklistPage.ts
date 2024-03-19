@@ -618,5 +618,35 @@ export default class WorklistPage{
     async followUpScnsht(){
         await this.page.getByTitle('Follow Up',{exact:true}).first().screenshot({path:'followupicon.png'});
     }
+    //add visit documents
+
+    async visitDocumentsAdd(){
+        await this.page.locator('app-document-list').getByRole('button', { name: 'Add' }).click();
+    }
+
+    async addVisitDocuments(){
+        await this.page.getByRole('row', { name: 'Add' }).getByRole('button').first().click();
+    }
+    
+    async closeVisitDocuments(){
+        await this.page.getByRole('button', { name: 'close' }).click();
+    }
+
+    async visitDocumentsEdit(){ //WIP
+        await this.page.getByTitle('Edit').click();
+    }
+
+    async documentEditSaveAll(){ //WIP
+        await this.page.getByRole('button', {name: 'Save All'}).click();
+    }
+
+    async visitDocumentsPreview(){
+        await this.page.getByTitle('Document preview').first().click();
+    }
+
+    async visitDocumentsDelete(){ //WIP
+        await this.page.getByTitle('Delete').first().click();
+    }
+
     //add communication
 }
