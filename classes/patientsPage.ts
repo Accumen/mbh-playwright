@@ -501,5 +501,47 @@ export default class PatientsPage{
 
     async patientVerify(){
         await this.page.screenshot({path:'patientverify.png', fullPage: true});
+      }
+
+    async addCommunication(commType, message,priority,resolveDate){
+        await this.page.locator('app-communication-list').getByRole('button', { name: ' Add' }).click();
+        await this.page.getByText('Communication TypeCommunication Type *').click();
+        await this.page.getByText(commType).click();
+        /**commType Key
+         * Task
+         * Comment
+         * Follow Up Call Needed
+         */
+        await this.page.getByLabel('Message *').click();
+        await this.page.getByLabel('Message *').fill(message);
+        await this.page.getByLabel('Priority *').locator('div').nth(3).click();
+        await this.page.getByText(priority).click();
+        /**priority key
+         * Hold: Review Case, but no
+         * Low: Review Case within 7 days
+         * Medium: Review Case and
+         * High: Case needs immediate
+         */
+        await this.page.getByLabel('Open calendar').click();
+        await this.page.getByLabel(resolveDate).click();
+        /**resolveDate
+         * Month day,
+         */
+        await this.page.locator('button').filter({ hasText: 'done' }).click();
+        await this.page.getByRole('button', { name: 'Add Communication' }).click();
+    }  
+    //sort communication
+    async orderCommunications(commSort){
+        await this.page.getByRole('button',{name:commSort}).click()
+        /**commSort
+         * Newest First
+         * Oldest First
+         */
     }
+    //edit communication
+    //mark as resolved
+    //reply to communication
+    //select a visit
+    
+
 }
