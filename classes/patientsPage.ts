@@ -49,9 +49,9 @@ export default class PatientsPage{
  
     //search patient name (fillable)
     async searchPatient(patient){
-        await this.page.locator('id=mat-input-0').click();
-        await this.page.locator('id=mat-input-0').fill(patient);
-        await this.page.locator('id=mat-input-0').press('Enter');
+        await this.page.getByLabel('Search Patient name , mrn').click();
+        await this.page.getByLabel('Search Patient name , mrn').fill(patient);
+        await this.page.getByLabel('Search Patient name , mrn').press('Enter');
     }
     //clear button
     async clearSelections(){
@@ -90,7 +90,7 @@ export default class PatientsPage{
                
         }        
         //select from lab search results list
-        async editSearchedLab(labtype,result,resultyear,resultmonth,resultday){
+        async editSearchedLab(result,resultyear,resultmonth,resultday){
             //await this.page.getByRole('row',{name:labtype,exact:false}).getByRole('link').first().click();
             //edit pencil
             await this.page.getByRole('link',{name:'Edit Lab'}).first().click();//edit button with aria-label
@@ -125,6 +125,10 @@ export default class PatientsPage{
         async closeSearchListWindow(){
             await this.page.getByRole('button', {name:'Close View All Labs'}).click(); // close window button with aria label
         }
+    //lastest labs section
+    async latestLabs(){
+        await this.page.getByText('LATEST LABS').scrollIntoViewIfNeeded();
+    }
     
     //add labs
     async addLabs(labtype,labvalue,resultyear,resultmonth,resultday){
