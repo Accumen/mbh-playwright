@@ -18,12 +18,7 @@ test('edit provider NPI', async ({ page }) => {
     const providers = new ProvidersPage(page);
     await providers.clickProviders();
     await providers.selectProvider('Surgeon Test');
-
-    await page.getByLabel('NPI *').click();
-    await page.getByLabel('NPI *').fill('012345678');
-    await page.getByLabel('NPI *').fill('01234567899');
-    await page.getByLabel('NPI *').fill('9876543210');
-
+    await providers.editProviderNPI('01234567899');
     await providers.saveProvider();
 
 })

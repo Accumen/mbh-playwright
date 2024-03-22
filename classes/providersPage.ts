@@ -56,6 +56,26 @@ export default class ProvidersPage{
         //call to status drop down
         this.providerStatus(status);
     }
+    //edit provider's first name
+    async editProviderFirstName(fname){
+        await this.page.getByLabel('First Name *').click();
+        await this.page.getByLabel('First Name *').fill(fname);       
+    }
+    //edit provider's last name
+    async editProviderLastName(lname){
+        await this.page.getByLabel('Last Name *').click();
+        await this.page.getByLabel('Last Name *').fill(lname);
+    }
+    //edit provider's email
+    async editProviderEmail(email) {
+        await this.page.getByLabel('Email *').click();
+        await this.page.getByLabel('Email *').fill(email);
+    }
+    //edit provider's NPI
+    async editProviderNPI(npi){
+        await this.page.getByLabel('NPI *').click();
+        await this.page.getByLabel('NPI *').fill(npi);
+    }
             //save provider button
     async saveProvider(){
         await this.page.getByRole('button', {name:'Save Provider'}).click();
