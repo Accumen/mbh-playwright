@@ -553,8 +553,8 @@ export default class WorklistPage{
     }     
          //Back Arrow (takes you back to the worklist)
     
-    async verifyVisit(){
-        await this.page.screenshot({path:'verifiedvisit.png',fullPage:true});
+    async worklistscreenshot(num){
+        await this.page.screenshot({path:'worklistscreenshot'+ num +'.png',fullPage:true});
     }
 
     //complete visit
@@ -624,6 +624,12 @@ export default class WorklistPage{
         await this.page.locator('app-document-list').getByRole('button', { name: 'Add' }).click();
     }
 
+    //search visit documents
+    async searchdoc(doc){
+        await this.page.getByLabel('Search').click();
+        await this.page.getByLabel('Search').fill(doc);
+        //await this.page.getByLabel('Search').press('Enter')
+    }
     async addVisitDocuments(){
         await this.page.getByRole('row', { name: 'Add' }).getByRole('button').first().click();
     }

@@ -157,6 +157,10 @@ export default class DocumentsPage{
         //add document(save new document)
         await this.page.getByRole('button',{name:'Save Document'}).click();    
     }
+    //screenshot for documents page
+    async verifyDoc(){
+        await this.page.screenshot({path:'verifyDocument.png'});
+    }
         //back arrow
     //page navigator
     //row counter
