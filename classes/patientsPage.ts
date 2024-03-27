@@ -90,13 +90,14 @@ export default class PatientsPage{
                
         }        
         //select from lab search results list
-        async editSearchedLab(result,resultyear,resultmonth,resultday){
+        async editSearchedLab(result?,resultyear?,resultmonth?,resultday?){
             //await this.page.getByRole('row',{name:labtype,exact:false}).getByRole('link').first().click();
             //edit pencil
             await this.page.getByRole('link',{name:'Edit Lab'}).first().click();//edit button with aria-label
                 //result value
                 await this.page.getByLabel('Result Value *').click();
                 await this.page.getByLabel('Result Value *').fill(result);
+                if(resultyear != 'NULL'){
                 //result date (calendar)
                 await this.page.locator('#mat-dialog-2').getByLabel('Open calendar').click();
                 await this.page.getByLabel('Choose month and year').click();
@@ -106,8 +107,16 @@ export default class PatientsPage{
                     await this.page.getByLabel(resultyear).click();
                     await this.page.getByLabel(resultmonth).click();
                     await this.page.getByText(resultday,{exact:true}).click(); 
-                    await this.page.getByRole('button').filter({hasText:'done'}).click();  
+                    await this.page.getByRole('button').filter({hasText:'done'}).click(); 
+                }
         }  
+            //delete prepopulated result date for edit result value
+            async deleteResultDate(){
+                await this.page.getByLabel('Result Date *').click();
+                await this.page.getByLabel('Result Date *').selectText();
+                await this.page.getByLabel('Result Date *').press('Delete');
+            }
+
             //Save  
             async saveEditedLab(){
                 await this.page.getByRole('button', {name:'Save'}).click();
@@ -503,8 +512,8 @@ export default class PatientsPage{
        await this.page.getByRole('button',{name:'Save'}).click();
         }
 
-    async patientVerify(){
-        await this.page.screenshot({path:'patientverify.png', fullPage: true});
+    async patientVerify(num){
+        await this.page.screenshot({path:'patientverify'+ num +'.png', fullPage: true});
       }
 
     async addCommunication(commType, message,priority,resolveDate){
