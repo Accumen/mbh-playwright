@@ -56,6 +56,10 @@ export default class WorklistPage{
     async clickChronic(){
         await this.page.getByRole('link', {name: 'Chronic'}).click({delay:1000}); // clicks the Chronic submenu from the worklist
     }
+
+    async clickFacility(){
+        await this.page.getByLabel('QA Facility').locator('div').nth(2).click();
+    }
     /* The rest of the functions are the same no matter which menu is chosen (surgical or chronic) */
     //Search Name, MRN
     async searchMRN(searchInfo: string){
