@@ -1,4 +1,4 @@
-import {test, expect} from "@playwright/test"
+import {test} from "@playwright/test"
 import LoginPage from "./classes/loginPage"// connects the login class to the test
 import ReportsPage from "./classes/reportsPage"
 
@@ -11,9 +11,9 @@ test("test user permission for region", async({page})=>{
      await login.enterPassword('TossedSalad84!')//password needs moved into the login class
      await login.clickLoginBtn()
 
-     const reports = new ReportsPage(page)
-     reports.selectReports();
-     reports.chooseReport('Chronic: Total Enrolled Report');
-     reports.selectFacilities();
+     const report = new ReportsPage(page)
+     await report.selectReports();
+     await report.chooseReport('Chronic: Total Enrolled Report');
+     await report.selectFacilities();
     
     })
