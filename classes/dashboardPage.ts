@@ -1,4 +1,4 @@
-import { Page} from "@playwright/test";
+import {expect,Page} from "@playwright/test";
 
 export default class DashboardPage{
 
@@ -97,7 +97,7 @@ export default class DashboardPage{
      }
     //date range drop down function
     //apply button
-    async clickDateRange(selection: string){
+    async clickDateRange(selection,startyear?,startmonth?,startday?,endyear?,endmonth?,endday?){
         await this.page.getByLabel('Date range').locator('div').nth(3).click(); // clicks the drop down selector for date range
         /** Selection Key
          * This Week
@@ -109,20 +109,36 @@ export default class DashboardPage{
          * Custom 
         */
         await this.page.getByText(selection).click();//selects the option from the date range drop down menu
-        //will need to build a special function to handle the calendar pop up that is created by selecting "custom"
-        /*
-          await page.getByText('Custom').click();
-          await page.getByLabel('Open calendar').click();
-          await page.getByLabel('Choose month and year').click();
-          await page.getByText('2022').click();
-          await page.getByText('MAR', { exact: true }).click();
-          await page.getByText('23', { exact: true }).click();
-          await page.getByLabel('Next month').click();
-          await page.getByText('14').click();
-        */
-        await this.page.getByRole('button', {name:'APPLY'}).click();//apply button has to be selected whenever the drop down menu option changes
-
-    }
+        if(selection == 'Custom'){
+            //start date (calendar)
+            await this.page.getByRole('button',{name:'Open calendar'}).click();
+            await this.page.getByLabel('Choose month and year').last().click();
+               while(await this.page.getByRole('button', {name:startyear, exact:false}).first().isHidden()){
+                    await this.page.getByLabel('Previous 24 years').click();
+               }
+                    await this.page.getByLabel(startyear,{exact:true}).click();
+                    await this.page.getByLabel(startmonth).click();
+                    await this.page.getByText(startday,{exact:true}).click();    
+                    //end date    (calendar) 
+                    if(endyear != startyear){
+                    await this.page.getByLabel('Choose month and year').last().click();
+                    while(await this.page.getByRole('button', {name:endyear, exact:false}).first().isHidden()){
+                       await this.page.getByLabel('Previous 24 years').click();}
+                       await this.page.getByLabel(endyear,{exact:true}).click();
+                    }
+                    else{
+                        while(await this.page.locator('#mat-datepicker-0').getByText(endmonth,{exact:true}).isHidden()){
+                            await this.page.getByRole('button',{name:'Next month'}).last().click();
+                        }}
+                        await this.page.getByRole('dialog',{name:'Custom Date Range',exact:false}).getByText(endday,{exact:false}).first().click();
+                       //await this.page.getByText(endday).first().click();
+                       await this.page.getByRole('button', {name:'APPLY'}).click()
+                   }
+            else{
+            await this.page.getByRole('button', {name:'APPLY'}).click();//apply button has to be selected whenever the drop down menu option changes
+            } 
+    }   
+   
     //download excel function
     async excelDownload(){
         await this.page.getByRole('button',{name:'Download Excel'}).click();// selects the download excel button
@@ -156,6 +172,14 @@ export default class DashboardPage{
          * Chronic
          */
         await this.page.getByRole('link',{name: navSelect}).click();
+    }
+    async dataverify(num){
+        await this.page.locator('app-client-dashboard').getByText('User Login').scrollIntoViewIfNeeded();
+        await this.page.locator('app-client-dashboard').screenshot({path:'dataverify' + num + '.png'});
+    }
+
+    async datacomparison(){
+        expect(await this.page.screenshot()).toMatchSnapshot(['dataverify1', 'dataverify2']);
 
     }
 
