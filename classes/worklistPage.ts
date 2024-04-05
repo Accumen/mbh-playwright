@@ -32,6 +32,8 @@ export default class WorklistPage{
     public state;
     public zip;
     public gender;
+    public race;
+    public ethnicity;
     public hippa;
     public hhMonthdd;
     public procedure;
@@ -42,6 +44,7 @@ export default class WorklistPage{
     public pcp;
     public surgeon;
     public location;
+    public changeDesc;
 
     //click Worklist from Side navigation menu
     async clickWorklist(){
@@ -50,11 +53,11 @@ export default class WorklistPage{
     
     //surgical menu option
     async clickSurgical(){
-        await this.page.getByRole('link', {name: 'Surgical'}).click({delay:1000});// clicks the Surgical submenu from the worklist
+        await this.page.getByRole('link', {name: 'S Surgical'}).click({delay:1000});// clicks the Surgical submenu from the worklist
     }
     //chronic menu option
-    async clickChronic(){
-        await this.page.getByRole('link', {name: 'Chronic'}).click({delay:1000}); // clicks the Chronic submenu from the worklist
+    async clickChronic(){ //change name to clickNonSurgical?
+        await this.page.getByRole('link', {name: 'C Non-Surgical'}).click({delay:1000}); // clicks the Chronic submenu from the worklist
     }
 
     async clickFacility(){
@@ -182,9 +185,17 @@ export default class WorklistPage{
         await this.page.locator('#mainFilter div').filter({hasText: 'CLEAR'}).nth(2).click();//looks for the Clear element on the screen
         await this.page.getByRole('button',{name:'CLEAR'}).first().click();//clicks the clear expired visits button
     }
+    //Click Patient Details dropdown
+    async selectPatientDetails(){
+        await this.page.getByRole('button', { name: 'PATIENT DETAILS' }).click();
+    }
+    //Click Chain of Custody dropdown
+    async selectChainofCustody(){
+        await this.page.getByRole('button', { name: 'CHAIN OF CUSTODY' }).click();
+    }
     //Schedule Visit
     async scheduleSurgicalVisit(patienttype: string, fname?, mname?, lname?, email?, mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
-        state?,zip?, gender?,hippa?,hhMonthdd?,pYear?, pMonth?, pDay?, pclickcount?,
+        state?,zip?, gender?,race?,ethnicity?,hippa?,hhMonthdd?,pYear?, pMonth?, pDay?, pclickcount?,
         procedure?, surgeon?){
         //expect (this.page.locator('id=toast-container').getByText('Patients fetched successfully').isVisible);
         //await this.page.waitFor(3000);
@@ -230,8 +241,8 @@ export default class WorklistPage{
          await this.page.getByLabel('Street *').fill(street);
          //apt/unit
          //city
-         await this.page.getByLabel('City *').click();
-         await this.page.getByLabel('City *').fill(city);
+         await this.page.getByLabel('City *', { exact: true }).click();
+         await this.page.getByLabel('City *', { exact: true }).fill(city);
          //state
          await this.page.getByLabel('State *').click();
          await this.page.getByLabel('State *').fill(state);
@@ -241,6 +252,17 @@ export default class WorklistPage{
          //gender (drop down)
          await this.page.getByLabel('Gender').locator('div').nth(2).click();
          await this.page.getByText(gender, {exact:true}).click();
+         //race
+         await this.page.getByLabel('Race *').click();
+         await this.page.getByLabel('Race *').fill(race);
+         //ethnicity (drop down)
+         await this.page.getByLabel('Ethnicity *').locator('div').nth(2).click();
+         await this.page.getByText(ethnicity, {exact:true}).click();
+         /** Ethnicity Key
+          * Unknown
+          * Hispanic
+          * Not Hispanic
+          */
          //hippa checkbox
          if(hippa == 'yes'){
          //await this.page.locator('#mat-checkbox-6 > .mat-checkbox-layout > .mat-checkbox-inner-container').click()
@@ -621,6 +643,28 @@ export default class WorklistPage{
     //chronic follow up screenshot
     async followUpScnsht(){
         await this.page.getByTitle('Follow Up',{exact:true}).first().screenshot({path:'followupicon.png'});
+    }
+    //edit patient button
+    async editPatientDetails(changeDesc){
+        await this.page.getByRole('button',{name:'Edit Patient'}).click();
+         //change description note box
+        await this.page.getByLabel('Change Description *').click();
+        await this.page.getByLabel('Change Description *').fill(changeDesc)
+    }
+    //edit patient information
+    async editPatientRace(race){
+    //race
+    await this.page.getByLabel('Race *').click();
+    await this.page.getByLabel('Race *').fill(race);
+    }
+    async editPatientEthnicity(ethnicity){
+    //ethinicity
+    await this.page.getByLabel('Ethnicity *').locator('div').nth(2).click();
+    await this.page.getByText(ethnicity, {exact:true}).click();
+    }
+    async saveEditPatient(){      
+    //save button
+    await this.page.getByRole('button',{name:'Save'}).click();
     }
     //add visit documents
 
