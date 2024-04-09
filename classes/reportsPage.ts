@@ -27,6 +27,7 @@ export default class ReportsPage{
         await this.page.getByLabel('Search Report Name').click();
         await this.page.getByLabel('Search Report Name').fill(reportName);
         await this.page.getByLabel('Search Report Name').press('Enter');
+        await this.page.getByText('Report Type').focus();
     }
 
     //report type (clickable list)
@@ -129,5 +130,9 @@ export default class ReportsPage{
         await this.page.getByRole('button',{name:'CLEAR'}).click();
     }
 
+    //report validation screenshot
+    async verifyReport(num){
+        await this.page.screenshot({path:'reportverify'+ num + '.png'});
+    }
 
 }
