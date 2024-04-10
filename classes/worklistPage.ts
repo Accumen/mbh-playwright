@@ -67,6 +67,7 @@ export default class WorklistPage{
     //Search Name, MRN
     async searchMRN(searchInfo: string){
         await this.page.getByText('Search Name, MRN').fill(searchInfo);//types "st" in the MRN search field
+        await this.page.getByText('Search Name, MRN').press('Enter');
         
     }
     //Unselect Select All for Case Type
