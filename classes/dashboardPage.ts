@@ -1,4 +1,6 @@
 import {expect,Page} from "@playwright/test";
+import { after } from "node:test";
+import {getComparator}from "playwright-core/lib/utils"
 
 export default class DashboardPage{
 
@@ -118,7 +120,7 @@ export default class DashboardPage{
                }
                     await this.page.getByLabel(startyear,{exact:true}).click();
                     await this.page.getByLabel(startmonth).click();
-                    await this.page.getByText(startday,{exact:true}).click();    
+                    await this.page.getByText(startday,{exact:true}).last().click();    
                     //end date    (calendar) 
                     if(endyear != startyear){
                     await this.page.getByLabel('Choose month and year').last().click();
@@ -175,11 +177,14 @@ export default class DashboardPage{
     }
     async dataverify(num){
         await this.page.locator('app-client-dashboard').getByText('User Login').scrollIntoViewIfNeeded();
-        await this.page.locator('app-client-dashboard').screenshot({path:'dataverify' + num + '.png'});
+        await this.page.getByTitle('User Login').screenshot({path:'dataverify' + num + '.png'});
+               
+       
     }
 
     async datacomparison(){
-        expect(await this.page.screenshot()).toMatchSnapshot(['dataverify1', 'dataverify2']);
+        expect(await this.page.getByTitle('User Login').screenshot()).toMatchSnapshot('dataverify1.png');
+        
 
     }
 
