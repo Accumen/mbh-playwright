@@ -3,7 +3,7 @@ import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import WorklistPage from './classes/worklistPage';
 
-test('surgical visit', async ({ page }) => {
+test('edit patient non surgical', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
@@ -17,9 +17,12 @@ test('surgical visit', async ({ page }) => {
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
-    await worklist.clickSurgical();
-    await worklist.scheduleSurgicalVisit('New', 'June', '', 'Smith', '', '123654789','2022','MAR','10','6101231234','568 Willowbrook rd', 'Broomall',
-    'PA','19008', 'Female','White','Not Hispanic','yes','April 20','2024', 'MAR', '28', 5,
-        'CARDIO', 'test');
-    //await worklist.saveScheduledVisit();
+    await worklist.clickChronic();
+    await worklist.selectPatientfromSearch('Jack Black');
+    await worklist.selectPatientDetails();
+    await worklist.selectChainofCustody();
+    await worklist.editPatientDetails('Changed Race and Ethinicity')
+    await worklist.editPatientRace('White');
+    await worklist.editPatientEthnicity('Not Hispanic');
+    //await worklist.saveEditPatient();
 })

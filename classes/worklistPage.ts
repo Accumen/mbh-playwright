@@ -253,12 +253,20 @@ export default class WorklistPage{
          //gender (drop down)
          await this.page.getByLabel('Gender').locator('div').nth(2).click();
          await this.page.getByText(gender, {exact:true}).click();
-         //race
-         await this.page.getByLabel('Race *').click();
-         await this.page.getByLabel('Race *').fill(race);
+         //race (drop down)
+         await this.page.getByLabel('Race *').locator('div').nth(2).click();
+         await this.page.getByRole('option', { name: race, exact:true }).locator('span').click();
+         /** Race Key
+          * American Indian or Alaska Native
+          * Asian
+          * Black or African American
+          * Native Hawaiian or Other Pacific Islander
+          * Other Race
+          * White
+          */
          //ethnicity (drop down)
          await this.page.getByLabel('Ethnicity *').locator('div').nth(2).click();
-         await this.page.getByText(ethnicity, {exact:true}).click();
+         await this.page.getByRole('option', { name: ethnicity, exact:true }).locator('span').click();
          /** Ethnicity Key
           * Unknown
           * Hispanic
@@ -266,8 +274,8 @@ export default class WorklistPage{
           */
          //hippa checkbox
          if(hippa == 'yes'){
-         //await this.page.locator('#mat-checkbox-6 > .mat-checkbox-layout > .mat-checkbox-inner-container').click()
-            await this.page.locator('id=mat-checkbox-5-input').click();
+            await this.page.locator('#mat-checkbox-7 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+            //await this.page.locator('id=mat-checkbox-5-input').click();
          }
          else{
             //no need to check the box
@@ -412,7 +420,7 @@ export default class WorklistPage{
     }
 
     async scheduleChronicVisit(patienttype: string, fname?, lname?, email?, mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
-        state?,zip?, gender?,hippa?,hhMonthdd?, pYear?, pMonth?, pDay?, pclickcount?,
+        state?,zip?, gender?,race?,ethnicity?,hippa?,hhMonthdd?, pYear?, pMonth?, pDay?, pclickcount?,
         procedure?, surgeon?){
         //expect (this.page.locator('id=toast-container').getByText('Patients fetched successfully').isVisible);
         //await this.page.waitFor(3000);
@@ -454,8 +462,8 @@ export default class WorklistPage{
          await this.page.getByLabel('Street *').fill(street);
          //apt/unit
          //city
-         await this.page.getByLabel('City *').click();
-         await this.page.getByLabel('City *').fill(city);
+         await this.page.getByLabel('City *', { exact: true }).click();
+         await this.page.getByLabel('City *', { exact: true }).fill(city);
          //state
          await this.page.getByLabel('State *').click();
          await this.page.getByLabel('State *').fill(state);
@@ -465,9 +473,28 @@ export default class WorklistPage{
          //gender (drop down)
          await this.page.getByLabel('Gender').locator('div').nth(2).click();
          await this.page.getByText(gender, {exact:true}).click();
+         //race (drop down)
+         await this.page.getByLabel('Race *').locator('div').nth(2).click();
+         await this.page.getByRole('option', { name: race, exact:true }).locator('span').click();
+         /** Race Key
+          * American Indian or Alaska Native
+          * Asian
+          * Black or African American
+          * Native Hawaiian or Other Pacific Islander
+          * Other Race
+          * White
+          */
+         //ethnicity (drop down)
+         await this.page.getByLabel('Ethnicity *').locator('div').nth(2).click();
+         await this.page.getByRole('option', { name: ethnicity, exact:true }).locator('span').click();
+         /** Ethnicity Key
+          * Unknown
+          * Hispanic
+          * Not Hispanic
+          */
          //hippa checkbox
-         if(hippa = 'yes'){
-         await this.page.locator('#mat-checkbox-6 > .mat-checkbox-layout > .mat-checkbox-inner-container').click()
+         if(hippa == 'yes'){
+            await this.page.locator('#mat-checkbox-7 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
          }
          else{
             //no need to check the box
@@ -655,13 +682,15 @@ export default class WorklistPage{
     //edit patient information
     async editPatientRace(race){
     //race
-    await this.page.getByLabel('Race *').click();
-    await this.page.getByLabel('Race *').fill(race);
+    await this.page.getByLabel('Race *').locator('div').nth(2).click();
+    //await this.page.getByText(race, {exact:true}).click();
+    await this.page.getByRole('option', { name: race, exact:true }).locator('span').click();
     }
     async editPatientEthnicity(ethnicity){
     //ethinicity
     await this.page.getByLabel('Ethnicity *').locator('div').nth(2).click();
-    await this.page.getByText(ethnicity, {exact:true}).click();
+    //await this.page.getByText(ethnicity, {exact:true}).click();
+    await this.page.getByRole('option', { name: ethnicity, exact:true }).locator('span').click();
     }
     async saveEditPatient(){      
     //save button
