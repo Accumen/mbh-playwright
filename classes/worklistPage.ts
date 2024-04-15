@@ -154,7 +154,32 @@ export default class WorklistPage{
          */
         await this.page.getByText(sortBy,{exact:true}).click();//selects the method to which you want the data sorted
     }  
+    
     //Calendar option for date filter
+    async sortByDateRange(startyear, startmonth, startday, endyear, endmonth, endday){
+        await this.page.getByRole('button',{name:'Open calendar'}).click();
+                await this.page.getByLabel('Choose month and year').click();
+                   while(await this.page.getByRole('button', {name:startyear, exact:false}).first().isHidden()){
+                        await this.page.getByLabel('Previous year').click();
+                   }
+                        await this.page.getByLabel(startyear,{exact:true}).click();
+                        await this.page.getByLabel(startmonth).click();
+                        await this.page.getByText(startday,{exact:true}).last().click();    
+                        //end date    (calendar) 
+                        await this.page.getByLabel('Choose month and year').click();
+                        while(await this.page.getByRole('button', {name:startyear, exact:false}).first().isHidden()){
+                             await this.page.getByLabel('Previous year').click();
+                        }
+                           await this.page.getByLabel(endyear,{exact:true}).click();
+                           await this.page.getByLabel(endmonth).click();
+                           await this.page.getByText(endday,{exact:true}).last().click();  
+                        await this.page.locator('id=toast-container',{hasText:'Patients Fetched Successfully'}).isVisible();
+                        await this.page.getByText('MRN').first().scrollIntoViewIfNeeded();
+        }
+                        
+                            
+                            
+           
     // select patient visit from worklist
     async selectPatientfromSearch(patient){
         await this.page.getByText(patient,{exact:true}).first().click();
