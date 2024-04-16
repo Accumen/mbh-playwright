@@ -2,6 +2,7 @@ import {test} from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 
+//serial test for capturing baseline screenshot 
 test('filter dashboard data', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
@@ -17,6 +18,7 @@ test('filter dashboard data', async ({ page }) => {
     await dashboard.datacomparison();
 })
 
+//serial test for capturing comparison screenshot
 test('filter screenshot comparison',async ({page})=>{
     test.slow();
     const login = new LoginPage(page);
@@ -30,4 +32,21 @@ test('filter screenshot comparison',async ({page})=>{
     await dashboard.clickClientDropDown('Farmers Trauma Center');
     await dashboard.clickDateRange('Custom','2024','JAN','1','2024','MAR','31');
     await dashboard.datacomparison();
+})
+//reset cache 
+test('reset cache test',async ({page})=>{
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail('cts-secure@accumen.com');
+    await login.enterPassword('Pass#123');
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('Farmers Trauma Center');
+    await dashboard.clickDateRange('This Week');
+    await dashboard.dataverify(2);
+    await dashboard.resetCache();
+    await dashboard.dataverify(3);
 })

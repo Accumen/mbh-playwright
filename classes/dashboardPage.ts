@@ -139,7 +139,11 @@ export default class DashboardPage{
             else{
             await this.page.getByRole('button', {name:'APPLY'}).click();//apply button has to be selected whenever the drop down menu option changes
             } 
-    }   
+    } 
+    //reset cache button
+    async resetCache(){
+        await this.page.getByRole('button',{name: 'Reset Cache'}).click();
+    }  
    
     //download excel function
     async excelDownload(){
@@ -177,7 +181,7 @@ export default class DashboardPage{
     }
     async dataverify(num){
         await this.page.locator('app-client-dashboard').getByText('User Login').scrollIntoViewIfNeeded();
-        await this.page.getByTitle('User Login').screenshot({path:'dataverify' + num + '.png'});
+        await this.page.screenshot({path:'dataverify' + num + '.png'});
                
        
     }
