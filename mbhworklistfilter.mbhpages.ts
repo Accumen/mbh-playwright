@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import WorklistPage from './classes/worklistPage';
+import PatientsPage from './classes/patientsPage';
 
 test('worklist filter date range test', async ({ page }) => {
 
@@ -42,4 +43,27 @@ test('worklist filter case type test', async ({ page }) => {
   await worklist.unselectAllCaseTypes();
   await worklist.selectCaseType('THORACIC');
   await worklist.worklistscreenshot(1);
+})
+
+test('retain worklist filter test', async ({ page }) => {
+
+  test.slow();
+  const login = new LoginPage(page);
+  await page.goto('https://qa.mybloodhealth.com/login');
+  await login.enterEmail('cts-secure@accumen.com');
+  await login.enterPassword('Pass#123');
+  await login.clickLoginBtn();
+
+  const dashboard = new DashboardPage(page);
+  await dashboard.clickClientDropDown('QA Testing');
+
+  const worklist = new WorklistPage(page);
+  await worklist.clickWorklist();
+  await worklist.clickChronic();
+  await worklist.unselectAllCaseTypes();
+  await worklist.selectCaseType('CHRONIC MEDICAL');
+  await worklist.selectStatus('Cancelled');
+  await worklist.selectPatientfromSearch('Jack Black');
+  await worklist.backarrow();
+  await worklist.clickSurgical();
 })

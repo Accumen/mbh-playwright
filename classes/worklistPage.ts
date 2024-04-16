@@ -111,8 +111,8 @@ export default class WorklistPage{
          * Cancelled
          * All
          */
-        await this.page.getByLabel('Active').click();//selects the status you want the data filtered by
-        await this.page.getByText(status,{exact:true}).click();
+        //await this.page.getByText('Active').locator('div').nth(2).click();//selects the status you want the data filtered by
+        await this.page.getByRole('option', { name: status}).locator('span').click();
     }
     //filter
     //new field built for MBHS-662
@@ -182,7 +182,11 @@ export default class WorklistPage{
            
     // select patient visit from worklist
     async selectPatientfromSearch(patient){
+        await this.page.getByText(patient,{exact:true}).first().focus();
         await this.page.getByText(patient,{exact:true}).first().click();
+    }
+    async backarrow(){
+        await this.page.locator('app-page-header i').first().click();
     }
 
       //clear button
