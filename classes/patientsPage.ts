@@ -20,6 +20,8 @@ export default class PatientsPage{
     public hhMonth;
     public hhDay;
     public gender;
+    public race;
+    public ethnicity;
     public labvalue;
     public resultyear;
     public resultmonth;
@@ -160,7 +162,7 @@ export default class PatientsPage{
     }
 
     //add patient
-    async addPatient(fname,lname,mrn,hhYear,hhMonth,hhDay,gender,dobyear,dobmonth,dobday,hippa,phone,street,city,state,zipcode){
+    async addPatient(fname,lname,mrn,hhYear,hhMonth,hhDay,gender,race,ethnicity,dobyear,dobmonth,dobday,hippa,phone,street,city,state,zipcode){
         //add patient button
         await this.page.getByRole('button',{name:'Add Patients'}).click();
          //Required fields only
@@ -186,14 +188,33 @@ export default class PatientsPage{
         await this.page.locator('button').filter({hasText: 'done'}).click();
             
         //gender drop down
-        await this.page.getByLabel('Gender * *').locator('div').nth(3).click();
+        await this.page.getByLabel('Gender *').locator('div').nth(3).click();
         await this.page.getByText(gender,{exact:true}).click();
             /**gender key
              * male
              * female
              */
+        //race (drop down)
+        await this.page.getByLabel('Race *').locator('div').nth(2).click();
+        await this.page.getByRole('option', { name: race, exact:true }).locator('span').click();
+        /** Race Key
+         * American Indian or Alaska Native
+         * Asian
+         * Black or African American
+         * Native Hawaiian or Other Pacific Islander
+         * Other Race
+         * White
+         */
+        //ethnicity (drop down)
+        await this.page.getByLabel('Ethnicity *').locator('div').nth(2).click();
+        await this.page.getByRole('option', { name: ethnicity, exact:true }).locator('span').click();
+        /** Ethnicity Key
+         * Unknown
+         * Hispanic
+         * Not Hispanic
+         */
         //date of birth (calendar)
-        await this.page.locator('mat-form-field').filter({hasText: 'Date of birth * *'}).getByLabel('Open calendar').click();
+        await this.page.locator('mat-form-field').filter({hasText: 'Date of birth *'}).getByLabel('Open calendar').click();
         await this.page.getByLabel('Choose month and year').click();
         while(await this.page.getByRole('button', {name:dobyear, exact:true}).isHidden()){
            await this.page.getByLabel('Previous 24 years').click();
@@ -203,10 +224,12 @@ export default class PatientsPage{
            await this.page.getByLabel(dobday).click();
         //hipaa received (checkbox)
         if(hippa != 'yes'){
-            await this.page.locator('id=mat-checkbox-3');
+            await this.page.locator('.mat-checkbox-inner-container');
+            //await this.page.locator('id=mat-checkbox-3');
             }
             else{
-            await this.page.locator('id=mat-checkbox-3').click();
+            await this.page.locator('.mat-checkbox-inner-container').click();
+            //await this.page.locator('id=mat-checkbox-3').click();
             }
         //phone number
         await this.page.getByLabel('Primary Phone *').click();
@@ -216,8 +239,8 @@ export default class PatientsPage{
         await this.page.getByLabel('Address *').fill(street);
         //apt/unit
         //city
-        await this.page.getByLabel('City *').click();
-        await this.page.getByLabel('City *').fill(city);
+        await this.page.getByLabel('City *', { exact: true }).click();
+        await this.page.getByLabel('City *', { exact: true }).fill(city);
         //state
         await this.page.getByLabel('State *').click();
         await this.page.getByLabel('State *').fill(state);
@@ -461,6 +484,29 @@ export default class PatientsPage{
              * male
              * female
              */
+    }
+    async editPatientRace(race){
+        //race
+        await this.page.getByLabel('Race *').locator('div').nth(2).click();
+        await this.page.getByRole('option', { name: race, exact:true }).locator('span').click();
+        /** Race Key
+         * American Indian or Alaska Native
+         * Asian
+         * Black or African American
+         * Native Hawaiian or Other Pacific Islander
+         * Other Race
+         * White
+         */
+    }
+    async editPatientEthnicity(ethnicity){
+        //ethinicity
+        await this.page.getByLabel('Ethnicity *').locator('div').nth(2).click();
+        await this.page.getByRole('option', { name: ethnicity, exact:true }).locator('span').click();
+        /** Ethnicity Key
+         * Unknown
+         * Hispanic
+         * Not Hispanic
+         */
     }
     async editPatientDob(dobyear,dobmonth,dobday){
         //date of birth (calendar)

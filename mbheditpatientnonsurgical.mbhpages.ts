@@ -18,11 +18,13 @@ test('edit patient non surgical', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.selectPatientfromSearch('Jack Black');
-    await worklist.selectPatientDetails();
-    await worklist.selectChainofCustody();
+    await worklist.searchMRN('58585')
+    await worklist.selectPatientfromSearch('Clark Kent');
     await worklist.editPatientDetails('Changed Race and Ethinicity')
     await worklist.editPatientRace('White');
     await worklist.editPatientEthnicity('Not Hispanic');
-    //await worklist.saveEditPatient();
+    await worklist.saveEditPatient();
+    await worklist.selectPatientDetails();
+    await worklist.selectChainofCustody();
+    
 })

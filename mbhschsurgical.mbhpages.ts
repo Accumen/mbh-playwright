@@ -18,8 +18,8 @@ test('surgical visit', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.scheduleSurgicalVisit('New', 'June', '', 'Smith', '', '123654789','2022','MAR','10','6101231234','568 Willowbrook rd', 'Broomall',
-    'PA','19008', 'Female','White','Not Hispanic','yes','April 20','2024', 'MAR', '28', 5,
+    await worklist.scheduleSurgicalVisit('New', 'July', '', 'Smith', '', '456789123','2022','MAR','10','6101231234','568 Willowbrook rd', 'Broomall',
+    'PA','19008', 'Female','White','Not Hispanic','no','April 20','2024', 'MAR', '28', 5,
         'CARDIO', 'test');
-    //await worklist.saveScheduledVisit();
+    await worklist.saveScheduledVisit();
 })
