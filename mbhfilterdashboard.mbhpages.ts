@@ -1,6 +1,7 @@
 import {test} from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
+const logindata = JSON.parse(JSON.stringify(require("../mbhpages/testdata/login.json")))
 
 //serial test for capturing baseline screenshot 
 test('filter dashboard data', async ({ page }) => {
@@ -8,8 +9,8 @@ test('filter dashboard data', async ({ page }) => {
     const login = new LoginPage(page);
 
     await page.goto('https://qa.mybloodhealth.com/login');
-    await login.enterEmail('cts-secure@accumen.com');
-    await login.enterPassword('Pass#123');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
@@ -24,8 +25,8 @@ test('filter screenshot comparison',async ({page})=>{
     const login = new LoginPage(page);
 
     await page.goto('https://qa.mybloodhealth.com/login');
-    await login.enterEmail('cts-secure@accumen.com');
-    await login.enterPassword('Pass#123');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
@@ -39,8 +40,8 @@ test('reset cache test',async ({page})=>{
     const login = new LoginPage(page);
 
     await page.goto('https://qa.mybloodhealth.com/login');
-    await login.enterEmail('cts-secure@accumen.com');
-    await login.enterPassword('Pass#123');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);

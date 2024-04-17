@@ -3,14 +3,15 @@ import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import WorklistPage from './classes/worklistPage';
 import PatientsPage from './classes/patientsPage';
+const logindata = JSON.parse(JSON.stringify(require("../mbhpages/testdata/login.json")))
 
 test('surgical visit', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
     await page.goto('https://qa.mybloodhealth.com/login');
-    await login.enterEmail('cts-secure@accumen.com');
-    await login.enterPassword('Iu$24680');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
