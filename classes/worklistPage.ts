@@ -53,11 +53,11 @@ export default class WorklistPage{
     
     //surgical menu option
     async clickSurgical(){
-        await this.page.getByRole('link', {name: 'S Surgical'}).click({delay:1000});// clicks the Surgical submenu from the worklist
+        await this.page.getByRole('link', {name: 'Surgical', exact:true}).click({delay:1000});// clicks the Surgical submenu from the worklist
     }
     //chronic menu option
     async clickChronic(){ //change name to clickNonSurgical?
-        await this.page.getByRole('link', {name: 'C Non-Surgical'}).click({delay:1000}); // clicks the Chronic submenu from the worklist
+        await this.page.getByRole('link', {name:'Non-Surgical', exact: true}).click({delay:1000}); // clicks the Chronic submenu from the worklist
     }
 
     async clickFacility(){
@@ -721,6 +721,18 @@ export default class WorklistPage{
     //await this.page.getByText(ethnicity, {exact:true}).click();
     await this.page.getByRole('option', { name: ethnicity, exact:true }).locator('span').click();
     }
+    //height
+    async editPatientHeight(height){
+    await this.page.locator('id=mat-input-8').click();
+    await this.page.locator('id=mat-input-8').fill(height);
+    }
+
+    //weight
+    async editPatientWeight(weight){
+        await this.page.locator('id=mat-input-9').click();
+        await this.page.locator('id=mat-input-9').fill(weight);
+    }
+
     async saveEditPatient(){      
     //save button
     await this.page.getByRole('button',{name:'Save'}).click();
