@@ -733,6 +733,18 @@ export default class WorklistPage{
         await this.page.locator('id=mat-input-9').fill(weight);
     }
 
+    //Invasive Treatment Toggle
+    async invasiveToggle(){
+        await this.page.locator('id=mat-slide-toggle-1').click()
+        await this.page.getByTitle('Invasive').screenshot({path:'invasive.png'});
+    }
+
+    //Bloodless Case Toggle
+    async bloodlessToggle(){
+        await this.page.locator('id=mat-slide-toggle-2').click();
+        await this.page.getByTitle('Bloodless').screenshot({path:'bloodless.png'});
+    }
+
     async saveEditPatient(){      
     //save button
     await this.page.getByRole('button',{name:'Save'}).click();
