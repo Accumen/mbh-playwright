@@ -162,7 +162,7 @@ export default class PatientsPage{
     }
 
     //add patient
-    async addPatient(fname,lname,mrn,hhYear,hhMonth,hhDay,gender,race,ethnicity,dobyear,dobmonth,dobday,hippa,phone,street,city,state,zipcode){
+    async addPatient(fname,lname,mrn,hhYear,hhMonth,hhDay,gender,race,ethnicity,dobyear,dobmonth,dobday,hippa,phone,street,city,state,zipcode,height, weight){
         //add patient button
         await this.page.getByRole('button',{name:'Add Patients'}).click();
          //Required fields only
@@ -247,6 +247,13 @@ export default class PatientsPage{
         //zip
         await this.page.getByLabel('PostalCode *').click();
         await this.page.getByLabel('PostalCode *').fill(zipcode);
+        //height
+        await this.page.locator('id=mat-input-10').click();
+        await this.page.locator('id=mat-input-10').fill(height);
+        //weight
+        await this.page.locator('id=mat-input-11').click();
+        await this.page.locator('id=mat-input-11').fill(weight);
+
     }
         //save patient button
         async savePatient(){
@@ -553,8 +560,19 @@ export default class PatientsPage{
         await this.page.getByLabel('Primary Phone *').click();
         await this.page.getByLabel('Primary Phone *').fill(phone);
     }
+    //edit height
+    async editPatientHeight(height){
+     await this.page.locator('id=mat-input-10').click();
+     await this.page.locator('id=mat-input-10').fill(height);
+    }
+    //edit weight
+    async editPatientWeight(weight){
+    await this.page.locator('id=mat-input-11').click();
+    await this.page.locator('id=mat-input-11').fill(weight);   
+
+    }
+    //save button
     async saveEditPatient(){      
-       //save button
        await this.page.getByRole('button',{name:'Save'}).click();
         }
 
