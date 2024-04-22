@@ -180,17 +180,38 @@ export default class DashboardPage{
         await this.page.getByRole('link',{name: navSelect}).click();
     }
     async dataverify(num){
-        await this.page.locator('app-client-dashboard').getByText('User Login').scrollIntoViewIfNeeded();
-        await this.page.screenshot({path:'dataverify' + num + '.png'});
-               
-       
+        await this.page.getByLabel('Weight *').focus();
+        await this.page.screenshot({path:'dataverify' + num + '.png'}); 
     }
 
     async datacomparison(){
-        expect(await this.page.getByTitle('User Login').screenshot()).toMatchSnapshot('dataverify1.png');
-        
+        expect(await this.page.getByTitle('User Login').screenshot()).toMatchSnapshot('basescreenshot.png');
+    }
+
+    async ganzoniCalculator(weightype,weight, curHgb){
+        await this.page.locator('button').filter({hasText:'work'}).click();
+        await this.page.getByRole('menuitem',{name:'Ganzoni Calculator'}).click();
+
+        if (weightype != 'lbs'){
+            //select kg
+            await this.page.locator('#mat-radio-3').click();
+            //enter kg weight
+            await this.page.getByLabel('Weight *').click();
+            await this.page.getByLabel('Weight *').fill(weight);
+        }
+        else{
+            //enter lbs weight
+            await this.page.getByLabel('Weight *').click();
+            await this.page.getByLabel('Weight *').fill(weight);
+        }
+        //enter current hgb
+        await this.page.getByLabel('Current HGB (g/dL) *').click();
+        await this.page.getByLabel('Current HGB (g/dL) *').fill(curHgb);
+
+        //capture value
 
     }
+
 
 }
 
