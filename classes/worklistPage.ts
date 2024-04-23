@@ -45,6 +45,9 @@ export default class WorklistPage{
     public surgeon;
     public location;
     public changeDesc;
+    public edit;
+    public editrace;
+    public editethnicity;
 
     //click Worklist from Side navigation menu
     async clickWorklist(){
@@ -225,7 +228,7 @@ export default class WorklistPage{
     }
     //Schedule Visit
     async scheduleSurgicalVisit(patienttype: string, fname?, mname?, lname?, email?, mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
-        state?,zip?, gender?,race?,ethnicity?,hippa?,hhMonthdd?,pYear?, pMonth?, pDay?, pclickcount?,
+        state?,zip?, gender?,race?,ethnicity?,hippa?,hhMonthdd?,edit?,editrace?,editethnicity?,changeDesc?,pYear?, pMonth?, pDay?, pclickcount?,
         procedure?, surgeon?){
         //expect (this.page.locator('id=toast-container').getByText('Patients fetched successfully').isVisible);
         //await this.page.waitFor(3000);
@@ -327,13 +330,19 @@ export default class WorklistPage{
             else{
          //*Existing */
          //select the existing check box
-         await this.page.locator('#mat-checkbox-5 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+         await this.page.locator('#mat-checkbox-6 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
          //search field for patient or mrn
          await this.page.getByLabel('Patient / MRN').click();
          await this.page.getByRole('combobox', { name: 'Patient / MRN' }).fill(mrn);
          await this.page.getByRole('combobox', { name: 'Patient / MRN' }).press('Enter');
          //searching produces a drop down if patient is found that needs to be clicked
          await this.page.getByText(mrn).click();
+         if (edit == 'yes'){
+            await this.editPatientDetails(changeDesc);
+            await this.editPatientRace(editrace);
+            await this.editPatientEthnicity(editethnicity);
+            await this.page.getByRole('button', { name: 'Save Patient' }).click();
+         }
             }
          //next button
          await this.page.getByRole('button',{name:'Next'}).click();
@@ -449,7 +458,7 @@ export default class WorklistPage{
     }
 
     async scheduleChronicVisit(patienttype: string, fname?, lname?, email?, mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
-        state?,zip?, gender?,race?,ethnicity?,hippa?,hhMonthdd?, pYear?, pMonth?, pDay?, pclickcount?,
+        state?,zip?, gender?,race?,ethnicity?,hippa?,hhMonthdd?,edit?,editrace?,editethnicity?,changeDesc?,pYear?, pMonth?, pDay?, pclickcount?,
         procedure?, surgeon?){
         //expect (this.page.locator('id=toast-container').getByText('Patients fetched successfully').isVisible);
         //await this.page.waitFor(3000);
@@ -546,13 +555,19 @@ export default class WorklistPage{
             else{
          //*Existing */
          //select the existing check box
-         await this.page.locator('#mat-checkbox-5 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+         await this.page.locator('#mat-checkbox-6 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
          //search field for patient or mrn
          await this.page.getByLabel('Patient / MRN').click();
          await this.page.getByRole('combobox', { name: 'Patient / MRN' }).fill(mrn);
          await this.page.getByRole('combobox', { name: 'Patient / MRN' }).press('Enter');
          //searching produces a drop down if patient is found that needs to be clicked
          await this.page.getByText(mrn).click();
+         if (edit == 'yes'){
+            await this.editPatientDetails(changeDesc);
+            await this.editPatientRace(editrace);
+            await this.editPatientEthnicity(editethnicity);
+            await this.page.getByRole('button', { name: 'Save Patient' }).click();
+         }
             }
          //next button
          await this.page.getByRole('button',{name:'Next'}).click();
@@ -710,21 +725,21 @@ export default class WorklistPage{
     }
     //edit patient information
     async editPatientRace(race){
-    //race
-    await this.page.getByLabel('Race *').locator('div').nth(2).click();
-    //await this.page.getByText(race, {exact:true}).click();
-    await this.page.getByRole('option', { name: race, exact:true }).locator('span').click();
+        //race
+        await this.page.getByLabel('Race *').locator('div').nth(2).click();
+        //await this.page.getByText(race, {exact:true}).click();
+        await this.page.getByRole('option', { name: race, exact:true }).locator('span').click();
     }
     async editPatientEthnicity(ethnicity){
-    //ethinicity
-    await this.page.getByLabel('Ethnicity *').locator('div').nth(2).click();
-    //await this.page.getByText(ethnicity, {exact:true}).click();
-    await this.page.getByRole('option', { name: ethnicity, exact:true }).locator('span').click();
+        //ethinicity
+        await this.page.getByLabel('Ethnicity *').locator('div').nth(2).click();
+        //await this.page.getByText(ethnicity, {exact:true}).click();
+        await this.page.getByRole('option', { name: ethnicity, exact:true }).locator('span').click();
     }
     //height
     async editPatientHeight(height){
-    await this.page.locator('id=mat-input-8').click();
-    await this.page.locator('id=mat-input-8').fill(height);
+        await this.page.locator('id=mat-input-8').click();
+        await this.page.locator('id=mat-input-8').fill(height);
     }
 
     //weight
