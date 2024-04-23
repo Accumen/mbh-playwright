@@ -125,12 +125,9 @@ export default class PatientsPage{
             }     
             //delete trash can    
             async deleteSearchedLab(labtype){
-                //await this.page.getByRole('option',{name:labtype,exact:false}).locator('span').click();
+                this.page.on('dialog',dialog => dialog.accept());
                 await this.page.getByRole('link',{name:'Delete Lab'}).first().click();//delete lab button with aria-label
-                this.page.once('dialog',dialog=>{
-                    console.log('Dialog message: ${dialog.message()}');
-                    dialog.dismiss().catch(()=>{})
-                })
+                
             }
         //red x close window button
         async closeSearchListWindow(){
