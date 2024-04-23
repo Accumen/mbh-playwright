@@ -149,6 +149,7 @@ export default class LabtypesPage{
        async searchLabType(labtype: string){
         await this.page.getByLabel('Search Lab Type').click();
         await this.page.getByLabel('Search Lab Type').fill(labtype);
+        await this.page.getByLabel('Search Lab Type').press('Enter');
        }
        
        //search (drop down)
@@ -160,6 +161,12 @@ export default class LabtypesPage{
          * Inactive
          */
         
+       }
+
+       //delete lab type
+       async deleteLabType(){
+          this.page.on('dialog',dialog => dialog.accept());
+          await this.page.getByTitle('Delete').click();
        }
 
         //Clear Selections button
@@ -323,4 +330,5 @@ export default class LabtypesPage{
           await this.page.getByLabel('Below Report Label').click();
           await this.page.getByLabel('Below Report Label').fill(belowReportLabel);
      }
+
 }
