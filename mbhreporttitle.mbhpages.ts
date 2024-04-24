@@ -25,3 +25,23 @@ test('verify report title', async ({ page }) => {
     await reports.chooseReport('Non-Surgical: Total Enrolled Report');
     await reports.verifyReport(2);
 })
+
+test('verify report data shows', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const reports = new ReportsPage(page);
+    await reports.selectReports();
+    await reports.searchReport('Opportunity Report');
+    await reports.chooseReport('Opportunity Report');
+    await reports.selectDateRange('This Week');
+    await reports.verifyReport(1);
+})
