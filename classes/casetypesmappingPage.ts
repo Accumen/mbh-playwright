@@ -145,7 +145,8 @@ export default class CasetypesmappingPage{
 
     }
     async fullPageVerify(){
-        await this.page.getByTitle('Mapping Overrides: 1').screenshot({path:'verification.png'})
+        await this.page.getByText('50',{exact:true}).scrollIntoViewIfNeeded();
+        await this.page.getByText('50',{exact:true}).screenshot({path:'verification.png'})
     }
 
 
