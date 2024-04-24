@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import WorklistPage from './classes/worklistPage';
-const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const logindata = JSON.parse(JSON.stringify(require("../mbhpages/testdata/login.json")))
 
 test('edit existing surgical', async ({ page }) => {
     test.slow();
@@ -20,6 +20,6 @@ test('edit existing surgical', async ({ page }) => {
     await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.scheduleSurgicalVisit('Existing','','','','','651324','','','','','','','','','','','','','',
-    'yes','White','Not Hispanic','Changed Race and Ethnicity','2024','APR','30',5,'CARDIO','test');
+    'yes','White','Not Hispanic','Changed Race and Ethnicity','2024','MAY','12',7,'CARDIO','test');
     await worklist.saveScheduledVisit();
 })

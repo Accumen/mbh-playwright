@@ -42,12 +42,12 @@ test('add edit patient', async ({ page }) => {
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.addPatient('August','Smith','741852963','2024','April','25','Female','Other Race','Unknown','1997','January','18','no','2673196195',
+    await patients.addPatient('Emily','Smith','789456123','2024','April','25','Female','Other Race','Unknown','1999','October','18','no','7539511234',
     '568 Willowbrook rd','Broomall','PA','19008','76','256');
     await patients.savePatient();
 
-    await patients.searchPatient('741852963');
-    await patients.selectPatientfromSearch('August Smith');
+    await patients.searchPatient('789456123');
+    await patients.selectPatientfromSearch('Emily Smith');
     await patients.editPatientDetails('Changed Race and Ethnicity');
     await patients.editPatientRace('White');
     await patients.editPatientEthnicity('Not Hispanic')

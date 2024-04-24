@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import WorklistPage from './classes/worklistPage';
+const logindata = JSON.parse(JSON.stringify(require("../mbhpages/testdata/login.json")))
 
 test('edit patient surgical', async ({ page }) => {
     test.slow();
