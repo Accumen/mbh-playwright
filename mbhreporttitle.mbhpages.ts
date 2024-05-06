@@ -36,12 +36,12 @@ test('verify report data shows', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown('Newlife hospital');
 
     const reports = new ReportsPage(page);
     await reports.selectReports();
     await reports.searchReport('Opportunity Report');
     await reports.chooseReport('Opportunity Report');
-    await reports.selectDateRange('This Week');
+    await reports.selectDateRange('This Year');
     await reports.verifyReport(1);
 })

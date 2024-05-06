@@ -67,3 +67,45 @@ test('retain worklist filter test', async ({ page }) => {
   await worklist.backarrow();
   await worklist.clickSurgical();
 })
+
+test('retain surgical worklist filter test', async ({ page }) => {
+
+  test.slow();
+  const login = new LoginPage(page);
+  await page.goto('https://qa.mybloodhealth.com/login');
+  await login.enterEmail(logindata.email);
+  await login.enterPassword(logindata.password);
+  await login.clickLoginBtn();
+
+  const dashboard = new DashboardPage(page);
+  await dashboard.clickClientDropDown('QA Testing');
+
+  const worklist = new WorklistPage(page);
+  await worklist.clickWorklist();
+  await worklist.clickSurgical();
+  await worklist.unselectAllCaseTypes();
+  await worklist.selectCaseType('SPINE');
+  await worklist.selectPatientfromSearch('Barney Rubble');
+  await worklist.backarrow();
+})
+
+test('retain non surgical worklist filter test', async ({ page }) => {
+
+  test.slow();
+  const login = new LoginPage(page);
+  await page.goto('https://qa.mybloodhealth.com/login');
+  await login.enterEmail(logindata.email);
+  await login.enterPassword(logindata.password);
+  await login.clickLoginBtn();
+
+  const dashboard = new DashboardPage(page);
+  await dashboard.clickClientDropDown('QA Testing');
+
+  const worklist = new WorklistPage(page);
+  await worklist.clickWorklist();
+  await worklist.clickChronic();
+  await worklist.unselectAllCaseTypes();
+  await worklist.selectCaseType("WOMEN'S HEALTH- CHRONIC");
+  await worklist.selectPatientfromSearch('Betty Rubble');
+  await worklist.backarrow();
+})
