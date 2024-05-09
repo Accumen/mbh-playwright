@@ -3,7 +3,7 @@ import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import PatientsPage from './classes/patientsPage';
 import WorklistPage from './classes/worklistPage';
-const logindata = JSON.parse(JSON.stringify(require("../mbhpages/testdata/login.json")))
+const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 
 
 test('filter patients labs', async ({ page }) => {
@@ -27,6 +27,26 @@ test('filter patients labs', async ({ page }) => {
 
 })
 
+test('add patients lab', async ({ page }) => {
+
+    test.slow();
+    const login = new LoginPage(page);
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+  
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const patients = new PatientsPage(page);
+    await patients.selectPatients();
+    await patients.searchPatient('Terrell');
+    await patients.selectPatientfromSearch('Terrell Jack');
+    await patients.addLabs('test lab type', '123', '2024', 'MAY', '3')
+
+})
+
 test('delete patients lab', async ({ page }) => {
 
     test.slow();
@@ -41,11 +61,11 @@ test('delete patients lab', async ({ page }) => {
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.searchPatient('Rubble');
-    await patients.selectPatientfromSearch('Betty Rubble');
-    await patients.viewAllLabs('WBC','NULL');
-    await patients.deleteSearchedLab('WBC');
+    await patients.searchPatient('Terrell');
+    await patients.selectPatientfromSearch('Terrell Jack');
+    await patients.viewAllLabs('test lab type','NULL');
+    await patients.deleteSearchedLab('test lab type');
     await patients.patientVerify(2);
     await patients.closeSearchListWindow();
-    
+    await patients.viewAllLabs('test lab type','NULL');
 })
