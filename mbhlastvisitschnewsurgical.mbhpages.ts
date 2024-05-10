@@ -20,15 +20,15 @@ test('surgical visit', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.scheduleSurgicalVisit('New', 'Joseph', '', 'Biden', '', '0963258741','1962','MAR','10','6101231234','568 Willowbrook rd', 'Broomall',
+    await worklist.scheduleSurgicalVisit('New', 'Tom', '', 'Hanks', '', '1597534268','1962','MAR','10','6101231234','568 Willowbrook rd', 'Broomall',
     'PA','19008', 'Male','White','Not Hispanic','No','May 20','No','','','','2024', 'MAY', '28', 5,
         'CARDIO', 'test');
     await worklist.saveScheduledVisit();
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.searchPatient('0963258741');
+    await patients.searchPatient('1597534268');
     await patients.patientVerify(1);
-    //await patients.selectPatientfromSearch('Joseph Biden');
+    await patients.selectPatientfromSearch('Tom Hanks');
 
 })
