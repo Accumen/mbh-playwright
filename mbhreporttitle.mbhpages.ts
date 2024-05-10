@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import ReportsPage from './classes/reportsPage';
-const logindata = JSON.parse(JSON.stringify(require("../mbhpages/testdata/login.json")))
+const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 
 test('verify report title', async ({ page }) => {
     test.slow();
@@ -36,12 +36,12 @@ test('verify report data shows', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('Newlife hospital');
+    await dashboard.clickClientDropDown('QA Testing');
 
     const reports = new ReportsPage(page);
     await reports.selectReports();
-    await reports.searchReport('Opportunity Report');
-    await reports.chooseReport('Opportunity Report');
-    await reports.selectDateRange('This Year');
+    await reports.searchReport('Patient Enroll Report');
+    await reports.chooseReport('Patient Enroll Report');
+    //await reports.selectDateRange('Last 3 Months'); commented out for MBHS-1200
     await reports.verifyReport(1);
 })
