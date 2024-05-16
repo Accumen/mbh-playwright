@@ -37,7 +37,7 @@ export default class CasetypesmappingPage{
 
     //case type drop down  (74 items)
     async searchTypeDropDown(casetype: string){
-        await this.page.locator('#mat-select-14 div').nth(2).click();
+        await this.page.getByLabel('Case Type').locator('div').nth(2).click();
         await this.page.getByText(casetype).click();
     /**Case Type Key
      * unmapped
@@ -117,7 +117,7 @@ export default class CasetypesmappingPage{
      * new sub
      * 
     */
-    await this.page.getByText(casetype).press('Enter');
+    //await this.page.getByText(casetype).press('Enter');
    }
    //Select case to map
    async selectCaseToMap(searchCaseCode: string){
@@ -134,7 +134,7 @@ export default class CasetypesmappingPage{
 
     //clear button
     async clearSelections(){
-        await this.page.getByRole('button', {name: 'CLEAR'}).click();
+        await this.page.getByRole('button', {name: 'CLEAR'}).click({delay:1000});
     }
 
     async overrideMapping(casetype){
@@ -151,6 +151,9 @@ export default class CasetypesmappingPage{
 
 
     //page navigation
+    async paginationCheck(){
+        await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+    }
     //row counter
     /**
      * 15

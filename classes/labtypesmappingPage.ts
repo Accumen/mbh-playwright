@@ -16,8 +16,9 @@ export default class LabtypesmappingPage{
 
     //search Lab Code (fillable)
     async searchLabCode(labcode:string){
-        await this.page.locator('div').filter({hasText: 'Search Code, Description'}).nth(3).click();
+        await this.page.getByLabel('Search Code, Description').click();
         await this.page.getByLabel('Search Code, Description').fill(labcode);
+        await this.page.getByLabel('Search Code, Description').press('Enter')
     }
     //search Lab Type (drop down)
     async searchLabTypeDropDown(labtype: string){
@@ -61,7 +62,7 @@ export default class LabtypesmappingPage{
     }
     //clear button
     async clearSelections(){
-        await this.page.getByRole('button', {name:'CLEAR'}).click();
+        await this.page.getByRole('button', {name:'CLEAR'}).click({delay:1000});
     }
 
     //download mappings button
@@ -79,4 +80,8 @@ export default class LabtypesmappingPage{
         await this.page.getByRole('button', {name:'open'}).click();
     }
 
+    //page navigation
+    async paginationCheck(){
+        await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+    }
 }

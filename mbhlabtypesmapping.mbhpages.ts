@@ -1,10 +1,11 @@
 import { test, expect } from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
-import WorklistPage from './classes/worklistPage';
+import LabTypesMappingPage from './classes/labtypesmappingPage'
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 
-test('switch worklist', async ({ page }) => {
+test('pagination after search', async ({ page }) => {
+
     test.slow();
     const login = new LoginPage(page);
 
@@ -16,14 +17,17 @@ test('switch worklist', async ({ page }) => {
     const dashboard = new DashboardPage(page);
     await dashboard.clickClientDropDown('QA Testing');
 
-    const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
-    await worklist.clickSurgical();
-    await worklist.clickChronic();
-    await worklist.clickSurgical();
+    const labtypesmap = new LabTypesMappingPage(page);
+    await labtypesmap.selectLabTypesMapping();
+    await labtypesmap.paginationCheck();
+    await labtypesmap.searchLabCode("1525952");
+    await labtypesmap.clearSelections();
+    await labtypesmap.paginationCheck();
+    
 })
 
-test('switch worklist paitent visit', async ({ page }) => {
+test('pagination after filter', async ({ page }) => {
+
     test.slow();
     const login = new LoginPage(page);
 
@@ -35,12 +39,11 @@ test('switch worklist paitent visit', async ({ page }) => {
     const dashboard = new DashboardPage(page);
     await dashboard.clickClientDropDown('QA Testing');
 
-    const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
-    await worklist.clickSurgical();
-    await worklist.selectPatientfromSearch("Jack Black")
-    await worklist.worklistscreenshot(1)
-    await worklist.clickChronic();
-    await worklist.selectPatientfromSearch("Jack Black")
-    await worklist.worklistscreenshot(2)
+    const labtypesmap = new LabTypesMappingPage(page);
+    await labtypesmap.selectLabTypesMapping();
+    await labtypesmap.paginationCheck();
+    await labtypesmap.searchLabTypeDropDown("WBC")
+    await labtypesmap.clearSelections();
+    await labtypesmap.paginationCheck();
+    
 })
