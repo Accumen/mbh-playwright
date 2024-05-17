@@ -655,8 +655,8 @@ export default class WorklistPage{
         await this.page.screenshot({path:'worklistscreenshot'+ num +'.png',fullPage:true});
     }
 
-    //complete visit
-    async completeVisit(completeType,treatment?,untreatedtype?,followup?,specialty?,fyear?,fmonth?,fday?){
+    //complete surgical visit
+    async completeSurgicalVisit(completeType,treatment?,untreatedtype?,followup?,specialty?,fyear?,fmonth?,fday?){
         await this.page.getByRole('button', {name: 'Complete Case'}).click();
         await this.page.locator('div').filter({ hasText: /^TreatedComplete Case Type \*$/ }).nth(1).click();
         await this.page.getByRole('option',{name:completeType,exact:true}).click();
@@ -664,14 +664,16 @@ export default class WorklistPage{
          * Treated
          * Not Treated
          */
-        if(completeType != 'Treated'){
+        if(completeType == 'Not Treated'){
             await this.page.getByText(untreatedtype,{exact:true}).click();
             /**untreatedtype
+             * Cancelled/Postponed surgery
              * Does not meet criteria for treatment
              * Insurance delayed treatment
              * Insurance denied treatment
              * No contact from patient
              * Patient declines treatment
+             * Patient has not received pre-admission testing
              * Physician declines treatment of anemic patient
              * Scheduling delayed for infusion
              * Timing too close to surgery date
@@ -687,15 +689,13 @@ export default class WorklistPage{
              * Oral Iron
              */ 
         }
-        if(followup != 'yes'){
-
-            await this.page.getByRole('button',{name:'Confirm'}).click();
+        if(followup == 'no'){
+            await this.page.getByRole('button',{name:'Confirm'}).hover();
         }
         else{
-            await this.page.locator('.mat-radio-outer-circle').first().click();
+            await this.page.getByText('Yes', { exact: true }).click();
             await this.page.getByRole('button',{name:'Continue'}).click();    
-        
-        
+            
             await this.page.getByText(specialty,{exact:true}).click();
             /**specialty
             * 321
@@ -707,7 +707,76 @@ export default class WorklistPage{
             await this.page.getByRole('button',{name:fyear, exact:true}).click();
             await this.page.getByRole('button',{name: fmonth, exact: false}).click();
             await this.page.getByLabel(fday).click();
-            await this.page.getByRole('button',{name:'Confirm'}).click();
+            await this.page.getByRole('button',{name:'Confirm'}).hover();
+        }
+
+        //await this.page.getByRole('button',{name:'Activate'}).click();
+    }
+    //complete non-surgical visit
+    async completeNonSurgicalVisit(completeType,treatment?,untreatedtype?,followup?,freason?,freasonfill?,specialty?,fyear?,fmonth?,fday?){
+        await this.page.getByRole('button', {name: 'Complete Case'}).click();
+        await this.page.locator('div').filter({ hasText: /^TreatedComplete Case Type \*$/ }).nth(1).click();
+        await this.page.getByRole('option',{name:completeType,exact:true}).click();
+        /**completeType
+         * Treated
+         * Not Treated
+         */
+        if(completeType == 'Not Treated'){
+            await this.page.getByText(untreatedtype,{exact:true}).click();
+            /**untreatedtype
+             * Insurance denied treatment
+             * No contact from patient
+             * Patient declines treatment
+             * Patient treatment plan complete
+             */
+        
+        }
+        else{
+            await this.page.getByRole('option',{name:treatment,exact:true}).click();
+            /**treatment
+             * B12
+             * EPO
+             * IV Iron
+             * Oral Iron
+             */ 
+        }
+        if(followup == 'no'){
+            if(completeType == 'Not Treated'){
+                await this.page.getByRole('button',{name:'Confirm'}).hover();
+            }
+            else{
+                await this.page.getByText('No Follow up Appt Required').click();
+                await this.page.getByLabel('Please select Follow Up').click();
+                await this.page.getByText(freason, {exact:true}).click();
+                await this.page.getByLabel('Follow Up Reason', { exact: true }).click();
+                await this.page.getByLabel('Follow Up Reason', { exact: true }).fill(freasonfill);
+                await this.page.getByRole('button',{name:'Confirm'}).hover();
+                /**freason
+                 * No contact from patient
+                 * Patient treatment plan complete
+                 * Patient declines treatment
+                 * Insurance denied treatment
+                 */
+            }
+        }
+        else{
+            if(completeType == 'Not Treated'){
+                await this.page.getByLabel('Select an option').getByText('Yes').click();
+                await this.page.getByRole('button',{name:'Continue'}).click();
+
+                await this.page.getByText(specialty,{exact:true}).click();
+                /**specialty
+                * 321
+                * CHRONIC MEDICAL
+                * WOMEN'S HEALTH- CHRONIC
+                */
+            }
+            await this.page.getByRole('button',{name:'Open calendar'}).click();
+            await this.page.getByLabel('Choose month and year').click();
+            await this.page.getByRole('button',{name:fyear, exact:true}).click();
+            await this.page.getByRole('button',{name: fmonth, exact: false}).click();
+            await this.page.getByLabel(fday).click();
+            await this.page.getByRole('button',{name:'Confirm'}).hover();
         }
 
         //await this.page.getByRole('button',{name:'Activate'}).click();
