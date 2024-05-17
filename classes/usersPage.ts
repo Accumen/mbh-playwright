@@ -107,12 +107,85 @@ export default class UsersPage{
     }
 
     //edit user information
-    async editUserInfo(){
-        
+    async editUserfName(fname){
+        await this.page.getByLabel('First Name *').click();
+        await this.page.getByLabel('First Name *').fill(fname);
     }
-    //reset password button
+
+    async editUserlName(lname){
+        await this.page.getByLabel('Last Name *').click();
+        await this.page.getByLabel('Last Name *').fill(lname);
+    }
+
+    async editUserEmail(email){
+        await this.page.getByLabel('Email *').click();
+        await this.page.getByLabel('Email *').fill(email);
+    }
+
+    async editUserCredentials(cadmin,contents,users,clinical,reports,mapping){
+        //client admin (checkbox)
+        if (cadmin != 'yes'){
+            //contents (checkbox)
+            if(contents == 'yes'){
+                //check box for contents
+                await this.page.locator('#mat-checkbox-5 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+            }
+            //users (checkbox)
+            if (users == 'yes'){
+                //check box for users
+                await this.page.locator('#mat-checkbox-6 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+            }
+            //clinical navigation (checkbox)
+            if (clinical == 'yes'){
+                //check box for clinical navigation
+                await this.page.locator('#mat-checkbox-7 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+            }
+            //reports (checkbox)
+            if(reports == 'yes'){
+                //check box for reports
+                await this.page.locator('#mat-checkbox-8 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+            }
+            //mapping (checkbox)
+            if(mapping == 'yes'){
+                //check box for mapping
+                await this.page.locator('#mat-checkbox-9 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+            }
+        }
+        else{
+            //check the client admin box and all other boxes are checked automatically
+            await this.page.locator('#mat-checkbox-4').click();
+        }
+    }
+
     //regions 
+    async addeditUserRegions(region){
+        switch(region){
+            case 1:{
+                await this.page.locator('id=mat-checkbox-20-input').click();
+                break;
+            }
+            case 2:{
+                await this.page.locator('id=mat-checkbox-22-input').click();
+                break;
+            }
+            case 3:{
+                await this.page.locator('id=mat-checkbox-20-input').click();
+                await this.page.locator('id=mat-checkbox-22-input').click();
+                break;
+            }
+        }
+
+    }
+
+    //reset password button
+    async resetPassword(){
+        await this.page.getByRole('button',{name:'Reset Password'}).click();
+    }
+    
     //delete button
+    async deleteUser(){
+        await this.page.getByTitle('Delete').click();
+    }
 
     
 
