@@ -16,9 +16,10 @@ export default class CasetypesmappingPage{
 
     //download mappings button
     async downloadCaseTypeMappings(){
-        const downloadPromise = await this.page.waitForEvent('download');
         await this.page.getByRole('button', {name:'Download Mappings'}).click();
+        const downloadPromise = await this.page.waitForEvent('download');
         const download = await downloadPromise;
+        await download.saveAs('/playwright-report'+ download.suggestedFilename());
     }
 
     //upload mappings button
@@ -144,9 +145,13 @@ export default class CasetypesmappingPage{
         await this.page.getByRole('button',{name:'Save Overrides'}).click();
 
     }
+    async caseVerify(casecode){
+        await this.page.getByText(casecode,{exact:true}).scrollIntoViewIfNeeded();
+        await this.page.screenshot({path:'casetype.png'})
+    }
+
     async fullPageVerify(){
-        await this.page.getByText('50',{exact:true}).scrollIntoViewIfNeeded();
-        await this.page.getByText('50',{exact:true}).screenshot({path:'verification.png'})
+        await this.page.screenshot({path:'verification.png'});
     }
 
 

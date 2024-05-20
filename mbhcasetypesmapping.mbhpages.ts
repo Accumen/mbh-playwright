@@ -20,9 +20,6 @@ test('check pagination on case type mapping page', async ({ page }) => {
     await casetypesmap.selectCaseTypesMapping();
     await casetypesmap.fullPageVerify();
 
-
-
-
 })
 
 test('pagination after search', async ({ page }) => {
@@ -67,4 +64,60 @@ test('pagination after filter', async ({ page }) => {
     await casetypesmap.clearSelections();
     await casetypesmap.paginationCheck();
 
+})
+
+test('map case type', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const casetypesmap = new CaseTypesMappingPage(page);
+    await casetypesmap.selectCaseTypesMapping();
+    await casetypesmap.selectCaseToMap('1932');
+    await casetypesmap.clickToMap('1932','ORTHO');
+    await casetypesmap.searchCode('1932');
+    await casetypesmap.caseVerify('1932');
+
+})
+
+test('upload case type mappings', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const casetypesmap = new CaseTypesMappingPage(page);
+    await casetypesmap.selectCaseTypesMapping();
+    await casetypesmap.uploadCaseTypeMappings();
+
+})
+
+test('download case type mappings', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const casetypesmap = new CaseTypesMappingPage(page);
+    await casetypesmap.selectCaseTypesMapping();
+    await casetypesmap.downloadCaseTypeMappings();
 })
