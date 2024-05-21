@@ -1,4 +1,5 @@
 import { Page} from "@playwright/test";
+import path from "path/win32";
 
 export default class CasetypesmappingPage{
 
@@ -26,7 +27,9 @@ export default class CasetypesmappingPage{
     async uploadCaseTypeMappings(){
         await this.page.getByRole('button', {name: 'Upload Mappings'}).click();
         await this.page.getByRole('textbox').click();
-        await this.page.getByRole('button', {name: ''}).click();
+       // await this.page.locator("input[name= '']").setInputFiles("/Users/mperez/OneDrive - Accumen Inc/Desktop/playwright learning/playwright-report/54321CaseTypeUploadDocTestFile.xlsx")
+        //above functionality needs to be built in MBH UI before it can be utilitzed within playwright.
+        //await this.page.getByRole('button',{name:'Upload Mappings'}).click();
     }
 
     //search code, description (fillable field)
