@@ -26,10 +26,9 @@ export default class CasetypesmappingPage{
     //upload mappings button
     async uploadCaseTypeMappings(){
         await this.page.getByRole('button', {name: 'Upload Mappings'}).click();
-        await this.page.getByRole('textbox').click();
-       // await this.page.locator("input[name= '']").setInputFiles("/Users/mperez/OneDrive - Accumen Inc/Desktop/playwright learning/playwright-report/54321CaseTypeUploadDocTestFile.xlsx")
-        //above functionality needs to be built in MBH UI before it can be utilitzed within playwright.
-        //await this.page.getByRole('button',{name:'Upload Mappings'}).click();
+        await this.page.locator("input[type=file]").setInputFiles("./tests/CaseTypeMapping_1716326373753.xlsx");
+        await this.page.getByRole('button',{name:'Upload Mappings'}).click();
+        //file will not actually upload due to browser security settings that prevent file path entry for upload.
     }
 
     //search code, description (fillable field)
