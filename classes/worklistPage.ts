@@ -870,4 +870,14 @@ export default class WorklistPage{
     }
 
     //add communication
+
+    async worklistPagination(num){
+        await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+        await this.page.getByRole('link', { name: num }).click({delay:1000});
+    }
+
+      //page navigation
+    async paginationCheck(){
+        await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+    }
 }
