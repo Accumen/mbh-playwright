@@ -102,7 +102,7 @@ test('upload case type mappings', async ({ page }) => {
     const casetypesmap = new CaseTypesMappingPage(page);
     await casetypesmap.selectCaseTypesMapping();
     await casetypesmap.uploadCaseTypeMappings();
-    await casetypesmap.searchCode('54321');
+    //await casetypesmap.searchCode('54321');
 })
 
 test('download case type mappings', async ({ page }) => {

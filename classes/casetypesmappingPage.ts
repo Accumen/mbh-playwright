@@ -17,18 +17,19 @@ export default class CasetypesmappingPage{
 
     //download mappings button
     async downloadCaseTypeMappings(){
+      
+        const downloadPromise = this.page.waitForEvent('download');
         await this.page.getByRole('button', {name:'Download Mappings'}).click();
-        const downloadPromise = await this.page.waitForEvent('download');
         const download = await downloadPromise;
-        await download.saveAs('/playwright-report'+ download.suggestedFilename());
+        await download.saveAs('./testdata/'+ download.suggestedFilename());
     }
 
     //upload mappings button
     async uploadCaseTypeMappings(){
         await this.page.getByRole('button', {name: 'Upload Mappings'}).click();
-        await this.page.locator("input[type=file]").setInputFiles("./tests/CaseTypeMapping_1716326373753.xlsx");
+        await this.page.locator("input[type=file]").setInputFiles("./caseTypeMapping.xlsx");
         await this.page.getByRole('button',{name:'Upload Mappings'}).click();
-        //file will not actually upload due to browser security settings that prevent file path entry for upload.
+        
     }
 
     //search code, description (fillable field)
