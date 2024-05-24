@@ -20,8 +20,10 @@ test('complete surgical treated no followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.selectPatientfromSearch('Jack Black');
+    await worklist.searchMRN('789456');
+    await worklist.selectPatientfromSearch('Treated nFollow');
     await worklist.completeSurgicalVisit('Treated','B12','','no','','','','');
+    await worklist.selectChainofCustody();
 
 
 })
@@ -42,8 +44,10 @@ test('complete surgical treated followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.selectPatientfromSearch('Jack Black');
-    await worklist.completeSurgicalVisit('Treated','B12','','yes','321','2024','MAY','31');
+    await worklist.searchMRN('789457');
+    await worklist.selectPatientfromSearch('Treated Follow');
+    await worklist.completeSurgicalVisit('Treated','B12','','yes','321','2024','JUNE','18');
+    await worklist.selectChainofCustody();
 
 
 })
@@ -64,8 +68,10 @@ test('complete surgical not treated no followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.selectPatientfromSearch('Jack Black');
+    await worklist.searchMRN('789458');
+    await worklist.selectPatientfromSearch('nTreated nFollow');
     await worklist.completeSurgicalVisit('Not Treated','','Does not meet criteria for treatment','no','','','','');
+    await worklist.selectChainofCustody();
 
 
 })
@@ -86,8 +92,10 @@ test('complete surgical not treated followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.selectPatientfromSearch('Jack Black');
-    await worklist.completeSurgicalVisit('Not Treated','','Does not meet criteria for treatment','yes','321','2024','MAY','31');
+    await worklist.searchMRN('789459');
+    await worklist.selectPatientfromSearch('nTreated Follow');
+    await worklist.completeSurgicalVisit('Not Treated','','Does not meet criteria for treatment','yes','321','2024','JUNE','18');
+    await worklist.selectChainofCustody();
 
 
 })
@@ -108,8 +116,10 @@ test('complete nonsurgical treated no followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.selectPatientfromSearch('Jack Black');
+    await worklist.searchMRN('789456');
+    await worklist.selectPatientfromSearch('Treated nFollow');
     await worklist.completeNonSurgicalVisit('Treated','B12','','no','Patient declines treatment','test reason','','','','');
+    await worklist.selectChainofCustody();
 
 
 })
@@ -130,8 +140,14 @@ test('complete nonsurgical treated followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.selectPatientfromSearch('Jack Black');
-    await worklist.completeNonSurgicalVisit('Treated','B12','','yes','','','','2024','MAY','31');
+    await worklist.searchMRN('789457');
+    await worklist.selectPatientfromSearch('Treated Follow');
+    await worklist.completeNonSurgicalVisit('Treated','B12','','yes','','','','2024','JUNE','18');
+    await worklist.selectChainofCustody();
+    await worklist.backarrow();
+    await worklist.searchMRN('789457');
+    await worklist.followUpScnsht();
+
 
 
 })
@@ -152,8 +168,10 @@ test('complete nonsurgical not treated no followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.selectPatientfromSearch('Jack Black');
+    await worklist.searchMRN('789458');
+    await worklist.selectPatientfromSearch('nTreated nFollow');
     await worklist.completeNonSurgicalVisit('Not Treated','','No contact from patient','no','','','','','','');
+    await worklist.selectChainofCustody();
 
 
 })
@@ -174,8 +192,10 @@ test('complete nonsurgical not treated followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.selectPatientfromSearch('Jack Black');
-    await worklist.completeNonSurgicalVisit('Not Treated','','No contact from patient','yes','','','321','2024','MAY','31');
+    await worklist.searchMRN('789459');
+    await worklist.selectPatientfromSearch('nTreated Follow');
+    await worklist.completeNonSurgicalVisit('Not Treated','','No contact from patient','yes','','','321','2024','JUNE','18');
+    await worklist.selectChainofCustody();
 
 
 })
