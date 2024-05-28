@@ -26,8 +26,9 @@ export default class FacilitiesPage{
    }
     //search facility name (fillable)
     async facilitySearch(facility: string){
-        await this.page.locator('id=mat-input-0').click();
-        await this.page.locator('id=mat-input-0').fill(facility);
+        await this.page.getByLabel('Search Facility name , code,').click();
+        await this.page.getByLabel('Search Facility name , code,').fill(facility);
+        await this.page.getByLabel('Search Facility name , code,').press('Enter');
     }
 
     //status drop down (not labeled)
@@ -45,9 +46,14 @@ export default class FacilitiesPage{
     async clearSelections(){
         await this.page.getByRole('button',{name:'CLEAR'}).last().click();
     }
-
-    
-
+    //select facility
+    async selectFacility(facility){
+        await this.page.getByText(facility).click();
+    }
+    //select location
+    async selectLocation(location){
+        await this.page.getByText(location).click();
+    }
     
     //facility name (clickable)
 
@@ -61,7 +67,7 @@ export default class FacilitiesPage{
         }
 		 //add facility button
      async addFacility(facility: string, shortname: string, facilitycode: string, address:string,city:string,state:string, zip: string, 
-        phone: string, fax: string,type: string, status: string){
+        phone: string, fax: string,type: string, region: string, status: string){
         await this.page.getByRole('button',{name:'Add Facility'}).click();
     
         //facility name (fillable)
@@ -101,16 +107,19 @@ export default class FacilitiesPage{
             await this.page.getByLabel('Fax').fill(fax);
 
         //Type drop down
-            await this.page.locator('#mat-select-value-15').click();
+            await this.page.getByLabel('Type *').locator('div').nth(2).click();
             await this.page.getByText(type).click();
              /**Type Key
              * Hospital System
              * Blood Center
              * Insurance Company
              */
+         //Region drop down
+            await this.page.getByLabel('Region').locator('div').nth(2).click();
+            await this.page.getByText(region,{exact:true}).click(); 
                    
         //select status function on new facility form
-            await this.page.locator('id=mat-select-16').click();
+            await this.page.getByLabel('Status').locator('div').nth(2).click();
             await this.page.getByText(status).click();
         }
 
@@ -146,10 +155,81 @@ export default class FacilitiesPage{
             //exit (x) button
     //delete button (trash can icon)    
     async trashButton(){
-        await this.page.getByText('fa fa-trash text-danger').click();
+        //await this.page.getByText('fa fa-trash text-danger').click();
+        await this.page.getByTitle('Delete').click();
         this.page.once('dialog', dialog => {
             console.log(`Dialog message: ${dialog.message()}`);
             dialog.dismiss().catch(() => {})});
+    }
+    //edit facility
+    async editFacility(facility?,shortname?,facilitycode?,address?,city?,state?,zip?, 
+        phone?,fax?,type?,region?,status?){
+
+        if(facility != ''){
+            await this.page.getByLabel('Facility Name').click();
+            await this.page.getByLabel('Facility Name').fill(facility);
+        }
+        if(shortname != ''){
+            await this.page.getByLabel('Facility Short Name').click();
+            await this.page.getByLabel('Facility Short Name').fill(shortname);
+        }
+        if(facilitycode != ''){
+            await this.page.getByLabel('Facility Code').click();
+            await this.page.getByLabel('Facility Code').fill(facilitycode);
+        }
+        if(address != ''){
+            await this.page.getByLabel('Address').click();
+            await this.page.getByLabel('Address').fill(address);
+        }
+        if(city != ''){
+            await this.page.getByLabel('City').click();
+            await this.page.getByLabel('City').fill(city);
+        }
+        if(state != ''){
+            await this.page.locator('id=mat-input-6').click();
+            await this.page.locator('id=mat-input-6').fill(state);
+        }
+        if(zip != ''){
+            await this.page.getByLabel('Zipcode').click();
+            await this.page.getByLabel('Zipcode').fill(zip);
+        }
+        if(phone != ''){
+            await this.page.getByLabel('Phone').click();
+            await this.page.getByLabel('Phone').fill(phone);
+        }
+        if(fax != ''){
+            await this.page.getByLabel('Fax').click();
+            await this.page.getByLabel('Fax').fill(fax);
+        }
+        if(type != ''){
+            await this.page.getByLabel('Type *').locator('div').nth(2).click();
+            await this.page.getByText(type).click();
+        }
+        if(region != ''){
+            await this.page.getByLabel('Region').locator('div').nth(2).click();
+            await this.page.getByText(region).click();
+        }
+        if(status != ''){
+            await this.page.getByLabel('Status').locator('div').nth(2).click();
+            await this.page.getByText(status).click();
+        }
+    }
+    //edit location
+    async editLocation(location?,type?,status?){
+        if(location != ''){
+            await this.page.getByLabel('Location Name').click();
+            await this.page.getByLabel('Location Name').fill(location);
+        }
+        if(type != ''){
+            await this.page.getByText('TypeType').click();
+            await this.page.getByText(type).click();
+        }
+        if(status != ''){
+            await this.page.getByLabel('Status',{exact:true}).locator('div').nth(3).click();
+            await this.page.getByRole('option', {name:status, exact:true}).locator('span').click();
+        }
+        //save location
+        await this.page.getByRole('button',{name:'Save Location'}).click();
     }
     //row counter
     /**
