@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import WorklistPage from './classes/worklistPage';
-const logindata = JSON.parse(JSON.stringify(require("../mbhpages/testdata/login.json")))
+const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 
 test('surgical visit', async ({ page }) => {
     test.slow();
@@ -19,8 +19,8 @@ test('surgical visit', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.scheduleSurgicalVisit('New', 'July', '', 'Smith', '', '456789123','2022','MAR','10','6101231234','568 Willowbrook rd', 'Broomall',
-    'PA','19008', 'Female','White','Not Hispanic','no','April 20','2024', 'MAR', '28', 5,
+    await worklist.scheduleSurgicalVisit('New', 'nTreated', '', 'Follow', '', '789459','2022','MAR','10','6101231234','568 Willowbrook rd', 'Broomall',
+    'PA','19008', 'Female','White','Not Hispanic','no','MAY 31','no','','','','2024', 'MAY', '31', 5,
         'CARDIO', 'test');
     await worklist.saveScheduledVisit();
 })

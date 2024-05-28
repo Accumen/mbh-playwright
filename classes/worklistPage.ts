@@ -70,7 +70,7 @@ export default class WorklistPage{
     //Search Name, MRN
     async searchMRN(searchInfo: string){
         await this.page.getByText('Search Name, MRN').fill(searchInfo);//types "st" in the MRN search field
-        await this.page.getByText('Search Name, MRN').press('Enter');
+        //await this.page.getByText('Search Name, MRN').press('Enter');
         
     }
     //Unselect Select All for Case Type
@@ -690,7 +690,7 @@ export default class WorklistPage{
              */ 
         }
         if(followup == 'no'){
-            await this.page.getByRole('button',{name:'Confirm'}).hover();
+            await this.page.getByRole('button',{name:'Confirm'}).click();
         }
         else{
             await this.page.getByText('Yes', { exact: true }).click();
@@ -707,7 +707,7 @@ export default class WorklistPage{
             await this.page.getByRole('button',{name:fyear, exact:true}).click();
             await this.page.getByRole('button',{name: fmonth, exact: false}).click();
             await this.page.getByLabel(fday).click();
-            await this.page.getByRole('button',{name:'Confirm'}).hover();
+            await this.page.getByRole('button',{name:'Confirm'}).click();
         }
 
         //await this.page.getByRole('button',{name:'Activate'}).click();
@@ -742,7 +742,7 @@ export default class WorklistPage{
         }
         if(followup == 'no'){
             if(completeType == 'Not Treated'){
-                await this.page.getByRole('button',{name:'Confirm'}).hover();
+                await this.page.getByRole('button',{name:'Confirm'}).click();
             }
             else{
                 await this.page.getByText('No Follow up Appt Required').click();
@@ -750,7 +750,7 @@ export default class WorklistPage{
                 await this.page.getByText(freason, {exact:true}).click();
                 await this.page.getByLabel('Follow Up Reason', { exact: true }).click();
                 await this.page.getByLabel('Follow Up Reason', { exact: true }).fill(freasonfill);
-                await this.page.getByRole('button',{name:'Confirm'}).hover();
+                await this.page.getByRole('button',{name:'Confirm'}).click();
                 /**freason
                  * No contact from patient
                  * Patient treatment plan complete
@@ -776,7 +776,7 @@ export default class WorklistPage{
             await this.page.getByRole('button',{name:fyear, exact:true}).click();
             await this.page.getByRole('button',{name: fmonth, exact: false}).click();
             await this.page.getByLabel(fday).click();
-            await this.page.getByRole('button',{name:'Confirm'}).hover();
+            await this.page.getByRole('button',{name:'Confirm'}).click();
         }
 
         //await this.page.getByRole('button',{name:'Activate'}).click();
