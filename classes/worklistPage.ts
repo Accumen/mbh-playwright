@@ -781,6 +781,19 @@ export default class WorklistPage{
 
         //await this.page.getByRole('button',{name:'Activate'}).click();
     }
+    //click Complete Case
+    async clickCompleteCase(){
+        await this.page.getByRole('button', {name: 'Complete Case'}).click();
+    }
+    //change Complete Case Type
+    async changeCompleteCaseType(completeType){
+        await this.page.locator('#mat-select-value-23').click();
+        await this.page.getByRole('option',{name:completeType,exact:true}).click();
+    }
+    //select yes follow up for Not Treated
+    async notTreatedFollowUp(){
+        await this.page.getByLabel('Select an option').getByText('Yes').click();
+    }
     //chronic follow up screenshot
     async followUpScnsht(){
         await this.page.getByTitle('Follow Up',{exact:true}).first().screenshot({path:'followupicon.png'});
