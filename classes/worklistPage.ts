@@ -876,8 +876,29 @@ export default class WorklistPage{
         await this.page.getByRole('link', { name: num }).click({delay:1000});
     }
 
-      //page navigation
+    //page navigation
     async paginationCheck(){
         await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+    }
+
+    //latest labs screenshot
+    async latestlabs(){
+        await this.page.getByText('LAB INTERPRETATION',{exact:true}).scrollIntoViewIfNeeded();
+    }
+
+    //add labs
+    async addlab(labtype,labvalue,resultyear,resultmonth,resultday){
+        await this.page.locator('app-latest-lab').getByRole('button', { name: ' Add' }).click();
+        await this.page.getByLabel('Choose Lab Type *').locator('span').click();
+        await this.page.getByRole('option', {name:labtype, exact: true}).locator('span').click();
+        await this.page.getByLabel('Result Value *').click();
+        await this.page.getByLabel('Result Value *').fill(labvalue);
+        await this.page.getByLabel('Open calendar').click();
+        await this.page.getByLabel('Choose month and year').click();
+        await this.page.getByLabel(resultyear).click();
+        await this.page.getByLabel(resultmonth).click();
+        await this.page.getByLabel(resultday).click();
+        await this.page.locator('button').filter({ hasText: 'done' }).click();
+        await this.page.getByRole('button', { name: ' Add Lab' }).click();
     }
 }

@@ -142,7 +142,7 @@ export default class PatientsPage{
     async addLabs(labtype,labvalue,resultyear,resultmonth,resultday){
         await this.page.getByRole('button',{name: 'Add'}).click();
         await this.page.getByLabel('Choose Lab Type *').locator('span').click();
-        await this.page.getByRole('option', {name:labtype}).locator('span').click();
+        await this.page.getByRole('option', {name:labtype, exact: true}).locator('span').click();
         await this.page.getByLabel('Result Value *').click();
         await this.page.getByLabel('Result Value *').fill(labvalue);
         //await this.page.locator('id=mat-input-3').getByLabel('Open calendar').click();
@@ -156,6 +156,7 @@ export default class PatientsPage{
            await this.page.getByText(resultday,{exact:true}).click();
            await this.page.locator('button').filter({hasText: 'done'}).click();
            await this.page.getByRole('button',{name:'Add Lab'}).click();
+           
     }
 
     //add patient
@@ -617,5 +618,10 @@ export default class PatientsPage{
     //reply to communication
     //select a visit
     
+    //latest labs screenshot
+    async latestlabsscreenshot(){
+        await this.page.getByText('LAB INTERPRETATION',{exact:true}).scrollIntoViewIfNeeded();
+
+    }
 
 }
