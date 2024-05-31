@@ -39,6 +39,10 @@ export default class CasetypesmappingPage{
         await this.page.getByLabel('Search Code, Description').press('Enter');
     }
 
+    async hoverSearch(search){
+        await this.page.getByText(search).hover();
+    }
+
     //case type drop down  (74 items)
     async searchTypeDropDown(casetype: string){
         await this.page.getByLabel('Case Type').locator('div').nth(2).click();
@@ -132,7 +136,7 @@ export default class CasetypesmappingPage{
    //click mapping dropdown
    async clickToMap(searchCaseCode: string, casetype: string){
     await this.page.getByText(searchCaseCode)
-    await this.page.locator('#mat-select-14 div').nth(3).click();
+    await this.page.locator('#mat-select-value-115').click();
     await this.page.getByText(casetype).click();
    }
 

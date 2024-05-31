@@ -8,20 +8,23 @@ test("map by region test", async({page})=>{
     test.slow();//changes default timeout from 30000 ms to 90000 ms
 
     const login = new LoginPage (page)
-     await page.goto('https://qa.mybloodhealth.com/login')
-     await login.enterEmail(logindata.email);
-     await login.enterPassword(logindata.password);
-     await login.clickLoginBtn()
+    await page.goto('https://qa.mybloodhealth.com/login')
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn()
 
-     const dashboard = new DashboardPage(page)
-     await dashboard.clickClientDropDown("QA Testing");
+    const dashboard = new DashboardPage(page)
+    await dashboard.clickClientDropDown("Newlife hospital");
 
-     const casetypesmapping = new CasetypesmappingPage(page);
-     await casetypesmapping.selectCaseTypesMapping();
-     await casetypesmapping.searchCode('28');
-     await casetypesmapping.overrideMapping('ORTHO');
-     await casetypesmapping.searchCode('28');
-     await casetypesmapping.fullPageVerify();
+    const casetypesmapping = new CasetypesmappingPage(page);
+    await casetypesmapping.selectCaseTypesMapping();
+    await casetypesmapping.searchCode('107733');
+    await casetypesmapping.hoverSearch('107733');
+    await casetypesmapping.overrideMapping('ORTHO');
+    await casetypesmapping.clearSelections();
+    await casetypesmapping.searchCode('107733');
+    await casetypesmapping.hoverSearch('107733');
+    await casetypesmapping.fullPageVerify();
 
 
 })

@@ -76,14 +76,16 @@ test('map case type', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown('Newlife hospital');
 
     const casetypesmap = new CaseTypesMappingPage(page);
     await casetypesmap.selectCaseTypesMapping();
-    await casetypesmap.selectCaseToMap('1932');
-    await casetypesmap.clickToMap('1932','ORTHO');
-    await casetypesmap.searchCode('1932');
-    await casetypesmap.caseVerify('1932');
+    await casetypesmap.searchCode('107733');
+    await casetypesmap.selectCaseToMap('107733');
+    await casetypesmap.clickToMap('107733','ORTHO');
+    await casetypesmap.clearSelections();
+    await casetypesmap.searchCode('107733');
+    await casetypesmap.caseVerify('107733');
 
 })
 
