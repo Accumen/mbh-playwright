@@ -44,6 +44,61 @@ test('pagination after filter', async ({ page }) => {
     await labtypesmap.paginationCheck();
     await labtypesmap.searchLabTypeDropDown("WBC")
     await labtypesmap.clearSelections();
-    await labtypesmap.paginationCheck();
-    
+    await labtypesmap.paginationCheck();  
+})
+
+test('download mappings', async ({ page }) => {
+
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const labtypesmap = new LabTypesMappingPage(page);
+    await labtypesmap.selectLabTypesMapping();
+    await labtypesmap.downloadLabTypeMappings();    
+})
+
+test('upload mappings', async ({ page }) => {
+
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const labtypesmap = new LabTypesMappingPage(page);
+    await labtypesmap.selectLabTypesMapping();
+    await labtypesmap.uploadLabTypeMappings();  
+    await labtypesmap.searchLabCode('1234567');
+})
+
+test('map lab type', async ({page}) => {
+    test.slow();
+
+    const login = new LoginPage(page);
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const labtypesmap = new LabTypesMappingPage(page);
+    await labtypesmap.selectLabTypesMapping();
+    await labtypesmap.searchLabCode('1526776');
+    await labtypesmap.clickToMap('1526776','test lab type');
+    await labtypesmap.searchLabCode('1526776');
 })

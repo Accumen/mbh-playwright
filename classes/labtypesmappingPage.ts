@@ -56,7 +56,7 @@ export default class LabtypesmappingPage{
     //click to map
     async clickToMap(labcode: string, labtype:string){
         await this.page.getByText(labcode)
-        await this.page.locator('#mat-select-116').click();
+        await this.page.getByLabel('UNMAPPED').nth(3).click();
         await this.page.getByRole('option',{name:labtype}).locator('span').click();
     
     }
@@ -74,9 +74,9 @@ export default class LabtypesmappingPage{
     }
 
     //upload mappings button
-    async uploadLabTypeMappings(mappingfilename:string){
+    async uploadLabTypeMappings(){
         await this.page.getByRole('button', {name:'Upload Mappings'}).click();
-        await this.page.locator("input[type=file]").setInputFiles("./labTypeMapping.xlsx");
+        await this.page.locator("input[type=file]").setInputFiles("./labTypeMapping_1234567.xlsx");
         await this.page.getByRole('button',{name:'Upload Mappings'}).click();
     }
 
