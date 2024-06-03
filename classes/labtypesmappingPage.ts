@@ -56,8 +56,8 @@ export default class LabtypesmappingPage{
     //click to map
     async clickToMap(labcode: string, labtype:string){
         await this.page.getByText(labcode)
-        await this.page.getByLabel('UNMAPPED').nth(3).click();
-        await this.page.getByRole('option',{name:labtype}).locator('span').click();
+        await this.page.locator('#mat-select-14 div').nth(3).click({delay:1000});
+        await this.page.getByText(labtype,{exact:true}).first().click();
     
     }
     //clear button

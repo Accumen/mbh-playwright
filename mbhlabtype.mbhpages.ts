@@ -42,11 +42,34 @@ test('edit lab type', async ({ page }) => {
     const labtypes = new LabtypesPage(page);
     await labtypes.selectLabTypes();
     await labtypes.searchLabType('testtype');
-    await labtypes.clickLabTypeList('testtype')
-    await labtypes.editLabTypeUniqueCode('tstp2')
+    await labtypes.clickLabTypeList('testtype');
+    await labtypes.editLabTypeStatus('Inactive');
     await labtypes.saveLabType();
 
     await labtypes.clearLabTypesSelection();
     await labtypes.searchLabType('testtype');
+    await labtypes.searchStatus('Inactive');
     await labtypes.clickLabTypeList('testtype')
+})
+
+test('delete lab type', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const labtypes = new LabtypesPage(page);
+    await labtypes.selectLabTypes();
+    await labtypes.searchLabType('testtype');
+    await labtypes.deleteLabType();
+
+    await labtypes.clearLabTypesSelection();
+    await labtypes.searchLabType('testtype');
+
 })

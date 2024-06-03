@@ -98,7 +98,7 @@ test('map lab type', async ({page}) => {
 
     const labtypesmap = new LabTypesMappingPage(page);
     await labtypesmap.selectLabTypesMapping();
-    await labtypesmap.searchLabCode('1526776');
-    await labtypesmap.clickToMap('1526776','test lab type');
-    await labtypesmap.searchLabCode('1526776');
+    await labtypesmap.searchLabCode('1234567');
+    await labtypesmap.clickToMap('1234567','test lab type');
+    await labtypesmap.searchLabCode('1234567');
 })
