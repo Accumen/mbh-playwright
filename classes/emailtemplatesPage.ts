@@ -58,7 +58,13 @@ export default class EmailtemplatesPage{
         //back arrow button
     async backArrow(){
         await this.page.getByRole('button',{name:''}).click();
-    }    
+    } 
+    
+    //reset template
+    async resetTemplate(){
+        this.page.on('dialog',dialog => dialog.accept());
+        //await this.page.getbyTitle('Sync').click(); Button currently has no label to be able to be pulled.
+    }
 
     //row counter
         /**
