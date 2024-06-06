@@ -1,6 +1,5 @@
 import {expect,Page} from "@playwright/test";
 import DashboardPage from "./dashboardPage";
-import { fn } from "moment";
 
 
 export default class WorklistPage{
