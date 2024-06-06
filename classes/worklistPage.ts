@@ -882,6 +882,40 @@ export default class WorklistPage{
     }
 
     //add communication
+    async addcommunication(comtype,comment,priority,resultyear, resultmonth,resultday){ 
+        await this.page.locator('app-communication-list').getByRole('button', { name: ' Add' }).click();
+        await this.page.getByLabel('Communication Type *').locator('span').click();
+        await this.page.getByRole('option', {name:comtype, exact: true}).locator('span').click();
+        await this.page.getByLabel('Message *').click();
+        await this.page.getByLabel('Message *').fill(comment);
+        await this.page.getByLabel('Priority *').locator('div').nth(2).click();
+        await this.page.getByRole ('option', {name:priority}).locator('span').click();
+        await this.page.getByLabel('Open calendar').click();
+        await this.page.getByLabel('Choose month and year').click();
+        await this.page.getByLabel(resultyear).click();
+        await this.page.getByLabel(resultmonth).click();
+        await this.page.getByLabel(resultday).click();
+        await this.page.locator('button').filter({ hasText: 'done' }).click();
+        await this.page.getByRole('button', { name: 'Add Communication' }).click();
+    }
+
+    //edit communication
+    async editcommunication(comtype,comment,priority,resultyear, resultmonth,resultday){ 
+        await this.page.getByRole('button', { name: ' Edit' }).click();
+        await this.page.locator('#mat-select-value-23').click();
+        await this.page.getByRole('option', { name:comtype }).locator('span').click();
+        await this.page.getByLabel('Message *').click();
+        await this.page.getByLabel('Message *').fill(comment);
+        await this.page.locator('#mat-select-value-25').click();
+        await this.page.getByRole ('option', {name:priority}).locator('span').click();
+        await this.page.getByLabel('Open calendar').click();
+        await this.page.getByLabel('Choose month and year').click();
+        await this.page.getByLabel(resultyear).click();
+        await this.page.getByLabel(resultmonth).click();
+        await this.page.getByLabel(resultday).click();
+        await this.page.locator('button').filter({ hasText: 'done' }).click();
+        await this.page.getByRole('button', { name: 'Edit Communication' }).click();
+    }
 
     async worklistPagination(num){
         await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
