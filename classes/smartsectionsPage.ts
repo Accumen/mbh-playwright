@@ -30,6 +30,7 @@ export default class SmartsectionsPage{
          * PSARR In Hospital Transfusion Liklihood Score
          * New smart Doc 12
          */
+        await this.page.getByLabel('Search Name').press('Enter');
     }
     //status drop down 
     async selectSmartStatus(smartstatus){
@@ -57,7 +58,7 @@ export default class SmartsectionsPage{
     }
 
     //edit/add smart section
-    async editSmartSection(smartname, smartdesc, smartstatus,addopt,editopt,smartoption?,smartoptdesc?,smartcomment?){
+    async editSmartSection(smartname, smartdesc, smartstatus){
         //smart section name (fillable)
         await this.page.getByLabel('Smart Section Name *').click();
         await this.page.getByLabel('Smart Section Name *').fill(smartname);
@@ -70,13 +71,13 @@ export default class SmartsectionsPage{
             /**Smart Status Key
              * active
              * inactive
-             */
-        if(addopt != 'No'){
-        //add option button
-        await this.page.getByRole('button',{name:'Add Option'}).click();
-            if(editopt != 'No'){       
-            //edit button
-            await this.page.getByRole('button',{name:'Edit'}).click();
+             */ 
+    }
+    
+        //add option
+        async addSmartOption(smartoption,smartoptdesc, smartcomment){
+            await this.page.getByRole('button',{name:'Add Option'}).click();
+            await this.page.getByRole('button',{name:'Edit'}).last().click();
                 //new option name (fillable)
                 await this.page.getByLabel('Smart Option Name *').click();
                 await this.page.getByLabel('Smart Option Name *').fill(smartoption);
@@ -88,20 +89,40 @@ export default class SmartsectionsPage{
                 await this.page.locator('quill-editor div').nth(2).fill(smartcomment);
                 //close button
                 await this.page.getByRole('button',{name:'Close'}).click();
-            }
-            else{ 
-                //delete button
-                await this.page.getByRole('button',{name:'Delete'}).click();
-            }
-           }
-           else{
-            //save smart section button
+        }
+
+        //add suboption
+        async addSubOption(suboption,suboptdesc, suboptcomment){
+            await this.page.getByRole('button',{name:'Add Sub-Option'}).last().click();
+            await this.page.getByRole('button',{name:'Edit'}).last().click();
+                //new option name (fillable)
+                await this.page.getByLabel('Smart Option Name *').click();
+                await this.page.getByLabel('Smart Option Name *').fill(suboption);
+                //smart option description (fillable)
+                await this.page.getByLabel('Smart Option Description').click();
+                await this.page.getByLabel('Smart Option Description').fill(suboptdesc);
+                //smart option content text box (formatable)
+                await this.page.getByRole('paragraph').click();
+                await this.page.locator('quill-editor div').nth(2).fill(suboptcomment);
+                //close button
+                await this.page.getByRole('button',{name:'Close'}).click();
+        }
+
+        //save smart option button
+        async saveSmartOption(){
             await this.page.getByRole('button',{name:'Save Smart Section'}).click();
-           }   
-    }
-    
+        }
+
         //back arrow button
         async backArrow(){
             await this.page.getByRole('button',{name:''}).click();
         }
+
+        //delete
+        async delete(){
+            this.page.on('dialog',dialog => dialog.accept());
+            await this.page.getByTitle('Delete').click();
+        }
+
+        
 }
