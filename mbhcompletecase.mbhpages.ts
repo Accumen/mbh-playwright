@@ -201,7 +201,7 @@ test('complete nonsurgical not treated followup', async ({ page }) => {
 })
 
 test('test complete visit workflow', async ({ page }) => {
-
+    //MBHS-1227
     test.slow();
     const login = new LoginPage(page);
 
@@ -221,5 +221,48 @@ test('test complete visit workflow', async ({ page }) => {
     await worklist.changeCompleteCaseType('Not Treated');
     await worklist.notTreatedFollowUp();
     await worklist.changeCompleteCaseType('Treated');
+
+})
+
+test('test nonsurgical followup icon', async ({ page }) => {
+    //MBHS-1247
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const worklist = new WorklistPage(page);
+    await worklist.clickWorklist();
+    await worklist.clickChronic();
+    await worklist.searchMRN('3845239');
+    await worklist.selectPatientfromSearch('Dylan Maryska');
+    await worklist.selectChainofCustody();
+    await worklist.worklistscreenshot(1);
+    
+    await worklist.completeNonSurgicalVisit('Treated','B12','','yes','','','','2024','JUNE','29');
+    await worklist.backarrow();
+    await worklist.searchMRN('3845239');
+    await worklist.hoverSearch('Dylan Maryska');
+    await worklist.worklistscreenshot(2);
+
+    await worklist.selectPatientfromSearch('Dylan Maryska');
+    await worklist.selectChainofCustody();
+    await worklist.worklistscreenshot(3);
+
+    await worklist.backarrow();
+    await worklist.selectStatus('Completed');
+    await worklist.searchMRN('3845239');
+    await worklist.worklistscreenshot(4);
+
+    await worklist.selectPatientfromSearch('Dylan Maryska');
+    await worklist.selectChainofCustody();
+    await worklist.worklistscreenshot(5);
+
 
 })

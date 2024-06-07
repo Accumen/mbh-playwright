@@ -72,6 +72,9 @@ export default class WorklistPage{
         //await this.page.getByText('Search Name, MRN').press('Enter');
         
     }
+    async hoverSearch(search){
+        await this.page.getByText(search).hover();
+    }
     //Unselect Select All for Case Type
     async unselectAllCaseTypes(){
         await this.page.getByLabel('Case Type').locator('div').nth(3).click();//selects the case type drop down
