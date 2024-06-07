@@ -43,17 +43,17 @@ test("facility regression testing", async ({page})=>{
     await facility.editLocation('test location 2','',''); //edit location
     await facility.saveFacility();
     await facility.selectFacility('QA Facility 4');
-    await facility.trashButton(); //delete location
+    await facility.trashButton(); //delete location (only works if last in the list)
     await facility.facilityBackArrow(); //back arrow
 
-    await facility.trashButton(); //delete facility
+    await facility.trashButton(); //delete facility (only works if last in the list)
     await facility.facilitySearch('QA Facility 4'); //search facility
 
     await facility.clearSelections(); //clear selection
 
 })
 
-test("test creating facility", async ({page})=>{
+test("test creating unique facility", async ({page})=>{
 
     test.slow();
 
@@ -78,4 +78,66 @@ test("test creating facility", async ({page})=>{
     await facility.editFacility('','QA3','301202','','','','','','','','','');
     await facility.saveFacility();
     await facility.facilityScreenshot(3);
+})
+
+test("test facility create", async ({page})=>{
+
+    test.slow();
+
+    const login = new LoginPage(page);
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const facility = new FacilityPage(page);
+    await facility.selectFacilityMenu();
+    await facility.addFacility('QA Facility 3','QA3','301203','','',
+    '','','','','Blood Center','Test','Active');
+    await facility.saveFacility();
+    await facility.facilityScreenshot(1);
+})
+
+test("test facility edit", async ({page})=>{
+
+    test.slow();
+
+    const login = new LoginPage(page);
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const facility = new FacilityPage(page);
+    await facility.selectFacilityMenu();
+    await facility.selectFacility('QA Facility 3');
+    await facility.editFacility('QA Facility 4','','','','','','','','','','',''); //edit facility
+    await facility.saveFacility();
+    await facility.facilityScreenshot(1);
+
+})
+
+test("test facility delete", async ({page})=>{
+
+    test.slow();
+
+    const login = new LoginPage(page);
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const facility = new FacilityPage(page);
+    await facility.selectFacilityMenu();
+    await facility.trashButton(); //only works if last in the list
+    await facility.facilityScreenshot(1);
 })

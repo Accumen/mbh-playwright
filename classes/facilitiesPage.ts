@@ -121,7 +121,7 @@ export default class FacilitiesPage{
                    
         //select status function on new facility form
         await this.page.getByLabel('Status').locator('div').nth(2).click();
-        await this.page.getByText(status).click();
+        await this.page.getByText(status,{exact:true}).click();
     }
 
     //add location button
