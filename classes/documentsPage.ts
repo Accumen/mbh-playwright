@@ -35,6 +35,7 @@ export default class DocumentsPage{
     async searchDoc(document){
         await this.page.getByLabel('Search name').click();
         await this.page.getByLabel('Search name').fill(document);
+        await this.page.getByLabel('Search name').press('Enter');
     }
     //drop down for status (not labeled)
     async docStatusdropdown(docstat){
@@ -52,7 +53,7 @@ export default class DocumentsPage{
     }
     //document name (clickable)
     async selectDocFromList(docname){
-        await this.page.getByRole('link',{name:docname,exact:false}).click();
+        await this.page.getByText(docname,{exact:true}).click();
     }
      //preview button
      async previewdoc(){
@@ -63,7 +64,7 @@ export default class DocumentsPage{
         await this.page.getByRole('button',{name:'Save Document'}).click();
     }
     //fillable fields for adding or editing a document
-    async addEditDoc(docname,desc,doctype,casetype,docstat,addsection, addsmartsec,secname?,secdesc?,seccontent?,smartdoctype?){
+    async addEditDoc(docname,desc,doctype,casetype,docstat){
         //document name (fillable)
         await this.page.getByLabel('Document Name *').click();
         await this.page.getByLabel('Document Name *').fill(docname);
@@ -83,13 +84,14 @@ export default class DocumentsPage{
              * tools and references
              */
         //case types check boxes
-        if(casetype != 'Chronic'){
+        if(casetype != 'Non-Surgical'){
             //surgical
             await this.page.locator('.mat-checkbox-inner-container').first().check();
         }
         else{
              //chronic
-            await this.page.locator('id=mat-checkbox-4').getByText('Chronic').check();
+            //await this.page.locator('id=mat-checkbox-14').getByText('Non-Surgical').check();
+            await this.page.locator('.mat-checkbox-inner-container').nth(1).check();
         }
         //status drop down
         await this.page.getByLabel('Status').click();
@@ -98,70 +100,131 @@ export default class DocumentsPage{
              * active
              * inactive
              */
-        if(addsection !='yes'){   
-        //do nothing
-        }
-        else{ 
+    }
+
+    //add text section in add document
+    async addTextSection(secname,secdesc,seccontent){
             //add text button
             await this.page.getByRole('button',{name:'Text Section'}).click();
                 //section name
+            await this.page.getByLabel('Section Name *',{exact:true}).last().click()
+            await this.page.getByLabel('Section Name *',{exact:true}).last().fill(secname);
+                //section description
+            await this.page.getByLabel('Description',{exact:true}).last().click();
+            await this.page.getByLabel('Description',{exact:true}).last().fill(secdesc);
+                //new section content
+            await this.page.getByText('New Section Content',{exact:true}).click();
+            await this.page.getByText('New Section Content',{exact:true}).fill(seccontent);
+    }
+
+    //add smart section in new document
+    async addSmartSection(smartdoctype){
+      //add smart section button
+      await this.page.getByRole('button',{name:'Smart Section'}).click()
+      await this.page.getByLabel('Choose Document Section').locator('span').click();
+      await this.page.getByText(smartdoctype,{exact:true}).click();
+      /** Smart Document Type Key
+        * Smart 1section Test 3.1
+        * RCP Follow Up Options
+        * Surgical: Notification of Abnormal Labs
+        * PSARR In Hospital Transfusion Liklihood Score
+        * New smart Doc 12
+        * PSARR Restrictive Transfusion Strategy
+        * Chronic Patient Initial Letter-Body Options
+        * Surgical: Patient Letter: Labs Body Options
+        * Medication Order - Title- INFED
+        * Anemia Management: Perisurgical Chronic vs Surgical
+        * Medication Order - Provider Signature
+        * 1212
+        * PCP Abnormal Letter options
+        * Chronic Patient Letter-Follow Up Options
+        * Medication Order -Iron Monitoring
+        * PSARR Post-Operative Strategies
+        * Chronic Patient Demo/Intro
+        * Testing 1412
+        * Surgical Abnormal Letter
+        * Feraheme Surgical/Chronic
+        * PSARR Pre-Hospital Smart Section
+        * PSARR Interoperative Strategies
+        * PSARR Treatments
+        * TREATMENT ORDERS: ESA- ERYTHROPOIETIN
+        * TREATMENT ORDERS: ESA- ARANESP (ALBUMIN FREE)
+        * What is PCP in medical report?
+        * Medication
+        */    
+    }
+
+    //add smart section add document button
+    async addSmartSecDocBtn(){
+           //add document button
+       await this.page.getByRole('button',{name:'Add Document'}).click();
+    }
+
+    async smartSecInfo(smartsecname,smartsecdesc){
+            //section name
             await this.page.getByLabel('Section Name *').click()
-            await this.page.getByLabel('Section Name *').fill(secname);
+            await this.page.getByLabel('Section Name *').fill(smartsecname);
                 //section description
             await this.page.getByLabel('Description',{exact:true}).click();
-            await this.page.getByLabel('Description',{exact:true}).fill(secdesc);
-                //new section content
-            await this.page.getByText('New Section Content').click();
-            await this.page.getByText('New Section Content').fill(seccontent);}
-        if(addsmartsec !='yes'){
-            //do nothing
-        }
-        else{
-            //add smart section button
-        await this.page.getByRole('button',{name:'Smart Section'}).click()
-        await this.page.getByLabel('Choose Document Section').locator('span').click();
-        await this.page.getByText(smartdoctype).click();
-        /** Smart Document Type Key
-          * Smart 1section Test 3.1
-          * RCP Follow Up Options
-          * Surgical: Notification of Abnormal Labs
-          * PSARR In Hospital Transfusion Liklihood Score
-          * New smart Doc 12
-          * PSARR Restrictive Transfusion Strategy
-          * Chronic Patient Initial Letter-Body Options
-          * Surgical: Patient Letter: Labs Body Options
-          * Medication Order - Title- INFED
-          * Anemia Management: Perisurgical Chronic vs Surgical
-          * Medication Order - Provider Signature
-          * 1212
-          * PCP Abnormal Letter options
-          * Chronic Patient Letter-Follow Up Options
-          * Medication Order -Iron Monitoring
-          * PSARR Post-Operative Strategies
-          * Chronic Patient Demo/Intro
-          * Testing 1412
-          * Surgical Abnormal Letter
-          * Feraheme Surgical/Chronic
-          * PSARR Pre-Hospital Smart Section
-          * PSARR Interoperative Strategies
-          * PSARR Treatments
-          * TREATMENT ORDERS: ESA- ERYTHROPOIETIN
-          * TREATMENT ORDERS: ESA- ARANESP (ALBUMIN FREE)
-          * What is PCP in medical report?
-          * Medication
-          */
-         //add document button
-         await this.page.getByRole('button',{name:'Add Document'}).click();
-        }
-        //hide title checkbox
-        //add document(save new document)
-        await this.page.getByRole('button',{name:'Save Document'}).click();    
+            await this.page.getByLabel('Description',{exact:true}).fill(smartsecdesc);
     }
+
     //screenshot for documents page
     async verifyDoc(){
         await this.page.screenshot({path:'verifyDocument.png'});
     }
+
+      //fillable fields for adding or editing a document
+      async newStaticDoc(docname,desc,doctype,casetype,docstat){
+        //document name (fillable)
+        await this.page.getByLabel('Document Name *').click();
+        await this.page.getByLabel('Document Name *').fill(docname);
+        //document description (fillable)
+        await this.page.getByLabel('Description *').click();
+        await this.page.getByLabel('Description *').fill(desc);
+        //document types drop down
+        await this.page.getByLabel('Document Types *').getByText('Document Types').click();//may also use locator(#mat-select-value-15)
+        await this.page.getByText(doctype, {exact:true}).click();
+            /** Document Types Key
+             * patient letter
+             * pcp letter
+             * surgeon letter
+             * assessment template
+             * rcp letter
+             * medication order
+             * tools and references
+             */
+        //case types check boxes
+        if(casetype != 'Non-Surgical'){
+            //surgical
+            await this.page.locator('.mat-checkbox-inner-container').first().check();
+        }
+        else{
+             //chronic
+            await this.page.locator('id=mat-checkbox-4').getByText('Non-Surgical').check();
+        }
+        //status drop down
+        await this.page.getByLabel('Status').click();
+        await this.page.getByText(docstat,{exact:true}).click();
+            /**docstat key
+             * active
+             * inactive
+            */
+        //upload 
+        await this.page.getByRole('button',{name:'Upload'}).click();
+        await this.page.locator("input[type=file]").setInputFiles("./testdocumentupload.pdf");
+        }
+        
         //back arrow
+        async backArrow(){
+            await this.page.getByRole('button',{name:''}).click();
+        }
+
+      //delete
+      async delete(){
+        this.page.on('dialog',dialog => dialog.accept());
+        await this.page.getByTitle('Delete').click();
+    }
     //page navigator
     //row counter
         /**
