@@ -27,3 +27,23 @@ test('search,edit email template', async ({ page }) => {
     await emailtemp.searchEmailTemplate('Assign Visit Notification');
     await emailtemp.selectEmailtemplate('Assign Visit Notification');
 })
+
+test('test email template between clients', async ({ page }) => {
+
+    test.slow();
+    const login = new LoginPage(page);
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+  
+    const emailtemp = new EmailtemplatesPage(page);
+    await emailtemp.clickEmailTemplate();
+    await emailtemp.emailTemplateScreenshot(1);
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    await emailtemp.clickEmailTemplate();
+    await emailtemp.emailTemplateScreenshot(2);
+})

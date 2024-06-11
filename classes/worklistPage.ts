@@ -800,6 +800,25 @@ export default class WorklistPage{
     async followUpScnsht(){
         await this.page.getByTitle('Follow Up',{exact:true}).first().screenshot({path:'followupicon.png'});
     }
+
+    //assign user
+    async assignUser(){
+        await this.page.getByRole('button', { name: 'Assign' }).click();
+    }
+    async selectAssignUser(user){
+        await this.page.locator('#mat-select-value-23').click();
+        await this.page.getByText(user, {exact:true}).click();
+    }
+    async unassignUser(){
+        await this.page.getByRole('button', { name: 'UnAssign' }).click();
+    }
+    async saveUser(){
+        await this.page.getByRole('button', { name: 'Save' }).click();
+    }
+    async assignedToCheck(){
+        await this.page.getByText('Assigned To').hover();
+    }
+
     //edit patient button
     async editPatientDetails(changeDesc){
         await this.page.getByRole('button',{name:'Edit Patient'}).click();

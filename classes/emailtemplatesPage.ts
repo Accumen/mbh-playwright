@@ -66,6 +66,10 @@ export default class EmailtemplatesPage{
         //await this.page.getbyTitle('Sync').click(); Button currently has no label to be able to be pulled.
     }
 
+    async emailTemplateScreenshot(num){
+        await this.page.screenshot({path:'emailtemplatescreenshot'+ num +'.png',fullPage:true});
+    }
+
     //row counter
         /**
          * 15
