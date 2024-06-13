@@ -18,6 +18,7 @@ jobs:
           versionSpec: 16.x
 
       - script: |
+          cd $(Pipeline.Workspace)/s/
           npm ci
         displayName: "NPM Install"
 
