@@ -16,6 +16,12 @@ export default class ProvidersPage{
     async clickProviders(){
         await this.page.getByRole('link', {name: 'Providers'}).click({delay:100});
     }
+    //search provider
+    async providerSearch(provider){
+        await this.page.getByLabel('Search provider name, npi').click();
+        await this.page.getByLabel('Search provider name, npi').fill(provider);
+        await this.page.getByLabel('Search provider name, npi').press('Enter');
+    }
     //add provider button
     async addProvider(){
         await this.page.getByRole('button', {name: 'Add Provider'}).click();
@@ -25,33 +31,57 @@ export default class ProvidersPage{
         await this.page.getByRole('link', {name: provider, exact: false}).click();
     }
     //Enter/Edit Provider Information
-    async editAddProviderInfo(fname, lname, email, npi, status){
+    async editAddProviderInfo(fname, mname, lname, prefix, suffix, cred, desc, address, city, state, zip, email, phone, fax, npi, clinic, status){
     //all fillable fields
             
-             //first name (required)
+        //first name (required)
         await this.page.getByLabel('First Name *').click();
         await this.page.getByLabel('First Name *').fill(fname);     
-             //middle name
-             //last name (required)
+        //middle name
+        await this.page.getByLabel('Middle Name').click();
+        await this.page.getByLabel('Middle Name').fill(mname); 
+        //last name (required)
         await this.page.getByLabel('Last Name *').click();
         await this.page.getByLabel('Last Name *').fill(lname);     
-             //prefix
-             //suffix
-             //credentials
-             //description
-             //address
-             //city 
-             //state
-             //postal code
-             //email (required)
+        //prefix
+        await this.page.getByLabel('Prefix').click();
+        await this.page.getByLabel('Prefix').fill(prefix); 
+        //suffix
+        await this.page.getByLabel('Suffix').click();
+        await this.page.getByLabel('Suffix').fill(suffix);
+        //credentials
+        await this.page.getByLabel('Credentials').click();
+        await this.page.getByLabel('Credentials').fill(cred);
+        //description
+        await this.page.getByLabel('Description').click();
+        await this.page.getByLabel('Description').fill(desc);
+        //address
+        await this.page.getByLabel('Address').click();
+        await this.page.getByLabel('Address').fill(address);
+        //city
+        await this.page.getByLabel('City').click();
+        await this.page.getByLabel('City').fill(city); 
+        //state
+        await this.page.getByLabel('State').click();
+        await this.page.getByLabel('State').fill(state);
+        //postal code
+        await this.page.getByLabel('PostalCode').click();
+        await this.page.getByLabel('PostalCode').fill(zip);
+        //email (required)
         await this.page.getByLabel('Email *').click();
         await this.page.getByLabel('Email *').fill(email);     
-             //office phone
-             //office fax
-             //NPI (required)
+        //office phone
+        await this.page.getByLabel('Office Phone').click();
+        await this.page.getByLabel('Office Phone').fill(phone);
+        //office fax
+        await this.page.getByLabel('Office Fax').click();
+        await this.page.getByLabel('Office Fax').fill(fax);
+        //NPI (required)
         await this.page.getByLabel('NPI *').click();
         await this.page.getByLabel('NPI *').fill(npi);     
-             //Clinic
+        //Clinic
+        await this.page.getByLabel('Clinic').click();
+        await this.page.getByLabel('Clinic').fill(clinic);
              
         //call to status drop down
         this.providerStatus(status);
@@ -102,6 +132,11 @@ export default class ProvidersPage{
     //clear button
     async clearSelections(){
         await this.page.getByRole('button', {name:'CLEAR'}).click();
+    }
+    async deleteProvider(){
+        //await this.page.getByTitle('Delete').click();
+        this.page.once('dialog',dialog => dialog.accept());
+        await this.page.getByTitle('Delete').last().click();
     }
 
 }
