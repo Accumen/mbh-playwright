@@ -16,7 +16,9 @@ jobs:
         displayName: 'Use Node version 18'
         inputs:
           versionSpec: 18.x
-
+      - script: | 
+          dir
+        displayName: "Directory Check"
       - script: |
           npm ci
         displayName: "NPM Install"
