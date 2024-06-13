@@ -10,7 +10,7 @@ const config: PlaywrightTestConfig = {
     }, 
    
     ],
-testMatch: ["mbhlogin.mbhpages.ts"] ,//file name we are running
+//testMatch: ["mbhpatientschvisit.mbhpages.ts"] ,//file name we are running
 use: {
     //baseURL: "qa.mybloodhealth.com",
     headless: false, //another way to make sure it runs with a UI
