@@ -13,12 +13,11 @@ jobs:
       - checkout: self
 
       - task: NodeTool@0
-        displayName: 'Use Node version 16'
+        displayName: 'Use Node version 18'
         inputs:
-          versionSpec: 16.x
+          versionSpec: 18.x
 
       - script: |
-          cd $(Pipeline.Workspace)/s/
           npm ci
         displayName: "NPM Install"
 
