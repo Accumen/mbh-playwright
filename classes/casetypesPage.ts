@@ -69,11 +69,19 @@ export default class CasetypesPage{
         async backArrow(){
             await this.page.getByRole('button', {name:''}).click();
         }
+        
+        //delete case type
+        async deleteCaseType(){
+            this.page.on('dialog',dialog => dialog.accept());
+            await this.page.getByTitle('Delete').first().click();
+            }
+        
 
     //search case type (fillable field)
     async searchCaseType(searchCase: string){
         await this.page.getByLabel('Search Case Type').fill(searchCase);
         await this.page.getByLabel('Search Case Type').press('Enter');
+        await this.page.getByText(searchCase).focus();
     }
 
     //status drop down

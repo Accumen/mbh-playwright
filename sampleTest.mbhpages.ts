@@ -5,10 +5,15 @@ import DocumentsPage from "./classes/documentsPage"// connects the documents cla
 import WorklistPage from "./classes/worklistPage" // connect the worklist class to the test
 import FacilitiesPage from "./classes/facilitiesPage" // connect the facilities class to the test
 import CasetypesPage from "./classes/casetypesPage" // connect the case types class to the test
-import CasetypesmappingPage from "./classes/casetypesmappingPage"
-
-const email = ["mperez@accumen.com", "thisemail@gmail.com", "onetwothree@gmail.com"]
-const password = ["ThisShit2023!", "MostlyBs2020!", "Whoseon1st!"]
+import CasetypesmappingPage from "./classes/casetypesmappingPage"//connect the case types mapping class to the test
+import LabtypesPage from "./classes/labtypesPage" //connects the lab types class to the test
+import LabtypesmappingPage from "./classes/labtypesmappingPage" // connect the lab types mapping class to the test
+import ProvidersPage from "./classes/providersPage"// connect the providers class to the test
+import PatientsPage from "./classes/patientsPage" //connect the patients class to the test
+import EmailtemplatesPage from "./classes/emailtemplatesPage"
+import SmartsectionsPage from "./classes/smartsectionsPage"
+import ReportsPage from "./classes/reportsPage"
+import RegionsPage from "./classes/regionsPage"
 
 
 test("Sample test", async({page})=>{
@@ -16,8 +21,8 @@ test("Sample test", async({page})=>{
     const login = new LoginPage (page)
      await page.goto('https://qa.mybloodhealth.com/login')//will need to get this into a baseURL call
      //next two lines call to the array for email and password.  make sure the [#] matches for both unless intentionally setting login to fail.
-     await login.enterEmail(email[0])//email needs moved into the login class
-     await login.enterPassword(password[0])//password needs moved into the login class
+     await login.enterEmail('cts-secure@accumen.com')//email needs moved into the login class
+     await login.enterPassword('Iu$24680')//password needs moved into the login class
      await login.clickLoginBtn()
 //  Uncomment this to run tests within the dashboard page
      const dashboard = new DashboardPage (page)
@@ -35,6 +40,7 @@ test("Sample test", async({page})=>{
 // Uncomment this to run tests within the worklist page
     //8const worklist = new WorklistPage (page)
      //8await worklist.clickChronic();
+     //8await worklist.clickSurgical();
      //8await worklist.searchMRN('Scutts');
      //8await worklist.unselectAllCaseTypes();
      //8await worklist.selectCaseType("CHRONIC MEDICAL");// this function needs work as it is unable to exit the drop down menu only on the surgical worklist
@@ -44,7 +50,11 @@ test("Sample test", async({page})=>{
      //8await worklist.adjustRowCount("30");
      //8await worklist.clearExpiredVisits();
      //await worklist.exportVisits();//this function needs work to wait for the download to finish
-     //await worklist.scheduleVisit();//this function works but needs additional features to deal with the patient schedule screen that pops up
+     //await worklist.scheduleChronicVisit('New', 'Fred', 'R', 'Flinstone', 'email@gmail.com', '12655473','1992','MARCH','15',
+     //'8159152544','5674 True St','City','TX','76543', 'Male', 'yes','January 31', 'FEB', '22', 2,
+     //'CHRONIC MEDICAL', 'Surgeon');//this function works but needs additional features to deal with the patient schedule screen that pops up
+     //await worklist.backBtnSchVisitScreen();
+     //await worklist.saveScheduledVisit();
      //8await dashboard.clickLogout();
      
      //8const facilities = new FacilitiesPage(page);
@@ -58,8 +68,8 @@ test("Sample test", async({page})=>{
      //8await facilities.newLocation('LocationTest', 'others','Inactive');
      //8await facilities.saveFacility();
      //8await dashboard.clickLogout();
-     const casetypes = new CasetypesPage(page);
-     await casetypes.selectCaseTypeMenu();
+    //8 const casetypes = new CasetypesPage(page);
+     //8await casetypes.selectCaseTypeMenu();
      //8await casetypes.searchCaseType("ORTHO");
      //await casetypes.statusDropDown("Active");
      //8await casetypes.clearSelections();
@@ -80,11 +90,138 @@ test("Sample test", async({page})=>{
      const casetypesmapping = new CasetypesmappingPage(page);
      await casetypesmapping.selectCaseTypesMapping();
      await casetypesmapping.searchCode('28');
-     await casetypesmapping.searchTypeDropDown('ORTHO');
+     //8await casetypesmapping.searchTypeDropDown('EXCLUDE');
+     await casetypesmapping.overrideMapping('ORTHO');
      //8await casetypesmapping.clearSelections();
-     //await casetypesmapping.clickToMap('ORTHO');
-     await dashboard.clickLogout();
+     //8await casetypesmapping.clickToMap('2838','ORTHO');
+    //8await dashboard.clickLogout();
+
+    //8const labtypes = new LabtypesPage(page);
+    //8await labtypes.selectLabTypes(); 
+    //8await labtypes.searchLabType('Hct');
+    //8await labtypes.searchStatus('Active');
+    //8await labtypes.clearLabTypesSelection();
+    //8await labtypes.clickLabTypeList('Hct');
+    //8await labtypes.editLabTypeName('Hct2');
+    //8await labtypes.editLabTypeUoM('#');
+    //8await labtypes.editLabTypeMinValue('11.00');
+    //8await labtypes.editLabTypeMaxValue('61.00');
+    //8await labtypes.editLabTypeUoM('Hct');
+    //8await labtypes.editLabTypeStatus('INACTIVE');
+    //8await labtypes.editMrefMin('39.00');
+    //8await labtypes.editMrefMax('54.00');
+    //8await labtypes.editmAbnomalAbove('54.10');
+    //8await labtypes.editmAbnormalAboveLabel('Above this');
+    //8await labtypes.editmAbnormalBelow('38.99');
+    //8await labtypes.editmAbnormalBelowLabel('Below this');
+    //8await labtypes.editfRefMin('34.00');
+    //8await labtypes.editfRefMax('48.00');
+    //8await labtypes.editfAbnormalAbove('48.10');
+    //8await labtypes.editfAbnormalAboveLabel('Above that');
+    //8await labtypes.editfAbnormalBelow('33.99');
+    //8await labtypes.editfAbnormalBelowLabel('Below that');
+    //8await labtypes.editRefMin('5.00');
+    //8await labtypes.editRefMax('12.00');
+    //8await labtypes.editAbnormalAbove('12.75');
+    //8await labtypes.editAbnormalAboveLabel('Above this');
+    //8await labtypes.editAbnormalBelow('3.75');
+    //8await labtypes.editAbnormalBelowLabel('Below this');
+   //8await labtypes.addLabType('testtype','x10(9)/L', '1', '125','tstp', 'ACTIVE','Gendered','4.00', '11.00', '11.25', '3.50', 'Above', 'Below', '4.00', '11.00', '11.25','mAbove', '3.50', 'mBelow', 
+   //8'3.00', '12.00', '12.25','fAbove', '2.50', 'fBelow' );
+   //8await labtypes.labTypeBackArrow();
+   //8await labtypes.saveLabType();
+   //8 await dashboard.clickLogout();
+
+   //8const labtypesmapping = new LabtypesmappingPage (page);
+
+   //8await labtypesmapping.selectLabTypesMapping();
+   //8await labtypesmapping.searchLabCode('1525870');
+   //8await labtypesmapping.searchLabTypeDropDown('UNMAPPED');
+   //8await labtypesmapping.clearSelections();
+   //8await labtypesmapping.clickToMap('1525870','UNMAPPED')
+   //8await dashboard.clickLogout();
+
+   //8const providers = new ProvidersPage (page);
+   //8await providers.clickProviders();
+   //8await providers.searchProvider('sur');
+   //8await providers.providerStatus('Active');
+   //8await providers.clearSelections();  
+   //8await providers.selectProvider('Surgeon');
+   //8await providers.editAddProviderInfo('Surgeon','Test','email@aol.com','123456789','Active');
+   //8await providers.saveProvider();     
+   //8await providers.addProvider();
+   //8await providers.editAddProviderInfo('Primary', 'Provider','ppc@gmail.com','987654321','Inactive')
+   //8await providers.backArrow();
+
+   //8const patients = new PatientsPage(page);
+   //8await patients.selectPatients();
+   //8await patients.searchPatient('Flinestone');
+   //8await patients.selectPatientfromSearch('Flinestone');
+   //8await patients.viewAllLabs('WBC','2023','OCT','1','2024','FEB','15');
+   //8await patients.editSearchedLab('WBC','11.00','2024','Feb','7');
+   //8await patients.closeSearchListWindow();
+   //8await patients.deleteSearchedLab('WBC');
+   //8await patients.saveEditedLab();
+   //8await patients.clearSelections();
+   //8await patients.addLabs('B 12','12.25','2024','FEB','8');
+   //8await patients.addPatient('Fred','Flinestone','1546687','2024','JAN','30','Male','1963','JUL','16','no');
+   //8await patients.savePatient();
+   //8await patients.editPatientDetails('DOB Correction from 1953 to 1952');
+   //8await patients.editPatientDob('1952','August','15');
+   //8await patients.editPatientLname('Mosely');
+   //8await patients.saveEditPatient();
+
+   //8const documents = new DocumentsPage (page);
+   //8await documents.selectDocuments();
+  //8await documents.searchDoc('Invasive Anemia Treatment');
+   //8await documents.docStatusdropdown('Active');
+   //8await documents.selectDocFromList('Invasive Anemia Treatment');
+   //8await documents.previewdoc();
+   //8await documents.clearSelections();
+   //8await documents.addDocBtn();
+   //8await documents.addEditDoc('Test Document #3','Document for testing #3','Surgeon Letter','Chronic','Active','yes','yes','test section','section for testing','Content of test section','1212');
+   
+   //8const emailtemplates = new EmailtemplatesPage(page);
+   //8await emailtemplates.clickEmailTemplate();
+   //8await emailtemplates.searchEmailTemplate('Visit Doc');
+   //8await emailtemplates.selectEmailtemplate('Visit Doc');
+   //8await emailtemplates.editTemplate('Visit Doc Notification #2','Visit Doc','Mary Perez','visiturl.test.com','test visit documents','This is a test comment.');
+   //8await emailtemplates.backArrow();
+   //8await emailtemplates.saveTemplate();
+
+   //8const smartsection = new SmartsectionsPage(page);
+   //8await smartsection.selectSmartSections();
+   //8await smartsection.searchSmartSection('RCP Follow Up Options');
+   //8await smartsection.selectSmartStatus('Active');
+   //8await smartsection.clearSelections();
+   //8await smartsection.selectSearchResult('RCP Follow Up Options');
+   //8await smartsection.addSmartSection();
+   //8await smartsection.backArrow();
+   //8await smartsection.editSmartSection('Test Smart Section','Smart section test description','Active','Yes','Yes','Smart Option','Smart Option Test','This is a test.')
+    //8 const reports = new ReportsPage(page);
+     //8await reports.selectReports();
+     //8await reports.searchReport('Medication Revenue');
+     //8await reports.clearSelections();
+     //8await reports.chooseReport('Medication Revenue');
+     //8await reports.selectFacility('EH GI');
+     //await reports.selectProvider('Charles E Camacho MD');
+    //8await reports.selectCaseType('CARDIO');
+     //await reports.selectDateRange('Custom','2023','January','1','2024','February','15');
+     //8await reports.applyChanges();
+
+     const regions = new RegionsPage(page);
+     //8await regions.selectRegionsMenu();
+     //8await regions.selectRegion('Texas');
+     //8await regions.editRegionName('Tennessee');
+     //8await regions.editRegionCode('658');
+     //8await regions.editRegionStatus('Inactive');
+     //await regions.backArrow();
+     //8await regions.addRegion();
+     //8await regions.newRegion('Tennessee','658','Active');
+     //8await regions.saveRegion();
 
 
-     
+
+
+
 })

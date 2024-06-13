@@ -1,4 +1,5 @@
 import { Page} from "@playwright/test";
+import path from "path/win32";
 
 export default class CasetypesmappingPage{
 
@@ -16,22 +17,30 @@ export default class CasetypesmappingPage{
 
     //download mappings button
     async downloadCaseTypeMappings(){
-        const downloadPromise = await this.page.waitForEvent('download');
+      
+        const downloadPromise = this.page.waitForEvent('download');
         await this.page.getByRole('button', {name:'Download Mappings'}).click();
         const download = await downloadPromise;
+        await download.saveAs('./testdata/'+ download.suggestedFilename());
     }
 
     //upload mappings button
     async uploadCaseTypeMappings(){
         await this.page.getByRole('button', {name: 'Upload Mappings'}).click();
-        await this.page.getByRole('textbox').click();
-        await this.page.getByRole('button', {name: ''}).click();
+        await this.page.locator("input[type=file]").setInputFiles("./caseTypeMapping.xlsx");
+        await this.page.getByRole('button',{name:'Upload Mappings'}).click();
+        
     }
 
     //search code, description (fillable field)
     async searchCode(searchCaseCode: string){
         await this.page.getByLabel('Search Code, Description').click();
         await this.page.getByLabel('Search Code, Description').fill(searchCaseCode);
+        await this.page.getByLabel('Search Code, Description').press('Enter');
+    }
+
+    async hoverSearch(search){
+        await this.page.getByText(search).hover();
     }
 
     //case type drop down  (74 items)
@@ -116,23 +125,47 @@ export default class CasetypesmappingPage{
      * new sub
      * 
     */
+    //await this.page.getByText(casetype).press('Enter');
    }
    //Select case to map
    async selectCaseToMap(searchCaseCode: string){
     await this.page.getByText(searchCaseCode).click();
+    await this.page.getByText(searchCaseCode).press('Enter');
    }
 
    //click mapping dropdown
-   async clickToMap(casetype: string){
-    await this.page.locator('#mat-select-118 div').nth(3).click();
+   async clickToMap(searchCaseCode: string, casetype: string){
+    await this.page.getByText(searchCaseCode)
+    await this.page.locator('#mat-select-value-115').click();
     await this.page.getByText(casetype).click();
    }
 
     //clear button
     async clearSelections(){
-        await this.page.getByRole('button', {name: 'CLEAR'}).click();
+        await this.page.getByRole('button', {name: 'CLEAR'}).click({delay:1000});
     }
+
+    async overrideMapping(casetype){
+        await this.page.getByTitle('Override Mapping').first().click();
+        await this.page.getByText('No override').click();
+        await this.page.getByRole('option',{name:casetype}).click();
+        await this.page.getByRole('button',{name:'Save Overrides'}).click();
+
+    }
+    async caseVerify(casecode){
+        await this.page.getByText(casecode,{exact:true}).scrollIntoViewIfNeeded();
+        await this.page.screenshot({path:'casetype.png'})
+    }
+
+    async fullPageVerify(){
+        await this.page.screenshot({path:'verification.png'});
+    }
+
+
     //page navigation
+    async paginationCheck(){
+        await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+    }
     //row counter
     /**
      * 15

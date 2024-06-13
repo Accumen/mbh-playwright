@@ -1,27 +1,25 @@
 import {Page} from "@playwright/test"
 
-
 export default class LoginPage{
 
     constructor(public page: Page){}
-
-    public email;//cts-secure@accumen.com
-    public password;//IU$24680
+    
+    public email;
+    public password;
 
     async enterEmail(email: string){
-        await this.page.getByPlaceholder("Enter your email")//"input[name='email']"
+        await this.page.getByPlaceholder("Enter your email")
         .fill(email);
     }
 
     async enterPassword(password: string){
-        await this.page.getByPlaceholder("Enter your password")//"input[name='password']"
+        await this.page.getByPlaceholder("Enter your password")
         .fill(password);
     }
 
     async clickLoginBtn(){
-        await this.page.getByRole('button',{name: 'Log in to your account'}).click();//"input[value='Login']"
+        await this.page.getByRole('button',{name: 'Log in to your account'}).click();
     }
     
 }
 
-//loginpage class tested successful 10/23/2023 by Mary Perez

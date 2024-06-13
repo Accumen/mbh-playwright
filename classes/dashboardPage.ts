@@ -1,15 +1,17 @@
-import { Page} from "@playwright/test";
+import {expect,Page} from "@playwright/test";
+import { after } from "node:test";
+import {getComparator}from "playwright-core/lib/utils"
 
 export default class DashboardPage{
 
     constructor(public page: Page){  }
 
     public optionClient;
+    public currentClient;
     public facility;
     public casetype;
     public selection;
     public navSelect;
-    //danny test
     //function for the "MBH" button
     //select client drop down
     //change button
@@ -29,9 +31,16 @@ export default class DashboardPage{
          * Test Client
          * TJUH
          */
-        await this.page.getByRole('option',{name: optionClient}).click();//selects the client from the drop down list
+        await this.page.getByRole('option',{name: optionClient,exact:true}).click();//selects the client from the drop down list
         await this.page.getByRole('button', {name: 'Change'}).click({delay:90}); //this clicks the change button to "select" the client for MBH.
         //await this.page.waitForLoadState();// call to wait for the page to load after the change button is selected
+    }
+    //change from one client to another
+    async changeClient(currentClient: string, optionClient){
+        await this.page.getByRole('button', {name: currentClient,exact:true}).click() //this selects the client drop down for current client
+        await this.page.getByLabel(currentClient).locator('div').nth(3).click(); //this selects the "drop down" for the client list
+        await this.page.getByRole('option',{name: optionClient,exact:true}).click(); //selects the client from the drop down list
+        await this.page.getByRole('button', {name: 'Change'}).click({delay:90}); //this clicks the change button to "select" the client for MBH.
     }
     //User Button (label=icon-button with share icon)
     //logout
@@ -90,7 +99,7 @@ export default class DashboardPage{
      }
     //date range drop down function
     //apply button
-    async clickDateRange(selection: string){
+    async clickDateRange(selection,startyear?,startmonth?,startday?,endyear?,endmonth?,endday?){
         await this.page.getByLabel('Date range').locator('div').nth(3).click(); // clicks the drop down selector for date range
         /** Selection Key
          * This Week
@@ -102,20 +111,40 @@ export default class DashboardPage{
          * Custom 
         */
         await this.page.getByText(selection).click();//selects the option from the date range drop down menu
-        //will need to build a special function to handle the calendar pop up that is created by selecting "custom"
-        /*
-          await page.getByText('Custom').click();
-          await page.getByLabel('Open calendar').click();
-          await page.getByLabel('Choose month and year').click();
-          await page.getByText('2022').click();
-          await page.getByText('MAR', { exact: true }).click();
-          await page.getByText('23', { exact: true }).click();
-          await page.getByLabel('Next month').click();
-          await page.getByText('14').click();
-        */
-        await this.page.getByRole('button', {name:'APPLY'}).click();//apply button has to be selected whenever the drop down menu option changes
-
-    }
+        if(selection == 'Custom'){
+            //start date (calendar)
+            await this.page.getByRole('button',{name:'Open calendar'}).click();
+            await this.page.getByLabel('Choose month and year').last().click();
+               while(await this.page.getByRole('button', {name:startyear, exact:false}).first().isHidden()){
+                    await this.page.getByLabel('Previous 24 years').click();
+               }
+                    await this.page.getByLabel(startyear,{exact:true}).click();
+                    await this.page.getByLabel(startmonth).click();
+                    await this.page.getByText(startday,{exact:true}).last().click();    
+                    //end date    (calendar) 
+                    if(endyear != startyear){
+                    await this.page.getByLabel('Choose month and year').last().click();
+                    while(await this.page.getByRole('button', {name:endyear, exact:false}).first().isHidden()){
+                       await this.page.getByLabel('Previous 24 years').click();}
+                       await this.page.getByLabel(endyear,{exact:true}).click();
+                    }
+                    else{
+                        while(await this.page.locator('#mat-datepicker-0').getByText(endmonth,{exact:true}).isHidden()){
+                            await this.page.getByRole('button',{name:'Next month'}).last().click();
+                        }}
+                        await this.page.getByRole('dialog',{name:'Custom Date Range',exact:false}).getByText(endday,{exact:false}).first().click();
+                       //await this.page.getByText(endday).first().click();
+                       await this.page.getByRole('button', {name:'APPLY'}).click()
+                   }
+            else{
+            await this.page.getByRole('button', {name:'APPLY'}).click();//apply button has to be selected whenever the drop down menu option changes
+            } 
+    } 
+    //reset cache button
+    async resetCache(){
+        await this.page.getByRole('button',{name: 'Reset Cache'}).click();
+    }  
+   
     //download excel function
     async excelDownload(){
         await this.page.getByRole('button',{name:'Download Excel'}).click();// selects the download excel button
@@ -149,8 +178,40 @@ export default class DashboardPage{
          * Chronic
          */
         await this.page.getByRole('link',{name: navSelect}).click();
+    }
+    async dataverify(num){
+        await this.page.getByLabel('Weight *').focus();
+        await this.page.screenshot({path:'dataverify' + num + '.png'}); 
+    }
+
+    async datacomparison(){
+        expect(await this.page.getByTitle('User Login').screenshot()).toMatchSnapshot('basescreenshot.png');
+    }
+
+    async ganzoniCalculator(weightype,weight, curHgb){
+        await this.page.locator('button').filter({hasText:'work'}).click();
+        await this.page.getByRole('menuitem',{name:'Ganzoni Calculator'}).click();
+
+        if (weightype != 'lbs'){
+            //select kg
+            await this.page.locator('#mat-radio-3').click();
+            //enter kg weight
+            await this.page.getByLabel('Weight *').click();
+            await this.page.getByLabel('Weight *').fill(weight);
+        }
+        else{
+            //enter lbs weight
+            await this.page.getByLabel('Weight *').click();
+            await this.page.getByLabel('Weight *').fill(weight);
+        }
+        //enter current hgb
+        await this.page.getByLabel('Current HGB (g/dL) *').click();
+        await this.page.getByLabel('Current HGB (g/dL) *').fill(curHgb);
+
+        //capture value
 
     }
+
 
 }
 
