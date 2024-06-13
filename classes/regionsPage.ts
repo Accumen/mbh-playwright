@@ -18,62 +18,62 @@ export default class CasetypesmappingPage{
     async selectRegion(regionName){
         await this.page.getByText(regionName).click();
     }
-        //edit region name
+    //edit region name
     async editRegionName(regionName){
         await this.page.getByLabel('Region Name *').click();
         await this.page.getByLabel('Region Name *').fill(regionName);
 
     }
-        //edit region code
+    //edit region code
     async editRegionCode(regionCode){
         await this.page.getByLabel('Region Code *').click();
         await this.page.getByLabel('Region Code *').fill(regionCode);
 
     }
-        //edit region status
+    //edit region status
     async editRegionStatus(regionStatus){
         await this.page.getByLabel('Active').locator('div').nth(2).click();
-        await this.page.getByText(regionStatus).click();
+        await this.page.getByText(regionStatus,{exact:true}).click();
         /**
          * Active
          * Inactive
          */
 
     }
-        //Save
+    //Save
     async saveRegion(){
         await this.page.getByRole('button',{name:'Save'}).click();
     }
-
-
-     //add region button
-     async addRegion(){
+    //add region button
+    async addRegion(){
         await this.page.getByRole('button',{name:'Add Region'}).click();
-     }
+    }
 
-     //add region screen
-     async newRegion(regionName,regionCode,regionStatus){
-        //region name (fillable)
+    //add region screen
+    async newRegion(regionName,regionCode,regionStatus){
+        //add region name (fillable)
         await this.page.getByLabel('Region Name *').click();
         await this.page.getByLabel('Region Name *').fill(regionName);
-        //region code (fillable)
+        //add region code (fillable)
         await this.page.getByLabel('Region Code *').click();
         await this.page.getByLabel('Region Code *').fill(regionCode);
-        //region status 
+        //add region status 
         await this.page.getByLabel('Active').locator('div').nth(2).click();
         await this.page.getByRole('option',{name:regionStatus, exact:true}).click();
         /**
          * Active
-         * Inactive
+         * InActive
          */
-     }
+    }
     //back arrow
     async backArrow(){
-        await this.page.getByRole('button',{name:''}).click();
+        await this.page.getByRole('button',{name:''}).click();
     }
     //delete (trash can)
     async deleteRegion(){
-        await this.page.getByTitle('Delete').click();
+        //await this.page.getByTitle('Delete').click();
+        this.page.once('dialog',dialog => dialog.accept());
+        await this.page.getByTitle('Delete').last().click();
     }
 
 }
