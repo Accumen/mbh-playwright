@@ -144,8 +144,13 @@ test('complete nonsurgical treated followup', async ({ page }) => {
     await worklist.selectPatientfromSearch('Treated Follow');
     await worklist.completeNonSurgicalVisit('Treated','B12','','yes','','','','2024','JUNE','18');
     await worklist.selectChainofCustody();
+    await worklist.worklistscreenshot(1);
     await worklist.backarrow();
     await worklist.searchMRN('789457');
+    await worklist.worklistscreenshot(2);
+    await worklist.selectPatientfromSearch('Treated Follow');
+    await worklist.selectChainofCustody();
+    await worklist.worklistscreenshot(3);
     await worklist.followUpScnsht();
 
 
