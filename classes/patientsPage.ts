@@ -569,6 +569,57 @@ export default class PatientsPage{
     await this.page.locator('id=mat-input-11').fill(weight);   
 
     }
+    //edit pcp
+    async editPCP(provider){
+        //click the blue pencil "Edit" for PCP
+        await this.page.getByTitle('Edit').nth(0).click();
+        //enter provider name
+        await this.page.getByLabel('Provider Name / NPI').click();
+        await this.page.getByLabel('Provider Name / NPI').fill(provider);
+        await this.page.getByLabel('Provider Name / NPI').press('Enter');
+        await this.page.getByRole('option',{name:provider,exact:false}).click();
+        //save button
+        await this.page.getByRole('button',{name:'Save'}).click();
+    }
+    //edit surgeon
+    async editSurgeon(surgeon){
+        //click the blue pencil "Edit" for PCP
+        await this.page.getByTitle('Edit').nth(2).click();
+        //enter the surgeon
+        await this.page.getByLabel('Surgeon Name / NPI').click();
+        await this.page.getByLabel('Surgeon Name / NPI').fill(surgeon);
+        await this.page.getByLabel('Surgeon Name / NPI').press('Enter');
+        await this.page.getByRole('option',{name:surgeon,exact:false}).click();
+        //save button
+        await this.page.getByRole('button',{name:'Save'}).click();
+    }
+    //edit treatment center
+    async editCenter(center){
+        //click the blue pencil "edit" for Treatment Infusion Center
+        await this.page.getByTitle('Edit').nth(1).click();
+        //enter the center's name
+        await this.page.getByLabel('Infusion Name / Facility Name / Code').click();
+        await this.page.getByLabel('Infusion Name / Facility Name / Code').fill(center);
+        /**center key
+         * test location (QA1)
+         * test location (QA3)
+         */
+        await this.page.getByLabel('Infusion Name / Facility Name / Code').press('Enter');
+        //save button
+        await this.page.getByRole('button',{name:'Save'}).click();
+    }
+    //edit surgery facility
+    async editFacility(facility){
+          //click the blue pencil "edit" for Treatment Infusion Center
+          await this.page.getByTitle('Edit').nth(3).click();
+          //enter the center's name
+          await this.page.getByLabel('Facility Name').click();
+          await this.page.getByLabel('Facility Name').fill(facility);
+          await this.page.getByLabel('Facility Name').press('Enter');
+         await this.page.getByRole('option',{name:facility,exact:true}).click();
+          //save button
+          await this.page.getByRole('button',{name:'Save'}).click();
+    }
     //save button
     async saveEditPatient(){      
        await this.page.getByRole('button',{name:'Save'}).click();
@@ -624,4 +675,121 @@ export default class PatientsPage{
 
     }
 
-}
+    //view visit button
+    async viewVisit(){
+        await this.page.getByRole('button',{name:'View Visit'}).last().click();//chooses most recent visit
+    }
+    //assign visit
+    async assignVisit(user){
+        await this.page.getByRole('button',{name:'Assign'}).click();
+        await this.page.getByLabel('Users list').locator('div').nth(3).click();
+        await this.page.getByRole('option',{name:user,exact:true}).click();
+    }
+    //save assigned user
+    async saveAssigned(){
+        await this.page.getByRole('button',{name:'Save'}).click();
+        await this.page.locator('app-basic-visit-info-page div').getByText('Assigned To | Test User').focus();
+    }
+    //unassign user
+    async unAssign(){
+        await this.page.getByRole('button',{name:'UnAssign'}).click();
+    }
+    //back arrow
+    async backarrow(){
+        await this.page.getByRole('button',{name:''}).click();
+    }
+    //close assign user window
+    async closeAssignWindow(){
+        await this.page.getByRole('button',{name:'Close'}).click();
+    }
+    //patient details drop down
+    async seePatientDetails(){
+        await this.page.getByRole('button',{name:'PATIENT DETAILS'}).click();
+    }
+    //medications drop down
+    async seeMedications(){
+        await this.page.getByRole('button',{name:'MEDICATIONS'}).click();
+    }
+    //allergies drop down
+    async seeAllergies(){
+        await this.page.getByRole('button',{name:'ALLERGIES'}).click();
+    }
+    //chain of custody drop down and scroll
+    async seeChainofCustody(){
+        await this.page.getByRole('button',{name:'CHAIN OF CUSTODY'}).click();
+        
+    }
+    //add communication
+    //sort communication
+    async sortCommunication(sortby){
+        /**sortby key
+         * asc
+         * desc
+         */
+        if(sortby == 'asc' && await this.page.getByRole('button',{name:'Newest First'}).isVisible()){
+            //do nothing already sorted by ascending
+        }
+        else if(sortby == 'desc' && await this.page.getByRole('button',{name:'Newest First'}).isVisible()){
+            await this.page.getByRole('button',{name:'Newest First'}).click();
+        }
+        else if(sortby == 'desc' && await this.page.getByRole('button',{name:'Oldest First'}).isVisible()){
+            //do nothing already sorted by descending
+        }
+        else( sortby == 'asc' && await this.page.getByRole('button',{name:'Oldest First'}).isVisible());{
+            await this.page.getByRole('button',{name:'Oldest First'}).click();
+        }
+    }
+    //edit communication
+    async editCommunication(){
+        await this.page.getByRole('button',{name:'Edit'}).last().click();
+    }
+    //edit commtype
+    async editCommType(commType){
+        await this.page.getByText('Communication Type *').nth(2).click();
+        await this.page.getByRole('option',{name:commType,exact:true}).click();
+        /**commType key
+         * Task
+         * Comment
+         * Follow Up Call Needed
+         */
+    }
+    //edit message
+    async editMessage(comment){
+        await this.page.getByLabel('Message *').click();
+        await this.page.getByLabel('Message *').fill(comment);
+    }
+    //edit priority
+    async editPriority(priority){
+        await this.page.getByText('Priority *').nth(2).click();
+        await this.page.getByRole('option',{name:priority,exact:false}).click();
+        /**priority key
+         * Low
+         * Medium
+         * High
+         * Hold
+         */
+    }
+    //edit resolve date
+    async editResolveDate(){
+
+    }
+    //edit communication button
+    async saveCommEdits(){
+        await this.page.getByRole('button',{name:'Edit Communication'}).click();
+    }
+    //reply to communication
+    async replyCommunication(comment,resolved){
+        await this.page.getByRole('button',{name:'Reply'}).last().click();
+        await this.page.getByPlaceholder('Message').click();
+        await this.page.getByPlaceholder('Message').fill(comment);
+        if(resolved == 'yes'){
+            await this.page.locator('mat-checkbox-inner-container').click();   
+        }
+        else{
+            //do nothing
+        }
+        await this.page.getByRole('button',{name:'Reply'}).click();
+    }
+    //mark as resolved
+
+}   
