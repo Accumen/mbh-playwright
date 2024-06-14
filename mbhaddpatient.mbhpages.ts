@@ -19,12 +19,12 @@ test('addpatient', async ({ page }) => {
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.addPatient('Barney','Rubble','651325','2024','March','25','Male','White','Not Hispanic','1970','May','23','yes','2548879845',
-    '881 Dinosaur Way','Bedrock','CA','56795','68','156');
+    await patients.addPatient('Donald','Duck','859423','2024','June','25','Male','White','Not Hispanic','1987','May','16','yes','2548879845',
+    '543 Waddle Way','Bedrock','CA','56795','68','156');
     await patients.savePatient();
-    await patients.searchPatient('651325');
-    await patients.selectPatientfromSearch('Barney Rubble');
-    await patients.patientschedulesurgical('2024','May','12',13,'SPINE','test','QA Facility 1');
+    await patients.searchPatient('859423');
+    await patients.selectPatientfromSearch('Donald Duck');
+    await patients.patientschedulesurgical('2024','July','12',13,'SPINE','test','QA Facility 1');
 
 })
 

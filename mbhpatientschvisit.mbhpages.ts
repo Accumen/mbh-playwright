@@ -19,11 +19,11 @@ test('patient surgical visit', async ({ page }) => {
     const patients = new PatientsPage(page);
     await patients.selectPatients();
     await patients.searchPatient('smith');
-    await patients.selectPatientfromSearch('Pammi Smiths');
-    await patients.patientschedulesurgical('2024','March','29',8,'CARDIO','test','QA Facility 1');
+    await patients.selectPatientfromSearch('Emily Smith');
+    await patients.patientschedulesurgical('2024','JUNE','29',8,'CARDIO','test','QA Facility 1');
 })
 
-test('patients chronic visit', async ({ page }) => {
+test('patients non-surgical visit', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
@@ -39,7 +39,7 @@ test('patients chronic visit', async ({ page }) => {
     await patients.selectPatients();
     await patients.searchPatient('Smith');
     await patients.selectPatientfromSearch('Smith');
-    await patients.patientsschedulechronic('2024','Apr','4',15,'CHRONIC MEDICAL FOLLOW UP','test','QA Facility 1');
+    await patients.patientsschedulechronic('2024','June','24',15,'CHRONIC MEDICAL FOLLOW UP','test','QA Facility 1');
    
 })
 
@@ -142,4 +142,51 @@ test ('open drop downs on patient visit', async ({page})=>{
     await patients.seeMedications();
     await patients.seeAllergies();
     await patients.seeChainofCustody();
+})
+
+test('edit communication', async({page})=>{
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const patients = new PatientsPage(page);
+    await patients.selectPatients();
+    await patients.searchPatient('Rubble');
+    await patients.selectPatientfromSearch('Barney Rubble');
+    await patients.viewVisit();
+    await patients.editCommunication();
+    await patients.editCommType('Task');
+    await patients.editMessage('playwright test message');
+    await patients.editPriority('Low');
+    await patients.editResolveDate('June 24');
+    await patients.saveCommEdits();
+    await patients.replyCommunication('This reply is a playwright test.','no');
+    await patients.markAsResolved();
+})
+
+test('add communication', async({page})=>{
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const patients = new PatientsPage(page);
+    await patients.selectPatients();
+    await patients.searchPatient('Rubble');
+    await patients.selectPatientfromSearch('Barney Rubble');
+    await patients.viewVisit();
+    await patients.addCommunication('Task','Playwright Test','Low','June 28');
 })

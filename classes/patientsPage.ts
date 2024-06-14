@@ -51,9 +51,9 @@ export default class PatientsPage{
  
     //search patient name (fillable)
     async searchPatient(patient){
-        await this.page.getByLabel('Search Patient name , mrn').click();
-        await this.page.getByLabel('Search Patient name , mrn').fill(patient);
-        await this.page.getByLabel('Search Patient name , mrn').press('Enter');
+        await this.page.locator('mat-label').click();
+        await this.page.getByPlaceholder('Search Patient name , mrn').fill(patient);
+        await this.page.getByPlaceholder('Search Patient name , mrn').press('Enter');
     }
     //clear button
     async clearSelections(){
@@ -141,10 +141,10 @@ export default class PatientsPage{
     //add labs
     async addLabs(labtype,labvalue,resultyear,resultmonth,resultday){
         await this.page.getByRole('button',{name: 'Add'}).click();
-        await this.page.getByLabel('Choose Lab Type *').locator('span').click();
+        await this.page.getByLabel('Choose Lab Type').click();
         await this.page.getByRole('option', {name:labtype, exact: true}).locator('span').click();
-        await this.page.getByLabel('Result Value *').click();
-        await this.page.getByLabel('Result Value *').fill(labvalue);
+        await this.page.getByPlaceholder('Result Value').click();
+        await this.page.getByPlaceholder('Result Value').fill(labvalue);
         //await this.page.locator('id=mat-input-3').getByLabel('Open calendar').click();
         await this.page.getByRole('button',{name:'Open calendar'}).click();
         await this.page.getByLabel('Choose month and year').click();
@@ -165,16 +165,16 @@ export default class PatientsPage{
         await this.page.getByRole('button',{name:'Add Patients'}).click();
          //Required fields only
          //first name 
-        await this.page.getByLabel('First Name *').click();
-        await this.page.getByLabel('First Name *').fill(fname);
+        await this.page.getByPlaceholder('First Name').click();
+        await this.page.getByPlaceholder('First Name').fill(fname);
          //last name 
-         await this.page.getByLabel('Last Name *').click();
-         await this.page.getByLabel('Last Name *').fill(lname); 
+         await this.page.getByPlaceholder('Last Name').click();
+         await this.page.getByPlaceholder('Last Name').fill(lname); 
          //mrn
-         await this.page.getByLabel('MRN *').click();
-         await this.page.getByLabel('MRN *').fill(mrn);
+         await this.page.getByPlaceholder('MRN',{exact:true}).click();
+         await this.page.getByPlaceholder('MRN',{exact:true}).fill(mrn);
         //health history (calendar)
-        await this.page.locator('mat-form-field').filter({hasText: 'Health History Date'}).getByLabel('Open calendar').click();
+        await this.page.getByPlaceholder('Health History Date').getByLabel('Open calendar').click();
         await this.page.getByLabel('Choose month and year').click();
         while(await this.page.getByRole('button', {name:hhYear, exact:true}).isHidden()){
            await this.page.getByLabel('Previous 24 years').click();
@@ -186,14 +186,14 @@ export default class PatientsPage{
         await this.page.locator('button').filter({hasText: 'done'}).click();
             
         //gender drop down
-        await this.page.getByLabel('Gender *').locator('div').nth(3).click();
-        await this.page.getByText(gender,{exact:true}).click();
+        await this.page.getByLabel('Gender').locator('div').nth(2).click();
+        await this.page.getByRole('option',{name:gender,exact:true}).click();
             /**gender key
-             * male
-             * female
+             * Male
+             * Female
              */
         //race (drop down)
-        await this.page.getByLabel('Race *').locator('div').nth(2).click();
+        await this.page.getByLabel('Race').locator('div').nth(2).click();
         await this.page.getByRole('option', { name: race, exact:true }).locator('span').click();
         /** Race Key
          * American Indian or Alaska Native
@@ -204,7 +204,7 @@ export default class PatientsPage{
          * White
          */
         //ethnicity (drop down)
-        await this.page.getByLabel('Ethnicity *').locator('div').nth(2).click();
+        await this.page.getByLabel('Ethnicity').locator('div').nth(2).click();
         await this.page.getByRole('option', { name: ethnicity, exact:true }).locator('span').click();
         /** Ethnicity Key
          * Unknown
@@ -222,35 +222,41 @@ export default class PatientsPage{
            await this.page.getByLabel(dobday).click();
         //hipaa received (checkbox)
         if(hippa != 'yes'){
-            await this.page.locator('.mat-checkbox-inner-container');
-            //await this.page.locator('id=mat-checkbox-3');
+            if(await this.page.getByLabel('Hipaa Received').isChecked()){
+            await this.page.getByLabel('Hipaa Received').uncheck();}
+            else{ //do nothing
+                }
+            
             }
             else{
-            await this.page.locator('.mat-checkbox-inner-container').click();
-            //await this.page.locator('id=mat-checkbox-3').click();
+                if(await this.page.getByLabel('Hipaa Received').isChecked()){
+                    //do nothing
+                }
+                else{
+                await this.page.getByLabel('Hipaa Received').click();}
             }
         //phone number
-        await this.page.getByLabel('Primary Phone *').click();
-        await this.page.getByLabel('Primary Phone *').fill(phone);
+        await this.page.getByPlaceholder('Primary Phone').click();
+        await this.page.getByPlaceholder('Primary Phone').fill(phone);
         //street
-        await this.page.getByLabel('Address *').click();
-        await this.page.getByLabel('Address *').fill(street);
+        await this.page.getByPlaceholder('Address').click();
+        await this.page.getByPlaceholder('Address').fill(street);
         //apt/unit
         //city
-        await this.page.getByLabel('City *', { exact: true }).click();
-        await this.page.getByLabel('City *', { exact: true }).fill(city);
+        await this.page.getByPlaceholder('City', { exact: true }).click();
+        await this.page.getByPlaceholder('City', { exact: true }).fill(city);
         //state
-        await this.page.getByLabel('State *').click();
-        await this.page.getByLabel('State *').fill(state);
+        await this.page.getByPlaceholder('State').click();
+        await this.page.getByPlaceholder('State').fill(state);
         //zip
-        await this.page.getByLabel('PostalCode *').click();
-        await this.page.getByLabel('PostalCode *').fill(zipcode);
+        await this.page.getByPlaceholder('PostalCode').click();
+        await this.page.getByPlaceholder('PostalCode').fill(zipcode);
         //height
-        await this.page.locator('id=mat-input-10').click();
-        await this.page.locator('id=mat-input-10').fill(height);
+        await this.page.getByPlaceholder('Height(inches)').click();
+        await this.page.getByPlaceholder('Height(inches)').fill(height);
         //weight
-        await this.page.locator('id=mat-input-11').click();
-        await this.page.locator('id=mat-input-11').fill(weight);
+        await this.page.getByPlaceholder('Weight (lbs)').click();
+        await this.page.getByPlaceholder('Weight (lbs)').fill(weight);
 
     }
         //save patient button
@@ -299,7 +305,7 @@ export default class PatientsPage{
          //check mark button
          await this.page.locator('button').filter({hasText: 'done'}).click();
          //procedure drop down(has case types list)
-         await this.page.getByLabel('Procedure *').locator('div').nth(2).click();
+         await this.page.getByPlaceholder('Procedure').locator('div').nth(2).click();
          await this.page.getByText(procedure,{exact:true}).click()
          /**Surgical Procedure key
           * ORTHO
@@ -363,19 +369,19 @@ export default class PatientsPage{
             //Delete Button
         //Surgeon (fillable required field)
         await this.page.getByLabel('Surgeon', {exact:true}).click();
-         await this.page.getByLabel('Surgeon', {exact:true}).fill('Sur');
-         await this.page.getByLabel('Surgeon',{exact:true}).press('Enter');
+         await this.page.getByPlaceholder('Surgeon', {exact:true}).fill('Sur');
+         await this.page.getByPlaceholder('Surgeon',{exact:true}).press('Enter');
          //await expect (this.page.locator('id=mat-autocomplete-1')).toBeVisible();
          await this.page.getByRole('option', {name: surgeon, exact: false}).click();
-         await this.page.getByLabel('Facility',{exact:true}).click();
-         await this.page.getByLabel('Facility',{exact:true}).fill(pFacility);
-         await this.page.getByLabel('Facility',{exact:true}).press('Enter');
+         await this.page.getByPlaceholder('Facility',{exact:true}).click();
+         await this.page.getByPlaceholder('Facility',{exact:true}).fill(pFacility);
+         await this.page.getByPlaceholder('Facility',{exact:true}).press('Enter');
          await this.page.getByRole('option',{name:pFacility,exact:true}).click();
          await this.page.getByRole('button',{name:'Schedule Visit'}).click();
         }
         //schedule chronic visit
         async patientsschedulechronic(pYear,pMonth,pDay,pclickcount,procedure,surgeon,pFacility){
-            await this.page.getByRole('button',{name:'Schedule Chronic Visit'}).click();
+            await this.page.getByRole('button',{name:'Schedule Non-Surgical Visit'}).click();
              //**Visit screen**
          //visit date (calendar and 24hr clock)
          await this.page.getByRole('button',{name:'Open calendar'}).click();
@@ -414,7 +420,7 @@ export default class PatientsPage{
          //check mark button
          await this.page.locator('button').filter({hasText: 'done'}).click();
          //procedure drop down(has case types list)
-         await this.page.getByLabel('Procedure *').locator('div').nth(2).click();
+         await this.page.getByPlaceholder('Procedure').locator('div').nth(2).click();
          await this.page.getByText(procedure,{exact:true}).click()
          /**Chronic Procedure key
           * WOMEN'S HEALTH- CHRONIC
@@ -434,18 +440,14 @@ export default class PatientsPage{
             //Add button
             //Delete Button
         //Surgeon (fillable required field)
-     await this.page.getByLabel('Surgeon', {exact:true}).click();
-         await this.page.getByLabel('Surgeon', {exact:true}).fill('Sur');
-         await this.page.getByLabel('Surgeon', {exact:true}).press('Enter');
-         //await this.page.getByLabel('Surgeon', {exact:true}).press('enter');
-         //await expect (this.page.locator('id=mat-autocomplete-1')).toBeVisible();
+     await this.page.getByText('Referring Provider', {exact:true}).click();
+         await this.page.getByPlaceholder('Referring Provider', {exact:true}).fill('Sur');
+         await this.page.getByPlaceholder('Referring Provider', {exact:true}).press('Enter');
          await this.page.getByRole('option', {name: surgeon, exact: false}).click();
-         //PCP (fillabe not required field)
-         //Location(fillable not required field)
          //Facility
-         await this.page.getByLabel('Facility',{exact:true}).click();
-         await this.page.getByLabel('Facility',{exact:true}).fill(pFacility);
-         await this.page.getByLabel('Facility',{exact:true}).press('Enter');
+         await this.page.getByText('Treatment Facility',{exact:true}).click();
+         await this.page.getByPlaceholder('Treatment Facility',{exact:true}).fill(pFacility);
+         await this.page.getByPlaceholder('Treatment Facility',{exact:true}).press('Enter');
          await this.page.getByRole('option',{name:pFacility,exact:true}).click();
          await this.page.getByRole('button',{name:'Schedule Visit'}).click();
         }  
@@ -575,8 +577,8 @@ export default class PatientsPage{
         await this.page.getByTitle('Edit').nth(0).click();
         //enter provider name
         await this.page.getByLabel('Provider Name / NPI').click();
-        await this.page.getByLabel('Provider Name / NPI').fill(provider);
-        await this.page.getByLabel('Provider Name / NPI').press('Enter');
+        await this.page.getByPlaceholder('Provider Name / NPI').fill(provider);
+        await this.page.getByPlaceholder('Provider Name / NPI').press('Enter');
         await this.page.getByRole('option',{name:provider,exact:false}).click();
         //save button
         await this.page.getByRole('button',{name:'Save'}).click();
@@ -587,8 +589,8 @@ export default class PatientsPage{
         await this.page.getByTitle('Edit').nth(2).click();
         //enter the surgeon
         await this.page.getByLabel('Surgeon Name / NPI').click();
-        await this.page.getByLabel('Surgeon Name / NPI').fill(surgeon);
-        await this.page.getByLabel('Surgeon Name / NPI').press('Enter');
+        await this.page.getByPlaceholder('Surgeon Name / NPI').fill(surgeon);
+        await this.page.getByPlaceholder('Surgeon Name / NPI').press('Enter');
         await this.page.getByRole('option',{name:surgeon,exact:false}).click();
         //save button
         await this.page.getByRole('button',{name:'Save'}).click();
@@ -599,12 +601,12 @@ export default class PatientsPage{
         await this.page.getByTitle('Edit').nth(1).click();
         //enter the center's name
         await this.page.getByLabel('Infusion Name / Facility Name / Code').click();
-        await this.page.getByLabel('Infusion Name / Facility Name / Code').fill(center);
+        await this.page.getByPlaceholder('Infusion Name / Facility Name / Code').fill(center);
         /**center key
          * test location (QA1)
          * test location (QA3)
          */
-        await this.page.getByLabel('Infusion Name / Facility Name / Code').press('Enter');
+        await this.page.getByPlaceholder('Infusion Name / Facility Name / Code').press('Enter');
         //save button
         await this.page.getByRole('button',{name:'Save'}).click();
     }
@@ -614,8 +616,8 @@ export default class PatientsPage{
           await this.page.getByTitle('Edit').nth(3).click();
           //enter the center's name
           await this.page.getByLabel('Facility Name').click();
-          await this.page.getByLabel('Facility Name').fill(facility);
-          await this.page.getByLabel('Facility Name').press('Enter');
+          await this.page.getByPlaceholder('Facility Name').fill(facility);
+          await this.page.getByPlaceholder('Facility Name').press('Enter');
          await this.page.getByRole('option',{name:facility,exact:true}).click();
           //save button
           await this.page.getByRole('button',{name:'Save'}).click();
@@ -628,46 +630,6 @@ export default class PatientsPage{
     async patientVerify(num){
         await this.page.screenshot({path:'patientverify'+ num +'.png', fullPage: true});
       }
-
-    async addCommunication(commType, message,priority,resolveDate){
-        await this.page.locator('app-communication-list').getByRole('button', { name: ' Add' }).click();
-        await this.page.getByText('Communication TypeCommunication Type *').click();
-        await this.page.getByText(commType).click();
-        /**commType Key
-         * Task
-         * Comment
-         * Follow Up Call Needed
-         */
-        await this.page.getByLabel('Message *').click();
-        await this.page.getByLabel('Message *').fill(message);
-        await this.page.getByLabel('Priority *').locator('div').nth(3).click();
-        await this.page.getByText(priority).click();
-        /**priority key
-         * Hold: Review Case, but no
-         * Low: Review Case within 7 days
-         * Medium: Review Case and
-         * High: Case needs immediate
-         */
-        await this.page.getByLabel('Open calendar').click();
-        await this.page.getByLabel(resolveDate).click();
-        /**resolveDate
-         * Month day,
-         */
-        await this.page.locator('button').filter({ hasText: 'done' }).click();
-        await this.page.getByRole('button', { name: 'Add Communication' }).click();
-    }  
-    //sort communication
-    async orderCommunications(commSort){
-        await this.page.getByRole('button',{name:commSort}).click()
-        /**commSort
-         * Newest First
-         * Oldest First
-         */
-    }
-    //edit communication
-    //mark as resolved
-    //reply to communication
-    //select a visit
     
     //latest labs screenshot
     async latestlabsscreenshot(){
@@ -720,6 +682,33 @@ export default class PatientsPage{
         
     }
     //add communication
+    async addCommunication(commType, message,priority,resolveDate){
+        await this.page.locator('app-communication-list').getByRole('button', { name: ' Add' }).click();
+        await this.page.getByPlaceholder('Communication Type').click();
+        await this.page.getByText(commType).click();
+        /**commType Key
+         * Task
+         * Comment
+         * Follow Up Call Needed
+         */
+        await this.page.getByPlaceholder('Message').click();
+        await this.page.getByPlaceholder('Message').fill(message);
+        await this.page.getByPlaceholder('Priority').locator('div').nth(3).click();
+        await this.page.getByRole('option',{name:priority,exact:false}).click();
+        /**priority key
+         * Hold
+         * Low
+         * Medium
+         * High
+         */
+        await this.page.getByLabel('Open calendar').click();
+        await this.page.getByLabel(resolveDate).click();
+        /**resolveDate
+         * Month day,
+         */
+        await this.page.locator('button').filter({ hasText: 'done' }).click();
+        await this.page.getByRole('button', { name: 'Add Communication' }).click();
+    } 
     //sort communication
     async sortCommunication(sortby){
         /**sortby key
@@ -741,11 +730,11 @@ export default class PatientsPage{
     }
     //edit communication
     async editCommunication(){
-        await this.page.getByRole('button',{name:'Edit'}).last().click();
+        await this.page.getByRole('button',{name:' Edit',exact:true}).last().click();
     }
     //edit commtype
     async editCommType(commType){
-        await this.page.getByText('Communication Type *').nth(2).click();
+        await this.page.getByPlaceholder('Communication Type').click();
         await this.page.getByRole('option',{name:commType,exact:true}).click();
         /**commType key
          * Task
@@ -755,12 +744,12 @@ export default class PatientsPage{
     }
     //edit message
     async editMessage(comment){
-        await this.page.getByLabel('Message *').click();
-        await this.page.getByLabel('Message *').fill(comment);
+        await this.page.getByPlaceholder('Message').click();
+        await this.page.getByPlaceholder('Message').fill(comment);
     }
     //edit priority
     async editPriority(priority){
-        await this.page.getByText('Priority *').nth(2).click();
+        await this.page.getByPlaceholder('Priority').click();
         await this.page.getByRole('option',{name:priority,exact:false}).click();
         /**priority key
          * Low
@@ -770,8 +759,13 @@ export default class PatientsPage{
          */
     }
     //edit resolve date
-    async editResolveDate(){
-
+    async editResolveDate(resolveDate){
+        await this.page.getByLabel('Open calendar').click();
+        await this.page.getByLabel(resolveDate).click();
+        /**resolveDate
+         * Month day,
+         */
+        await this.page.locator('button').filter({ hasText: 'done' }).click();
     }
     //edit communication button
     async saveCommEdits(){
@@ -783,7 +777,7 @@ export default class PatientsPage{
         await this.page.getByPlaceholder('Message').click();
         await this.page.getByPlaceholder('Message').fill(comment);
         if(resolved == 'yes'){
-            await this.page.locator('mat-checkbox-inner-container').click();   
+            await this.page.getByLabel('Mark as Resolved').click();   
         }
         else{
             //do nothing
@@ -791,5 +785,8 @@ export default class PatientsPage{
         await this.page.getByRole('button',{name:'Reply'}).click();
     }
     //mark as resolved
+    async markAsResolved(){
+        await this.page.getByRole('button',{name:'Mark as Resolved'}).last().click();
+    }
 
 }   

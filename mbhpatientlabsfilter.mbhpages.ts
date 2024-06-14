@@ -2,7 +2,6 @@ import { test, expect } from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import PatientsPage from './classes/patientsPage';
-import WorklistPage from './classes/worklistPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 
 
@@ -43,7 +42,7 @@ test('add patients lab', async ({ page }) => {
     await patients.selectPatients();
     await patients.searchPatient('Terrell');
     await patients.selectPatientfromSearch('Terrell Jack');
-    await patients.addLabs('test lab type', '123', '2024', 'MAY', '3')
+    await patients.addLabs('test lab type', '123', '2024', 'JULY', '3')
 
 })
 
@@ -69,3 +68,4 @@ test('delete patients lab', async ({ page }) => {
     await patients.closeSearchListWindow();
     await patients.viewAllLabs('test lab type','NULL');
 })
+
