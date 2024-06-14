@@ -3,7 +3,7 @@ import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import WorklistPage from './classes/worklistPage';
 import PatientsPage from './classes/patientsPage';
-const logindata = JSON.parse(JSON.stringify(require("../mbhpages/testdata/login.json")))
+const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 
 test('labvalue', async ({ page }) => {
     test.slow();
