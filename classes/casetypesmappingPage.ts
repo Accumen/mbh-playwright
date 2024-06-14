@@ -21,7 +21,7 @@ export default class CasetypesmappingPage{
         const downloadPromise = this.page.waitForEvent('download');
         await this.page.getByRole('button', {name:'Download Mappings'}).click();
         const download = await downloadPromise;
-        await download.saveAs('./testdata/'+ download.suggestedFilename());
+        await download.saveAs('../testdata/'+ download.suggestedFilename());
     }
 
     //upload mappings button

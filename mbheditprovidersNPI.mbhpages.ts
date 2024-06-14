@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import ProvidersPage from './classes/providersPage';
-const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const logindata = JSON.parse(JSON.stringify(require("./testdata/login.json")))
 
 test('edit provider NPI', async ({ page }) => {
     test.slow();

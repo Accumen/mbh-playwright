@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import LabTypesMappingPage from './classes/labtypesmappingPage'
-const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const logindata = JSON.parse(JSON.stringify(require("./testdata/login.json")))
 
 test('pagination after search', async ({ page }) => {
 

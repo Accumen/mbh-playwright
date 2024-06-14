@@ -2,7 +2,7 @@ import {test, expect} from "@playwright/test"
 import LoginPage from "./classes/loginPage"// connects the login class to the test
 import DashboardPage from "./classes/dashboardPage"//  connects the dashboard class to the test
 import CasetypesmappingPage from "./classes/casetypesmappingPage"//connect the case types mapping class to the test
-const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const logindata = JSON.parse(JSON.stringify(require("./testdata/login.json")))
 
 test("map by region test", async({page})=>{
     test.slow();//changes default timeout from 30000 ms to 90000 ms

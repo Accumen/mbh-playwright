@@ -1,7 +1,7 @@
 import {test} from "@playwright/test"
 import LoginPage from "./classes/loginPage"
 import UsersPage from "./classes/usersPage"
-const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const logindata = JSON.parse(JSON.stringify(require("./testdata/login.json")))
 /**test coverage
  * adding a user
  * back arrow
