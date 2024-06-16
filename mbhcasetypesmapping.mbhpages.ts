@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import CaseTypesMappingPage from './classes/casetypesmappingPage'
-const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const logindata = JSON.parse(JSON.stringify(require("./testdata/login.json")))
 
 test('check pagination on case type mapping page', async ({ page }) => {
     test.slow();

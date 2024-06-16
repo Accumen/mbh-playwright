@@ -1,10 +1,10 @@
+.idea/
 node_modules/
 sequential/
+tests/
 /test-results/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
 *.png
 *.win32
-package-lock.json
-package.json

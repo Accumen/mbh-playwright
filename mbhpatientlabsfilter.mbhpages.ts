@@ -2,7 +2,8 @@ import { test, expect } from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import PatientsPage from './classes/patientsPage';
-const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+import WorklistPage from './classes/worklistPage';
+const logindata = JSON.parse(JSON.stringify(require("./testdata/login.json")))
 
 
 test('filter patients labs', async ({ page }) => {
@@ -68,4 +69,3 @@ test('delete patients lab', async ({ page }) => {
     await patients.closeSearchListWindow();
     await patients.viewAllLabs('test lab type','NULL');
 })
-

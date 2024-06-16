@@ -1,7 +1,7 @@
 import {test} from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
-const logindata = JSON.parse(JSON.stringify(require("../mbhpages/testdata/login.json")))
+const logindata = JSON.parse(JSON.stringify(require("./testdata/login.json")))
 
 //serial test for capturing baseline screenshot 
 test('filter dashboard data', async ({ page }) => {

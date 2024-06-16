@@ -1,0 +1,19 @@
+pool:
+  vmImage: 'windows-latest'
+
+trigger:
+  branches:
+    include:
+      - 'master'
+
+name: $(Build.BuildId)
+
+stages:
+
+  - stage: qa
+    displayName: 'Run Automation Test - QA'
+    dependsOn: []
+    jobs:
+      - template: ./playwright-template.yml
+        parameters:
+          BASE_URL: 'https://qa.mybloodhealth.com'
