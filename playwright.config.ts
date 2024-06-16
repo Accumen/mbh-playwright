@@ -15,7 +15,7 @@ const config: PlaywrightTestConfig = {
     fullyParallel: true,
 use: {
     //baseURL: "qa.mybloodhealth.com",
-    headless: true, //another way to make sure it runs with a UI
+    headless: false, //another way to make sure it runs with a UI
     screenshot: "on", // takes a screenshot (options are "on", "off", "only-on-failure")
     video:"on", // takes a video  (options are "on", "on first retry", "retain-on-failure", "retry-with-video")
     launchOptions: { // tells it to perform the steps in a slow manner
