@@ -211,7 +211,10 @@ export default class DashboardPage{
         //capture value
 
     }
-
+   //dashboard screenshot
+    async dashboardscreenshot(){
+        await this.page.getByText('Facilities: All',{exact:true}).scrollIntoViewIfNeeded();
+    }
 
 }
 

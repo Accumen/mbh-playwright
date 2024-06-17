@@ -1,6 +1,7 @@
 import {test} from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
+import ClientsPage from './classes/clientsPage';
 const logindata = JSON.parse(JSON.stringify(require("./testdata/login.json")))
 
 //serial test for capturing baseline screenshot 
@@ -50,4 +51,33 @@ test('reset cache test',async ({page})=>{
     await dashboard.dataverify(2);
     await dashboard.resetCache();
     await dashboard.dataverify(3);
+})
+//Confirm dashboard loads without error after changing date range 
+test('load dashboard', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickDateRange('This Year');
+    await dashboard.dashboardscreenshot()
+})
+
+//delete client
+test('delete client', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const clients = new ClientsPage(page);    
+    await clients.deleteclient();
 })
