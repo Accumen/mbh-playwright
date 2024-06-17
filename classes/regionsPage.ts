@@ -20,14 +20,14 @@ export default class CasetypesmappingPage{
     }
     //edit region name
     async editRegionName(regionName){
-        await this.page.getByLabel('Region Name *').click();
-        await this.page.getByLabel('Region Name *').fill(regionName);
+        await this.page.getByLabel('Region Name').click();
+        await this.page.getByLabel('Region Name').fill(regionName);
 
     }
     //edit region code
     async editRegionCode(regionCode){
-        await this.page.getByLabel('Region Code *').click();
-        await this.page.getByLabel('Region Code *').fill(regionCode);
+        await this.page.getByLabel('Region Code').click();
+        await this.page.getByLabel('Region Code').fill(regionCode);
 
     }
     //edit region status
@@ -52,11 +52,11 @@ export default class CasetypesmappingPage{
     //add region screen
     async newRegion(regionName,regionCode,regionStatus){
         //add region name (fillable)
-        await this.page.getByLabel('Region Name *').click();
-        await this.page.getByLabel('Region Name *').fill(regionName);
+        await this.page.getByLabel('Region Name').click();
+        await this.page.getByLabel('Region Name').fill(regionName);
         //add region code (fillable)
-        await this.page.getByLabel('Region Code *').click();
-        await this.page.getByLabel('Region Code *').fill(regionCode);
+        await this.page.getByLabel('Region Code').click();
+        await this.page.getByLabel('Region Code').fill(regionCode);
         //add region status 
         await this.page.getByLabel('Active').locator('div').nth(2).click();
         await this.page.getByRole('option',{name:regionStatus, exact:true}).click();

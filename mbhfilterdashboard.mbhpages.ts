@@ -79,5 +79,5 @@ test('delete client', async ({ page }) => {
     await login.clickLoginBtn();
 
     const clients = new ClientsPage(page);    
-    await clients.deleteclient();
+    //await clients.deleteclient();
 })

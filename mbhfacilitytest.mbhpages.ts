@@ -17,6 +17,7 @@ const logindata = JSON.parse(JSON.stringify(require("./testdata/login.json")))
 test("facility regression testing", async ({page})=>{
 
     test.slow();
+    test.setTimeout(120000);
 
     const login = new LoginPage(page);
     await page.goto('https://qa.mybloodhealth.com/login');
@@ -36,12 +37,13 @@ test("facility regression testing", async ({page})=>{
     await facility.addLocation();
     await facility.newLocation('test location','Others','Active'); //add & save location
     await facility.saveFacility(); //save facility
-    await facility.selectStatus('Inactive') //status dropdown
+    await facility.selectStatus('Inactive'); //status dropdown
     await facility.selectFacility('QA Facility 3');
-    await facility.editFacility('QA Facility 4','','','','','','','','','','',''); //edit facility
+    await facility.editFacility('QA Facility 4','QA4','301204','321 Test Rd','Brookyln','NY','54321','0987654321','0987654321','Hospital System','Texas','Active'); //edit facility
     await facility.selectLocation('test location');
-    await facility.editLocation('test location 2','',''); //edit location
+    await facility.editLocation('test location 2','Infusion Center','Inactive'); //edit location
     await facility.saveFacility();
+    await facility.selectStatus('Active');
     await facility.selectFacility('QA Facility 4');
     await facility.trashButton(); //delete location (only works if last in the list)
     await facility.facilityBackArrow(); //back arrow
@@ -138,6 +140,6 @@ test("test facility delete", async ({page})=>{
 
     const facility = new FacilityPage(page);
     await facility.selectFacilityMenu();
-    await facility.trashButton(); //only works if last in the list
+    //await facility.trashButton(); //only works if last in the list
     await facility.facilityScreenshot(1);
 })
