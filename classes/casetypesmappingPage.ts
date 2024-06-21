@@ -34,9 +34,9 @@ export default class CasetypesmappingPage{
 
     //search code, description (fillable field)
     async searchCode(searchCaseCode: string){
-        await this.page.getByLabel('Search Code, Description').click();
-        await this.page.getByLabel('Search Code, Description').fill(searchCaseCode);
-        await this.page.getByLabel('Search Code, Description').press('Enter');
+        await this.page.getByText('Search Code, Description').click();
+        await this.page.getByPlaceholder('Search Code, Description').fill(searchCaseCode);
+        await this.page.getByPlaceholder('Search Code, Description').press('Enter');
     }
 
     async hoverSearch(search){
@@ -46,7 +46,7 @@ export default class CasetypesmappingPage{
     //case type drop down  (74 items)
     async searchTypeDropDown(casetype: string){
         await this.page.getByLabel('Case Type').locator('div').nth(2).click();
-        await this.page.getByText(casetype).click();
+        await this.page.getByRole('option',{name:casetype,exact:true}).click();
     /**Case Type Key
      * unmapped
      * exclude
@@ -125,7 +125,6 @@ export default class CasetypesmappingPage{
      * new sub
      * 
     */
-    //await this.page.getByText(casetype).press('Enter');
    }
    //Select case to map
    async selectCaseToMap(searchCaseCode: string){

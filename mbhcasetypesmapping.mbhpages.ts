@@ -76,16 +76,16 @@ test('map case type', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('Newlife hospital');
+    await dashboard.clickClientDropDown('QA Testing');
 
     const casetypesmap = new CaseTypesMappingPage(page);
     await casetypesmap.selectCaseTypesMapping();
-    await casetypesmap.searchCode('107733');
-    await casetypesmap.selectCaseToMap('107733');
-    await casetypesmap.clickToMap('107733','ORTHO');
+    await casetypesmap.searchCode('2864');
+    await casetypesmap.selectCaseToMap('2864');
+    await casetypesmap.clickToMap('2864','ORTHO');
     await casetypesmap.clearSelections();
-    await casetypesmap.searchCode('107733');
-    await casetypesmap.caseVerify('107733');
+    await casetypesmap.searchCode('2864');
+    await casetypesmap.caseVerify('2864');
 
 })
 
@@ -104,7 +104,7 @@ test('upload case type mappings', async ({ page }) => {
     const casetypesmap = new CaseTypesMappingPage(page);
     await casetypesmap.selectCaseTypesMapping();
     await casetypesmap.uploadCaseTypeMappings();
-    //await casetypesmap.searchCode('54321');
+    await casetypesmap.searchCode('76543');
 })
 
 test('download case type mappings', async ({ page }) => {
