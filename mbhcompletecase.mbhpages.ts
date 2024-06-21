@@ -206,7 +206,7 @@ test('complete nonsurgical not treated followup', async ({ page }) => {
 })
 
 test('test complete visit workflow', async ({ page }) => {
-    //MBHS-1227
+    //MBHS-1329
     test.slow();
     const login = new LoginPage(page);
 
@@ -220,12 +220,17 @@ test('test complete visit workflow', async ({ page }) => {
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
-    await worklist.clickChronic();
-    await worklist.selectPatientfromSearch('anna tipoli');
+    await worklist.clickSurgical();
+    await worklist.selectPatientfromSearch('Emily Smith');
     await worklist.clickCompleteCase();
     await worklist.changeCompleteCaseType('Not Treated');
-    await worklist.notTreatedFollowUp();
+    await worklist.worklistscreenshot(1);
+    await worklist.surgicalFollowUp();
+    await worklist.worklistscreenshot(2);
     await worklist.changeCompleteCaseType('Treated');
+    await worklist.worklistscreenshot(3);
+    await worklist.surgicalFollowUp();
+    await worklist.worklistscreenshot(4);
 
 })
 

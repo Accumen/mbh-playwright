@@ -62,8 +62,9 @@ export default class WorklistPage{
         await this.page.getByRole('link', {name:'Non-Surgical', exact: true}).click({delay:1000}); // clicks the Chronic submenu from the worklist
     }
 
-    async clickFacility(){
+    async clickFacility(facility){
         await this.page.getByLabel('QA Facility').locator('div').nth(2).click();
+        await this.page.getByRole('option', { name: facility }).click();
     }
     /* The rest of the functions are the same no matter which menu is chosen (surgical or chronic) */
     //Search Name, MRN
@@ -78,7 +79,8 @@ export default class WorklistPage{
     //Unselect Select All for Case Type
     async unselectAllCaseTypes(){
         await this.page.getByLabel('Case Type').locator('div').nth(3).click();//selects the case type drop down
-        await this.page.locator('.mat-checkbox-inner-container').click({delay:100}); //deselects the select all case type
+        await this.page.getByText('Select All').click({delay:100});
+        //await this.page.locator('.mat-checkbox-inner-container').click({delay:100}); //deselects the select all case type
     }
     //Select Case Type function
     async selectCaseType(casetype: string){
@@ -792,8 +794,8 @@ export default class WorklistPage{
         await this.page.locator('#mat-select-value-23').click();
         await this.page.getByRole('option',{name:completeType,exact:true}).click();
     }
-    //select yes follow up for Not Treated
-    async notTreatedFollowUp(){
+    //select yes follow up for Surgical Complete Case
+    async surgicalFollowUp(){
         await this.page.getByLabel('Select an option').getByText('Yes').click();
     }
     //chronic follow up screenshot
