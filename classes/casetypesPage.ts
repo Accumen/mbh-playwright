@@ -26,34 +26,26 @@ export default class CasetypesPage{
     async newCaseType(name:string, bloodloss: string, description: string, worklisttype: string, parentcasetype: string, status: string){
         
             //name (fillable)
-            //this.editCaseTypeName(name);
             await this.page.locator('div').filter({hasText: 'Name'}).nth(4).click();
             await this.page.getByLabel('Name').fill(name);
             //Est. blood loss (fillable)
-            //this.editBloodLoss(bloodloss);
             await this.page.getByLabel('Est. Blood Loss').click();
             await this.page.getByLabel('Est. Blood Loss').fill(bloodloss);
             //description (fillable)
-            //this.editDescription(description);
-            await this.page.getByLabel('Description').click();
-            await this.page.getByLabel('Description').fill(description);
+            await this.page.getByPlaceholder('Description').click();
+            await this.page.getByPlaceholder('Description').fill(description);
             //Type drop down
-            //this.editWorklistType(worklisttype);
-            //await this.page.getByLabel('Type').click();
-            await this.page.getByLabel('Type *').locator('div').nth(3).click();
-            await this.page.getByRole('option', { name: worklisttype }).locator('span').click();
-            //await this.page.getByRole('option', {name: worklisttype}).locator('span').click();
+            await this.page.getByPlaceholder('Type').locator('div').nth(3).click();
+            await this.page.getByRole('option', { name: worklisttype, exact:true}).locator('span').click();
             //worklisttype key
                 //surgical
                 //chronic
             //parent case type drop down
-            //this.editParentCaseType(parentcasetype);
-            await this.page.getByLabel('Parent Case Type').locator('div').nth(3).click();
-            await this.page.getByText(parentcasetype, {exact: true}).first().click();
+            await this.page.getByPlaceholder('Parent Case Type').locator('div').nth(3).click();
+            await this.page.getByRole('option',{name:parentcasetype, exact: true}).first().click();
                 //list of 76 case types
             //status drop down
-            //this.editStatusDropDown(status);
-            await this.page.getByText('StatusStatus').click();
+            await this.page.getByLabel('Status').getByText('Status').click();
             await this.page.getByText(status, {exact: true}).click();
             //status key
                 //active
@@ -67,7 +59,7 @@ export default class CasetypesPage{
 
         //back arrow button
         async backArrow(){
-            await this.page.getByRole('button', {name:''}).click();
+            await this.page.getByRole('button', {name:'Back'}).click();
         }
         
         //delete case type
@@ -115,13 +107,13 @@ export default class CasetypesPage{
     }
     //description (fillable)
     async editDescription(description: string) {
-        await this.page.getByLabel('Description').click();
-        await this.page.getByLabel('Description').fill(description);
+        await this.page.getByPlaceholder('Description').click();
+        await this.page.getByPlaceholder('Description').fill(description);
     }
     //Type drop down
     async editWorklistType(worklisttype: string) {
-        await this.page.getByLabel('Type *').locator('div').nth(3).click();
-        await this.page.getByRole('option', { name: worklisttype }).locator('span').click();
+        await this.page.getByPlaceholder('Type').locator('div').nth(3).click();
+        await this.page.getByRole('option', {name:worklisttype,exact:true }).locator('span').click();
         //worklist type key
         //surgical
         //chronic

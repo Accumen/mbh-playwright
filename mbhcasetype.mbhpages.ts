@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import CasetypesPage from './classes/casetypesPage';
-const logindata = JSON.parse(JSON.stringify(require("../mbhpages/testdata/login.json")))
+const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 
 test('delete case type', async ({ page }) => {
     test.slow();
@@ -39,9 +39,10 @@ test('add/save case type', async ({page})=> {
     const casetypes = new CasetypesPage(page);
     await casetypes.selectCaseTypeMenu();
     await casetypes.clickAddCaseType();
-    await casetypes.newCaseType('Test Case','3mL/h','test case for playwright','Surgical','VASCULAR','Active');
+    await casetypes.newCaseType('123','3mL/h','test case for playwright','Surgical','VASCULAR','Active');
     await casetypes.backArrow();
-    await casetypes.newCaseType('Test Case','3mL/h','test case for playwright','Surgical','VASCULAR','Active');
+    await casetypes.clickAddCaseType();
+    await casetypes.newCaseType('123','3mL/h','test case for playwright','Surgical','VASCULAR','Active');
     await casetypes.saveCaseType();
 })
 
@@ -59,11 +60,11 @@ test('search/edit case type', async ({page})=> {
 
     const casetypes = new CasetypesPage(page);
     await casetypes.selectCaseTypeMenu();
-    await casetypes.searchCaseType('Test Case');
+    await casetypes.searchCaseType('123');
     await casetypes.statusDropDown('Inactive');
     await casetypes.clearSelections();
-    await casetypes.searchCaseType('Test Case');
-    await casetypes.selectCaseTypeName('Test Case');
+    await casetypes.searchCaseType('123');
+    await casetypes.selectCaseTypeName('123');
     await casetypes.editWorklistType('Non-Surgical');
     await casetypes.saveCaseType();
 
