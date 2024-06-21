@@ -1,8 +1,7 @@
 import {test} from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
-import ClientsPage from './classes/clientsPage';
-const logindata = JSON.parse(JSON.stringify(require("./testdata/login.json")))
+const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 
 //serial test for capturing baseline screenshot 
 test('filter dashboard data', async ({ page }) => {
@@ -77,7 +76,4 @@ test('delete client', async ({ page }) => {
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
-
-    const clients = new ClientsPage(page);    
-    //await clients.deleteclient();
 })
