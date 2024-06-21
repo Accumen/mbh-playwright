@@ -155,32 +155,8 @@ export default class DashboardPage{
         await this.page.getByRole('button',{name:'Download PDF'}).click();//selects the download pdf button
         const downloadPromise = this.page.waitForEvent('download');//looks for the download popup and waits for it to finish
     }
-    //left side navigation menu
-    async navigationMenu(navSelect: string){
-        /**
-         * navSelect Key
-         * Documents
-         * Smart Sections
-         * Email Templates
-         * Lab Types 
-         * Lab Types Mapping 78
-         * Case Types
-         * Case Types Mapping 273
-         * Clients
-         * Users
-         * Reports
-         * Dashboard
-         * Facilities
-         * Patients
-         * Providers
-         * Worklist
-         * Surgical
-         * Chronic
-         */
-        await this.page.getByRole('link',{name: navSelect}).click();
-    }
+    
     async dataverify(num){
-        await this.page.getByLabel('Weight *').focus();
         await this.page.screenshot({path:'dataverify' + num + '.png'}); 
     }
 
@@ -196,17 +172,17 @@ export default class DashboardPage{
             //select kg
             await this.page.locator('#mat-radio-3').click();
             //enter kg weight
-            await this.page.getByLabel('Weight *').click();
-            await this.page.getByLabel('Weight *').fill(weight);
+            await this.page.getByPlaceholder('Weight').click();
+            await this.page.getByPlaceholder('Weight').fill(weight);
         }
         else{
             //enter lbs weight
-            await this.page.getByLabel('Weight *').click();
-            await this.page.getByLabel('Weight *').fill(weight);
+            await this.page.getByPlaceholder('Weight').click();
+            await this.page.getByPlaceholder('Weight').fill(weight);
         }
         //enter current hgb
-        await this.page.getByLabel('Current HGB (g/dL) *').click();
-        await this.page.getByLabel('Current HGB (g/dL) *').fill(curHgb);
+        await this.page.getByText('Current HGB (g/dL)').click();
+        await this.page.getByText('Current HGB (g/dL)').fill(curHgb);
 
         //capture value
 
