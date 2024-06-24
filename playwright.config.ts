@@ -5,7 +5,8 @@ const config: PlaywrightTestConfig = {
     projects: [{
         name: "chrome",
         use: {
-            ...devices['Desktop Chrome']
+            ...devices['Desktop Chrome'],
+            viewport: {width: 1280, height: 1024},
         }
     }, 
    

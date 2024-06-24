@@ -20,6 +20,6 @@ test('edit existing surgical', async ({ page }) => {
     await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.scheduleSurgicalVisit('Existing','','','','','651324','','','','','','','','','','','','','',
-    'yes','White','Not Hispanic','Changed Race and Ethnicity','2024','MAY','12',7,'CARDIO','test');
+    'yes','White','Not Hispanic','Changed Race and Ethnicity','2024','NOV','12',7,'CARDIO','test');
     await worklist.saveScheduledVisit();
 })

@@ -332,7 +332,7 @@ export default class WorklistPage{
             else{
          //*Existing */
          //select the existing check box
-         await this.page.locator('#mat-checkbox-6 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+         await this.page.getByLabel('Existing').click();
          //search field for patient or mrn
          await this.page.getByLabel('Patient / MRN').click();
          await this.page.getByRole('combobox', { name: 'Patient / MRN' }).fill(mrn);
@@ -386,7 +386,7 @@ export default class WorklistPage{
          //check mark button
          await this.page.locator('button').filter({hasText: 'done'}).click();
          //procedure drop down(has case types list)
-         await this.page.getByLabel('Procedure *').locator('div').nth(2).click();
+         await this.page.getByLabel('Procedure').locator('div').nth(2).click();
          await this.page.getByText(procedure,{exact:true}).click()
          /**Surgical Procedure key
           * ORTHO
@@ -450,8 +450,8 @@ export default class WorklistPage{
             //Delete Button
         //Surgeon (fillable required field)
         await this.page.getByLabel('Surgeon', {exact:true}).click();
-         await this.page.getByLabel('Surgeon', {exact:true}).fill('Sur');
-         await this.page.getByLabel('Surgeon',{exact:true}).press('Enter');
+         await this.page.getByPlaceholder('Surgeon', {exact:true}).fill('Sur');
+         await this.page.getByPlaceholder('Surgeon',{exact:true}).press('Enter');
          //await expect (this.page.locator('id=mat-autocomplete-1')).toBeVisible();
          await this.page.getByRole('option', {name: surgeon, exact: false}).click();
          //PCP (fillabe not required field)
@@ -823,19 +823,19 @@ export default class WorklistPage{
     async editPatientDetails(changeDesc){
         await this.page.getByRole('button',{name:'Edit Patient'}).click();
          //change description note box
-        await this.page.getByLabel('Change Description *').click();
-        await this.page.getByLabel('Change Description *').fill(changeDesc)
+        await this.page.getByText('Change Description',{exact:true}).click();
+        await this.page.getByText('Change Description',{exact:true}).fill(changeDesc);
     }
     //edit patient information
     async editPatientRace(race){
         //race
-        await this.page.getByLabel('Race *').locator('div').nth(2).click();
+        await this.page.getByLabel('Race').locator('div').nth(2).click();
         //await this.page.getByText(race, {exact:true}).click();
         await this.page.getByRole('option', { name: race, exact:true }).locator('span').click();
     }
     async editPatientEthnicity(ethnicity){
         //ethinicity
-        await this.page.getByLabel('Ethnicity *').locator('div').nth(2).click();
+        await this.page.getByLabel('Ethnicity').locator('div').nth(2).click();
         //await this.page.getByText(ethnicity, {exact:true}).click();
         await this.page.getByRole('option', { name: ethnicity, exact:true }).locator('span').click();
     }
