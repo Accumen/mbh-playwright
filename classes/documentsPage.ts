@@ -53,7 +53,7 @@ export default class DocumentsPage{
     }
     //document name (clickable)
     async selectDocFromList(docname){
-        await this.page.getByText(docname,{exact:true}).click();
+        await this.page.getByText(docname,{exact:true}).first().click();
     }
      //preview button
      async previewdoc(){
@@ -65,40 +65,44 @@ export default class DocumentsPage{
     }
     //fillable fields for adding or editing a document
     async addEditDoc(docname,desc,doctype,casetype,docstat){
-        //document name (fillable)
-        await this.page.getByLabel('Document Name *').click();
-        await this.page.getByLabel('Document Name *').fill(docname);
-        //document description (fillable)
-        await this.page.getByLabel('Description *').click();
-        await this.page.getByLabel('Description *').fill(desc);
-        //document types drop down
-        await this.page.getByLabel('Document Types *').getByText('Document Types').click();//may also use locator(#mat-select-value-15)
-        await this.page.getByText(doctype, {exact:true}).click();
-            /** Document Types Key
-             * patient letter
-             * pcp letter
-             * surgeon letter
-             * assessment template
-             * rcp letter
-             * medication order
-             * tools and references
-             */
-        //case types check boxes
-        if(casetype != 'Non-Surgical'){
-            //surgical
-            await this.page.locator('.mat-checkbox-inner-container').first().check();
-        }
-        else{
-             //chronic
-            //await this.page.locator('id=mat-checkbox-14').getByText('Non-Surgical').check();
-            await this.page.locator('.mat-checkbox-inner-container').nth(1).check();
-        }
-        //status drop down
-        await this.page.getByLabel('Status').click();
-        await this.page.getByText(docstat,{exact:true}).click();
-            /**docstat key
-             * active
-             * inactive
+         //document name (fillable)
+         await this.page.getByPlaceholder('Document Name').click();
+         await this.page.getByPlaceholder('Document Name').fill(docname);
+         //document description (fillable)
+         await this.page.getByPlaceholder('Description').click();
+         await this.page.getByPlaceholder('Description').fill(desc);
+         //document types drop down
+         await this.page.getByPlaceholder('Document Types').getByText('Document Types').click();//may also use locator(#mat-select-value-15)
+         await this.page.getByText(doctype, {exact:true}).click();
+             /** Document Types Key
+              * patient letter
+              * pcp letter
+              * surgeon letter
+              * assessment template
+              * rcp letter
+              * medication order
+              * tools and references
+              */
+         //case types check boxes
+         if(casetype == 'Surgical'){
+             //surgical
+             await this.page.getByRole('checkbox',{name:'Surgical',exact:true}).check();
+         }
+         else if(casetype == 'Non-Surgical'){
+              //Non-Surgical
+             await this.page.getByRole('checkbox',{name:'Non-Surgical',exact: true}).check();
+         }
+         else{
+             //both
+             await this.page.getByRole('checkbox',{name:'Surgical',exact:true}).check();
+             await this.page.getByRole('checkbox',{name:'Non-Surgical',exact: true}).check();
+         }
+         //status drop down
+         await this.page.getByLabel('Status').click();
+         await this.page.getByText(docstat,{exact:true}).click();
+             /**docstat key
+              * active
+              * inactive
              */
     }
 
@@ -107,11 +111,11 @@ export default class DocumentsPage{
             //add text button
             await this.page.getByRole('button',{name:'Text Section'}).click();
                 //section name
-            await this.page.getByLabel('Section Name *',{exact:true}).last().click()
-            await this.page.getByLabel('Section Name *',{exact:true}).last().fill(secname);
+            await this.page.getByPlaceholder('Section Name',{exact:true}).last().click()
+            await this.page.getByPlaceholder('Section Name',{exact:true}).last().fill(secname);
                 //section description
-            await this.page.getByLabel('Description',{exact:true}).last().click();
-            await this.page.getByLabel('Description',{exact:true}).last().fill(secdesc);
+            await this.page.getByPlaceholder('Description',{exact:true}).last().click();
+            await this.page.getByPlaceholder('Description',{exact:true}).last().fill(secdesc);
                 //new section content
             await this.page.getByText('New Section Content',{exact:true}).click();
             await this.page.getByText('New Section Content',{exact:true}).fill(seccontent);
@@ -162,11 +166,11 @@ export default class DocumentsPage{
 
     async smartSecInfo(smartsecname,smartsecdesc){
             //section name
-            await this.page.getByLabel('Section Name *').click()
-            await this.page.getByLabel('Section Name *').fill(smartsecname);
+            await this.page.getByPlaceholder('Section Name').click()
+            await this.page.getByPlaceholder('Section Name').fill(smartsecname);
                 //section description
-            await this.page.getByLabel('Description',{exact:true}).click();
-            await this.page.getByLabel('Description',{exact:true}).fill(smartsecdesc);
+            await this.page.getByPlaceholder('Description').last().click();
+            await this.page.getByPlaceholder('Description').last().fill(smartsecdesc);
     }
 
     //screenshot for documents page
@@ -177,13 +181,13 @@ export default class DocumentsPage{
       //fillable fields for adding or editing a document
       async newStaticDoc(docname,desc,doctype,casetype,docstat){
         //document name (fillable)
-        await this.page.getByLabel('Document Name *').click();
-        await this.page.getByLabel('Document Name *').fill(docname);
+        await this.page.getByPlaceholder('Document Name').click();
+        await this.page.getByPlaceholder('Document Name').fill(docname);
         //document description (fillable)
-        await this.page.getByLabel('Description *').click();
-        await this.page.getByLabel('Description *').fill(desc);
+        await this.page.getByPlaceholder('Document Description').click();
+        await this.page.getByPlaceholder('Document Description').fill(desc);
         //document types drop down
-        await this.page.getByLabel('Document Types *').getByText('Document Types').click();//may also use locator(#mat-select-value-15)
+        await this.page.getByPlaceholder('Document Types').getByText('Document Types').click();//may also use locator(#mat-select-value-15)
         await this.page.getByText(doctype, {exact:true}).click();
             /** Document Types Key
              * patient letter
@@ -195,13 +199,18 @@ export default class DocumentsPage{
              * tools and references
              */
         //case types check boxes
-        if(casetype != 'Non-Surgical'){
+        if(casetype == 'Surgical'){
             //surgical
-            await this.page.locator('.mat-checkbox-inner-container').first().check();
+            await this.page.getByRole('checkbox',{name:'Surgical',exact:true}).check();
+        }
+        else if(casetype == 'Non-Surgical'){
+             //Non-Surgical
+            await this.page.getByRole('checkbox',{name:'Non-Surgical',exact: true}).check();
         }
         else{
-             //chronic
-            await this.page.locator('id=mat-checkbox-4').getByText('Non-Surgical').check();
+            //both
+            await this.page.getByRole('checkbox',{name:'Surgical',exact:true}).check();
+            await this.page.getByRole('checkbox',{name:'Non-Surgical',exact: true}).check();
         }
         //status drop down
         await this.page.getByLabel('Status').click();
@@ -217,7 +226,7 @@ export default class DocumentsPage{
         
         //back arrow
         async backArrow(){
-            await this.page.getByRole('button',{name:''}).click();
+            await this.page.getByRole('button',{name:'Back'}).click();
         }
 
       //delete

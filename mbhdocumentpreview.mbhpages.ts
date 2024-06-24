@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import WorklistPage from './classes/worklistPage';
-const logindata = JSON.parse(JSON.stringify(require("../mbhpages/testdata/login.json")))
+const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 
 test('document preview', async ({ page }) => {
     test.slow();
@@ -19,7 +19,8 @@ test('document preview', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.selectPatientfromSearch('Sam Smyth');
+    await worklist.searchMRN('Smith');
+    await worklist.selectPatientfromSearch('Emily Smith');
     await worklist.visitDocumentsAdd();
     await worklist.addVisitDocuments();
     await worklist.closeVisitDocuments();
