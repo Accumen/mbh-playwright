@@ -30,8 +30,8 @@ test('worklist filter case type test', async ({ page }) => {
   test.slow();
   const login = new LoginPage(page);
   await page.goto('https://qa.mybloodhealth.com/login');
-  await login.enterEmail('cts-secure@accumen.com');
-  await login.enterPassword('Pass#123');
+  await login.enterEmail(logindata.email);
+  await login.enterPassword(logindata.password);
   await login.clickLoginBtn();
 
   const dashboard = new DashboardPage(page);
@@ -50,8 +50,8 @@ test('retain worklist filter test', async ({ page }) => {
   test.slow();
   const login = new LoginPage(page);
   await page.goto('https://qa.mybloodhealth.com/login');
-  await login.enterEmail('cts-secure@accumen.com');
-  await login.enterPassword('Pass#123');
+  await login.enterEmail(logindata.email);
+  await login.enterPassword(logindata.password);
   await login.clickLoginBtn();
 
   const dashboard = new DashboardPage(page);

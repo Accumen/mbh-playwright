@@ -57,8 +57,8 @@ test('add/edit/delete document', async ({ page }) => {
     const document = new DocumentsPage (page);
     await document.selectDocuments();
     await document.addDocBtn();
-    //await document.backArrow();
-    //await document.addDocBtn();
+    await document.backArrow();
+    await document.addDocBtn();
     await document.addEditDoc('Second Test Document','Playwrights second test document','Assessment Template','Non-Surgical','Active')
     await document.saveDoc();
     await document.searchDoc('Second Test Document');

@@ -13,12 +13,11 @@ test("Worklist Filter Test", async({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage (page);
-    await dashboard.clickClientDropDown("Deaconess New");
+    await dashboard.clickClientDropDown("QA Testing");
 
     const worklist = new WorklistPage (page);
+    await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.selectFilter("Labs Missing");
     await dashboard.clickLogout();
-
-    
 })

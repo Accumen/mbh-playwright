@@ -47,12 +47,9 @@ test("facility regression testing", async ({page})=>{
     await facility.selectFacility('QA Facility 4');
     await facility.trashButton(); //delete location (only works if last in the list)
     await facility.facilityBackArrow(); //back arrow
-
     await facility.trashButton(); //delete facility (only works if last in the list)
     await facility.facilitySearch('QA Facility 4'); //search facility
-
     await facility.clearSelections(); //clear selection
-
 })
 
 test("test creating unique facility", async ({page})=>{

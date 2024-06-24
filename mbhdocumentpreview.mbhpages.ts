@@ -19,7 +19,8 @@ test('document preview', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.selectPatientfromSearch('Sam Smyth');
+    await worklist.searchMRN('Smith');
+    await worklist.selectPatientfromSearch('Emily Smith');
     await worklist.visitDocumentsAdd();
     await worklist.addVisitDocuments();
     await worklist.closeVisitDocuments();

@@ -70,8 +70,7 @@ export default class FacilitiesPage{
     }
     //back arrow button
     async facilityBackArrow(){
-        await this.page.getByRole('button',{name:''}).click()
-        //await this.page.locator('mat-sidenav-content').click();
+        await this.page.getByRole('button',{name:''}).click()
     }
 	//add facility button
     async addFacility(facility: string, shortname: string, facilitycode: string, address:string,city:string,state:string, zip: string, 
@@ -85,8 +84,12 @@ export default class FacilitiesPage{
         //facility short name (fillable)
         await this.page.getByText('Facility Short Name').click();
         await this.page.getByText('Facility Short Name').fill(shortname);
+        await this.page.getByText('Facility Short Name').click();
+        await this.page.getByText('Facility Short Name').fill(shortname);
 
         //facility code (fillable)
+        await this.page.getByText('Facility Code').click();
+        await this.page.getByText('Facility Code').fill(facilitycode);
         await this.page.getByText('Facility Code').click();
         await this.page.getByText('Facility Code').fill(facilitycode);
 
@@ -105,26 +108,28 @@ export default class FacilitiesPage{
         //zipcode (fillable)
         await this.page.getByText('Zipcode').click();
         await this.page.getByText('Zipcode').fill(zip);
+        await this.page.getByText('Zipcode').click();
+        await this.page.getByText('Zipcode').fill(zip);
        
         //phone (fillable)
-        await this.page.getByLabel('Phone').click();
-        await this.page.getByLabel('Phone').fill(phone);
+        await this.page.getByText('Phone').click();
+        await this.page.getByText('Phone').fill(phone);
        
         //fax (fillable)
         await this.page.getByLabel('Fax').click();
         await this.page.getByLabel('Fax').fill(fax);
 
         //Type drop down
-        await this.page.getByLabel('Type').locator('div').nth(2).click();
-        await this.page.getByText(type).click();
+        await this.page.getByPlaceholder('Type').locator('div').nth(2).click();
+        await this.page.getByRole('option',{name:type}).click();
             /**Type Key
          * Hospital System
          * Blood Center
          * Insurance Company
          */
         //Region drop down
-        await this.page.getByLabel('Region').locator('div').nth(2).click();
-        await this.page.getByText(region,{exact:true}).click(); 
+        await this.page.getByText('Region').nth(2).click();
+        await this.page.getByRole('option',{name:region,exact:true}).click(); 
                    
         //select status function on new facility form
         await this.page.getByLabel('Status').locator('div').nth(2).click();
@@ -148,8 +153,7 @@ export default class FacilitiesPage{
          * others
          */
         //status drop down
-        await this.page.getByRole('combobox',{name: 'Status'}).click();
-        //await this.page.getByLabel('Status',{exact:true}).locator('div').nth(3).click();
+        await this.page.getByRole('combobox',{name:'Status Status'}).locator('path').click();
         await this.page.getByRole('option', {name:status, exact:true}).locator('span').click();
         /**
          * active
