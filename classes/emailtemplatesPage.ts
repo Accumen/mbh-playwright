@@ -19,9 +19,9 @@ export default class EmailtemplatesPage{
 
     //search email template (fillable)
     async searchEmailTemplate(templateName){
-        await this.page.getByLabel('Search email template').click();
-        await this.page.getByLabel('Search email template').fill(templateName);
-        await this.page.getByLabel('Search email template').press('Enter');
+        await this.page.getByText('Search email template').click();
+        await this.page.getByText('Search email template').fill(templateName);
+        await this.page.getByText('Search email template').press('Enter');
     }
 
     //email template name (clickable)
@@ -31,8 +31,8 @@ export default class EmailtemplatesPage{
     //edit email template
     async editTemplate(templateName,templateType,userFullname?,visitUrl?,visitDocuments?,comment?){
         //template name (fillable)
-        await this.page.getByLabel('Template Name *').click();
-        await this.page.getByLabel('Template Name *').fill(templateName);
+        await this.page.getByPlaceholder('Template Name').click();
+        await this.page.getByPlaceholder('Template Name').fill(templateName);
         //text box for creation (fillable w/ formatting)
         if(templateType != 'Visit Doc'){
             await this.page.getByText('[user.fullname]').click();
@@ -57,7 +57,7 @@ export default class EmailtemplatesPage{
     }    
         //back arrow button
     async backArrow(){
-        await this.page.getByRole('button',{name:''}).click();
+        await this.page.getByRole('button',{name:'Back'}).click();
     } 
     
     //reset template
