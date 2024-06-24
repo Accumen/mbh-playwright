@@ -2,7 +2,7 @@ import{test, expect}from "@playwright/test";
 import LoginPage from "./classes/loginPage";
 import DashboardPage from "./classes/dashboardPage";
 import WorklistPage from "./classes/worklistPage";
-const logindata = JSON.parse(JSON.stringify(require("../mbhpages/testdata/login.json")))
+const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 
 test("Worklist Filter Test", async({page})=>{
     test.slow();//changes default timeout from 30000 ms to 90000 ms
@@ -13,12 +13,11 @@ test("Worklist Filter Test", async({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage (page);
-    await dashboard.clickClientDropDown("Deaconess New");
+    await dashboard.clickClientDropDown("QA Testing");
 
     const worklist = new WorklistPage (page);
+    await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.selectFilter("Labs Missing");
     await dashboard.clickLogout();
-
-    
 })

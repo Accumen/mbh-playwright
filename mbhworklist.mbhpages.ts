@@ -33,8 +33,8 @@ test('add communication', async ({ page }) => {
   const login = new LoginPage(page);
 
   await page.goto('https://qa.mybloodhealth.com/login');
-  await login.enterEmail('cts-secure@accumen.com');
-  await login.enterPassword('Pass#123');
+  await login.enterEmail(logindata.email);
+  await login.enterPassword(logindata.password);
   await login.clickLoginBtn();
 
   const dashboard = new DashboardPage(page);
@@ -55,8 +55,8 @@ test('edit communication', async ({ page }) => {
   const login = new LoginPage(page);
 
   await page.goto('https://qa.mybloodhealth.com/login');
-  await login.enterEmail('cts-secure@accumen.com');
-  await login.enterPassword('Pass#123');
+  await login.enterEmail(logindata.email);
+  await login.enterPassword(logindata.password);
   await login.clickLoginBtn();
 
   const dashboard = new DashboardPage(page);
