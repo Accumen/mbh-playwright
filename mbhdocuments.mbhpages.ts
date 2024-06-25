@@ -77,3 +77,23 @@ test('add/edit/delete document', async ({ page }) => {
 
 })
 
+test('document pagination', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const document = new DocumentsPage (page);
+    await document.selectDocuments();
+    await document.documentPagination(3);
+    await document.selectDocFromList('Surgeon Letter for the Abnormal Patient');
+    await document.backArrow();
+    await document.paginationCheck();
+})
+

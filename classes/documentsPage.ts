@@ -234,12 +234,15 @@ export default class DocumentsPage{
         this.page.on('dialog',dialog => dialog.accept());
         await this.page.getByTitle('Delete').click();
     }
-    //page navigator
-    //row counter
-        /**
-         * 15
-         * 30
-         * 50
-         */
+    
+     //pagination
+     async documentPagination(num){
+        await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+        await this.page.getByRole('link', { name: num }).click({delay:1000});
+    }
+    //check current page of pagination
+    async paginationCheck(){
+        await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+    }
 
 }

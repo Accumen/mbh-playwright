@@ -70,12 +70,14 @@ export default class EmailtemplatesPage{
         await this.page.screenshot({path:'emailtemplatescreenshot'+ num +'.png',fullPage:true});
     }
 
-    //row counter
-        /**
-         * 15
-         * 30
-         * 50
-         */
-    
+    //pagination
+    async emailTemplatePagination(num){
+        await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+        await this.page.getByRole('link', { name: num }).click({delay:1000});
+    }
+    //check current page of pagination
+    async paginationCheck(){
+        await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+    }
 
 }

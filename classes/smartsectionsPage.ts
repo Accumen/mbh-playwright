@@ -115,7 +115,7 @@ export default class SmartsectionsPage{
 
         //back arrow button
         async backArrow(){
-            await this.page.getByRole('button',{name:''}).click();
+            await this.page.getByRole('button',{name:'Back'}).click();
         }
 
         //delete
@@ -123,6 +123,16 @@ export default class SmartsectionsPage{
             this.page.on('dialog',dialog => dialog.accept());
             await this.page.getByTitle('Delete').click();
         }
+
+          //pagination
+    async smartSectionPagination(num){
+        await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+        await this.page.getByRole('link', { name: num }).click({delay:1000});
+    }
+    //check current page of pagination
+    async paginationCheck(){
+        await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+    }
 
         
 }

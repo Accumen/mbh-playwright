@@ -142,7 +142,7 @@ export default class LabtypesPage{
 
        //Back Arrow
        async labTypeBackArrow(){
-        await this.page.getByRole('button', {name:''}).click();
+        await this.page.getByRole('button', {name:'Back'}).click();
        }
 
        //Search Lab Type (fillable)
@@ -330,5 +330,14 @@ export default class LabtypesPage{
           await this.page.getByLabel('Below Report Label').click();
           await this.page.getByLabel('Below Report Label').fill(belowReportLabel);
      }
+     //pagination
+     async labTypePagination(num){
+          await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+          await this.page.getByRole('link', { name: num }).click({delay:1000});
+      }
+      //check current page of pagination
+      async paginationCheck(){
+          await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+      }
 
 }

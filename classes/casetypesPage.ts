@@ -135,13 +135,13 @@ export default class CasetypesPage{
         //Save Case Type button
         //back arrow button
 
-    //page navigator
-
-    //row counter
-    /**
-     * 15
-     * 30
-     * 50
-     */
+ //pagination
+ async caseTypePagination(num){    await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+    await this.page.getByRole('link', { name: num }).click({delay:1000});
+}
+//check current page of pagination
+async paginationCheck(){
+    await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+}
 
 }
