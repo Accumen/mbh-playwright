@@ -660,7 +660,7 @@ export default class WorklistPage{
     //complete surgical visit
     async completeSurgicalVisit(completeType,treatment?,untreatedtype?,followup?,specialty?,fyear?,fmonth?,fday?){
         await this.page.getByRole('button', {name: 'Complete Case'}).click();
-        await this.page.locator('div').filter({ hasText: /^TreatedComplete Case Type \*$/ }).nth(1).click();
+        await this.page.locator('#mat-select-value-23').click();
         await this.page.getByRole('option',{name:completeType,exact:true}).click();
         /**completeType
          * Treated
@@ -717,7 +717,7 @@ export default class WorklistPage{
     //complete non-surgical visit
     async completeNonSurgicalVisit(completeType,treatment?,untreatedtype?,followup?,freason?,freasonfill?,specialty?,fyear?,fmonth?,fday?){
         await this.page.getByRole('button', {name: 'Complete Case'}).click();
-        await this.page.locator('div').filter({ hasText: /^TreatedComplete Case Type \*$/ }).nth(1).click();
+        await this.page.locator('#mat-select-value-23').click();
         await this.page.getByRole('option',{name:completeType,exact:true}).click();
         /**completeType
          * Treated
