@@ -268,6 +268,59 @@ test('test nonsurgical followup icon', async ({ page }) => {
     await worklist.selectPatientfromSearch('Dylan Maryska');
     await worklist.selectChainofCustody();
     await worklist.worklistscreenshot(5);
+})
 
 
+test('test nonsurgical number of doses on completed visit', async ({ page }) => {
+   
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const worklist = new WorklistPage(page);
+    await worklist.clickWorklist();
+    await worklist.clickChronic();
+    await worklist.searchMRN('August Smith');
+    await worklist.selectPatientfromSearch('August Smith');
+    await worklist.clickCompleteCase();
+    await worklist.changeCompleteCaseType('Not Treated');
+    await worklist.notTreatedFollowUp();
+    await worklist.changeCompleteCaseType('Treated')
+    await worklist.editTreatment('B12');
+    await worklist.editTreatment ('EPO');
+    await worklist.editTreatment('IV Iron');
+})
+
+test('test surgical number of doses on completed visit', async ({ page }) => {
+   
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const worklist = new WorklistPage(page);
+    await worklist.clickWorklist();
+    await worklist.clickSurgical();
+    await worklist.searchMRN('Emily Smith');
+    await worklist.selectPatientfromSearch('Emily Smith');
+    await worklist.clickCompleteCase();
+    await worklist.changeCompleteCaseType('Not Treated');
+    await worklist.notTreatedFollowUp();
+    await worklist.changeCompleteCaseType('Treated');
+    await worklist.editTreatment('B12');
+    await worklist.editTreatment ('EPO');
+    await worklist.editTreatment('IV Iron');
 })
