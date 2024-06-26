@@ -69,7 +69,7 @@ test('view / assign visit', async ({page})=> {
     await patients.saveAssigned();
 })
 
-test('unassign visit', async ({page})=>{
+test('assign/unassign visit', async ({page})=>{
     test.slow();
     const login = new LoginPage(page);
 
@@ -87,6 +87,10 @@ test('unassign visit', async ({page})=>{
     await patients.selectPatientfromSearch('Barney Rubble');
     await patients.viewVisit();
     await patients.assignVisit('Test User');
+    await patients.saveAssigned();
+    await patients.searchPatient('Rubble');
+    await patients.selectPatientfromSearch('Barney Rubble');
+    await patients.viewVisit();
     //await patients.closeAssignWindow(); uncomment when the close window button has a label
     await patients.unAssign();
     await patients.selectPatients();
@@ -189,4 +193,25 @@ test('add communication', async({page})=>{
     await patients.selectPatientfromSearch('Barney Rubble');
     await patients.viewVisit();
     await patients.addCommunication('Task','Playwright Test','Low','June 28');
+})
+
+test('visit view all labs by labtype filter', async ({page})=>{
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const patients = new PatientsPage(page);
+    await patients.selectPatients();
+    await patients.searchPatient('Rubble');
+    await patients.selectPatientfromSearch('Barney Rubble');
+    await patients.viewVisit();
+    await patients.viewAllLabs('Hgb','NULL');
+
 })

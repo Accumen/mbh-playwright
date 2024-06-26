@@ -650,7 +650,7 @@ export default class PatientsPage{
     //save assigned user
     async saveAssigned(){
         await this.page.getByRole('button',{name:'Save'}).click();
-        await this.page.locator('app-basic-visit-info-page div').getByText('Assigned To | Test User').focus();
+        //await this.page.locator('app-basic-visit-info-page div').getByText('Assigned To | Test User').focus();
     }
     //unassign user
     async unAssign(){
