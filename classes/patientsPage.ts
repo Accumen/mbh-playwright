@@ -654,6 +654,7 @@ export default class PatientsPage{
     }
     //unassign user
     async unAssign(){
+        await this.page.getByRole('button',{name:'Assign'}).click();
         await this.page.getByRole('button',{name:'UnAssign'}).click();
     }
     //back arrow

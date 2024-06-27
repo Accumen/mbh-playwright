@@ -88,6 +88,7 @@ test('assign/unassign visit', async ({page})=>{
     await patients.viewVisit();
     await patients.assignVisit('Test User');
     await patients.saveAssigned();
+    await patients.selectPatients();
     await patients.searchPatient('Rubble');
     await patients.selectPatientfromSearch('Barney Rubble');
     await patients.viewVisit();
