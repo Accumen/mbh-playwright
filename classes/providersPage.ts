@@ -18,9 +18,9 @@ export default class ProvidersPage{
     }
     //search provider
     async providerSearch(provider){
-        await this.page.getByLabel('Search provider name, npi').click();
-        await this.page.getByLabel('Search provider name, npi').fill(provider);
-        await this.page.getByLabel('Search provider name, npi').press('Enter');
+        await this.page.getByText('Search provider name, npi').click();
+        await this.page.getByText('Search provider name, npi').fill(provider);
+        await this.page.getByText('Search provider name, npi').press('Enter');
     }
     //add provider button
     async addProvider(){
@@ -35,14 +35,14 @@ export default class ProvidersPage{
     //all fillable fields
             
         //first name (required)
-        await this.page.getByLabel('First Name *').click();
-        await this.page.getByLabel('First Name *').fill(fname);     
+        await this.page.getByLabel('First Name').click();
+        await this.page.getByLabel('First Name').fill(fname);     
         //middle name
         await this.page.getByLabel('Middle Name').click();
         await this.page.getByLabel('Middle Name').fill(mname); 
         //last name (required)
-        await this.page.getByLabel('Last Name *').click();
-        await this.page.getByLabel('Last Name *').fill(lname);     
+        await this.page.getByLabel('Last Name').click();
+        await this.page.getByLabel('Last Name').fill(lname);     
         //prefix
         await this.page.getByLabel('Prefix').click();
         await this.page.getByLabel('Prefix').fill(prefix); 
@@ -53,8 +53,8 @@ export default class ProvidersPage{
         await this.page.getByLabel('Credentials').click();
         await this.page.getByLabel('Credentials').fill(cred);
         //description
-        await this.page.getByLabel('Description').click();
-        await this.page.getByLabel('Description').fill(desc);
+        await this.page.getByPlaceholder('Description').click();
+        await this.page.getByPlaceholder('Description').fill(desc);
         //address
         await this.page.getByLabel('Address').click();
         await this.page.getByLabel('Address').fill(address);
@@ -65,20 +65,20 @@ export default class ProvidersPage{
         await this.page.getByLabel('State').click();
         await this.page.getByLabel('State').fill(state);
         //postal code
-        await this.page.getByLabel('PostalCode').click();
-        await this.page.getByLabel('PostalCode').fill(zip);
+        await this.page.getByText('PostalCode').click();
+        await this.page.getByText('PostalCode').fill(zip);
         //email (required)
-        await this.page.getByLabel('Email *').click();
-        await this.page.getByLabel('Email *').fill(email);     
+        await this.page.getByLabel('Email').click();
+        await this.page.getByLabel('Email').fill(email);     
         //office phone
-        await this.page.getByLabel('Office Phone').click();
-        await this.page.getByLabel('Office Phone').fill(phone);
+        await this.page.getByText('Office Phone').click();
+        await this.page.getByText('Office Phone').fill(phone);
         //office fax
         await this.page.getByLabel('Office Fax').click();
         await this.page.getByLabel('Office Fax').fill(fax);
         //NPI (required)
-        await this.page.getByLabel('NPI *').click();
-        await this.page.getByLabel('NPI *').fill(npi);     
+        await this.page.getByLabel('NPI').click();
+        await this.page.getByLabel('NPI').fill(npi);     
         //Clinic
         await this.page.getByLabel('Clinic').click();
         await this.page.getByLabel('Clinic').fill(clinic);
@@ -88,23 +88,23 @@ export default class ProvidersPage{
     }
     //edit provider's first name
     async editProviderFirstName(fname){
-        await this.page.getByLabel('First Name *').click();
-        await this.page.getByLabel('First Name *').fill(fname);       
+        await this.page.getByLabel('First Name').click();
+        await this.page.getByLabel('First Name').fill(fname);       
     }
     //edit provider's last name
     async editProviderLastName(lname){
-        await this.page.getByLabel('Last Name *').click();
-        await this.page.getByLabel('Last Name *').fill(lname);
+        await this.page.getByLabel('Last Name').click();
+        await this.page.getByLabel('Last Name').fill(lname);
     }
     //edit provider's email
     async editProviderEmail(email) {
-        await this.page.getByLabel('Email *').click();
-        await this.page.getByLabel('Email *').fill(email);
+        await this.page.getByLabel('Email').click();
+        await this.page.getByLabel('Email').fill(email);
     }
     //edit provider's NPI
     async editProviderNPI(npi){
-        await this.page.getByLabel('NPI *').click();
-        await this.page.getByLabel('NPI *').fill(npi);
+        await this.page.getByLabel('NPI').click();
+        await this.page.getByLabel('NPI').fill(npi);
     }
             //save provider button
     async saveProvider(){

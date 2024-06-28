@@ -26,15 +26,20 @@ export default class FacilitiesPage{
     }
     //search facility name (fillable)
     async facilitySearch(facility: string){
-        await this.page.getByLabel('Search Facility name , code,').click();
-        await this.page.getByLabel('Search Facility name , code,').fill(facility);
-        await this.page.getByLabel('Search Facility name , code,').press('Enter');
+        await this.page.getByText('Search Facility name , code,').click();
+        await this.page.getByText('Search Facility name , code,').fill(facility);
+        await this.page.getByText('Search Facility name , code,').press('Enter');
     }
 
     //status drop down (not labeled)
     async selectStatus(status: string){
-        await this.page.getByLabel('Active',{exact:true}).locator('div').nth(3).click();
-        await this.page.getByText(status).click();
+        if (status == 'Inactive'){
+            await this.page.getByLabel('Active',{exact:true}).locator('div').nth(3).click();
+        }
+        else{
+            await this.page.getByLabel('Inactive',{exact:true}).locator('div').nth(3).click();
+        }
+        await this.page.getByText(status,{exact:true}).click();
         /**status key
          * active
          * inactive
@@ -63,7 +68,7 @@ export default class FacilitiesPage{
     }
     //back arrow button
     async facilityBackArrow(){
-        await this.page.getByRole('button',{name:''}).click()
+        await this.page.getByRole('button',{name:''}).click();
     }
 	//add facility button
     async addFacility(facility: string, shortname: string, facilitycode: string, address:string,city:string,state:string, zip: string, 
@@ -91,8 +96,8 @@ export default class FacilitiesPage{
         await this.page.getByLabel('City').fill(city);
        
         //state (fillable)
-        await this.page.locator('id=mat-input-6').click();
-        await this.page.locator('id=mat-input-6').fill(state);
+        await this.page.getByPlaceholder('State').click();
+        await this.page.getByPlaceholder('State').fill(state);
 			
         //zipcode (fillable)
         await this.page.getByText('Zipcode').click();
@@ -188,8 +193,8 @@ export default class FacilitiesPage{
             await this.page.getByLabel('City').fill(city);
         }
         if(state != ''){
-            await this.page.locator('id=mat-input-6').click();
-            await this.page.locator('id=mat-input-6').fill(state);
+            await this.page.getByPlaceholder('State').click();
+            await this.page.getByPlaceholder('State').fill(state);
         }
         if(zip != ''){
             await this.page.getByLabel('Zipcode').click();
@@ -204,7 +209,7 @@ export default class FacilitiesPage{
             await this.page.getByLabel('Fax').fill(fax);
         }
         if(type != ''){
-            await this.page.getByLabel('Type *').locator('div').nth(2).click();
+            await this.page.getByLabel('Type').locator('div').nth(2).click();
             await this.page.getByText(type).click();
         }
         if(region != ''){
@@ -212,8 +217,8 @@ export default class FacilitiesPage{
             await this.page.getByText(region).click();
         }
         if(status != ''){
-            await this.page.getByLabel('Status').locator('div').nth(2).click();
-            await this.page.getByText(status).click();
+            await this.page.getByLabel('Status').locator('svg').click();
+            await this.page.getByRole('option',{name: status, exact:true}).click();
         }
     }
     //edit location
@@ -223,11 +228,11 @@ export default class FacilitiesPage{
             await this.page.getByLabel('Location Name').fill(location);
         }
         if(type != ''){
-            await this.page.getByText('TypeType').click();
+            await this.page.locator('#mat-select-value-39').click();
             await this.page.getByText(type).click();
         }
         if(status != ''){
-            await this.page.getByLabel('Status',{exact:true}).locator('div').nth(3).click();
+            await this.page.getByRole('combobox',{name: 'Status'}).click();
             await this.page.getByRole('option', {name:status, exact:true}).locator('span').click();
         }
         //save location

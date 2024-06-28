@@ -25,17 +25,17 @@ test("region regression testing", async ({page})=>{
     const region = new RegionPage(page);
     await region.selectRegionsMenu();
     await region.addRegion();
-    await region.newRegion('Test 2','218','InActive');
-    await region.saveRegion();
+    await region.newRegion('Test 2','218','InActive'); //add region
+    await region.saveRegion(); //save region
 
     await region.selectRegion('Test 2');
-    await region.editRegionName('Test 3');
+    await region.editRegionName('Test 3'); //edit region
     await region.editRegionCode('219');
     await region.editRegionStatus('Active');
     await region.saveRegion();
 
     await region.selectRegion('Test 3');
-    await region.backArrow();
-    await region.deleteRegion();
+    await region.backArrow(); //back arrow
+    await region.deleteRegion(); //delete region
 
 })
