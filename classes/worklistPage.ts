@@ -662,7 +662,7 @@ export default class WorklistPage{
     //complete surgical visit
     async completeSurgicalVisit(completeType,treatment?,untreatedtype?,followup?,specialty?,fyear?,fmonth?,fday?){
         await this.page.getByRole('button', {name: 'Complete Case'}).click();
-        await this.page.locator('div').filter({ hasText: /^TreatedComplete Case Type \*$/ }).nth(1).click();
+        await this.page.locator('#mat-select-value-23').click();
         await this.page.getByRole('option',{name:completeType,exact:true}).click();
         /**completeType
          * Treated
@@ -719,7 +719,7 @@ export default class WorklistPage{
     //complete non-surgical visit
     async completeNonSurgicalVisit(completeType,treatment?,untreatedtype?,followup?,freason?,freasonfill?,specialty?,fyear?,fmonth?,fday?){
         await this.page.getByRole('button', {name: 'Complete Case'}).click();
-        await this.page.locator('div').filter({ hasText: /^TreatedComplete Case Type \*$/ }).nth(1).click();
+        await this.page.locator('#mat-select-value-23').click();
         await this.page.getByRole('option',{name:completeType,exact:true}).click();
         /**completeType
          * Treated
@@ -755,7 +755,7 @@ export default class WorklistPage{
                 await this.page.getByLabel('Follow Up Reason', { exact: true }).click();
                 await this.page.getByLabel('Follow Up Reason', { exact: true }).fill(freasonfill);
                 await this.page.getByRole('button',{name:'Confirm'}).click();
-                /**freason
+                /**freason Key
                  * No contact from patient
                  * Patient treatment plan complete
                  * Patient declines treatment
@@ -789,6 +789,17 @@ export default class WorklistPage{
     async clickCompleteCase(){
         await this.page.getByRole('button', {name: 'Complete Case'}).click();
     }
+    //edit treatment
+    async editTreatment(treatment){
+        await this.page.getByRole('option',{name:treatment,exact:true}).click();
+        /**treatment
+         * B12
+         * EPO
+         * IV Iron
+         * Oral Iron
+         */
+    }
+
     //change Complete Case Type
     async changeCompleteCaseType(completeType){
         await this.page.locator('#mat-select-value-23').click();

@@ -29,6 +29,11 @@ test('addprovider', async ({ page }) => {
  * status
  * clear selection
  * back arrow
+ * add/edit/save/delete provider
+ * search provider
+ * status
+ * clear selection
+ * back arrow
  */
 
 test('provider regression testing', async ({ page }) => {
@@ -46,12 +51,12 @@ test('provider regression testing', async ({ page }) => {
     const providers = new ProvidersPage(page);
     await providers.clickProviders();
     await providers.addProvider();
-    await providers.editAddProviderInfo('Dave','Michael','Smith','Dr','Sr','MD','test','123 Test Rd','Brooklyn','NY','19008',
-        'dsmith@test.com','1234567890','1234567890','1122334455','Test Clinic','Inactive') //add provider
+    await providers.editAddProviderInfo('Dave','Michael','Smith','Dr','Jr','MD','test','123 Test Rd','Brooklyn','NY','19008',
+        'dsmith@test.com','1234567890','1234567890','1122334455','Test Clinic','Inactive'); //add provider
     await providers.saveProvider(); //save provider
 
     await providers.providerStatus('Inactive'); //status
-    await providers.selectProvider('Dr Dave Michael Smith Sr MD');
+    await providers.selectProvider('Dr Dave Michael Smith Jr MD');
     await providers.editProviderFirstName('Scott'); //edit provider
     await providers.providerStatus('Active');
     await providers.saveProvider();
@@ -61,6 +66,6 @@ test('provider regression testing', async ({ page }) => {
     await providers.selectProvider('Surgeon Test');
     await providers.backArrow(); //back arrow
     await providers.clearSelections(); //clear selection
-    await providers.deleteProvider(); //delete provider  
+    await providers.deleteProvider(); //delete provider
 
 })

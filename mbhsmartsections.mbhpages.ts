@@ -55,3 +55,23 @@ test("edit smart section", async({page})=>{
     await smart.delete();
     await smart.searchSmartSection('Test Name for Smart Sections');
     })
+
+    test("smart section pagination", async({page})=>{
+
+        test.slow();
+        const login = new LoginPage (page);
+        await page.goto('https://qa.mybloodhealth.com/login');
+        await login.enterEmail(logindata.email);
+        await login.enterPassword(logindata.password);
+        await login.clickLoginBtn();
+    
+        const dashboard = new DashboardPage (page);
+        await dashboard.clickClientDropDown("QA Testing");
+    
+        const smart = new SmartsectionsPage (page);
+        await smart.selectSmartSections();
+        await smart.smartSectionPagination(3);
+        await smart.selectSearchResult('Medication Order-MONOFERRIC');
+        await smart.backArrow();
+        await smart.paginationCheck();
+    })

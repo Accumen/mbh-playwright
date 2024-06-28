@@ -73,3 +73,23 @@ test('delete lab type', async ({ page }) => {
     await labtypes.searchLabType('testtype');
 
 })
+
+test('lab type pagination', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const labtypes = new LabtypesPage(page);
+    await labtypes.selectLabTypes();
+    await labtypes.labTypePagination(2);
+    await labtypes.clickLabTypeList('Testing 12231');
+    await labtypes.labTypeBackArrow();
+    await labtypes.paginationCheck();
+})

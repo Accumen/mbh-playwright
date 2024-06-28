@@ -187,6 +187,16 @@ export default class UsersPage{
         await this.page.getByTitle('Delete').click();
     }
 
+          //pagination
+          async usersPagination(num){
+            await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+            await this.page.getByRole('link', { name: num }).click({delay:1000});
+        }
+        //check current page of pagination
+        async paginationCheck(){
+            await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+        }
+
     
 
 }

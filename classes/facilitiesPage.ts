@@ -35,11 +35,9 @@ export default class FacilitiesPage{
     async selectStatus(status: string){
         if (status == 'Inactive'){
             await this.page.getByLabel('Active',{exact:true}).locator('div').nth(3).click();
-            //await this.page.getByText('Active',{exact:true}).click();
         }
         else{
             await this.page.getByLabel('Inactive',{exact:true}).locator('div').nth(3).click();
-            //await this.page.getByText('Inactive',{exact:true}).click();
         }
         await this.page.getByText(status,{exact:true}).click();
         /**status key
@@ -70,7 +68,7 @@ export default class FacilitiesPage{
     }
     //back arrow button
     async facilityBackArrow(){
-        await this.page.getByRole('button',{name:''}).click()
+        await this.page.getByRole('button',{name:''}).click();
     }
 	//add facility button
     async addFacility(facility: string, shortname: string, facilitycode: string, address:string,city:string,state:string, zip: string, 
@@ -102,8 +100,8 @@ export default class FacilitiesPage{
         await this.page.getByLabel('City').fill(city);
        
         //state (fillable)
-        await this.page.locator('id=mat-input-6').click();
-        await this.page.locator('id=mat-input-6').fill(state);
+        await this.page.getByPlaceholder('State').click();
+        await this.page.getByPlaceholder('State').fill(state);
 			
         //zipcode (fillable)
         await this.page.getByText('Zipcode').click();
@@ -201,8 +199,8 @@ export default class FacilitiesPage{
             await this.page.getByLabel('City').fill(city);
         }
         if(state != ''){
-            await this.page.getByLabel('State').click();
-            await this.page.getByLabel('State').fill(state);
+            await this.page.getByPlaceholder('State').click();
+            await this.page.getByPlaceholder('State').fill(state);
         }
         if(zip != ''){
             await this.page.getByText('Zipcode').click();
@@ -226,7 +224,6 @@ export default class FacilitiesPage{
         }
         if(status != ''){
             await this.page.getByLabel('Status').locator('svg').click();
-            //await this.page.getByLabel('Status').locator('div').nth(2).click();
             await this.page.getByRole('option',{name: status, exact:true}).click();
         }
     }
@@ -238,12 +235,10 @@ export default class FacilitiesPage{
         }
         if(type != ''){
             await this.page.locator('#mat-select-value-39').click();
-            //await this.page.getByText('Type').click();
             await this.page.getByText(type).click();
         }
         if(status != ''){
             await this.page.getByRole('combobox',{name: 'Status'}).click();
-            //await this.page.getByLabel('Status',{exact:true}).locator('div').nth(3).click();
             await this.page.getByRole('option', {name:status, exact:true}).locator('span').click();
         }
         //save location

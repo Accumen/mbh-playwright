@@ -18,6 +18,7 @@ test("facility regression testing", async ({page})=>{
 
     test.slow();
     test.setTimeout(120000);
+    test.setTimeout(120000);
 
     const login = new LoginPage(page);
     await page.goto('https://qa.mybloodhealth.com/login');
@@ -39,7 +40,7 @@ test("facility regression testing", async ({page})=>{
     await facility.saveFacility(); //save facility
     await facility.selectStatus('Inactive'); //status dropdown
     await facility.selectFacility('QA Facility 3');
-    await facility.editFacility('QA Facility 4','QA4','301204','321 Test Rd','Brookyln','NY','54321','0987654321','0987654321','Hospital System','Texas','Active'); //edit facility
+    await facility.editFacility('QA Facility 4','QA4','301204','321 Test Rd','Brooklyn','NY','54321','0987654321','0987654321','Hospital System','Texas','Active'); //edit facility
     await facility.selectLocation('test location');
     await facility.editLocation('test location 2','Infusion Center','Inactive'); //edit location
     await facility.saveFacility();
