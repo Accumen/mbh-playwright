@@ -61,6 +61,12 @@ export default class CasetypesPage{
         async backArrow(){
             await this.page.getByRole('button', {name:'Back'}).click();
         }
+
+        //sync button
+        async syncCaseType(){
+            this.page.on('dialog',dialog => dialog.accept());
+            await this.page.getByTitle('Sync').first().click({delay:2000});
+        }
         
         //delete case type
         async deleteCaseType(){
@@ -120,7 +126,8 @@ export default class CasetypesPage{
     }
     //parent case type drop down
     async editParentCaseType(parentcasetype: string) {
-        await this.page.getByLabel('Parent Case Type').locator('div').nth(3).click();
+        await this.page.locator('#mat-select-value-9').click();
+        //await this.page.getByLabel('Parent Case Type').locator('div').nth(3).click();
         await this.page.getByText(parentcasetype, { exact: true }).click();
         //list of 76 case types
     }
@@ -142,6 +149,10 @@ export default class CasetypesPage{
 //check current page of pagination
 async paginationCheck(){
     await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+}
+//case type screenshot
+async caseTypeScreenshot(num){
+    await this.page.screenshot({path:'casetypescreenshot'+ num +'.png',fullPage:true});
 }
 
 }
