@@ -51,3 +51,43 @@ test('reset cache test',async ({page})=>{
     await dashboard.resetCache();
     await dashboard.dataverify(3);
 })
+
+//filters export to excel
+test('filter dashboard and export to excel',async ({page})=>{
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.unselectAllFacility();
+    await dashboard.clickFacility('QA Facility 1');
+    await dashboard.unselectAllCaseTypes();
+    await dashboard.clickCaseType('CARDIO');
+    await dashboard.applyFilters();
+    await dashboard.exportToExcel();
+})
+
+//filters export to pdf
+test('filter dashboard and export to pdf',async ({page})=>{
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.unselectAllFacility();
+    await dashboard.clickFacility('QA Facility 2');
+    await dashboard.unselectAllCaseTypes();
+    await dashboard.clickCaseType('THORACIC');
+    await dashboard.applyFilters();
+    await dashboard.exportToPdf();
+})

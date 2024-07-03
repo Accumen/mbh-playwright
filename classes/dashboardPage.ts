@@ -50,8 +50,8 @@ export default class DashboardPage{
     }
     //unselect all for Facility
     async unselectAllFacility(){
-        await this.page.getByLabel('Select Facility').locator('div').nth(3).click();
-        await this.page.locator("id=mat-checkbox-1").click({delay:30});// deselects the default select all option
+        await this.page.getByPlaceholder('Select Facilities').locator('div').nth(3).click();
+        await this.page.locator("id=mat-mdc-checkbox-2-input").click({delay:30});// deselects the default select all option
 
     }
     // select facility
@@ -67,8 +67,8 @@ export default class DashboardPage{
     }
      //unselect all for Case Type
      async unselectAllCaseTypes(){
-        await this.page.getByLabel('Case Type').locator('div').nth(3).click();
-        await this.page.locator("id=mat-checkbox-2").click({delay: 30}); //deselects the select all case type
+        await this.page.getByPlaceholder('Select Case Type').locator('div').nth(3).click();
+        await this.page.locator("id=mat-mdc-checkbox-1-input").click({delay: 30}); //deselects the select all case type
      }
      // select casetype
      async clickCaseType(casetype: string){
@@ -144,17 +144,6 @@ export default class DashboardPage{
     async resetCache(){
         await this.page.getByRole('button',{name: 'Reset Cache'}).click();
     }  
-   
-    //download excel function
-    async excelDownload(){
-        await this.page.getByRole('button',{name:'Download Excel'}).click();// selects the download excel button
-        const downloadPromise = this.page.waitForEvent('download');//looks for the download popup and waits for it to finish
-    }
-    //download pdf function
-    async pdfDownload(){
-        await this.page.getByRole('button',{name:'Download PDF'}).click();//selects the download pdf button
-        const downloadPromise = this.page.waitForEvent('download');//looks for the download popup and waits for it to finish
-    }
     
     async dataverify(num){
         await this.page.screenshot({path:'dataverify' + num + '.png'}); 
@@ -187,6 +176,25 @@ export default class DashboardPage{
         //capture value
 
     }
+    //export to excel
+    async exportToExcel(){
+        const downloadPromise = this.page.waitForEvent('download');
+        await this.page.getByRole('button', {name: 'Export Excel'}).click();
+        const download = await downloadPromise;
+        await download.saveAs('./testdata/'+ download.suggestedFilename());
+    }
+    //export to pdf
+    async exportToPdf(){
+        const downloadPromise = this.page.waitForEvent('download');
+        await this.page.getByRole('button', {name: 'Export PDF'}).click();
+        const download = await downloadPromise;
+        await download.saveAs('./testdata/'+ download.suggestedFilename());
+    }
+    //APPLY FILTERS
+    async applyFilters(){
+        await this.page.getByRole('button',{name:'APPLY'}).click();
+    }
+    //performance calendar
 
 
 }
