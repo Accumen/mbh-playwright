@@ -70,3 +70,55 @@ test('search/edit case type', async ({page})=> {
 
 })
 
+test('check parent case type match', async ({page})=> {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const casetypes = new CasetypesPage(page);
+    await casetypes.selectCaseTypeMenu();
+    await casetypes.selectCaseTypeName('ORTHO');
+    await casetypes.caseTypeScreenshot(1);
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    await casetypes.selectCaseTypeMenu();
+    await casetypes.selectCaseTypeName('ORTHO');
+    await casetypes.caseTypeScreenshot(2);
+
+
+})
+
+test('check parent case type match after save/sync', async ({page})=> {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const casetypes = new CasetypesPage(page);
+    await casetypes.selectCaseTypeMenu();
+    await casetypes.selectCaseTypeName('ORTHO');
+    await casetypes.editParentCaseType('ANY OPEN ABDOMINAL PROCEDURE');
+    await casetypes.saveCaseType();
+    await casetypes.selectCaseTypeName('ORTHO');
+    await casetypes.caseTypeScreenshot(1);
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    await casetypes.selectCaseTypeMenu();
+    await casetypes.searchCaseType('ORTHO');
+    await casetypes.syncCaseType();
+    await casetypes.selectCaseTypeName('ORTHO');
+    await casetypes.caseTypeScreenshot(2);
+
+
+})

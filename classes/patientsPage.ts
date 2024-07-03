@@ -97,8 +97,8 @@ export default class PatientsPage{
             //edit pencil
             await this.page.getByRole('link',{name:'Edit Lab'}).first().click();//edit button with aria-label
                 //result value
-                await this.page.getByLabel('Result Value *').click();
-                await this.page.getByLabel('Result Value *').fill(result);
+                await this.page.getByPlaceholder('Result Value').click();
+                await this.page.getByPlaceholder('Result Value').fill(result);
                 if(resultyear != 'NULL'){
                 //result date (calendar)
                 await this.page.locator('#mat-dialog-2').getByLabel('Open calendar').click();
@@ -114,9 +114,9 @@ export default class PatientsPage{
         }  
             //delete prepopulated result date for edit result value
             async deleteResultDate(){
-                await this.page.getByLabel('Result Date *').click();
-                await this.page.getByLabel('Result Date *').selectText();
-                await this.page.getByLabel('Result Date *').press('Delete');
+                await this.page.getByPlaceholder('Result Date').click();
+                await this.page.getByPlaceholder('Result Date').selectText();
+                await this.page.getByPlaceholder('Result Date').press('Delete');
             }
 
             //Save  
@@ -126,12 +126,12 @@ export default class PatientsPage{
             //delete trash can    
             async deleteSearchedLab(labtype){
                 this.page.on('dialog',dialog => dialog.accept());
-                await this.page.getByRole('link',{name:'Delete Lab'}).first().click();//delete lab button with aria-label
+                await this.page.getByRole('link',{name:'Delete Lab'}).first().click();
                 
             }
         //red x close window button
         async closeSearchListWindow(){
-            await this.page.getByRole('button', {name:'Close View All Labs'}).click(); // close window button with aria label
+            await this.page.getByRole('button', {name:'Close View All Labs'}).click(); 
         }
     //lastest labs section
     async latestLabs(){
