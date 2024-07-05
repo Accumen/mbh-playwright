@@ -194,8 +194,28 @@ export default class DashboardPage{
     async applyFilters(){
         await this.page.getByRole('button',{name:'APPLY'}).click();
     }
-    //performance calendar
-
+    //data performance calendar
+    async dataCalendar(year,month){
+        await this.page.getByLabel('Choose month and year').first().click();
+        await this.page.getByLabel(year,{exact:true}).click();
+        await this.page.getByLabel(month).click();
+    }
+    async changeMonthDC(change){
+        switch(change){
+            case "Next":{
+                await this.page.getByLabel('Next month').click();
+                break;
+            }
+            case "Previous":{
+                await this.page.getByLabel('Previous month').click();
+                break;
+            }
+        }
+    }
+    async pickDayDC(day){
+        await this.page.getByLabel(day).focus();
+        await this.page.getByLabel(day).click();
+    }
 
 }
 

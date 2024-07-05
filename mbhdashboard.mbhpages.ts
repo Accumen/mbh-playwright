@@ -91,3 +91,22 @@ test('filter dashboard and export to pdf',async ({page})=>{
     await dashboard.applyFilters();
     await dashboard.exportToPdf();
 })
+
+//test dashboard data performance calendar
+test('data performance calendar',async ({page})=>{
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.dataCalendar('2024','JUN');
+    await dashboard.changeMonthDC('Previous');
+    await dashboard.changeMonthDC('Next');
+    await dashboard.pickDayDC('12');
+
+})
