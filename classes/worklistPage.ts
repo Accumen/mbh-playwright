@@ -62,8 +62,12 @@ export default class WorklistPage{
         await this.page.getByRole('link', {name:'Non-Surgical', exact: true}).click({delay:1000}); // clicks the Chronic submenu from the worklist
     }
 
-    async clickFacility(){
-        await this.page.getByLabel('QA Facility').locator('div').nth(2).click();
+    async clickFacility(facility){
+        await this.page.getByLabel('QA Facility').locator('svg').nth(2).click();
+        await this.page.getByRole('option',{name:facility,exact:true}).click();
+    }
+    async favoriteFacility(){
+        await this.page.locator('app-page-header-content i').click();
     }
     /* The rest of the functions are the same no matter which menu is chosen (surgical or chronic) */
     //Search Name, MRN
@@ -211,14 +215,15 @@ export default class WorklistPage{
     }
     //export visits
     async exportVisits(){
-        await this.page.getByRole('button', {name:'Export Visits'}).click();//clicks the Export Visits button
-        //const downloadPromise = this.page.waitForEvent('download');
-        //const download = await downloadPromise;
+        const downloadPromise = this.page.waitForEvent('download');
+        await this.page.getByRole('button', {name: 'Export Visits'}).click();
+        const download = await downloadPromise;
+        await download.saveAs('./testdata/'+ download.suggestedFilename());
     }
     //Clear Expired Visits
     async clearExpiredVisits(){
-        await this.page.locator('#mainFilter div').filter({hasText: 'CLEAR'}).nth(2).click();//looks for the Clear element on the screen
-        await this.page.getByRole('button',{name:'CLEAR'}).first().click();//clicks the clear expired visits button
+        this.page.on('dialog',dialog => dialog.accept());
+        await this.page.getByRole('button',{name:'Clear Expired Visits'}).nth(2).click();
     }
     //Click Patient Details dropdown
     async selectPatientDetails(){
