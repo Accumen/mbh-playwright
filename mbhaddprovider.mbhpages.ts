@@ -64,3 +64,20 @@ test('provider regression testing', async ({ page }) => {
     await providers.deleteProvider(); //delete provider
 
 })
+
+test('provider pagination dropdown', async ({ page }) => {
+
+    test.slow();
+    const login = new LoginPage(page);
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+  
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const providers = new ProvidersPage(page);
+    await providers.clickProviders();
+    await providers.adjustRowCount('30');
+})

@@ -140,3 +140,21 @@ test("test facility delete", async ({page})=>{
     await facility.trashButton(); //only works if last in the list
     await facility.facilityScreenshot(1);
 })
+
+test('test facility pagination dropdown', async ({ page }) => {
+
+    test.slow();
+    const login = new LoginPage(page);
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+  
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+  
+    const facility = new FacilityPage(page);
+    await facility.selectFacilityMenu();
+    await facility.adjustRowCount('30');
+
+  })

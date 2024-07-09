@@ -149,3 +149,26 @@ test('Worklist pagination', async ({ page }) => {
   await worklist.paginationCheck();
   await worklist.worklistscreenshot(1);
 })
+
+test('worklist pagination dropdown', async ({ page }) => {
+
+  test.slow();
+  const login = new LoginPage(page);
+  await page.goto('https://qa.mybloodhealth.com/login');
+  await login.enterEmail(logindata.email);
+  await login.enterPassword(logindata.password);
+  await login.clickLoginBtn();
+
+  const dashboard = new DashboardPage(page);
+  await dashboard.clickClientDropDown('QA Testing');
+
+  const worklist = new WorklistPage(page);
+  await worklist.clickWorklist();
+  await worklist.clickSurgical();
+  await worklist.paginationCheck();
+  await worklist.adjustRowCount('15');
+
+  await worklist.clickChronic();
+  await worklist.paginationCheck();
+  await worklist.adjustRowCount('5');
+})

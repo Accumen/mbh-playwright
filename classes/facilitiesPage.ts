@@ -242,10 +242,15 @@ export default class FacilitiesPage{
     async facilityScreenshot(num){
         await this.page.screenshot({path:'facilityscreenshot'+ num +'.png',fullPage:true});
     }
-    //row counter
-    /**
-     * 15
-     * 30
-     * 50
-     */
+    // adjust number of rows visible on screen
+    async adjustRowCount(row: string){
+        await this.page.getByLabel('15').locator('div').nth(2).click();//clicks the drop down for the row count
+        /**Row Key
+         * 15 (default)
+         * 30
+         * 50
+         */
+        await this.page.getByText(row,{exact:true}).click();//selects the row count in the []
+        
+    }
 }
