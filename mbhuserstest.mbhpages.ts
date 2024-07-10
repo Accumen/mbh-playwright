@@ -43,5 +43,18 @@ test("test user permission for region", async({page})=>{
     await user.saveUser();
     await user.searchUser('Fred');
     await user.deleteUser();    
+    })
+
+    test("adjust row count", async({page})=>{
+        test.slow();//changes default timeout from 30000 ms to 90000 ms
     
+        const login = new LoginPage (page)
+         await page.goto('https://qa.mybloodhealth.com/login')
+         await login.enterEmail(logindata.email)
+         await login.enterPassword(logindata.password)
+         await login.clickLoginBtn()
+        
+        const user = new UsersPage(page)
+        await user.selectUsers();
+        await user.adjustRowCount('30');
     })

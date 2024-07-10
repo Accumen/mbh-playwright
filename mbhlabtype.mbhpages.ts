@@ -93,3 +93,20 @@ test('lab type pagination', async ({ page }) => {
     await labtypes.labTypeBackArrow();
     await labtypes.paginationCheck();
 })
+
+test('adjust row count', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const labtypes = new LabtypesPage(page);
+    await labtypes.selectLabTypes();
+    await labtypes.adjustRowCount('30');
+})
