@@ -24,3 +24,22 @@ test('surgical visit', async ({ page }) => {
         'CARDIO', 'test');
     await worklist.saveScheduledVisit();
 })
+
+test('surgical visit existing', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail('cts-secure@accumen.com');
+    await login.enterPassword('Pass#123');
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const worklist = new WorklistPage(page);
+    await worklist.clickWorklist();
+    await worklist.clickSurgical();
+    await worklist.scheduleSurgicalVisit('Existing','','','','','651324','','','','','','','','','','','',
+        '','','no','','','','2024','JUL','28',13,'SPINE','test');
+})

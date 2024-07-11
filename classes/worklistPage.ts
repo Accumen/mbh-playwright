@@ -237,8 +237,7 @@ export default class WorklistPage{
     async scheduleSurgicalVisit(patienttype: string, fname?, mname?, lname?, email?, mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
         state?,zip?, gender?,race?,ethnicity?,hippa?,hhMonthdd?,edit?,editrace?,editethnicity?,changeDesc?,pYear?, pMonth?, pDay?, pclickcount?,
         procedure?, surgeon?){
-        //expect (this.page.locator('id=toast-container').getByText('Patients fetched successfully').isVisible);
-        //await this.page.waitFor(3000);
+        ;
         await this.page.getByRole('button', {name:' Schedule Visit'}).waitFor({state:'attached'})
         await this.page.getByRole('button', {name:' Schedule Visit'}).click({delay:1000});//clicks the Schedule Visit button
         //Opens the patient schedule screen
@@ -324,15 +323,6 @@ export default class WorklistPage{
          await this.page.getByLabel(hhMonthdd).click()
          //checkmark button to close the calendar
          await this.page.locator('button').filter({hasText: 'done'}).click();
-         //prefix(optional)
-         //await this.page.getByLabel('Prefix').click();
-         //await this.page.getByLabel('Prefix').fill(prefix);
-         //suffix(optional)
-         //await this.page.getByLabel('Suffix').click();
-         //await this.page.getByLabel('Suffix').fill(suffix);
-         //credentials(optional)
-         //await this.page.getByLabel('Credentials').click();
-         //await this.page.getByLabel('Credentials').fill(credentials);
             }
             else{
          //*Existing */
