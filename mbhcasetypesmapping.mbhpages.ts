@@ -123,3 +123,20 @@ test('download case type mappings', async ({ page }) => {
     await casetypesmap.selectCaseTypesMapping();
     await casetypesmap.downloadCaseTypeMappings();
 })
+
+test('adjust row count', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const casetypesmap = new CaseTypesMappingPage(page);
+    await casetypesmap.selectCaseTypesMapping();
+    await casetypesmap.adjustRowCount('30');
+})

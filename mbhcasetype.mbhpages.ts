@@ -119,6 +119,21 @@ test('check parent case type match after save/sync', async ({page})=> {
     await casetypes.syncCaseType();
     await casetypes.selectCaseTypeName('ORTHO');
     await casetypes.caseTypeScreenshot(2);
+})
 
+test('adjust row count', async ({page})=> {
+    test.slow();
+    const login = new LoginPage(page);
 
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const casetypes = new CasetypesPage(page);
+    await casetypes.selectCaseTypeMenu();
+    await casetypes.adjustRowCount('30');
 })

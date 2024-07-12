@@ -43,5 +43,5 @@ test("test user permission for region", async({page})=>{
     await user.saveUser();
     await user.searchUser('Fred');
     await user.deleteUser();    
-    
+
     })

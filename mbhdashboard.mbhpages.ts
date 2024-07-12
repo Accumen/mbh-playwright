@@ -14,7 +14,7 @@ test('filter dashboard data', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('Farmers Trauma Center');
+    await dashboard.clickClientDropDown('QA Testing');
     await dashboard.clickDateRange('Last 3 Months');
     await dashboard.datacomparison();
 })
@@ -30,8 +30,8 @@ test('filter screenshot comparison',async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('Farmers Trauma Center');
-    await dashboard.clickDateRange('Custom','2024','JAN','1','2024','MAR','31');
+    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickDateRange('Custom','2024','APR','1','2024','JUN','30');
     await dashboard.datacomparison();
 })
 //reset cache 
@@ -90,4 +90,23 @@ test('filter dashboard and export to pdf',async ({page})=>{
     await dashboard.clickCaseType('THORACIC');
     await dashboard.applyFilters();
     await dashboard.exportToPdf();
+})
+
+//test dashboard data performance calendar
+test('data performance calendar',async ({page})=>{
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.dataCalendar('2024','JUN');
+    await dashboard.changeMonthDC('Previous');
+    await dashboard.changeMonthDC('Next');
+    await dashboard.pickDayDC('12');
+
 })

@@ -165,12 +165,15 @@ export default class CasetypesmappingPage{
     async paginationCheck(){
         await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
     }
-    //row counter
-    /**
-     * 15
-     * 30
-     * 50
-     */
-    
-
+       // adjust number of rows visible on screen
+       async adjustRowCount(row: string){
+        await this.page.getByLabel('50').locator('div').nth(2).scrollIntoViewIfNeeded();
+        await this.page.getByLabel('50').locator('div').nth(2).click();//clicks the drop down for the row count
+            /**Row Key
+             * 15 (default)
+             * 30
+             * 50
+             */
+        await this.page.getByText(row,{exact:true}).click();//selects the row count in the []
+    }
 }

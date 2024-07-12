@@ -63,8 +63,11 @@ export default class WorklistPage{
     }
 
     async clickFacility(facility){
-        await this.page.getByLabel('QA Facility').locator('div').nth(2).click();
-        await this.page.getByRole('option', { name: facility }).click();
+        await this.page.getByLabel('QA Facility').locator('svg').nth(2).click();
+        await this.page.getByRole('option',{name:facility,exact:true}).click();
+    }
+    async favoriteFacility(){
+        await this.page.locator('app-page-header-content i').click();
     }
     /* The rest of the functions are the same no matter which menu is chosen (surgical or chronic) */
     //Search Name, MRN
@@ -202,25 +205,26 @@ export default class WorklistPage{
     }  
     // adjust number of rows visible on screen
     async adjustRowCount(row: string){
-        await this.page.getByLabel('15').locator('div').nth(2).click();//clicks the drop down for the row count
+        await this.page.getByLabel('5').locator('div').nth(2).click();//clicks the drop down for the row count
         /**Row Key
          * 15 (default)
          * 30
          * 50
          */
-        await this.page.getByText(row).click();//selects the row count in the []
+        await this.page.getByText(row,{exact:true}).click();//selects the row count in the []
         
     }
     //export visits
     async exportVisits(){
-        await this.page.getByRole('button', {name:'Export Visits'}).click();//clicks the Export Visits button
-        //const downloadPromise = this.page.waitForEvent('download');
-        //const download = await downloadPromise;
+        const downloadPromise = this.page.waitForEvent('download');
+        await this.page.getByRole('button', {name: 'Export Visits'}).click();
+        const download = await downloadPromise;
+        await download.saveAs('./testdata/'+ download.suggestedFilename());
     }
     //Clear Expired Visits
     async clearExpiredVisits(){
-        await this.page.locator('#mainFilter div').filter({hasText: 'CLEAR'}).nth(2).click();//looks for the Clear element on the screen
-        await this.page.getByRole('button',{name:'CLEAR'}).first().click();//clicks the clear expired visits button
+        this.page.on('dialog',dialog => dialog.accept());
+        await this.page.getByRole('button',{name:'Clear Expired Visits'}).nth(2).click();
     }
     //Click Patient Details dropdown
     async selectPatientDetails(){
@@ -234,8 +238,7 @@ export default class WorklistPage{
     async scheduleSurgicalVisit(patienttype: string, fname?, mname?, lname?, email?, mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
         state?,zip?, gender?,race?,ethnicity?,hippa?,hhMonthdd?,edit?,editrace?,editethnicity?,changeDesc?,pYear?, pMonth?, pDay?, pclickcount?,
         procedure?, surgeon?){
-        //expect (this.page.locator('id=toast-container').getByText('Patients fetched successfully').isVisible);
-        //await this.page.waitFor(3000);
+        ;
         await this.page.getByRole('button', {name:' Schedule Visit'}).waitFor({state:'attached'})
         await this.page.getByRole('button', {name:' Schedule Visit'}).click({delay:1000});//clicks the Schedule Visit button
         //Opens the patient schedule screen
@@ -321,15 +324,6 @@ export default class WorklistPage{
          await this.page.getByLabel(hhMonthdd).click()
          //checkmark button to close the calendar
          await this.page.locator('button').filter({hasText: 'done'}).click();
-         //prefix(optional)
-         //await this.page.getByLabel('Prefix').click();
-         //await this.page.getByLabel('Prefix').fill(prefix);
-         //suffix(optional)
-         //await this.page.getByLabel('Suffix').click();
-         //await this.page.getByLabel('Suffix').fill(suffix);
-         //credentials(optional)
-         //await this.page.getByLabel('Credentials').click();
-         //await this.page.getByLabel('Credentials').fill(credentials);
             }
             else{
          //*Existing */

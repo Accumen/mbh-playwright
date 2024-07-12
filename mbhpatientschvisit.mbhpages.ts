@@ -172,9 +172,8 @@ test('edit communication', async({page})=>{
     await patients.editPriority('Low');
     await patients.editResolveDate('June 24');
     await patients.saveCommEdits();
-    await patients.replyCommunication('This reply is a playwright test.','no');
-    await patients.markAsResolved();
-})
+    await patients.replyCommunication('This reply is a playwright test.','yes');
+    })
 
 test('add communication', async({page})=>{
     test.slow();
