@@ -72,8 +72,8 @@ export default class WorklistPage{
     /* The rest of the functions are the same no matter which menu is chosen (surgical or chronic) */
     //Search Name, MRN
     async searchMRN(searchInfo: string){
-        await this.page.getByText('Search Name, MRN').fill(searchInfo);//types "st" in the MRN search field
-        //await this.page.getByText('Search Name, MRN').press('Enter');
+        await this.page.getByText('Search Name, MRN').fill(searchInfo);
+        await this.page.getByText('Search Name, MRN').press('Enter');
         
     }
     async hoverSearch(search){

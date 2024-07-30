@@ -26,7 +26,7 @@ test('verify report title', async ({ page }) => {
     await reports.verifyReport(2);
 })
 
-test('verify report data shows', async ({ page }) => {
+test('verify custom date range shows', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
@@ -42,8 +42,7 @@ test('verify report data shows', async ({ page }) => {
     await reports.selectReports();
     await reports.searchReport('Patient Enroll Report');
     await reports.chooseReport('Patient Enroll Report');
-    //await reports.selectDateRange('Last 3 Months'); commented out for MBHS-1200
-    await reports.selectDateRange('Last 30 Days'); // added for MBHS-1315
-    await reports.applyChanges(); // added for MBHS-1315
+    await reports.selectDateRange('Custom', '2024','MAY','5','2024','JUL','5'); 
+    await reports.applyChanges(); 
     await reports.verifyReport(1);
 })

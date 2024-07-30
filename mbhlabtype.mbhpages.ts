@@ -41,7 +41,7 @@ test('edit lab type', async ({ page }) => {
 
     const labtypes = new LabtypesPage(page);
     await labtypes.selectLabTypes();
-    await labtypes.searchLabType('testtype');
+    await labtypes.searchLabType('test');
     await labtypes.clickLabTypeList('testtype');
     await labtypes.editLabTypeStatus('Inactive');
     await labtypes.saveLabType();

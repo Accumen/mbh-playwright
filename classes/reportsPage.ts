@@ -82,7 +82,7 @@ export default class ReportsPage{
     }
         //date range (drop down)
     async selectDateRange(dateRange,startyear?,startMonth?,startDay?,endyear?,endMonth?,endDay?){
-        await this.page.getByLabel('Date range *').locator('div').nth(2).click();
+        await this.page.getByLabel('Date range').locator('div').nth(2).click();
         await this.page.getByText(dateRange).click();
             /**date range
              * Last 3 Months
@@ -101,7 +101,7 @@ export default class ReportsPage{
             }
                await this.page.getByLabel(startyear).click();
                await this.page.getByLabel(startMonth).click();
-               await this.page.getByLabel(startDay,{exact:true}).click();    
+               await this.page.getByText(startDay,{exact:true}).click();    
             //end date    (calendar) 
             await this.page.getByLabel('Choose month and year').click();
             while(await this.page.getByRole('button', {name:endyear, exact:false}).isHidden()){
@@ -109,7 +109,7 @@ export default class ReportsPage{
             }
                await this.page.getByLabel(endyear).click();
                await this.page.getByLabel(endMonth).click();
-               await this.page.getByLabel(endDay).click();  
+               await this.page.getByText(endDay,{exact:true}).click();  
         }    
     }
         

@@ -87,7 +87,7 @@ test('edit communication', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.searchMRN('Springer');
+    await worklist.searchMRN('Rubble');
     await worklist.worklistscreenshot(1);
   
   })
