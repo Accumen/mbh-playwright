@@ -100,3 +100,24 @@ test('edit patient', async ({ page }) => {
     await patients.editPatientWeight('117');
     await patients.savePatient();
 })
+
+test('check patient details page', async ({ page }) => {
+
+    test.slow();
+    const login = new LoginPage(page);
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+  
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const patients = new PatientsPage(page);
+    await patients.selectPatients();
+    await patients.searchPatient('Jack');
+    await patients.selectPatientfromSearch('Jack Black');
+    await patients.hoverPatientDetails();
+    await patients.patientVerify(1);
+
+})
