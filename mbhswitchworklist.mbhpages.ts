@@ -70,3 +70,27 @@ test('switch worklist pagination', async ({ page }) => {
     await worklist.worklistscreenshot(1);
 
 })
+
+test('switch worklist change filter', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const worklist = new WorklistPage(page);
+    await worklist.clickWorklist();
+    await worklist.clickSurgical();
+    await worklist.selectFilter('Bloodless');
+    await worklist.worklistscreenshot(1);
+    await worklist.clickChronic();
+    await worklist.selectFilter('Labs Missing');
+    await worklist.clickSurgical();
+    await worklist.worklistscreenshot(2);
+
+})

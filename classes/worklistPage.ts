@@ -945,6 +945,12 @@ export default class WorklistPage{
         await this.page.getByRole('button', { name: 'Edit Communication' }).click();
     }
 
+    //delete communication
+    async deleteCommunication(){
+        this.page.once('dialog',dialog => dialog.accept());
+        await this.page.getByLabel('communication-delete').click();
+    }
+
     async worklistPagination(num){
         await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
         await this.page.getByRole('link', { name: num }).click({delay:1000});
