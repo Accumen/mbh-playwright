@@ -19,7 +19,9 @@ test('add new users', async ({ page }) => {
     const users = new UsersPage(page);
     await users.selectUsers();
     await users.addUser();
-    await users.newUser('Amanda','Smith','mbowen8486@gmail.com','yes','','','','','','Active');
+    await users.newUser('Test','User2','testuser2@testmail.com','no','','','','','','Active');
+    await users.addregion();
     await users.saveUser();
+    await users.selectUserfromSearch('Test User2');
 
 })
