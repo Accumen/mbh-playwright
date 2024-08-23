@@ -6,6 +6,7 @@ export default class LabtypesmappingPage{
     
     //variables
     public labtype;
+    public labtype2;
     public labcode;
     public mappingfilename;
 
@@ -16,9 +17,9 @@ export default class LabtypesmappingPage{
 
     //search Lab Code (fillable)
     async searchLabCode(labcode:string){
-        await this.page.getByLabel('Search Code, Description').click();
-        await this.page.getByLabel('Search Code, Description').fill(labcode);
-        await this.page.getByLabel('Search Code, Description').press('Enter')
+        await this.page.getByText('Search Code, Description').click();
+        await this.page.getByText('Search Code, Description').fill(labcode);
+        await this.page.getByText('Search Code, Description').press('Enter');
     }
     //search Lab Type (drop down)
     async searchLabTypeDropDown(labtype: string){
@@ -54,10 +55,12 @@ export default class LabtypesmappingPage{
     } 
 
     //click to map
-    async clickToMap(labcode: string, labtype:string){
-        await this.page.getByText(labcode)
-        await this.page.locator('#mat-select-14 div').nth(3).click({delay:1000});
-        await this.page.getByText(labtype,{exact:true}).first().click();
+    async clickToMap(labcode, labtype: string, labtype2:string){
+        await this.page.getByText(labcode).hover();
+        await this.page.getByText(labtype, {exact:true}).click();
+        await this.page.getByText(labtype2, {exact:true}).click();
+        //await this.page.locator('#mat-select-14 div').nth(3).click({delay:1000});
+        //await this.page.getByText(labtype,{exact:true}).first().click();
     
     }
     //clear button
@@ -84,7 +87,10 @@ export default class LabtypesmappingPage{
     async paginationCheck(){
         await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
     }
-     // adjust number of rows visible on screen
+    async labTypesMappingScreenshot(num){
+        await this.page.screenshot({path:'labtypesmappingscreenshot'+ num +'.png',fullPage:true});
+    }
+    // adjust number of rows visible on screen
     async adjustRowCount(row: string){
         await this.page.getByLabel('50').locator('div').nth(2).scrollIntoViewIfNeeded();
         await this.page.getByLabel('50').locator('div').nth(2).click();//clicks the drop down for the row count
