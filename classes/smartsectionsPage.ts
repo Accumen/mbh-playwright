@@ -21,7 +21,8 @@ export default class SmartsectionsPage{
 
     //search name (fillable)
     async searchSmartSection(smartname){
-        await this.page.locator('div').filter({ hasText: /^Search Name$/ }).nth(3).click();
+        await this.page.getByPlaceholder('Search Name');
+        //await this.page.locator('div').filter({ hasText: /^Search Name$/ }).nth(3).click();
         await this.page.getByLabel('Search Name').fill(smartname);
         /**Smart Name Key
          * Smart 1 section Test 3.1
@@ -60,13 +61,13 @@ export default class SmartsectionsPage{
     //edit/add smart section
     async editSmartSection(smartname, smartdesc, smartstatus){
         //smart section name (fillable)
-        await this.page.getByLabel('Smart Section Name *').click();
-        await this.page.getByLabel('Smart Section Name *').fill(smartname);
+        await this.page.getByLabel('Smart Section Name').click();
+        await this.page.getByLabel('Smart Section Name').fill(smartname);
         //description (fillable)
-        await this.page.getByLabel('Description').click()
-        await this.page.getByLabel('Description').fill(smartdesc);
+        await this.page.getByPlaceholder('Description').click()
+        await this.page.getByPlaceholder('Description').fill(smartdesc);
         //status drop down
-        await this.page.getByLabel('Status *').click();
+        await this.page.getByLabel('Status').click();
         await this.page.getByRole('option',{name:smartstatus,exact:true}).click();
             /**Smart Status Key
              * active
@@ -79,8 +80,8 @@ export default class SmartsectionsPage{
             await this.page.getByRole('button',{name:'Add Option'}).click();
             await this.page.getByRole('button',{name:'Edit'}).last().click();
                 //new option name (fillable)
-                await this.page.getByLabel('Smart Option Name *').click();
-                await this.page.getByLabel('Smart Option Name *').fill(smartoption);
+                await this.page.getByLabel('Smart Option Name').click();
+                await this.page.getByLabel('Smart Option Name').fill(smartoption);
                 //smart option description (fillable)
                 await this.page.getByLabel('Smart Option Description').click();
                 await this.page.getByLabel('Smart Option Description').fill(smartoptdesc);
@@ -94,10 +95,11 @@ export default class SmartsectionsPage{
         //add suboption
         async addSubOption(suboption,suboptdesc, suboptcomment){
             await this.page.getByRole('button',{name:'Add Sub-Option'}).last().click();
+            await this.page.locator('.smart-option-toggle > .fas').click();
             await this.page.getByRole('button',{name:'Edit'}).last().click();
                 //new option name (fillable)
-                await this.page.getByLabel('Smart Option Name *').click();
-                await this.page.getByLabel('Smart Option Name *').fill(suboption);
+                await this.page.getByLabel('Smart Option Name').click();
+                await this.page.getByLabel('Smart Option Name').fill(suboption);
                 //smart option description (fillable)
                 await this.page.getByLabel('Smart Option Description').click();
                 await this.page.getByLabel('Smart Option Description').fill(suboptdesc);
@@ -132,6 +134,10 @@ export default class SmartsectionsPage{
     //check current page of pagination
     async paginationCheck(){
         await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+    }
+    //smart section screenshot
+    async smartSectionScreenshot(num){
+        await this.page.screenshot({path:'smartsectionscreenshot'+ num +'.png',fullPage:true});
     }
     // adjust number of rows visible on screen
     async adjustRowCount(row: string){

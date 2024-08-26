@@ -457,6 +457,9 @@ export default class PatientsPage{
          //change description note box
         await this.page.getByLabel('Change Description *').click();
         await this.page.getByLabel('Change Description *').fill(changeDesc)
+    }
+    async hoverPatientDetails(){
+        await this.page.getByText('Patient Details').hover();
     }  
     
      //edit patient information

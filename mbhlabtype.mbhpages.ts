@@ -41,15 +41,15 @@ test('edit lab type', async ({ page }) => {
 
     const labtypes = new LabtypesPage(page);
     await labtypes.selectLabTypes();
-    await labtypes.searchLabType('testtype');
-    await labtypes.clickLabTypeList('testtype');
+    await labtypes.searchLabType('test');
+    await labtypes.clickLabTypeList('test lab type');
     await labtypes.editLabTypeStatus('Inactive');
     await labtypes.saveLabType();
 
     await labtypes.clearLabTypesSelection();
-    await labtypes.searchLabType('testtype');
+    await labtypes.searchLabType('test lab type');
     await labtypes.searchStatus('Inactive');
-    await labtypes.clickLabTypeList('testtype')
+    await labtypes.clickLabTypeList('test lab type')
 })
 
 test('delete lab type', async ({ page }) => {

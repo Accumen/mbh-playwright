@@ -45,20 +45,20 @@ export default class LabtypesPage{
         await this.page.getByRole('button', {name:'Add Lab Type'}).click();
         
         //Test Name (fillable)
-        await this.page.getByLabel('Test Name *').click();
-        await this.page.getByLabel('Test Name *').fill(testname)//testtype
+        await this.page.getByPlaceholder('Test Name').click();
+        await this.page.getByPlaceholder('Test Name').fill(testname)//testtype
         //Unit of Measure (fillable)
-        await this.page.getByLabel('Unit of Measure *').click();
-        await this.page.getByLabel('Unit of Measure *').fill(unitOfMeasure);//x10(9)/L
+        await this.page.getByText('Unit of Measure').click();
+        await this.page.getByText('Unit of Measure').fill(unitOfMeasure);//x10(9)/L
         //Minimum Value (fillable)
-        await this.page.getByLabel('Minimum Value *').click();
-        await this.page.getByLabel('Minimum Value *').fill(minValue);//1
+        await this.page.getByText('Minimum Value').click();
+        await this.page.getByText('Minimum Value').fill(minValue);//1
         //Maximum Value (fillable)
-        await this.page.getByLabel('Maximum Value *').click();
-        await this.page.getByLabel('Maximum Value *').fill(maxValue);//125
+        await this.page.getByText('Maximum Value').click();
+        await this.page.getByText('Maximum Value').fill(maxValue);//125
         //Unique Code (fillable)
-        await this.page.getByLabel('Unique Code *').click();
-        await this.page.getByLabel('Unique Code *').fill(uniqueCode);//tstp
+        await this.page.getByText('Unique Code').click();
+        await this.page.getByText('Unique Code').fill(uniqueCode);//tstp
         //Status (drop down) - active and inactive
         await this.page.getByLabel('Status').locator('div').nth(2).click();
         await this.page.getByText(labtypestatus,{exact: true}).click();//active
@@ -72,7 +72,7 @@ export default class LabtypesPage{
         if (gendered == 'Gendered'){
        //** Male section**
        //Reference Min (fillable)
-            await this.page.locator('#mat-input-6').click();
+            //await this.page.locator('#mat-input-6').click();
             await this.page.locator('#mat-input-6').fill(mRefMin);//4.00
        //Reference Max (fillable)
             await this.page.locator('#mat-input-7').click();
@@ -147,9 +147,9 @@ export default class LabtypesPage{
 
        //Search Lab Type (fillable)
        async searchLabType(labtype: string){
-        await this.page.getByLabel('Search Lab Type').click();
-        await this.page.getByLabel('Search Lab Type').fill(labtype);
-        await this.page.getByLabel('Search Lab Type').press('Enter');
+        await this.page.getByText('Search Lab Type').click();
+        await this.page.getByText('Search Lab Type').fill(labtype);
+        await this.page.getByText('Search Lab Type').press('Enter');
        }
        
        //search (drop down)

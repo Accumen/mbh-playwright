@@ -99,10 +99,30 @@ test('map lab type', async ({page}) => {
     const labtypesmap = new LabTypesMappingPage(page);
     await labtypesmap.selectLabTypesMapping();
     await labtypesmap.searchLabCode('1234567');
-    await labtypesmap.clickToMap('1234567','test lab type');
+    await labtypesmap.clickToMap('1234567','UNMAPPED','Hgb');
     await labtypesmap.searchLabCode('1234567');
+    await labtypesmap.labTypesMappingScreenshot(1);
 })
 
+test('unmap lab type', async ({page}) => {
+    test.slow();
+
+    const login = new LoginPage(page);
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const labtypesmap = new LabTypesMappingPage(page);
+    await labtypesmap.selectLabTypesMapping();
+    await labtypesmap.searchLabCode('1234567');
+    await labtypesmap.clickToMap('1234567','Hgb','UNMAPPED');
+    await labtypesmap.searchLabCode('1234567');
+    await labtypesmap.labTypesMappingScreenshot(1);
+})
 
 test('adjust row count', async ({ page }) => {
     test.slow();

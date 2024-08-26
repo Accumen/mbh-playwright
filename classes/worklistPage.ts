@@ -72,8 +72,8 @@ export default class WorklistPage{
     /* The rest of the functions are the same no matter which menu is chosen (surgical or chronic) */
     //Search Name, MRN
     async searchMRN(searchInfo: string){
-        await this.page.getByText('Search Name, MRN').fill(searchInfo);//types "st" in the MRN search field
-        //await this.page.getByText('Search Name, MRN').press('Enter');
+        await this.page.getByText('Search Name, MRN').fill(searchInfo);
+        await this.page.getByText('Search Name, MRN').press('Enter');
         
     }
     async hoverSearch(search){
@@ -944,6 +944,12 @@ export default class WorklistPage{
         await this.page.getByLabel(resultday).click();
         await this.page.locator('button').filter({ hasText: 'done' }).click();
         await this.page.getByRole('button', { name: 'Edit Communication' }).click();
+    }
+
+    //delete communication
+    async deleteCommunication(){
+        this.page.once('dialog',dialog => dialog.accept());
+        await this.page.getByLabel('communication-delete').click();
     }
 
     async worklistPagination(num){

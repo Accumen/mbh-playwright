@@ -41,14 +41,19 @@ export default class UsersPage{
     //new user screen
     async newUser(fname,lname,email,cadmin,contents,users,clinical,reports,mapping,ustatus){
         //first name
-        await this.page.getByLabel('First Name *').click();
-        await this.page.getByLabel('First Name *').fill(fname);
+        //await this.page.getByLabel('First Name *').click();
+        //await this.page.getByLabel('First Name *').fill(fname);
+        await this.page.getByRole("textbox", { name: "First Name", exact: true }).click();
+        await this.page.getByRole("textbox", { name: "First Name", exact: true }).fill(fname);
+
         //last name
-        await this.page.getByLabel('Last Name *').click();
-        await this.page.getByLabel('Last Name *').fill(lname);
+        //await this.page.getByText('Last Name*').click();
+        //await this.page.getByPlaceholder('Last Name*').fill(lname);
+        await this.page.getByRole("textbox", { name: "Last Name", exact: true }).click();
+        await this.page.getByRole("textbox", { name: "Last Name", exact: true }).fill(lname);
         //email
-        await this.page.getByLabel('Email *').click();
-        await this.page.getByLabel('Email *').fill(email);
+        await this.page.getByRole("textbox", { name: "Email", exact: true }).click();
+        await this.page.getByRole("textbox", { name: "Email", exact: true }).fill(email);
         //client admin (checkbox)
         if (cadmin != 'yes'){
             //contents (checkbox)
@@ -207,6 +212,17 @@ export default class UsersPage{
              * 50
              */
         await this.page.getByText(row,{exact:true}).click();//selects the row count in the []
+    }
+
+    //add region(s)
+    async addregion(){
+        await this.page.getByLabel('Texas').check();
+            /*List
+            * Texas
+            * Test
+            */
+        await this.page.getByLabel('Texas').uncheck();
+        await this.page.getByRole( 'checkbox', {name: 'QA Facility 1' }).check();
     }
 
 }

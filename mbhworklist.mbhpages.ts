@@ -72,6 +72,28 @@ test('edit communication', async ({ page }) => {
 
   })
 
+  test('delete communication', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+  
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+  
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+  
+    const worklist = new WorklistPage(page);
+    await worklist.clickWorklist();
+    await worklist.clickSurgical();
+    await worklist.searchMRN('789456123');
+    await worklist.selectPatientfromSearch('Emily Smith');
+    await worklist.deleteCommunication();
+    await worklist.worklistscreenshot(1);
+  
+    })
+
   test('search worklist', async ({ page }) => {
 
     test.slow();
@@ -87,7 +109,7 @@ test('edit communication', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.searchMRN('Springer');
+    await worklist.searchMRN('Rubble');
     await worklist.worklistscreenshot(1);
   
   })
