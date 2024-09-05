@@ -1,4 +1,5 @@
-import { Page} from "@playwright/test";
+import {Page} from "@playwright/test";
+import{expect}from"@playwright/test";
 import WorklistPage from "./worklistPage";
 
 export default class PatientsPage{
@@ -93,7 +94,6 @@ export default class PatientsPage{
         }        
         //select from lab search results list
         async editSearchedLab(result?,resultyear?,resultmonth?,resultday?){
-            //await this.page.getByRole('row',{name:labtype,exact:false}).getByRole('link').first().click();
             //edit pencil
             await this.page.getByRole('link',{name:'Edit Lab'}).first().click();//edit button with aria-label
                 //result value
@@ -101,7 +101,8 @@ export default class PatientsPage{
                 await this.page.getByPlaceholder('Result Value').fill(result);
                 if(resultyear != 'NULL'){
                 //result date (calendar)
-                await this.page.locator('#mat-dialog-2').getByLabel('Open calendar').click();
+                await this.page.locator('#mat-mdc-dialog-2').getByLabel('Open calendar').click();
+                //
                 await this.page.getByLabel('Choose month and year').click();
                 while(await this.page.getByRole('button', {name:resultyear, exact:false}).isHidden()){
                     await this.page.getByLabel('Previous 24 years').click();
@@ -138,6 +139,16 @@ export default class PatientsPage{
         await this.page.getByText('LATEST LABS').scrollIntoViewIfNeeded();
     }
     
+    //confirm Ferritin badge
+    async worklistBadge(result){
+        await this.page.locator('app-basic-visit-info-page').getByText(result).screenshot({path:'worklistBadge.png'});
+        if(result != '300'){
+            await expect (this.page.locator('app-basic-visit-info-page').getByText(result)).toHaveCSS('color','rgb(255, 0, 0)');
+        }
+        else{
+            await expect (this.page.locator('app-basic-visit-info-page').getByText(result)).toHaveCSS('color','rgb(51, 51, 51)')
+        }
+    }
     //add labs
     async addLabs(labtype,labvalue,resultyear,resultmonth,resultday){
         await this.page.getByRole('button',{name: 'Add'}).click();

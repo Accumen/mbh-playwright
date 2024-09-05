@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import WorklistPage from './classes/worklistPage';
+import PatientsPage from './classes/patientsPage';
 const logindata = JSON.parse(JSON.stringify(require("./testdata/login.json")))
 
 test('worklist', async ({ page }) => {
@@ -150,4 +151,56 @@ test('edit communication', async ({ page }) => {
     await worklist.clickChronic();
     await worklist.sortByDateRange('2024','JUL','28','2024','JUL','28');
     await worklist.exportVisits();
+  })
+
+  test('Worklist Badge', async ({ page }) => {
+
+    test.slow();
+    const login = new LoginPage(page);
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+  
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+    
+    const worklist = new WorklistPage(page);
+    await worklist.clickWorklist();
+    await worklist.clickSurgical();
+    await worklist.searchMRN('Smith');
+    await worklist.selectPatientfromSearch('Frank Smith');
+    
+    const patient = new PatientsPage(page);
+    await patient.viewAllLabs('Ferritin','NULL');
+    await patient.editSearchedLab('300','NULL');
+    await patient.saveEditedLab();
+    await patient.closeSearchListWindow();
+    await patient.worklistBadge('300');
+  })
+
+  test('Non-Surgical Worklist Badge', async ({ page }) => {
+
+    test.slow();
+    const login = new LoginPage(page);
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+  
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+    
+    const worklist = new WorklistPage(page);
+    await worklist.clickWorklist();
+    await worklist.clickChronic();
+    await worklist.searchMRN('Smith');
+    await worklist.selectPatientfromSearch('August Smith');
+    
+    const patient = new PatientsPage(page);
+    await patient.viewAllLabs('Ferritin','NULL');
+    await patient.editSearchedLab('301','2024','JUL','1');
+    await patient.saveEditedLab();
+    await patient.closeSearchListWindow();
+    await patient.worklistBadge('301');
   })
