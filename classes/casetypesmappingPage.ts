@@ -39,10 +39,6 @@ export default class CasetypesmappingPage{
         await this.page.getByPlaceholder('Search Code, Description').press('Enter');
     }
 
-    async hoverSearch(search){
-        await this.page.getByText(search).hover();
-    }
-
     //case type drop down  (74 items)
     async searchTypeDropDown(casetype: string){
         await this.page.getByLabel('Case Type').locator('div').nth(2).click();

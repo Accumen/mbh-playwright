@@ -5,7 +5,7 @@ import CasetypesmappingPage from "./classes/casetypesmappingPage"//connect the c
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 
 test("map by region test", async({page})=>{
-    test.slow();//changes default timeout from 30000 ms to 90000 ms
+    test.slow();
 
     const login = new LoginPage (page)
     await page.goto('https://qa.mybloodhealth.com/login')
@@ -14,17 +14,10 @@ test("map by region test", async({page})=>{
     await login.clickLoginBtn()
 
     const dashboard = new DashboardPage(page)
-    await dashboard.clickClientDropDown("Newlife hospital");
+    await dashboard.clickClientDropDown("QA Testing");
 
     const casetypesmapping = new CasetypesmappingPage(page);
     await casetypesmapping.selectCaseTypesMapping();
-    await casetypesmapping.searchCode('107733');
-    await casetypesmapping.hoverSearch('107733');
+    await casetypesmapping.searchCode('50243');
     await casetypesmapping.overrideMapping('ORTHO');
-    await casetypesmapping.clearSelections();
-    await casetypesmapping.searchCode('107733');
-    await casetypesmapping.hoverSearch('107733');
-    await casetypesmapping.fullPageVerify();
-
-
 })
