@@ -27,7 +27,7 @@ export default class CasetypesmappingPage{
     //upload mappings button
     async uploadCaseTypeMappings(){
         await this.page.getByRole('button', {name: 'Upload Mappings'}).click();
-        await this.page.locator("input[type=file]").setInputFiles("./caseTypeMapping.xlsx");
+        await this.page.locator("input[type=file]").setInputFiles("./CaseTypeMapping_1718978762916.xlsx");
         await this.page.getByRole('button',{name:'Upload Mappings'}).click();
         
     }
@@ -131,7 +131,8 @@ export default class CasetypesmappingPage{
    //click mapping dropdown
    async clickToMap(searchCaseCode: string, casetype: string){
     await this.page.getByText(searchCaseCode)
-    await this.page.locator('#mat-select-value-115').click();
+   //await this.page.locator('#mat-select-value-115').click(); 
+    await this.page.getByText('UNMAPPED').click();
     await this.page.getByText(casetype).click();
    }
 
