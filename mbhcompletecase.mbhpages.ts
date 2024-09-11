@@ -21,7 +21,7 @@ test('complete surgical treated no followup', async ({ page }) => {
     await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.searchMRN('789456');
-    await worklist.selectPatientfromSearch('Treated nFollow');
+    await worklist.selectPatientfromSearch('Emily Smith');
     await worklist.completeSurgicalVisit('Treated','B12','','no','','','','');
     await worklist.selectChainofCustody();
 
@@ -44,9 +44,9 @@ test('complete surgical treated followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.searchMRN('Emily Smith');
-    await worklist.selectPatientfromSearch('Emily Smith');
-    await worklist.completeSurgicalVisit('Treated','B12','','yes','321','2024','JULY','28')
+    await worklist.searchMRN('1597642388');
+    await worklist.selectPatientfromSearch('Frank Smith');
+    await worklist.completeSurgicalVisit('Treated','B12','','yes','321','2024','OCT','28')
 
 })
 
@@ -66,8 +66,8 @@ test('complete surgical not treated no followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.searchMRN('789458');
-    await worklist.selectPatientfromSearch('nTreated nFollow');
+    await worklist.searchMRN('123456788');
+    await worklist.selectPatientfromSearch('Wilma Flinestone');
     await worklist.completeSurgicalVisit('Not Treated','','Does not meet criteria for treatment','no','','','','');
     await worklist.selectChainofCustody();
 
@@ -112,8 +112,8 @@ test('complete nonsurgical treated no followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('789456');
-    await worklist.selectPatientfromSearch('Treated nFollow');
+    await worklist.searchMRN('947128');
+    await worklist.selectPatientfromSearch('Chrystal Allison');
     await worklist.completeNonSurgicalVisit('Treated','B12','','no','Patient declines treatment','test reason','','','','');
     await worklist.selectChainofCustody();
 
@@ -136,9 +136,9 @@ test('complete nonsurgical treated followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('August Smith');
+    await worklist.searchMRN('741852963');
     await worklist.selectPatientfromSearch('August Smith');
-    await worklist.completeNonSurgicalVisit('Treated','B12','','yes','','','','2024','JULY','28');
+    await worklist.completeNonSurgicalVisit('Treated','EPO','','yes','','','','2024','JULY','28');
    
 })
 
@@ -158,8 +158,8 @@ test('complete nonsurgical not treated no followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('789458');
-    await worklist.selectPatientfromSearch('nTreated nFollow');
+    await worklist.searchMRN('115495');
+    await worklist.selectPatientfromSearch('Trueman Jacklings');
     await worklist.completeNonSurgicalVisit('Not Treated','','No contact from patient','no','','','','','','');
     await worklist.selectChainofCustody();
 
@@ -182,9 +182,9 @@ test('complete nonsurgical not treated followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('August Smith');
-    await worklist.selectPatientfromSearch('August Smith');
-    await worklist.completeNonSurgicalVisit('Not Treated','','No contact from patient','yes','','','321','2024','JUNE','28')
+    await worklist.searchMRN('1270546');
+    await worklist.selectPatientfromSearch('Augustine Coye');
+    await worklist.completeNonSurgicalVisit('Not Treated','','No contact from patient','yes','','','321','2024','OCT','28')
 })
 
 test('test complete visit workflow', async ({ page }) => {

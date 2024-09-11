@@ -18,9 +18,9 @@ test('patient surgical visit', async ({ page }) => {
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.searchPatient('smith');
+    await patients.searchPatient('Emily');
     await patients.selectPatientfromSearch('Emily Smith');
-    await patients.patientschedulesurgical('2024','JUNE','29',8,'CARDIO','test','QA Facility 1');
+    await patients.patientschedulesurgical('2024','SEP','28',8,'ORTHO','test','QA Facility 1');
 })
 
 test('patients non-surgical visit', async ({ page }) => {
@@ -37,9 +37,9 @@ test('patients non-surgical visit', async ({ page }) => {
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.searchPatient('Smith');
-    await patients.selectPatientfromSearch('Smith');
-    await patients.patientsschedulechronic('2024','June','24',15,'CHRONIC MEDICAL FOLLOW UP','test','QA Facility 1');
+    await patients.searchPatient('Emily');
+    await patients.selectPatientfromSearch('Emily Smith');
+    await patients.patientsschedulechronic('2024','SEP','28',15,'CHRONIC MEDICAL FOLLOW UP','test','QA Facility 1');
    
 })
 

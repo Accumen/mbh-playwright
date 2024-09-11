@@ -381,7 +381,7 @@ export default class PatientsPage{
             //Delete Button
         //Surgeon (fillable required field)
         await this.page.getByLabel('Surgeon', {exact:true}).click();
-         await this.page.getByPlaceholder('Surgeon', {exact:true}).fill('Sur');
+         await this.page.getByPlaceholder('Surgeon', {exact:true}).fill(surgeon);
          await this.page.getByPlaceholder('Surgeon',{exact:true}).press('Enter');
          //await expect (this.page.locator('id=mat-autocomplete-1')).toBeVisible();
          await this.page.getByRole('option', {name: surgeon, exact: false}).click();
@@ -453,7 +453,7 @@ export default class PatientsPage{
             //Delete Button
         //Surgeon (fillable required field)
      await this.page.getByText('Referring Provider', {exact:true}).click();
-         await this.page.getByPlaceholder('Referring Provider', {exact:true}).fill('Sur');
+         await this.page.getByPlaceholder('Referring Provider', {exact:true}).fill(surgeon);
          await this.page.getByPlaceholder('Referring Provider', {exact:true}).press('Enter');
          await this.page.getByRole('option', {name: surgeon, exact: false}).click();
          //Facility
