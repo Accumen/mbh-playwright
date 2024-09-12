@@ -8,6 +8,7 @@ export default class CasetypesmappingPage{
     //variables
     public searchCaseCode;
     public casetype;
+    public casetype2;
 
     //select case types mapping from navigation menu
     async selectCaseTypesMapping (){
@@ -129,11 +130,13 @@ export default class CasetypesmappingPage{
    }
 
    //click mapping dropdown
-   async clickToMap(searchCaseCode: string, casetype: string){
-    await this.page.getByText(searchCaseCode)
-   //await this.page.locator('#mat-select-value-115').click(); 
-    await this.page.getByText('UNMAPPED').click();
-    await this.page.getByText(casetype).click();
+   async clickToMap(searchCaseCode: string, casetype: string, casetype2: string){
+    await this.page.getByText(searchCaseCode).hover();
+    await this.page.getByText(casetype, {exact:true}).click();
+    await this.page.getByText(casetype2, {exact:true}).click();
+    //await this.page.locator('#mat-select-value-115').click(); 
+    //await this.page.getByText('UNMAPPED').click();
+    //await this.page.getByText(casetype).click();
    }
 
     //clear button
@@ -148,9 +151,9 @@ export default class CasetypesmappingPage{
         await this.page.getByRole('button',{name:'Save Overrides'}).click();
 
     }
-    async caseVerify(casecode){
+    async caseVerify(casecode, num){
         await this.page.getByText(casecode,{exact:true}).scrollIntoViewIfNeeded();
-        await this.page.screenshot({path:'casetype.png'})
+        await this.page.screenshot({path:'casetype'+ num + '.png'})
     }
 
     async fullPageVerify(){
