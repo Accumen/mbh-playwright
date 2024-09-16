@@ -8,7 +8,7 @@ test('upload document', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -27,7 +27,7 @@ test('preview document', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -46,7 +46,7 @@ test('add/edit/delete document', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -80,7 +80,7 @@ test('document pagination', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -100,7 +100,7 @@ test('document pagination dropdown', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -117,7 +117,7 @@ test('add document with smart section', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();

@@ -8,7 +8,7 @@ test('patient surgical visit', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -27,7 +27,7 @@ test('patients non-surgical visit', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -47,7 +47,7 @@ test('view / assign visit', async ({page})=> {
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -73,7 +73,7 @@ test('assign/unassign visit', async ({page})=>{
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -106,7 +106,7 @@ test('edit visit pcp/surgeon/treatment center/facility', async ({page})=>{
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -130,7 +130,7 @@ test ('open drop downs on patient visit', async ({page})=>{
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -153,7 +153,7 @@ test('edit communication', async({page})=>{
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -179,7 +179,7 @@ test('add communication', async({page})=>{
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -199,7 +199,7 @@ test('visit view all labs by labtype filter', async ({page})=>{
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();

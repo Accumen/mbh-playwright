@@ -8,7 +8,7 @@ test('add lab type', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -31,7 +31,7 @@ test('edit lab type', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -56,7 +56,7 @@ test('delete lab type', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -78,7 +78,7 @@ test('lab type pagination', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -98,7 +98,7 @@ test('adjust row count', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();

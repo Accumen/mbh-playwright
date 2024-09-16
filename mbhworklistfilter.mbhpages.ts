@@ -7,7 +7,7 @@ const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/
 test("Worklist Filter Test", async({page})=>{
   test.slow();//changes default timeout from 30000 ms to 90000 ms
   const login = new LoginPage (page);
-  await page.goto('https://qa.mybloodhealth.com/login');
+  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
   await login.enterEmail(logindata.email);
   await login.enterPassword(logindata.password);
   await login.clickLoginBtn();
@@ -26,7 +26,7 @@ test('worklist filter date range test', async ({ page }) => {
 
   test.slow();
   const login = new LoginPage(page);
-  await page.goto('https://qa.mybloodhealth.com/login');
+  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
   await login.enterEmail(logindata.email);
   await login.enterPassword(logindata.password);
   await login.clickLoginBtn();
@@ -47,7 +47,7 @@ test('worklist filter case type test', async ({ page }) => {
 
   test.slow();
   const login = new LoginPage(page);
-  await page.goto('https://qa.mybloodhealth.com/login');
+  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
   await login.enterEmail(logindata.email);
   await login.enterPassword(logindata.password);
   await login.clickLoginBtn();
@@ -67,7 +67,7 @@ test('retain worklist filter test', async ({ page }) => {
 
   test.slow();
   const login = new LoginPage(page);
-  await page.goto('https://qa.mybloodhealth.com/login');
+  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
   await login.enterEmail(logindata.email);
   await login.enterPassword(logindata.password);
   await login.clickLoginBtn();
@@ -90,7 +90,7 @@ test('retain surgical worklist filter test', async ({ page }) => {
 
   test.slow();
   const login = new LoginPage(page);
-  await page.goto('https://qa.mybloodhealth.com/login');
+  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
   await login.enterEmail(logindata.email);
   await login.enterPassword(logindata.password);
   await login.clickLoginBtn();
@@ -111,7 +111,7 @@ test('retain non surgical worklist filter test', async ({ page }) => {
 
   test.slow();
   const login = new LoginPage(page);
-  await page.goto('https://qa.mybloodhealth.com/login');
+  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
   await login.enterEmail(logindata.email);
   await login.enterPassword(logindata.password);
   await login.clickLoginBtn();
@@ -132,7 +132,7 @@ test('Worklist pagination', async ({ page }) => {
 
   test.slow();
   const login = new LoginPage(page);
-  await page.goto('https://qa.mybloodhealth.com/login');
+  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
   await login.enterEmail(logindata.email);
   await login.enterPassword(logindata.password);
   await login.clickLoginBtn();
@@ -154,7 +154,7 @@ test('worklist pagination dropdown', async ({ page }) => {
 
   test.slow();
   const login = new LoginPage(page);
-  await page.goto('https://qa.mybloodhealth.com/login');
+  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
   await login.enterEmail(logindata.email);
   await login.enterPassword(logindata.password);
   await login.clickLoginBtn();

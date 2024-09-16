@@ -20,7 +20,7 @@ test("facility regression testing", async ({page})=>{
     test.setTimeout(120000);
 
     const login = new LoginPage(page);
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -57,7 +57,7 @@ test("test creating unique facility", async ({page})=>{
     test.slow();
 
     const login = new LoginPage(page);
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -84,7 +84,7 @@ test("test facility create", async ({page})=>{
     test.slow();
 
     const login = new LoginPage(page);
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -105,7 +105,7 @@ test("test facility edit", async ({page})=>{
     test.slow();
 
     const login = new LoginPage(page);
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -127,7 +127,7 @@ test("test facility delete", async ({page})=>{
     test.slow();
 
     const login = new LoginPage(page);
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
@@ -145,7 +145,7 @@ test('test facility pagination dropdown', async ({ page }) => {
 
     test.slow();
     const login = new LoginPage(page);
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();

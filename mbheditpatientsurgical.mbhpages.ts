@@ -9,7 +9,7 @@ test('edit patient surgical', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail('cts-secure@accumen.com');
     await login.enterPassword('Pass#123');
     await login.clickLoginBtn();
@@ -35,7 +35,7 @@ test('verify latest labs', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail('cts-secure@accumen.com');
     await login.enterPassword('Pass#123');
     await login.clickLoginBtn();
@@ -57,7 +57,7 @@ test('verify latest labs after add', async ({ page }) => {
     test.setTimeout(120000);
     const login = new LoginPage(page);
 
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail('cts-secure@accumen.com');
     await login.enterPassword('Pass#123');
     await login.clickLoginBtn();
