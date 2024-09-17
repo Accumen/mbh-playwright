@@ -166,3 +166,21 @@ test('adjust row count', async ({ page }) => {
     await casetypesmap.selectCaseTypesMapping();
     await casetypesmap.adjustRowCount('30');
 })
+
+test("map by region test", async({page})=>{
+    test.slow();
+
+    const login = new LoginPage (page)
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login')
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn()
+
+    const dashboard = new DashboardPage(page)
+    await dashboard.clickClientDropDown("QA Testing");
+
+    const casetypesmap = new CaseTypesMappingPage(page);
+    await casetypesmap.selectCaseTypesMapping();
+    await casetypesmap.searchCode('50243');
+    await casetypesmap.overrideMapping('ORTHO');
+})

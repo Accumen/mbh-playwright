@@ -14,13 +14,13 @@ test('document preview', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown('Deaconess New');
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.searchMRN('Smith');
-    await worklist.selectPatientfromSearch('Emily Smith');
+    await worklist.searchMRN('Groover');
+    await worklist.selectPatientfromSearch('Danny Groover');
     await worklist.visitDocumentsAdd();
     await worklist.addVisitDocuments();
     await worklist.closeVisitDocuments();

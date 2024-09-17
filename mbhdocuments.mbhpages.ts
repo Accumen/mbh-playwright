@@ -37,8 +37,8 @@ test('preview document', async ({ page }) => {
 
     const document = new DocumentsPage (page);
     await document.selectDocuments();
-    await document.searchDoc('Playwright');
-    await document.selectDocFromList('Playwright Test Document');
+    await document.searchDoc('Invasive Anemia Treatment');
+    await document.selectDocFromList('Invasive Anemia Treatment');
     await document.previewdoc();
 })
 
@@ -69,7 +69,7 @@ test('add/edit/delete document', async ({ page }) => {
     await document.addSmartSection('Test Smart Section');
     await document.addDocBtn();
     await document.smartSecInfo('Test Smart Section','This is a test of smart.');
-    await document.addTextSection('Test Section Name','Playwright text section','This is a test for playwright.');
+    await document.addTextSection('Text Section Name','Playwright text section','This is a test for playwright.');
     await document.saveDoc();
     await document.searchDoc('Second Test Document');
     await document.delete();
@@ -111,26 +111,4 @@ test('document pagination dropdown', async ({ page }) => {
     const document = new DocumentsPage (page);
     await document.selectDocuments();
     await document.adjustRowCount('30');
-})
-
-test('add document with smart section', async ({ page }) => {
-    test.slow();
-    const login = new LoginPage(page);
-
-    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
-    await login.enterEmail(logindata.email);
-    await login.enterPassword(logindata.password);
-    await login.clickLoginBtn();
-
-    const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
-
-    const document = new DocumentsPage (page);
-    await document.selectDocuments();
-    await document.addDocBtn();
-    await document.addEditDoc('Second Test Document','Playwrights second test document','Assessment Template','Non-Surgical','Active')
-    await document.addSmartSection('Test Smart Section');
-    await document.addSmartSecDocBtn();
-    await document.smartSecInfo('Test Smart Section','This is a test of smart');
-    await document.saveDoc();
 })
