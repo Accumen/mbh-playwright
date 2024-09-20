@@ -165,7 +165,6 @@ export default class FacilitiesPage{
     //delete button (trash can icon)    
     async trashButton(){
         this.page.once('dialog',dialog => dialog.accept());
-        //await this.page.getByText('fa fa-trash text-danger').click();
         await this.page.getByTitle('Delete').last().click();
     }
     //edit facility

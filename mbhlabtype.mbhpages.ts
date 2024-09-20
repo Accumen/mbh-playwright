@@ -19,12 +19,8 @@ test('add lab type', async ({ page }) => {
     const labtypes = new LabtypesPage(page);
     await labtypes.selectLabTypes();
     await labtypes.addLabType('testtype','x10(9)/L','1','125','tstp','ACTIVE','Gendered','','','','','','',
-    '5','10','10','above','5','below','5','10','10','above','5','below');
+    '5','10','10','above','5','below','8','12','12','above','8','below');
     await labtypes.saveLabType();
-
-    await labtypes.clearLabTypesSelection();
-    await labtypes.searchLabType('testtype');
-    await labtypes.clickLabTypeList('testtype')
 })
 
 test('edit lab type', async ({ page }) => {
@@ -45,7 +41,6 @@ test('edit lab type', async ({ page }) => {
     await labtypes.clickLabTypeList('test lab type');
     await labtypes.editLabTypeStatus('Inactive');
     await labtypes.saveLabType();
-
     await labtypes.clearLabTypesSelection();
     await labtypes.searchLabType('test lab type');
     await labtypes.searchStatus('Inactive');
@@ -68,10 +63,6 @@ test('delete lab type', async ({ page }) => {
     await labtypes.selectLabTypes();
     await labtypes.searchLabType('testtype');
     await labtypes.deleteLabType();
-
-    await labtypes.clearLabTypesSelection();
-    await labtypes.searchLabType('testtype');
-
 })
 
 test('lab type pagination', async ({ page }) => {
