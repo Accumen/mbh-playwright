@@ -656,9 +656,12 @@ export default class PatientsPage{
     async viewVisit(){
         await this.page.getByRole('button',{name:'View Visit'}).last().click();//chooses most recent visit
     }
+    //Assign visit button
+    async assignButton(){
+        await this.page.getByRole('button',{name:'Assign'}).click();
+    }
     //assign visit
     async assignVisit(user){
-        await this.page.getByRole('button',{name:'Assign'}).click();
         await this.page.getByLabel('Users list').locator('div').nth(3).click();
         await this.page.getByRole('option',{name:user,exact:true}).click();
     }
@@ -687,6 +690,10 @@ export default class PatientsPage{
     //medications drop down
     async seeMedications(){
         await this.page.getByRole('button',{name:'MEDICATIONS'}).click();
+    }
+    //Anemia Management Treatment drop down
+    async seeAnemiaManagement(){
+        await this.page.getByRole('button',{name:'ANEMIA MANAGEMENT TREATMENT'}).click();
     }
     //allergies drop down
     async seeAllergies(){

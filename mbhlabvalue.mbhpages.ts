@@ -24,7 +24,7 @@ test('labvalue', async ({ page }) => {
     
     const patients = new PatientsPage(page);
     await patients.viewAllLabs('Hgb','NULL');
-    await patients.editSearchedLab('2.49999', '2024','February','27');
+    await patients.editSearchedLab('2.49999', '2024','DEC','27');
     await patients.patientVerify(1);
     await patients.saveEditedLab();
     await patients.closeSearchListWindow();

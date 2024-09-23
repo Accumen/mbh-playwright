@@ -4,6 +4,71 @@ import DashboardPage from './classes/dashboardPage';
 import PatientsPage from './classes/patientsPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 
+
+test('filter patients labs', async ({ page }) => {
+
+    test.slow();
+    const login = new LoginPage(page);
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+  
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const patients = new PatientsPage(page);
+    await patients.selectPatients();
+    await patients.searchPatient('Rubble');
+    await patients.selectPatientfromSearch('Betty Rubble');
+    await patients.viewAllLabs('Hgb','2023','Dec','28','2024','Mar','7');
+    await patients.patientVerify(1);
+
+})
+
+test('add patients lab', async ({ page }) => {
+
+    test.slow();
+    const login = new LoginPage(page);
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+  
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const patients = new PatientsPage(page);
+    await patients.selectPatients();
+    await patients.searchPatient('Terrell');
+    await patients.selectPatientfromSearch('Terrell Jack');
+    await patients.addLabs('test lab type', '123', '2024', 'JUL', '3')
+
+})
+
+test('delete patients lab', async ({ page }) => {
+
+    test.slow();
+    const login = new LoginPage(page);
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+  
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const patients = new PatientsPage(page);
+    await patients.selectPatients();
+    await patients.searchPatient('Terrell');
+    await patients.selectPatientfromSearch('Terrell Jack');
+    await patients.viewAllLabs('test lab type','NULL');
+    await patients.deleteSearchedLab('test lab type');
+    await patients.patientVerify(2);
+    await patients.closeSearchListWindow();
+    await patients.viewAllLabs('test lab type','NULL');
+})
+
 test('patient surgical visit', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
@@ -60,16 +125,16 @@ test('view / assign visit', async ({page})=> {
     await patients.searchPatient('Rubble');
     await patients.selectPatientfromSearch('Barney Rubble');
     await patients.backarrow();
-    await patients.searchPatient('Rubble');
     await patients.clearSelections();
     await patients.searchPatient('Rubble');
     await patients.selectPatientfromSearch('Barney Rubble');
     await patients.viewVisit();
+    await patients.assignButton();
     await patients.assignVisit('Test User');
     await patients.saveAssigned();
 })
 
-test('assign/unassign visit', async ({page})=>{
+test('unassign visit', async ({page})=>{
     test.slow();
     const login = new LoginPage(page);
 
@@ -86,19 +151,8 @@ test('assign/unassign visit', async ({page})=>{
     await patients.searchPatient('Rubble');
     await patients.selectPatientfromSearch('Barney Rubble');
     await patients.viewVisit();
-    await patients.assignVisit('Test User');
-    await patients.saveAssigned();
-    await patients.selectPatients();
-    await patients.searchPatient('Rubble');
-    await patients.selectPatientfromSearch('Barney Rubble');
-    await patients.viewVisit();
-    //await patients.closeAssignWindow(); uncomment when the close window button has a label
+    await patients.assignButton();
     await patients.unAssign();
-    await patients.selectPatients();
-    await patients.searchPatient('Rubble');
-    await patients.selectPatientfromSearch('Barney Rubble');
-    await patients.viewVisit();
-
 })
 
 test('edit visit pcp/surgeon/treatment center/facility', async ({page})=>{
@@ -145,35 +199,10 @@ test ('open drop downs on patient visit', async ({page})=>{
     await patients.viewVisit();
     await patients.seePatientDetails();
     await patients.seeMedications();
+    await patients.seeAnemiaManagement();
     await patients.seeAllergies();
     await patients.seeChainofCustody();
 })
-
-test('edit communication', async({page})=>{
-    test.slow();
-    const login = new LoginPage(page);
-
-    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
-    await login.enterEmail(logindata.email);
-    await login.enterPassword(logindata.password);
-    await login.clickLoginBtn();
-
-    const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
-
-    const patients = new PatientsPage(page);
-    await patients.selectPatients();
-    await patients.searchPatient('Rubble');
-    await patients.selectPatientfromSearch('Barney Rubble');
-    await patients.viewVisit();
-    await patients.editCommunication();
-    await patients.editCommType('Task');
-    await patients.editMessage('playwright test message');
-    await patients.editPriority('Low');
-    await patients.editResolveDate('June 24');
-    await patients.saveCommEdits();
-    await patients.replyCommunication('This reply is a playwright test.','yes');
-    })
 
 test('add communication', async({page})=>{
     test.slow();
@@ -195,7 +224,7 @@ test('add communication', async({page})=>{
     await patients.addCommunication('Task','Playwright Test','Low','June 28');
 })
 
-test('visit view all labs by labtype filter', async ({page})=>{
+test('edit communication', async({page})=>{
     test.slow();
     const login = new LoginPage(page);
 
@@ -212,6 +241,33 @@ test('visit view all labs by labtype filter', async ({page})=>{
     await patients.searchPatient('Rubble');
     await patients.selectPatientfromSearch('Barney Rubble');
     await patients.viewVisit();
-    await patients.viewAllLabs('Hgb','NULL');
+    await patients.editCommunication();
+    await patients.editCommType('Task');
+    await patients.editMessage('edited playwright test message');
+    await patients.editPriority('Medium');
+    await patients.editResolveDate('September 29');
+    await patients.saveCommEdits();
+    await patients.replyCommunication('This reply is a playwright test.','yes');
+    })
 
-})
+    test('reply to communication', async({page})=>{
+        test.slow();
+        const login = new LoginPage(page);
+    
+        await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+        await login.enterEmail(logindata.email);
+        await login.enterPassword(logindata.password);
+        await login.clickLoginBtn();
+    
+        const dashboard = new DashboardPage(page);
+        await dashboard.clickClientDropDown('QA Testing');
+    
+        const patients = new PatientsPage(page);
+        await patients.selectPatients();
+        await patients.searchPatient('Rubble');
+        await patients.selectPatientfromSearch('Barney Rubble');
+        await patients.viewVisit();
+        await patients.replyCommunication('This reply is a playwright test.','yes');
+        })
+
+

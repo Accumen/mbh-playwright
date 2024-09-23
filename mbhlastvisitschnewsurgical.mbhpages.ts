@@ -5,7 +5,7 @@ import WorklistPage from './classes/worklistPage';
 import PatientsPage from './classes/patientsPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 
-test('surgical visit', async ({ page }) => {
+test('last visit', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
