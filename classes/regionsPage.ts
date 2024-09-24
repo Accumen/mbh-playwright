@@ -71,7 +71,6 @@ export default class CasetypesmappingPage{
     }
     //delete (trash can)
     async deleteRegion(){
-        //await this.page.getByTitle('Delete').click();
         this.page.once('dialog',dialog => dialog.accept());
         await this.page.getByTitle('Delete').last().click();
     }

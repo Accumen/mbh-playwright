@@ -9,7 +9,7 @@ const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/
  * back arrow
  */
 
-test("region regression testing", async ({page})=>{
+test("add region", async ({page})=>{
 
     test.slow();
 
@@ -27,13 +27,44 @@ test("region regression testing", async ({page})=>{
     await region.addRegion();
     await region.newRegion('Test 2','218','InActive'); //add region
     await region.saveRegion(); //save region
+})
+
+test("edit region", async ({page})=>{
+
+    test.slow();
+
+    const login = new LoginPage(page);
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const region = new RegionPage(page);
 
     await region.selectRegion('Test 2');
     await region.editRegionName('Test 3'); //edit region
     await region.editRegionCode('219');
     await region.editRegionStatus('Active');
     await region.saveRegion();
+})
 
+test("navigate/delete region", async ({page})=>{
+
+    test.slow();
+
+    const login = new LoginPage(page);
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const region = new RegionPage(page);
     await region.selectRegion('Test 3');
     await region.backArrow(); //back arrow
     await region.deleteRegion(); //delete region

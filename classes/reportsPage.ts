@@ -52,6 +52,8 @@ export default class ReportsPage{
         await this.page.getByPlaceholder('Select Provider').press('Enter');
 
     }
+    //unselect all case types
+    
         //select case type (drop down)
     async selectCaseType(caseType){
         await this.page.getByText('AllSelect Case Type *').click();
