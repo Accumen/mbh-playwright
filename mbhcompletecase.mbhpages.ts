@@ -113,11 +113,9 @@ test('complete nonsurgical treated no followup', async ({ page }) => {
     await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.searchMRN('947128');
-    await worklist.selectPatientfromSearch('Chrystal Allison');
-    await worklist.completeNonSurgicalVisit('Treated','B12','','no','Patient declines treatment','test reason','','','','');
+    await worklist.selectPatientfromSearch('Chrystal Allinson');
+    await worklist.completeNonSurgicalVisit('Treated','B12','','no','Patient treatment plan complete','test reason','','','','');
     await worklist.selectChainofCustody();
-
-
 })
 
 test('complete nonsurgical treated followup', async ({ page }) => {
