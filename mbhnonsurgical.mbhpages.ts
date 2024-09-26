@@ -67,7 +67,7 @@ test('export non-surgical worklist', async ({ page }) => {
     await patient.editSearchedLab('301','2024','SEP','1');
     await patient.saveEditedLab();
     await patient.closeSearchListWindow();
-    await patient.worklistBadge('301');
+    await patient.ferritinWorklistBadge('301');
   })
 
   test('Non-surgical Hgb icon match', async ({ page }) => {
@@ -89,6 +89,8 @@ test('export non-surgical worklist', async ({ page }) => {
 
     const patients = new PatientsPage(page);
     await patients.viewAllLabs('Hgb','NULL');
+    await patients.closeSearchListWindow();
+    await patients.hgbWorklistBadge();
 })
 
 test('Non-Surgical edit patient height and weight', async ({ page }) => {
@@ -176,9 +178,8 @@ test('non-surgical edit toggles', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('12655473');
     await worklist.unselectAllCaseTypes();
-    await worklist.selectCaseType('CARDIO');
+    await worklist.selectCaseType('CHRONIC MEDICAL');
     await worklist.selectFilter('Urgent');  
   })
   
@@ -199,8 +200,8 @@ test('non-surgical edit toggles', async ({ page }) => {
     await worklist.clickChronic();
     await worklist.searchMRN('1478523690')
     await worklist.selectPatientfromSearch('Jerry Springer');
-    await worklist.addcommunication('Comment','Testing for ticket MBHS-1187',
-      'Low',2024,'JUNE',14)
+    await worklist.addcommunication('Comment','Testing comment',
+      'Low','2024','JUN','14');
   
   })
   
@@ -221,8 +222,8 @@ test('non-surgical edit toggles', async ({ page }) => {
     await worklist.clickChronic();
     await worklist.searchMRN('1478523690');
     await worklist.selectPatientfromSearch('Jerry Springer');
-    await worklist.editcommunication('Comment','Testing for ticket MBHS-1187',
-      'Medium',2024,'JUNE',12)
+    await worklist.editcommunication('Task','edited communication',
+      'Medium','2024','OCT','12');
   
     })
   
@@ -317,8 +318,8 @@ test('non-surgical edit toggles', async ({ page }) => {
         await worklist.unselectAllCaseTypes();
         await worklist.selectCaseType('CHRONIC MEDICAL');
       })
-      
-      test('non surgical worklist filter retention test', async ({ page }) => {
+
+      test('non-surgical worklist status filter', async ({ page }) => {
       
         test.slow();
         const login = new LoginPage(page);
@@ -333,9 +334,26 @@ test('non-surgical edit toggles', async ({ page }) => {
         const worklist = new WorklistPage(page);
         await worklist.clickWorklist();
         await worklist.clickChronic();
-        await worklist.unselectAllCaseTypes();
-        await worklist.selectCaseType("WOMEN'S HEALTH- CHRONIC");
-        await worklist.selectPatientfromSearch('Betty Rubble');
+        await worklist.selectStatus('Follow Up');
+      })
+      
+      test('non surgical worklist filter retention', async ({ page }) => {
+      
+        test.slow();
+        const login = new LoginPage(page);
+        await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+        await login.enterEmail(logindata.email);
+        await login.enterPassword(logindata.password);
+        await login.clickLoginBtn();
+      
+        const dashboard = new DashboardPage(page);
+        await dashboard.clickClientDropDown('QA Testing');
+      
+        const worklist = new WorklistPage(page);
+        await worklist.clickWorklist();
+        await worklist.clickChronic();
+        await worklist.selectFilter('Anemic');
+        await worklist.selectPatientfromSearch('Jacky Batcheldor');
         await worklist.backarrow();
       })
       
@@ -376,10 +394,10 @@ test('non-surgical edit toggles', async ({ page }) => {
         await worklist.clickWorklist();
         await worklist.clickChronic();
         await worklist.paginationCheck();
-        await worklist.adjustRowCount('30');
+        await worklist.adjustRowCount('15');
       })
 
-      test('clear expired visits from non-surgical worklist', async ({ page }) => {
+      test('clear expired visits', async ({ page }) => {
       
         test.slow();
         const login = new LoginPage(page);

@@ -59,32 +59,32 @@ export default class UsersPage{
             //contents (checkbox)
             if(contents == 'yes'){
                 //check box for contents
-                await this.page.locator('#mat-checkbox-5 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+                await this.page.locator('id=mat-mdc-checkbox-3-input').click();
             }
             //users (checkbox)
             if (users == 'yes'){
                 //check box for users
-                await this.page.locator('#mat-checkbox-6 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+                await this.page.locator('id=mat-mdc-checkbox-4-input').click();
             }
             //clinical navigation (checkbox)
             if (clinical == 'yes'){
                 //check box for clinical navigation
-                await this.page.locator('#mat-checkbox-7 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+                await this.page.locator('id=mat-mdc-checkbox-5-input').click();
             }
             //reports (checkbox)
             if(reports == 'yes'){
                 //check box for reports
-                await this.page.locator('#mat-checkbox-8 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+                await this.page.locator('id=mat-mdc-checkbox-6-input').click();
             }
             //mapping (checkbox)
             if(mapping == 'yes'){
                 //check box for mapping
-                await this.page.locator('#mat-checkbox-9 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+                await this.page.locator('id=mat-mdc-checkbox-7-input').click();
             }
         }
         else{
             //check the client admin box and all other boxes are checked automatically
-            await this.page.locator('#mat-checkbox-4').click();
+            await this.page.locator('id=mat-mdc-checkbox-1-input').click();
         }
         //status drop down
         await this.page.getByLabel('Status').locator('div').nth(3).click();

@@ -53,6 +53,11 @@ export default class SmartsectionsPage{
         await this.page.getByText(smartname).click();
     }
 
+    //sync smart section
+    async syncSection(){
+        this.page.on('dialog',dialog => dialog.accept());
+        await this.page.getByTitle('Sync').first().click();
+    }
     //add smart section button
     async addSmartSection(){
         await this.page.getByRole('button',{name:'Add Smart Section'}).click();

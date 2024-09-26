@@ -137,10 +137,7 @@ export default class WorklistPage{
      * Urgent
      * Short Time Frame
      * Labs Missing
-     */
-    //needs to check if data loads in the worklist based on the sort 
-        //await this.page.getByText("No data found").isVisible();//toast shows when no data loads on table
-        //data loads in the worklist    
+     */   
         //if data loads check for the icon based on the filter value entered
     
         //expect(this.page.getByTitle(filter))
@@ -743,10 +740,10 @@ export default class WorklistPage{
             }
             else{
                 await this.page.getByText('No Follow up Appt Required').click();
-                await this.page.getByLabel('Please select Follow Up').click();
-                await this.page.getByText(freason, {exact:true}).click();
-                await this.page.getByLabel('Follow Up Reason', { exact: true }).click();
-                await this.page.getByLabel('Follow Up Reason', { exact: true }).fill(freasonfill);
+                await this.page.getByLabel('Please select No Follow Up').locator('svg').click();
+                await this.page.getByRole('option',{name:freason, exact:true}).click();
+                await this.page.getByPlaceholder('No Follow Up Reason', { exact: true }).click();
+                await this.page.getByPlaceholder('No Follow Up Reason', { exact: true }).fill(freasonfill);
                 await this.page.getByRole('button',{name:'Confirm'}).click();
                 /**freason Key
                  * No contact from patient

@@ -140,7 +140,7 @@ export default class PatientsPage{
     }
 
     //confirm Ferritin badge
-    async worklistBadge(result){
+    async ferritinWorklistBadge(result){
         await this.page.locator('app-basic-visit-info-page').getByText(result).screenshot({path:'worklistBadge.png'});
         if(result != '300'){
             await expect (this.page.locator('app-basic-visit-info-page').getByText(result)).toHaveCSS('color','rgb(255, 0, 0)');
@@ -148,6 +148,11 @@ export default class PatientsPage{
         else{
             await expect (this.page.locator('app-basic-visit-info-page').getByText(result)).toHaveCSS('color','rgb(51, 51, 51)')
         }
+    }
+
+    //confirm Hgb badge
+    async hgbWorklistBadge(){
+        await this.page.getByLabel('Latest Hgb').screenshot({path:'hgbWorklistBadge.png'});
     }
     
     //add labs
