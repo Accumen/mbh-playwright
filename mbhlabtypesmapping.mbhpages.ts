@@ -102,6 +102,11 @@ test('map lab type', async ({page}) => {
     await labtypesmap.clickToMap('1234567','UNMAPPED','Hgb');
     await labtypesmap.searchLabCode('1234567');
     await labtypesmap.labTypesMappingScreenshot(1);
+    
+    await labtypesmap.searchLabCode('1525952');
+    await labtypesmap.clickToMap('1525952','UNMAPPED','EXCLUDE');
+    await labtypesmap.searchLabCode('1525952');
+    await labtypesmap.labTypesMappingScreenshot(2);
 })
 
 test('unmap lab type', async ({page}) => {

@@ -8,6 +8,7 @@ export default class CasetypesmappingPage{
     //variables
     public searchCaseCode;
     public casetype;
+    public casetype2;
 
     //select case types mapping from navigation menu
     async selectCaseTypesMapping (){
@@ -27,7 +28,7 @@ export default class CasetypesmappingPage{
     //upload mappings button
     async uploadCaseTypeMappings(){
         await this.page.getByRole('button', {name: 'Upload Mappings'}).click();
-        await this.page.locator("input[type=file]").setInputFiles("./caseTypeMapping.xlsx");
+        await this.page.locator("input[type=file]").setInputFiles("./CaseTypeMapping_1718978762916.xlsx");
         await this.page.getByRole('button',{name:'Upload Mappings'}).click();
         
     }
@@ -37,10 +38,6 @@ export default class CasetypesmappingPage{
         await this.page.getByText('Search Code, Description').click();
         await this.page.getByPlaceholder('Search Code, Description').fill(searchCaseCode);
         await this.page.getByPlaceholder('Search Code, Description').press('Enter');
-    }
-
-    async hoverSearch(search){
-        await this.page.getByText(search).hover();
     }
 
     //case type drop down  (74 items)
@@ -133,10 +130,13 @@ export default class CasetypesmappingPage{
    }
 
    //click mapping dropdown
-   async clickToMap(searchCaseCode: string, casetype: string){
-    await this.page.getByText(searchCaseCode)
-    await this.page.locator('#mat-select-value-115').click();
-    await this.page.getByText(casetype).click();
+   async clickToMap(searchCaseCode: string, casetype: string, casetype2: string){
+    await this.page.getByText(searchCaseCode).hover();
+    await this.page.getByText(casetype, {exact:true}).click();
+    await this.page.getByText(casetype2, {exact:true}).click();
+    //await this.page.locator('#mat-select-value-115').click(); 
+    //await this.page.getByText('UNMAPPED').click();
+    //await this.page.getByText(casetype).click();
    }
 
     //clear button
@@ -151,9 +151,9 @@ export default class CasetypesmappingPage{
         await this.page.getByRole('button',{name:'Save Overrides'}).click();
 
     }
-    async caseVerify(casecode){
+    async caseVerify(casecode, num){
         await this.page.getByText(casecode,{exact:true}).scrollIntoViewIfNeeded();
-        await this.page.screenshot({path:'casetype.png'})
+        await this.page.screenshot({path:'casetype'+ num + '.png'})
     }
 
     async fullPageVerify(){

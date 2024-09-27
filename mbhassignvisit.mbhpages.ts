@@ -22,14 +22,11 @@ test('test assign visit', async ({ page }) => {
     await worklist.searchMRN('1478523690');
     await worklist.selectPatientfromSearch('Jerry Springer');
     await worklist.selectChainofCustody();
-    
     await worklist.assignUser();
     await worklist.selectAssignUser('Test User');
     await worklist.saveUser();
-
     await worklist.worklistscreenshot(1);
     await worklist.assignedToCheck();
-
 })
 
 test('test unassign visit', async ({ page }) => {
@@ -50,10 +47,7 @@ test('test unassign visit', async ({ page }) => {
     await worklist.searchMRN('1478523690');
     await worklist.selectPatientfromSearch('Jerry Springer');
     await worklist.selectChainofCustody();
-
     await worklist.assignUser();
     await worklist.unassignUser();
     await worklist.worklistscreenshot(1);
-
-
 })

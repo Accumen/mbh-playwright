@@ -3,6 +3,7 @@ import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import PatientsPage from './classes/patientsPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const clientlogindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/clientlogin.json")))
 
 test('patient surgical visit', async ({ page }) => {
     test.slow();
@@ -18,9 +19,28 @@ test('patient surgical visit', async ({ page }) => {
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.searchPatient('smith');
+    await patients.searchPatient('Emily');
     await patients.selectPatientfromSearch('Emily Smith');
-    await patients.patientschedulesurgical('2024','JUNE','29',8,'CARDIO','test','QA Facility 1');
+    await patients.patientschedulesurgical('2024','SEP','28',8,'ORTHO','test','QA Facility 1');
+})
+
+test('patient surgical visit client user', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(clientlogindata.email);
+    await login.enterPassword(clientlogindata.password);
+    await login.clickLoginBtn();
+
+    //const dashboard = new DashboardPage(page);
+    //await dashboard.clickClientDropDown('QA Testing');
+
+    const patients = new PatientsPage(page);
+    await patients.selectPatients();
+    await patients.searchPatient('Emily');
+    await patients.selectPatientfromSearch('Emily Smith');
+    await patients.patientschedulesurgical('2024','NOV','28',8,'ORTHO','test','QA Facility 1');
 })
 
 test('patients non-surgical visit', async ({ page }) => {
@@ -37,9 +57,9 @@ test('patients non-surgical visit', async ({ page }) => {
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.searchPatient('Smith');
-    await patients.selectPatientfromSearch('Smith');
-    await patients.patientsschedulechronic('2024','June','24',15,'CHRONIC MEDICAL FOLLOW UP','test','QA Facility 1');
+    await patients.searchPatient('Emily');
+    await patients.selectPatientfromSearch('Emily Smith');
+    await patients.patientsschedulechronic('2024','SEP','28',15,'CHRONIC MEDICAL FOLLOW UP','test','QA Facility 1');
    
 })
 

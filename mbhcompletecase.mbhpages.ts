@@ -21,7 +21,7 @@ test('complete surgical treated no followup', async ({ page }) => {
     await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.searchMRN('789456');
-    await worklist.selectPatientfromSearch('Treated nFollow');
+    await worklist.selectPatientfromSearch('Emily Smith');
     await worklist.completeSurgicalVisit('Treated','B12','','no','','','','');
     await worklist.selectChainofCustody();
 
@@ -44,9 +44,9 @@ test('complete surgical treated followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.searchMRN('Emily Smith');
-    await worklist.selectPatientfromSearch('Emily Smith');
-    await worklist.completeSurgicalVisit('Treated','B12','','yes','321','2024','JULY','28')
+    await worklist.searchMRN('1597642388');
+    await worklist.selectPatientfromSearch('Frank Smith');
+    await worklist.completeSurgicalVisit('Treated','B12','','yes','321','2024','OCT','28')
 
 })
 
@@ -66,8 +66,8 @@ test('complete surgical not treated no followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.searchMRN('789458');
-    await worklist.selectPatientfromSearch('nTreated nFollow');
+    await worklist.searchMRN('123456788');
+    await worklist.selectPatientfromSearch('Wilma Flinestone');
     await worklist.completeSurgicalVisit('Not Treated','','Does not meet criteria for treatment','no','','','','');
     await worklist.selectChainofCustody();
 
@@ -112,12 +112,10 @@ test('complete nonsurgical treated no followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('789456');
-    await worklist.selectPatientfromSearch('Treated nFollow');
-    await worklist.completeNonSurgicalVisit('Treated','B12','','no','Patient declines treatment','test reason','','','','');
+    await worklist.searchMRN('947128');
+    await worklist.selectPatientfromSearch('Chrystal Allinson');
+    await worklist.completeNonSurgicalVisit('Treated','B12','','no','Patient treatment plan complete','test reason','','','','');
     await worklist.selectChainofCustody();
-
-
 })
 
 test('complete nonsurgical treated followup', async ({ page }) => {
@@ -136,9 +134,9 @@ test('complete nonsurgical treated followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('August Smith');
+    await worklist.searchMRN('741852963');
     await worklist.selectPatientfromSearch('August Smith');
-    await worklist.completeNonSurgicalVisit('Treated','B12','','yes','','','','2024','JULY','28');
+    await worklist.completeNonSurgicalVisit('Treated','EPO','','yes','','','','2024','JULY','28');
    
 })
 
@@ -158,8 +156,8 @@ test('complete nonsurgical not treated no followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('789458');
-    await worklist.selectPatientfromSearch('nTreated nFollow');
+    await worklist.searchMRN('115495');
+    await worklist.selectPatientfromSearch('Trueman Jacklings');
     await worklist.completeNonSurgicalVisit('Not Treated','','No contact from patient','no','','','','','','');
     await worklist.selectChainofCustody();
 
@@ -182,12 +180,12 @@ test('complete nonsurgical not treated followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('August Smith');
-    await worklist.selectPatientfromSearch('August Smith');
-    await worklist.completeNonSurgicalVisit('Not Treated','','No contact from patient','yes','','','321','2024','JUNE','28')
+    await worklist.searchMRN('1270546');
+    await worklist.selectPatientfromSearch('Augustine Coye');
+    await worklist.completeNonSurgicalVisit('Not Treated','','No contact from patient','yes','','','321','2024','OCT','28')
 })
 
-test('test complete visit workflow', async ({ page }) => {
+test('edit complete non-surgical visit', async ({ page }) => {
     //MBHS-1227
     test.slow();
     const login = new LoginPage(page);
@@ -203,12 +201,12 @@ test('test complete visit workflow', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.selectPatientfromSearch('anna tipoli');
+    await worklist.searchMRN('3979531')
+    await worklist.selectPatientfromSearch('Laughton Spring');
     await worklist.clickCompleteCase();
     await worklist.changeCompleteCaseType('Not Treated');
     await worklist.notTreatedFollowUp();
     await worklist.changeCompleteCaseType('Treated');
-
 })
 
 test('test nonsurgical followup icon', async ({ page }) => {
@@ -227,33 +225,26 @@ test('test nonsurgical followup icon', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('3845239');
-    await worklist.selectPatientfromSearch('Dylan Maryska');
+    await worklist.searchMRN('651325');
+    await worklist.selectPatientfromSearch('Barney Rubble');
     await worklist.selectChainofCustody();
     await worklist.worklistscreenshot(1);
-    
-    await worklist.completeNonSurgicalVisit('Treated','B12','','yes','','','','2024','JUNE','29');
+    await worklist.completeNonSurgicalVisit('Treated','B12','','yes','','','','2024','NOV','29');
     await worklist.backarrow();
-    await worklist.searchMRN('3845239');
-    await worklist.hoverSearch('Dylan Maryska');
     await worklist.worklistscreenshot(2);
-
-    await worklist.selectPatientfromSearch('Dylan Maryska');
+    await worklist.selectPatientfromSearch('Barney Rubble');
     await worklist.selectChainofCustody();
     await worklist.worklistscreenshot(3);
-
     await worklist.backarrow();
     await worklist.selectStatus('Completed');
-    await worklist.searchMRN('3845239');
     await worklist.worklistscreenshot(4);
-
-    await worklist.selectPatientfromSearch('Dylan Maryska');
+    await worklist.selectPatientfromSearch('Barney Rubble');
     await worklist.selectChainofCustody();
     await worklist.worklistscreenshot(5);
 })
 
 
-test('test nonsurgical number of doses on completed visit', async ({ page }) => {
+test('test nonsurgical number of doses autopopulates', async ({ page }) => {
    
     test.slow();
     const login = new LoginPage(page);
@@ -280,7 +271,7 @@ test('test nonsurgical number of doses on completed visit', async ({ page }) => 
     await worklist.editTreatment('IV Iron');
 })
 
-test('test surgical number of doses on completed visit', async ({ page }) => {
+test('test surgical number of doses autopopulates', async ({ page }) => {
    
     test.slow();
     const login = new LoginPage(page);

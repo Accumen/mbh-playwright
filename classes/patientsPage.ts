@@ -1,4 +1,5 @@
 import { Page} from "@playwright/test";
+import {expect} from "@playwright/test";
 import WorklistPage from "./worklistPage";
 
 export default class PatientsPage{
@@ -91,27 +92,27 @@ export default class PatientsPage{
                await this.page.getByText(resultday,{exact:true}).click();}
                
         }        
-        //select from lab search results list
-        async editSearchedLab(result?,resultyear?,resultmonth?,resultday?){
-            //await this.page.getByRole('row',{name:labtype,exact:false}).getByRole('link').first().click();
-            //edit pencil
-            await this.page.getByRole('link',{name:'Edit Lab'}).first().click();//edit button with aria-label
-                //result value
-                await this.page.getByPlaceholder('Result Value').click();
-                await this.page.getByPlaceholder('Result Value').fill(result);
-                if(resultyear != 'NULL'){
-                //result date (calendar)
-                await this.page.locator('#mat-dialog-2').getByLabel('Open calendar').click();
-                await this.page.getByLabel('Choose month and year').click();
-                while(await this.page.getByRole('button', {name:resultyear, exact:false}).isHidden()){
-                    await this.page.getByLabel('Previous 24 years').click();
-                 }
-                    await this.page.getByLabel(resultyear).click();
-                    await this.page.getByLabel(resultmonth).click();
-                    await this.page.getByText(resultday,{exact:true}).click(); 
-                    await this.page.getByRole('button').filter({hasText:'done'}).click(); 
-                }
-        }  
+	  //select from lab search results list
+      async editSearchedLab(result?,resultyear?,resultmonth?,resultday?){
+        //edit pencil
+        await this.page.getByRole('link',{name:'Edit Lab'}).first().click();//edit button with aria-label
+            //result value
+            await this.page.getByPlaceholder('Result Value').click();
+            await this.page.getByPlaceholder('Result Value').fill(result);
+            if(resultyear != 'NULL'){
+            //result date (calendar)
+            await this.page.locator('#mat-mdc-dialog-2').getByLabel('Open calendar').click();
+            //
+            await this.page.getByLabel('Choose month and year').click();
+            while(await this.page.getByRole('button', {name:resultyear, exact:false}).isHidden()){
+                await this.page.getByLabel('Previous 24 years').click();
+             }
+                await this.page.getByLabel(resultyear).click();
+                await this.page.getByLabel(resultmonth).click();
+                await this.page.getByText(resultday,{exact:true}).click(); 
+                await this.page.getByRole('button').filter({hasText:'done'}).click(); 
+            }
+    }    
             //delete prepopulated result date for edit result value
             async deleteResultDate(){
                 await this.page.getByPlaceholder('Result Date').click();
@@ -136,6 +137,17 @@ export default class PatientsPage{
     //lastest labs section
     async latestLabs(){
         await this.page.getByText('LATEST LABS').scrollIntoViewIfNeeded();
+    }
+
+    //confirm Ferritin badge
+    async worklistBadge(result){
+        await this.page.locator('app-basic-visit-info-page').getByText(result).screenshot({path:'worklistBadge.png'});
+        if(result != '300'){
+            await expect (this.page.locator('app-basic-visit-info-page').getByText(result)).toHaveCSS('color','rgb(255, 0, 0)');
+        }
+        else{
+            await expect (this.page.locator('app-basic-visit-info-page').getByText(result)).toHaveCSS('color','rgb(51, 51, 51)')
+        }
     }
     
     //add labs
@@ -369,7 +381,7 @@ export default class PatientsPage{
             //Delete Button
         //Surgeon (fillable required field)
         await this.page.getByLabel('Surgeon', {exact:true}).click();
-         await this.page.getByPlaceholder('Surgeon', {exact:true}).fill('Sur');
+         await this.page.getByPlaceholder('Surgeon', {exact:true}).fill(surgeon);
          await this.page.getByPlaceholder('Surgeon',{exact:true}).press('Enter');
          //await expect (this.page.locator('id=mat-autocomplete-1')).toBeVisible();
          await this.page.getByRole('option', {name: surgeon, exact: false}).click();
@@ -441,7 +453,7 @@ export default class PatientsPage{
             //Delete Button
         //Surgeon (fillable required field)
      await this.page.getByText('Referring Provider', {exact:true}).click();
-         await this.page.getByPlaceholder('Referring Provider', {exact:true}).fill('Sur');
+         await this.page.getByPlaceholder('Referring Provider', {exact:true}).fill(surgeon);
          await this.page.getByPlaceholder('Referring Provider', {exact:true}).press('Enter');
          await this.page.getByRole('option', {name: surgeon, exact: false}).click();
          //Facility

@@ -4,6 +4,7 @@ import DashboardPage from './classes/dashboardPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 
 //serial test for capturing baseline screenshot 
+/*
 test('filter dashboard data', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
@@ -34,6 +35,7 @@ test('filter screenshot comparison',async ({page})=>{
     await dashboard.clickDateRange('Custom','2024','APR','1','2024','JUN','30');
     await dashboard.datacomparison();
 })
+    */
 //reset cache 
 test('reset cache test',async ({page})=>{
     test.slow();

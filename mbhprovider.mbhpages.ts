@@ -19,7 +19,7 @@ test('addprovider', async ({ page }) => {
     const providers = new ProvidersPage(page);
     await providers.clickProviders();
     await providers.addProvider();
-    await providers.editAddProviderInfo('Fred','Smith','fsmith@madeup.com','123456','Active');
+    await providers.editAddProviderInfo('Constance','Smith','csmith@madeup.com','1234567891','Active');
     await providers.saveProvider();
 })
 
@@ -31,7 +31,7 @@ test('addprovider', async ({ page }) => {
  * back arrow
  */
 
-test('provider regression testing', async ({ page }) => {
+test('edit provider', async ({ page }) => {
 
     test.slow();
     const login = new LoginPage(page);
@@ -45,22 +45,32 @@ test('provider regression testing', async ({ page }) => {
 
     const providers = new ProvidersPage(page);
     await providers.clickProviders();
-    await providers.addProvider();
-    await providers.editAddProviderInfo('Dave','Michael','Smith','Dr','Jr','MD','test','123 Test Rd','Brooklyn','NY','19008',
-        'dsmith@test.com','1234567890','1234567890','1122334455','Test Clinic','Inactive'); //add provider
-    await providers.saveProvider(); //save provider
-
-    await providers.providerStatus('Inactive'); //status
-    await providers.selectProvider('Dr Dave Michael Smith Jr MD');
+    await providers.searchProvider('Dave');
+    await providers.selectProvider('Dave Michael');
     await providers.editProviderFirstName('Scott'); //edit provider
     await providers.providerStatus('Active');
     await providers.saveProvider();
-    
-    await providers.providerStatus('Active');
-    await providers.providerSearch('Surgeon Test'); //search provider
+})
+
+test('search, select, back, delete provider', async ({ page }) => {
+
+    test.slow();
+    const login = new LoginPage(page);
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+  
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const providers = new ProvidersPage(page);
+    await providers.clickProviders();
+    await providers.providerStatus('Inactive');
+    await providers.clearSelections();
     await providers.selectProvider('Surgeon Test');
     await providers.backArrow(); //back arrow
-    await providers.clearSelections(); //clear selection
+    await providers.searchProvider('Surgeon');
     await providers.deleteProvider(); //delete provider
 
 })
