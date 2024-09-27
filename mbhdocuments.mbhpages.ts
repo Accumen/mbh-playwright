@@ -23,6 +23,22 @@ test('upload document', async ({ page }) => {
     await document.saveDoc();
 })
 
+test('upload document client user', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    
+    const document = new DocumentsPage (page);
+    await document.selectDocuments();
+    await document.uploadDocBtn();
+    await document.newStaticDoc('Playwright Test Document','Playwright placed this document as a test.','Patient Letter','Surgical','Active');
+    await document.saveDoc();
+})
 test('preview document', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
@@ -66,7 +82,7 @@ test('add/edit/delete document', async ({ page }) => {
     await document.clearSelections();
     await document.searchDoc('Second Test Document');
     await document.selectDocFromList('Second Test Document');
-    await document.addSmartSection('Test');
+    await document.addSmartSection('Test Name');
     await document.addDocBtn();
     await document.smartSecInfo('Test Smart Section','This is a test of smart.');
     await document.addTextSection('Test Section Name','Playwright text section','This is a test for playwright.');
