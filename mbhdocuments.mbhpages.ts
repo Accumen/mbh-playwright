@@ -3,7 +3,7 @@ import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import DocumentsPage from './classes/documentsPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
-
+const clientlogin = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/clientlogin.json")))
 test('upload document', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
@@ -28,8 +28,8 @@ test('upload document client user', async ({ page }) => {
     const login = new LoginPage(page);
 
     await page.goto('https://qa.mybloodhealth.com/login');
-    await login.enterEmail(logindata.email);
-    await login.enterPassword(logindata.password);
+    await login.enterEmail(clientlogin.email);
+    await login.enterPassword(clientlogin.password);
     await login.clickLoginBtn();
 
     
@@ -82,7 +82,7 @@ test('add/edit/delete document', async ({ page }) => {
     await document.clearSelections();
     await document.searchDoc('Second Test Document');
     await document.selectDocFromList('Second Test Document');
-    await document.addSmartSection('Test Smart Section');
+    await document.addSmartSection('Test Name');
     await document.addDocBtn();
     await document.smartSecInfo('Test Smart Section','This is a test of smart.');
     await document.addTextSection('Test Section Name','Playwright text section','This is a test for playwright.');
@@ -92,6 +92,39 @@ test('add/edit/delete document', async ({ page }) => {
     await document.searchDoc('Second Test Document');
 })
 
+test('add/edit/delete document client user', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa.mybloodhealth.com/login');
+    await login.enterEmail(clientlogin.email);
+    await login.enterPassword(clientlogin.password);
+    await login.clickLoginBtn();
+
+    
+
+
+    const document = new DocumentsPage (page);
+    await document.selectDocuments();
+    await document.addDocBtn();
+    await document.backArrow();
+    await document.addDocBtn();
+    await document.addEditDoc('Second Test Document','Playwrights second test document','Assessment Template','Non-Surgical','Active')
+    await document.saveDoc();
+    await document.searchDoc('Second Test Document');
+    await document.docStatusdropdown('Inactive');
+    await document.clearSelections();
+    await document.searchDoc('Second Test Document');
+    await document.selectDocFromList('Second Test Document');
+    await document.addSmartSection('Test Name');
+    await document.addDocBtn();
+    await document.smartSecInfo('Test Smart Section','This is a test of smart.');
+    await document.addTextSection('Test Section Name','Playwright text section','This is a test for playwright.');
+    await document.saveDoc();
+    await document.searchDoc('Second Test Document');
+    await document.delete();
+    await document.searchDoc('Second Test Document');
+})
 test('document pagination', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
