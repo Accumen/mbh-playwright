@@ -26,6 +26,26 @@ test('Non-surgical schedule new patient visit', async ({ page }) => {
     await worklist.saveScheduledVisit();
 })
 
+test('Non-surgical schedule existing patient visit', async ({ page }) => {
+  test.slow();
+  const login = new LoginPage(page);
+
+  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+  await login.enterEmail('cts-secure@accumen.com');
+  await login.enterPassword('Pass#123');
+  await login.clickLoginBtn();
+
+  const dashboard = new DashboardPage(page);
+  await dashboard.clickClientDropDown('QA Testing');
+
+  const worklist = new WorklistPage(page);
+  await worklist.clickWorklist();
+  await worklist.clickChronic();
+  await worklist.scheduleChronicVisit('Existing','','','','','651324','','','','','','','','','','','',
+      '','','no','','','','2024','SEPT','28',13,'CHRONIC MEDICAL');
+  await worklist.saveScheduledVisit()
+})
+
 test('export non-surgical worklist', async ({ page }) => {
 
     test.slow();
@@ -44,7 +64,7 @@ test('export non-surgical worklist', async ({ page }) => {
     await worklist.exportVisits();
   })
 
-  test('Non-Surgical Worklist Badge', async ({ page }) => {
+  test('Non-Surgical Worklist Ferritin Badge', async ({ page }) => {
 
     test.slow();
     const login = new LoginPage(page);

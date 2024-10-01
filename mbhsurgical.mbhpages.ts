@@ -5,7 +5,7 @@ import WorklistPage from './classes/worklistPage';
 import PatientsPage from './classes/patientsPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 
-test('shedule new patient surgical visit', async ({ page }) => {
+test('surgical shedule new patient visit', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
@@ -26,7 +26,7 @@ test('shedule new patient surgical visit', async ({ page }) => {
     await worklist.saveScheduledVisit();
 })
 
-test('surgical visit existing', async ({ page }) => {
+test('surgical schedule existing patient visit', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
@@ -44,6 +44,142 @@ test('surgical visit existing', async ({ page }) => {
     await worklist.scheduleSurgicalVisit('Existing','','','','','651324','','','','','','','','','','','',
         '','','no','','','','2024','SEPT','28',13,'SPINE','test');
     await worklist.saveScheduledVisit()
+})
+
+test('export surgical worklist', async ({ page }) => {
+
+  test.slow();
+  const login = new LoginPage(page);
+  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+  await login.enterEmail(logindata.email);
+  await login.enterPassword(logindata.password);
+  await login.clickLoginBtn();
+
+  const dashboard = new DashboardPage(page);
+  await dashboard.clickClientDropDown('QA Testing');
+  
+  const worklist = new WorklistPage(page);
+  await worklist.clickWorklist();
+  await worklist.clickSurgical();
+  await worklist.exportVisits();
+})
+
+test('Surgical Worklist Ferritin Badge', async ({ page }) => {
+
+  test.slow();
+  const login = new LoginPage(page);
+  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+  await login.enterEmail(logindata.email);
+  await login.enterPassword(logindata.password);
+  await login.clickLoginBtn();
+
+  const dashboard = new DashboardPage(page);
+  await dashboard.clickClientDropDown('QA Testing');
+  
+  const worklist = new WorklistPage(page);
+  await worklist.clickWorklist();
+  await worklist.clickChronic();
+  await worklist.searchMRN('Smith');
+  await worklist.selectPatientfromSearch('August Smith');
+  
+  const patient = new PatientsPage(page);
+  await patient.viewAllLabs('Ferritin','NULL');
+  await patient.editSearchedLab('301','2024','SEP','1');
+  await patient.saveEditedLab();
+  await patient.closeSearchListWindow();
+  await patient.ferritinWorklistBadge('301');
+})
+
+test('Surgical Hgb icon match', async ({ page }) => {
+  test.slow();
+  const login = new LoginPage(page);
+  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+  await login.enterEmail(logindata.email);
+  await login.enterPassword(logindata.password);
+  await login.clickLoginBtn();
+
+  const dashboard = new DashboardPage(page);
+  await dashboard.clickClientDropDown('QA Testing');
+  
+  const worklist = new WorklistPage(page);
+  await worklist.clickWorklist();
+  await worklist.clickSurgical();
+  await worklist.searchMRN('Betty');
+  await worklist.selectPatientfromSearch('Betty Rubble');
+
+  const patients = new PatientsPage(page);
+  await patients.viewAllLabs('Hgb','NULL');
+  await patients.hgbWorklistBadge();
+})
+
+test('Surgical edit patient height and weight', async ({ page }) => {
+  test.slow();
+  const login = new LoginPage(page);
+
+  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+  await login.enterEmail(logindata.email);
+  await login.enterPassword(logindata.password);
+  await login.clickLoginBtn();
+
+  const dashboard = new DashboardPage(page);
+  await dashboard.clickClientDropDown('QA Testing');
+
+  const worklist = new WorklistPage(page);
+  await worklist.clickWorklist();
+  await worklist.clickSurgical();
+  await worklist.searchMRN('657984')
+  await worklist.selectPatientfromSearch('Jack Black');
+  await worklist.editPatientDetails('Updated Height and Weight')
+  await worklist.editPatientHeight('63.4');
+  await worklist.editPatientWeight('117.56');
+  await worklist.saveEditPatient();
+  await worklist.editPatientHeight('-63');
+  await worklist.editPatientWeight('-118');
+  await worklist.saveEditPatient();      
+  await worklist.editPatientHeight('63');
+  await worklist.editPatientWeight('118');
+  await worklist.saveEditPatient();   
+})
+
+test('Surgical edit toggles', async ({ page }) => {
+test.slow();
+const login = new LoginPage(page);
+
+await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+await login.enterEmail(logindata.email);
+await login.enterPassword(logindata.password);
+await login.clickLoginBtn();
+
+const dashboard = new DashboardPage(page);
+await dashboard.clickClientDropDown('QA Testing');
+
+const worklist = new WorklistPage(page);
+await worklist.clickWorklist();
+await worklist.clickSurgical();
+await worklist.searchMRN('5554465')
+await worklist.selectPatientfromSearch('Betsy Jones');
+await worklist.invasiveToggle();
+await worklist.bloodlessToggle();
+})
+
+test('view surgical patient details dropdown', async ({ page }) => {
+test.slow();
+const login = new LoginPage(page);
+
+await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+await login.enterEmail(logindata.email);
+await login.enterPassword(logindata.password);
+await login.clickLoginBtn();
+
+const dashboard = new DashboardPage(page);
+await dashboard.clickClientDropDown('QA Testing');
+
+const worklist = new WorklistPage(page);
+await worklist.clickWorklist();
+await worklist.clickSurgical();
+await worklist.searchMRN('789456123')
+await worklist.selectPatientfromSearch('Emily Smith');
+await worklist.selectPatientDetails();
 })
 
 test('filter surgical worklist', async ({ page }) => {
@@ -129,9 +265,7 @@ test('filter surgical worklist', async ({ page }) => {
       await worklist.clickSurgical();
       await worklist.searchMRN('789456123');
       await worklist.selectPatientfromSearch('Emily Smith');
-      await worklist.deleteCommunication();
-      await worklist.worklistscreenshot(1);
-    
+      await worklist.deleteCommunication();    
       })
   
     test('search surgical worklist', async ({ page }) => {
@@ -150,7 +284,6 @@ test('filter surgical worklist', async ({ page }) => {
       await worklist.clickWorklist();
       await worklist.clickSurgical();
       await worklist.searchMRN('Rubble');
-      await worklist.worklistscreenshot(1);
     })
     
     test('export surgical worklist after filter', async ({ page }) => {
@@ -171,126 +304,6 @@ test('filter surgical worklist', async ({ page }) => {
       await worklist.sortByDateRange('2024','NOV','12','2024','NOV','12');
       await worklist.exportVisits();
     })
-  
-    test('Surgical worklist Badge', async ({ page }) => {
-  
-      test.slow();
-      const login = new LoginPage(page);
-      await page.goto('https://qa-auto-base.mybloodhealth.com/login');
-      await login.enterEmail(logindata.email);
-      await login.enterPassword(logindata.password);
-      await login.clickLoginBtn();
-    
-      const dashboard = new DashboardPage(page);
-      await dashboard.clickClientDropDown('QA Testing');
-      
-      const worklist = new WorklistPage(page);
-      await worklist.clickWorklist();
-      await worklist.clickSurgical();
-      await worklist.searchMRN('Smith');
-      await worklist.selectPatientfromSearch('Frank Smith');
-      
-      const patient = new PatientsPage(page);
-      await patient.viewAllLabs('Ferritin','NULL');
-      await patient.editSearchedLab('300','NULL');
-      await patient.saveEditedLab();
-      await patient.closeSearchListWindow();
-      await patient.worklistBadge('300');
-    })
-  
-    test('Surgical Hgb icon match', async ({ page }) => {
-      test.slow();
-      const login = new LoginPage(page);
-      await page.goto('https://qa-auto-base.mybloodhealth.com/login');
-      await login.enterEmail(logindata.email);
-      await login.enterPassword(logindata.password);
-      await login.clickLoginBtn();
-    
-      const dashboard = new DashboardPage(page);
-      await dashboard.clickClientDropDown('QA Testing');
-      
-      const worklist = new WorklistPage(page);
-      await worklist.clickWorklist();
-      await worklist.clickSurgical();
-      await worklist.searchMRN('Betty');
-      await worklist.worklistscreenshot(1);
-      await worklist.selectPatientfromSearch('Betty Rubble');
-      await worklist.worklistscreenshot(2);
-  
-      const patients = new PatientsPage(page);
-      await patients.viewAllLabs('Hgb','NULL');
-      await patients.patientVerify(1);
-  })
-  
-    test('Surgical edit patient height and weight', async ({ page }) => {
-      test.slow();
-      const login = new LoginPage(page);
-  
-      await page.goto('https://qa-auto-base.mybloodhealth.com/login');
-      await login.enterEmail(logindata.email);
-      await login.enterPassword(logindata.password);
-      await login.clickLoginBtn();
-  
-      const dashboard = new DashboardPage(page);
-      await dashboard.clickClientDropDown('QA Testing');
-  
-      const worklist = new WorklistPage(page);
-      await worklist.clickWorklist();
-      await worklist.clickSurgical();
-      await worklist.searchMRN('657984')
-      await worklist.selectPatientfromSearch('Jack Black');
-      await worklist.editPatientDetails('Updated Height and Weight')
-      await worklist.editPatientHeight('63.4');
-      await worklist.editPatientWeight('117.56');
-      await worklist.saveEditPatient();
-      await worklist.editPatientHeight('-63');
-      await worklist.editPatientWeight('-118');
-      await worklist.saveEditPatient();      
-      await worklist.editPatientHeight('63');
-      await worklist.editPatientWeight('118');
-      await worklist.saveEditPatient();   
-  })
-  
-  test('Surgical edit toggles', async ({ page }) => {
-    test.slow();
-    const login = new LoginPage(page);
-  
-    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
-    await login.enterEmail(logindata.email);
-    await login.enterPassword(logindata.password);
-    await login.clickLoginBtn();
-  
-    const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
-  
-    const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
-    await worklist.clickSurgical();
-    await worklist.searchMRN('5554465')
-    await worklist.selectPatientfromSearch('Betsy Jones');
-    await worklist.invasiveToggle();
-    await worklist.bloodlessToggle();
-  })
-  
-  test('view surgical patient details dropdown', async ({ page }) => {
-    test.slow();
-    const login = new LoginPage(page);
-  
-    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
-    await login.enterEmail(logindata.email);
-    await login.enterPassword(logindata.password);
-    await login.clickLoginBtn();
-  
-    const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
-  
-    const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
-    await worklist.clickSurgical();
-    await worklist.searchMRN('789456123')
-    await worklist.selectPatientfromSearch('Emily Smith');
-    await worklist.selectPatientDetails();
-  })
 
   test("surgical worklist filter", async({page})=>{
     test.slow();//changes default timeout from 30000 ms to 90000 ms

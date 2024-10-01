@@ -214,7 +214,7 @@ export default class DocumentsPage{
         }
         //status drop down
         await this.page.getByLabel('Status').click();
-        await this.page.getByText(docstat,{exact:true}).click();
+        await this.page.getByRole('option',{name:docstat,exact:true}).click();
             /**docstat key
              * active
              * inactive

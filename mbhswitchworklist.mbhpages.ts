@@ -23,28 +23,6 @@ test('switch worklist', async ({ page }) => {
     await worklist.clickSurgical();
 })
 
-test('switch worklist paitent visit', async ({ page }) => {
-    test.slow();
-    const login = new LoginPage(page);
-
-    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
-    await login.enterEmail(logindata.email);
-    await login.enterPassword(logindata.password);
-    await login.clickLoginBtn();
-
-    const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
-
-    const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
-    await worklist.clickSurgical();
-    await worklist.selectPatientfromSearch("Jack Black")
-    await worklist.worklistscreenshot(1)
-    await worklist.clickChronic();
-    await worklist.selectPatientfromSearch("Jack Black")
-    await worklist.worklistscreenshot(2)
-})
-
 test('switch worklist pagination', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
@@ -67,8 +45,6 @@ test('switch worklist pagination', async ({ page }) => {
     await worklist.backarrow();
     await worklist.clickSurgical();
     await worklist.paginationCheck();
-    await worklist.worklistscreenshot(1);
-
 })
 
 test('switch worklist change filter', async ({ page }) => {
@@ -87,10 +63,8 @@ test('switch worklist change filter', async ({ page }) => {
     await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.selectFilter('Bloodless');
-    await worklist.worklistscreenshot(1);
     await worklist.clickChronic();
     await worklist.selectFilter('Labs Missing');
     await worklist.clickSurgical();
-    await worklist.worklistscreenshot(2);
 
 })

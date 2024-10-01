@@ -215,14 +215,13 @@ export default class UsersPage{
     }
 
     //add region(s)
-    async addregion(){
-        await this.page.getByLabel('Texas').check();
-            /*List
-            * Texas
-            * Test
-            */
-        await this.page.getByLabel('Texas').uncheck();
-        await this.page.getByRole( 'checkbox', {name: 'QA Facility 1' }).check();
+    async addregion(region){
+        await this.page.getByLabel(region).check();
+    }
+
+    //add facility(s)
+    async addFacility(facility){
+        await this.page.getByLabel(facility).check();
     }
 
 }

@@ -453,7 +453,7 @@ export default class WorklistPage{
 
     async scheduleChronicVisit(patienttype: string, fname?, lname?, email?, mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
         state?,zip?, gender?,race?,ethnicity?,hippa?,hhMonthdd?,edit?,editrace?,editethnicity?,changeDesc?,pYear?, pMonth?, pDay?, pclickcount?,
-        procedure?, surgeon?){
+        procedure?, provider?){
         //expect (this.page.locator('id=toast-container').getByText('Patients fetched successfully').isVisible);
         //await this.page.waitFor(3000);
         await this.page.getByRole('button', {name:' Schedule Visit'}).waitFor({state:'attached'})
@@ -624,11 +624,11 @@ export default class WorklistPage{
             //Delete Button
         //Surgeon (fillable required field)
         await this.page.getByLabel('Surgeon', {exact:true}).click();
-         await this.page.getByLabel('Surgeon', {exact:true}).fill('Sur');
+         await this.page.getByLabel('Surgeon', {exact:true}).fill(provider);
          await this.page.getByLabel('Surgeon', {exact:true}).press('Enter');
          //await this.page.getByLabel('Surgeon', {exact:true}).press('enter');
          //await expect (this.page.locator('id=mat-autocomplete-1')).toBeVisible();
-         await this.page.getByRole('option', {name: surgeon, exact: false}).click();
+         await this.page.getByRole('option', {name: provider, exact: false}).click();
          //PCP (fillabe not required field)
          //Location(fillable not required field)
          //Facility(pre populated)

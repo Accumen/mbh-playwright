@@ -1,28 +1,24 @@
 import {test} from "@playwright/test"
-import LoginPage from "./classes/loginPage"// connects the login class to the test
-import ReportsPage from "./classes/reportsPage"
+import LoginPage from "./classes/loginPage"
 import UsersPage from "./classes/usersPage"
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 
-test("test user permission for region", async({page})=>{
-    test.slow();//changes default timeout from 30000 ms to 90000 ms
-
-    const login = new LoginPage (page)
-     await page.goto('https://qa-auto-base.mybloodhealth.com/login')
-     await login.enterEmail('mbowen8486@gmail.com')//email needs moved into the login class
-     await login.enterPassword('TossedSalad84!')//password needs moved into the login class
-     await login.clickLoginBtn()
-
-     const report = new ReportsPage(page)
-     await report.selectReports();
-     await report.chooseReport('Chronic: Total Enrolled Report');
-     await report.selectFacilities();
-    
-    })
+/**test coverage
+ * adding a user
+ * back arrow
+ * save user
+ * search user
+ * status
+ * clear selections
+ * edit user
+ * set user permissions
+ * reset password
+ * delete user
+ */
 
     test("add user", async({page})=>{
         //MBHS-1686
-        test.slow();//changes default timeout from 30000 ms to 90000 ms
+        test.slow();
     
         const login = new LoginPage (page)
          await page.goto('https://qa-auto-base.mybloodhealth.com/login')
@@ -35,4 +31,120 @@ test("test user permission for region", async({page})=>{
         await user.addUser();
         await user.newUser('First','Name','fName2000@yahoo.com','No','yes','no','yes','yes','yes','Active');
         await user.saveUser();
+    })
+
+    test("edit user", async({page})=>{
+        test.slow();
+    
+        const login = new LoginPage (page)
+         await page.goto('https://qa-auto-base.mybloodhealth.com/login')
+         await login.enterEmail(logindata.email)
+         await login.enterPassword(logindata.password)
+         await login.clickLoginBtn()
+        
+        const user = new UsersPage(page)
+        await user.selectUsers();
+        await user.searchUser('First');
+        await user.userStatus('Active');
+        await user.selectUserfromSearch('First');
+        await user.editUserfName('Fred');
+        await user.saveUser();
+    })
+
+    test("reset user password", async({page})=>{
+        test.slow();
+    
+        const login = new LoginPage (page)
+         await page.goto('https://qa-auto-base.mybloodhealth.com/login')
+         await login.enterEmail(logindata.email)
+         await login.enterPassword(logindata.password)
+         await login.clickLoginBtn()
+        
+        const user = new UsersPage(page)
+        await user.selectUsers();
+        await user.searchUser('First');
+        await user.selectUserfromSearch('First');
+        await user.resetPassword();
+        await user.saveUser();
+    })
+
+    test("delete user", async({page})=>{
+        test.slow();
+    
+        const login = new LoginPage (page)
+         await page.goto('https://qa-auto-base.mybloodhealth.com/login')
+         await login.enterEmail(logindata.email)
+         await login.enterPassword(logindata.password)
+         await login.clickLoginBtn()
+        
+        const user = new UsersPage(page)
+        await user.selectUsers();
+        await user.searchUser('First');
+        await user.deleteUser();
+    })
+
+    test("user navigation", async({page})=>{
+        test.slow();
+    
+        const login = new LoginPage (page)
+         await page.goto('https://qa-auto-base.mybloodhealth.com/login')
+         await login.enterEmail(logindata.email)
+         await login.enterPassword(logindata.password)
+         await login.clickLoginBtn()
+        
+        const user = new UsersPage(page)
+        await user.selectUsers();
+        await user.userStatus('Inactive');
+        await user.clearSelections();
+        await user.searchUser('Fred');
+        await user.selectUserfromSearch('Fred Smith');
+        await user.backArrow();
+    })
+
+    test("assign user to region", async({page})=>{
+        test.slow();
+    
+        const login = new LoginPage (page)
+         await page.goto('https://qa-auto-base.mybloodhealth.com/login')
+         await login.enterEmail(logindata.email)
+         await login.enterPassword(logindata.password)
+         await login.clickLoginBtn()
+        
+        const user = new UsersPage(page)
+        await user.selectUsers();
+        await user.searchUser('Fred');
+        await user.selectUserfromSearch('Fred Smith');
+        await user.addregion('Texas');
+        await user.saveUser();
+    })
+
+    test("assign user to facility", async({page})=>{
+        test.slow();
+    
+        const login = new LoginPage (page)
+         await page.goto('https://qa-auto-base.mybloodhealth.com/login')
+         await login.enterEmail(logindata.email)
+         await login.enterPassword(logindata.password)
+         await login.clickLoginBtn()
+        
+        const user = new UsersPage(page)
+        await user.selectUsers();
+        await user.searchUser('Fred');
+        await user.selectUserfromSearch('Fred Smith');
+        await user.addFacility('QA Facility 1');
+        await user.saveUser();
+    })
+
+    test("adjust row count", async({page})=>{
+        test.slow();
+    
+        const login = new LoginPage (page)
+         await page.goto('https://qa-auto-base.mybloodhealth.com/login')
+         await login.enterEmail(logindata.email)
+         await login.enterPassword(logindata.password)
+         await login.clickLoginBtn()
+        
+        const user = new UsersPage(page)
+        await user.selectUsers();
+        await user.adjustRowCount('30');
     })
