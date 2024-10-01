@@ -191,7 +191,7 @@ export default class PatientsPage{
          await this.page.getByPlaceholder('MRN',{exact:true}).click();
          await this.page.getByPlaceholder('MRN',{exact:true}).fill(mrn);
         //health history (calendar)
-        await this.page.getByPlaceholder('Health History Date').getByLabel('Open calendar').click();
+        await this.page.locator('mat-form-field').filter({ hasText: 'Health History Date' }).getByLabel('Open calendar').click();
         await this.page.getByLabel('Choose month and year').click();
         while(await this.page.getByRole('button', {name:hhYear, exact:true}).isHidden()){
            await this.page.getByLabel('Previous 24 years').click();
@@ -229,7 +229,7 @@ export default class PatientsPage{
          * Not Hispanic
          */
         //date of birth (calendar)
-        await this.page.locator('mat-form-field').filter({hasText: 'Date of birth *'}).getByLabel('Open calendar').click();
+        await this.page.locator('mat-form-field').filter({hasText: 'Date of birth'}).getByLabel('Open calendar').click();
         await this.page.getByLabel('Choose month and year').click();
         while(await this.page.getByRole('button', {name:dobyear, exact:true}).isHidden()){
            await this.page.getByLabel('Previous 24 years').click();
@@ -263,17 +263,17 @@ export default class PatientsPage{
         await this.page.getByPlaceholder('City', { exact: true }).click();
         await this.page.getByPlaceholder('City', { exact: true }).fill(city);
         //state
-        await this.page.getByPlaceholder('State').click();
-        await this.page.getByPlaceholder('State').fill(state);
+        await this.page.locator('id=mat-mdc-form-field-label-52').click();
+        await this.page.locator('id=mat-mdc-form-field-label-52').fill(state);
         //zip
-        await this.page.getByPlaceholder('PostalCode').click();
-        await this.page.getByPlaceholder('PostalCode').fill(zipcode);
+        await this.page.locator('id=mat-mdc-form-field-label-54').click();
+        await this.page.locator('id=mat-mdc-form-field-label-54').fill(zipcode);
         //height
-        await this.page.getByPlaceholder('Height(inches)').click();
-        await this.page.getByPlaceholder('Height(inches)').fill(height);
+        await this.page.locator('id=mat-mdc-form-field-label-36').click();
+        await this.page.locator('id=mat-mdc-form-field-label-36').fill(height);
         //weight
-        await this.page.getByPlaceholder('Weight (lbs)').click();
-        await this.page.getByPlaceholder('Weight (lbs)').fill(weight);
+        await this.page.locator('id=mat-mdc-form-field-label-38').click();
+        await this.page.locator('id=mat-mdc-form-field-label-38').fill(weight);
 
     }
         //save patient button

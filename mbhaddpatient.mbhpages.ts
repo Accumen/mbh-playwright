@@ -3,6 +3,7 @@ import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import PatientsPage from './classes/patientsPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const addpatient = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/addPatient.json")))
 
 
 test('add patient', async ({ page }) => {
@@ -15,12 +16,13 @@ test('add patient', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(addpatient.optionClient);
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.addPatient('Donald','Duck','859423','2024','June','25','Male','White','Not Hispanic','1987','May','16','yes','2548879845',
-    '543 Waddle Way','Bedrock','CA','56795','68','156');
+    await patients.addPatient(addpatient.fname,addpatient.lname,addpatient.mrn,addpatient.hhYear,addpatient.hhMonth,addpatient.hhDay,
+        addpatient.gender,addpatient.race,addpatient.ethnicity,addpatient.dobyear,addpatient.dobmonth,addpatient.dobday,addpatient.hippa,addpatient.phone,
+    addpatient.street,addpatient.city,addpatient.state,addpatient.zipcode,addpatient.height,addpatient.weight);
     await patients.savePatient();
 })
 
