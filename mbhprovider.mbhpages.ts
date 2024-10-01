@@ -3,6 +3,7 @@ import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import ProvidersPage from './classes/providersPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const addprovider = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/addprovider.json")))
 
 /**test coverage
  * add/edit/save/delete provider
@@ -22,12 +23,12 @@ test('addprovider', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(addprovider.optionClient);
 
     const providers = new ProvidersPage(page);
     await providers.clickProviders();
     await providers.addProvider();
-    await providers.editAddProviderInfo('Constance','Smith','csmith@madeup.com','1234567891','Active');
+    await providers.editAddProviderInfo(addprovider.fname,addprovider.lname,addprovider.email,addprovider.npi,addprovider.status);
     await providers.saveProvider();
 })
 
