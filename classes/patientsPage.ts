@@ -472,8 +472,8 @@ export default class PatientsPage{
     async editPatientDetails(changeDesc){
         await this.page.getByRole('button',{name:'Edit Patient'}).click();
          //change description note box
-        await this.page.getByLabel('Change Description *').click();
-        await this.page.getByLabel('Change Description *').fill(changeDesc)
+        await this.page.getByLabel('Change Description').click();
+        await this.page.getByLabel('Change Description').fill(changeDesc)
     }
     async hoverPatientDetails(){
         await this.page.getByText('Patient Details').hover();
@@ -514,7 +514,7 @@ export default class PatientsPage{
     }
     async editPatientRace(race){
         //race
-        await this.page.getByLabel('Race *').locator('div').nth(2).click();
+        await this.page.getByPlaceholder('Race').locator('div').nth(2).click();
         await this.page.getByRole('option', { name: race, exact:true }).locator('span').click();
         /** Race Key
          * American Indian or Alaska Native
@@ -527,7 +527,7 @@ export default class PatientsPage{
     }
     async editPatientEthnicity(ethnicity){
         //ethinicity
-        await this.page.getByLabel('Ethnicity *').locator('div').nth(2).click();
+        await this.page.getByPlaceholder('Ethnicity').locator('div').nth(2).click();
         await this.page.getByRole('option', { name: ethnicity, exact:true }).locator('span').click();
         /** Ethnicity Key
          * Unknown
@@ -582,13 +582,13 @@ export default class PatientsPage{
     }
     //edit height
     async editPatientHeight(height){
-     await this.page.locator('id=mat-input-10').click();
-     await this.page.locator('id=mat-input-10').fill(height);
+     await this.page.getByPlaceholder('Height(inches)').click();
+     await this.page.getByPlaceholder('Height(inches)').fill(height);
     }
     //edit weight
     async editPatientWeight(weight){
-    await this.page.locator('id=mat-input-11').click();
-    await this.page.locator('id=mat-input-11').fill(weight);   
+    await this.page.getByPlaceholder('Weight (lbs)').click();
+    await this.page.getByPlaceholder('Weight (lbs)').fill(weight);   
 
     }
     //edit pcp
