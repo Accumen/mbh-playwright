@@ -4,25 +4,27 @@ import DashboardPage from './classes/dashboardPage';
 import WorklistPage from './classes/worklistPage';
 import PatientsPage from './classes/patientsPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const nssnpv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalschnewptvisit.json")))
+const nssepv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalschexistingptvisit.json")))
 
 test('Non-surgical schedule new patient visit', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
     await page.goto('https://qa-auto-base.mybloodhealth.com/login');
-    await login.enterEmail('cts-secure@accumen.com');
-    await login.enterPassword('Pass#123');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(nssnpv.optionClient);
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.scheduleChronicVisit('New', 'June', 'Smith', '', '987654321','2000','JAN','18','5656678945','568 Willowbrook rd', 'Broomall',
-    'PA','19008', 'Female','White','Not Hispanic','yes','25', '2024','MAR', '25', 10,
-        'CHRONIC MEDICAL', 'test')
+    await worklist.scheduleChronicVisit(nssnpv.patienttype, nssnpv.fname, nssnpv.lname, '', nssnpv.mrn,nssnpv.dobyear,nssnpv.dobmonth,nssnpv.dobday,
+      nssnpv.phone,nssnpv.street, nssnpv.city,nssnpv.state,nssnpv.zipcode,nssnpv.gender,nssnpv.race,nssnpv.ethnicity,nssnpv.hippa,nssnpv.hhMonthdd,
+      nssnpv.pYear,nssnpv.pMonth,nssnpv.pDay,nssnpv.pclickcount,nssnpv.procedure,nssnpv.provider)
     await worklist.saveScheduledVisit();
 })
 
@@ -31,18 +33,18 @@ test('Non-surgical schedule existing patient visit', async ({ page }) => {
   const login = new LoginPage(page);
 
   await page.goto('https://qa-auto-base.mybloodhealth.com/login');
-  await login.enterEmail('cts-secure@accumen.com');
-  await login.enterPassword('Pass#123');
+  await login.enterEmail(logindata.email);
+  await login.enterPassword(logindata.password);
   await login.clickLoginBtn();
 
   const dashboard = new DashboardPage(page);
-  await dashboard.clickClientDropDown('QA Testing');
+  await dashboard.clickClientDropDown(nssepv.optionClient);
 
   const worklist = new WorklistPage(page);
   await worklist.clickWorklist();
   await worklist.clickChronic();
-  await worklist.scheduleChronicVisit('Existing','','','','','651324','','','','','','','','','','','',
-      '','','no','','','','2024','SEPT','28',13,'CHRONIC MEDICAL');
+  await worklist.scheduleChronicVisit(nssepv.patienttype,'','','',nssepv.mrn,'','','','','','','','','','','',
+      '','',nssepv.edit,'','','',nssepv.pYear,nssepv.pMonth,nssepv.pDay,nssepv.pclickcount,nssepv.procedure,nssepv.provider);
   await worklist.saveScheduledVisit()
 })
 

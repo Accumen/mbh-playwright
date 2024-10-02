@@ -231,7 +231,7 @@ export default class WorklistPage{
         await this.page.getByRole('button', { name: 'CHAIN OF CUSTODY' }).click();
     }
     //Schedule Visit
-    async scheduleSurgicalVisit(patienttype: string, fname?, mname?, lname?, email?, mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
+    async scheduleSurgicalVisit(patienttype: string, fname?,lname?, email?, mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
         state?,zip?, gender?,race?,ethnicity?,hippa?,hhMonthdd?,edit?,editrace?,editethnicity?,changeDesc?,pYear?, pMonth?, pDay?, pclickcount?,
         procedure?, surgeon?){
         ;
@@ -248,8 +248,8 @@ export default class WorklistPage{
          await this.page.getByLabel('First Name *').click();
          await this.page.getByLabel('First Name *').fill(fname);
          //middle name
-         await this.page.getByLabel('Middle Name').click();
-         await this.page.getByLabel('Middle Name').fill(mname);
+         //await this.page.getByLabel('Middle Name').click();
+         //await this.page.getByLabel('Middle Name').fill(mname);
          //last name
          await this.page.getByLabel('Last Name *').click();
          await this.page.getByLabel('Last Name *').fill(lname);
