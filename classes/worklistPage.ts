@@ -467,19 +467,19 @@ export default class WorklistPage{
             if(patienttype != 'Existing'){
          //*New */
          //select the new check box
-         await this.page.locator('.mat-checkbox-inner-container').first().click();
+         await this.page.locator('id=mat-mdc-checkbox-4-input').click();
          //first name
-         await this.page.getByLabel('First Name *').click();
-         await this.page.getByLabel('First Name *').fill(fname);
+         await this.page.getByLabel('First Name').click();
+         await this.page.getByLabel('First Name').fill(fname);
          //last name
-         await this.page.getByLabel('Last Name *').click();
-         await this.page.getByLabel('Last Name *').fill(lname);
+         await this.page.getByLabel('Last Name').click();
+         await this.page.getByLabel('Last Name').fill(lname);
          //email
          await this.page.getByLabel('Email').click();
          await this.page.getByLabel('Email').fill(email);
          //MRN
-         await this.page.getByLabel('MRN *').click;
-         await this.page.getByLabel('MRN *').fill(mrn);
+         await this.page.getByPlaceholder('MRN',{exact:true}).click;
+         await this.page.getByPlaceholder('MRN',{exact:true}).fill(mrn);
          //dob
          await this.page.locator('#newPatientBlock').getByLabel('Open calendar').click();
          await this.page.getByLabel('Choose month and year').click();
@@ -490,18 +490,18 @@ export default class WorklistPage{
             await this.page.getByLabel(dobMonth).click();
             await this.page.getByLabel(dobDay).click();
          //phone number
-         await this.page.getByLabel('Phone No *').click();
-         await this.page.getByLabel('Phone No *').fill(phone);
+         await this.page.getByLabel('Phone No').click();
+         await this.page.getByLabel('Phone No').fill(phone);
          //street
-         await this.page.getByLabel('Street *').click();
-         await this.page.getByLabel('Street *').fill(street);
+         await this.page.getByLabel('Street').click();
+         await this.page.getByLabel('Street').fill(street);
          //apt/unit
          //city
-         await this.page.getByLabel('City *', { exact: true }).click();
-         await this.page.getByLabel('City *', { exact: true }).fill(city);
+         await this.page.getByLabel('City', { exact: true }).click();
+         await this.page.getByLabel('City', { exact: true }).fill(city);
          //state
-         await this.page.getByLabel('State *').click();
-         await this.page.getByLabel('State *').fill(state);
+         await this.page.getByLabel('State').click();
+         await this.page.getByLabel('State').fill(state);
          //zip
          await this.page.getByLabel('PostalCode').click();
          await this.page.getByLabel('PostalCode').fill(zip);
