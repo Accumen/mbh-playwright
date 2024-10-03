@@ -490,26 +490,26 @@ export default class WorklistPage{
             await this.page.getByLabel(dobMonth).click();
             await this.page.getByLabel(dobDay).click();
          //phone number
-         await this.page.getByLabel('Phone No').click();
-         await this.page.getByLabel('Phone No').fill(phone);
+         await this.page.getByText('Phone No').click();
+         await this.page.getByText('Phone No').fill(phone);
          //street
-         await this.page.getByLabel('Street').click();
-         await this.page.getByLabel('Street').fill(street);
+         await this.page.getByText('Street').click();
+         await this.page.getByText('Street').fill(street);
          //apt/unit
          //city
-         await this.page.getByLabel('City', { exact: true }).click();
-         await this.page.getByLabel('City', { exact: true }).fill(city);
+         await this.page.getByText('City', { exact: true }).click();
+         await this.page.getByText('City', { exact: true }).fill(city);
          //state
-         await this.page.getByLabel('State').click();
-         await this.page.getByLabel('State').fill(state);
+         await this.page.getByText('State').click();
+         await this.page.getByText('State').fill(state);
          //zip
-         await this.page.getByLabel('PostalCode').click();
-         await this.page.getByLabel('PostalCode').fill(zip);
+         await this.page.getByText('PostalCode').click();
+         await this.page.getByText('PostalCode').fill(zip);
          //gender (drop down)
          await this.page.getByLabel('Gender').locator('div').nth(2).click();
          await this.page.getByText(gender, {exact:true}).click();
          //race (drop down)
-         await this.page.getByLabel('Race *').locator('div').nth(2).click();
+         await this.page.getByLabel('Race').locator('div').nth(2).click();
          await this.page.getByRole('option', { name: race, exact:true }).locator('span').click();
          /** Race Key
           * American Indian or Alaska Native
@@ -520,7 +520,7 @@ export default class WorklistPage{
           * White
           */
          //ethnicity (drop down)
-         await this.page.getByLabel('Ethnicity *').locator('div').nth(2).click();
+         await this.page.getByLabel('Ethnicity').locator('div').nth(2).click();
          await this.page.getByRole('option', { name: ethnicity, exact:true }).locator('span').click();
          /** Ethnicity Key
           * Unknown
@@ -536,7 +536,7 @@ export default class WorklistPage{
          }
          //health history date
          await this.page.locator('mat-form-field').filter({hasText: 'Health History Date'}).getByLabel('Open calendar').click();
-         await this.page.getByLabel(hhMonthdd).click()
+         await this.page.getByText(hhMonthdd,{exact:true}).click()
          //checkmark button to close the calendar
          await this.page.locator('button').filter({hasText: 'done'}).click();
          //prefix(optional)
@@ -572,8 +572,8 @@ export default class WorklistPage{
          //visit date (calendar and 24hr clock)
          await this.page.getByRole('button',{name:'Open calendar'}).click();
          await this.page.getByLabel('Choose month and year').click();
-         await this.page.getByRole('button',{name:pYear, exact:true}).click();
-         await this.page.getByRole('button',{name: pMonth, exact: false}).click();
+         await this.page.getByLabel(pYear).click();
+         await this.page.getByLabel(pMonth, {exact: false}).click();
          await this.page.getByLabel(pDay).click();
          await this.page.getByLabel('expand_less icon').first().click({clickCount: pclickcount});
               /**Click Count Key for 24hr clock
@@ -606,7 +606,7 @@ export default class WorklistPage{
          //check mark button
          await this.page.locator('button').filter({hasText: 'done'}).click();
          //procedure drop down(has case types list)
-         await this.page.getByLabel('Procedure *').locator('div').nth(2).click();
+         await this.page.getByLabel('Procedure').locator('div').nth(2).click();
          await this.page.getByText(procedure,{exact:true}).click()
          /**Chronic Procedure key
           * WOMEN'S HEALTH- CHRONIC
