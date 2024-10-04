@@ -234,34 +234,27 @@ export default class WorklistPage{
         await this.page.getByRole('button', { name: 'CHAIN OF CUSTODY' }).click();
     }
     //Schedule Visit
-    async scheduleSurgicalVisit(patienttype: string, fname?, mname?, lname?, email?, mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
+    async scheduleSurgicalVisit(patienttype: string, fname?,lname?,mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
         state?,zip?, gender?,race?,ethnicity?,hippa?,hhMonthdd?,edit?,editrace?,editethnicity?,changeDesc?,pYear?, pMonth?, pDay?, pclickcount?,
         procedure?, surgeon?){
-        ;
         await this.page.getByRole('button', {name:' Schedule Visit'}).waitFor({state:'attached'})
         await this.page.getByRole('button', {name:' Schedule Visit'}).click({delay:1000});//clicks the Schedule Visit button
         //Opens the patient schedule screen
          //check box for new or existing patient
          //if statement for new or existing patient
             if(patienttype != 'Existing'){
-         //*New */
+          //*New */
          //select the new check box
-         await this.page.locator('.mat-checkbox-inner-container').first().click();
+         await this.page.locator('id=mat-mdc-checkbox-4-input').click();
          //first name
-         await this.page.getByLabel('First Name *').click();
-         await this.page.getByLabel('First Name *').fill(fname);
-         //middle name
-         await this.page.getByLabel('Middle Name').click();
-         await this.page.getByLabel('Middle Name').fill(mname);
+         await this.page.getByLabel('First Name').click();
+         await this.page.getByLabel('First Name').fill(fname);
          //last name
-         await this.page.getByLabel('Last Name *').click();
-         await this.page.getByLabel('Last Name *').fill(lname);
-         //email
-         await this.page.getByLabel('Email').click();
-         await this.page.getByLabel('Email').fill(email);
+         await this.page.getByLabel('Last Name').click();
+         await this.page.getByLabel('Last Name').fill(lname);
          //MRN
-         await this.page.getByLabel('MRN *').click;
-         await this.page.getByLabel('MRN *').fill(mrn);
+         await this.page.getByPlaceholder('MRN',{exact:true}).click;
+         await this.page.getByPlaceholder('MRN',{exact:true}).fill(mrn);
          //dob
          await this.page.locator('#newPatientBlock').getByLabel('Open calendar').click();
          await this.page.getByLabel('Choose month and year').click();
@@ -269,30 +262,29 @@ export default class WorklistPage{
             await this.page.getByLabel('Previous 24 years').click();
          }
             await this.page.getByLabel(dobyear).click();
-            await this.page.getByRole('button',{name: dobMonth, exact: false}).click();
-            //await this.page.getByLabel(dobMonth).click(); MBHS-892
+            await this.page.getByLabel(dobMonth).click();
             await this.page.getByLabel(dobDay).click();
          //phone number
-         await this.page.getByLabel('Phone No *').click();
-         await this.page.getByLabel('Phone No *').fill(phone);
+         await this.page.getByText('Phone No').click();
+         await this.page.getByText('Phone No').fill(phone);
          //street
-         await this.page.getByLabel('Street *').click();
-         await this.page.getByLabel('Street *').fill(street);
+         await this.page.getByText('Street').click();
+         await this.page.getByText('Street').fill(street);
          //apt/unit
          //city
-         await this.page.getByLabel('City *', { exact: true }).click();
-         await this.page.getByLabel('City *', { exact: true }).fill(city);
+         await this.page.getByText('City', { exact: true }).click();
+         await this.page.getByText('City', { exact: true }).fill(city);
          //state
-         await this.page.getByLabel('State *').click();
-         await this.page.getByLabel('State *').fill(state);
+         await this.page.getByText('State').click();
+         await this.page.getByText('State').fill(state);
          //zip
-         await this.page.getByLabel('PostalCode').click();
-         await this.page.getByLabel('PostalCode').fill(zip);
+         await this.page.getByText('PostalCode').click();
+         await this.page.getByText('PostalCode').fill(zip);
          //gender (drop down)
          await this.page.getByLabel('Gender').locator('div').nth(2).click();
          await this.page.getByText(gender, {exact:true}).click();
          //race (drop down)
-         await this.page.getByLabel('Race *').locator('div').nth(2).click();
+         await this.page.getByLabel('Race').locator('div').nth(2).click();
          await this.page.getByRole('option', { name: race, exact:true }).locator('span').click();
          /** Race Key
           * American Indian or Alaska Native
@@ -303,7 +295,7 @@ export default class WorklistPage{
           * White
           */
          //ethnicity (drop down)
-         await this.page.getByLabel('Ethnicity *').locator('div').nth(2).click();
+         await this.page.getByLabel('Ethnicity').locator('div').nth(2).click();
          await this.page.getByRole('option', { name: ethnicity, exact:true }).locator('span').click();
          /** Ethnicity Key
           * Unknown
@@ -313,14 +305,13 @@ export default class WorklistPage{
          //hippa checkbox
          if(hippa == 'yes'){
             await this.page.locator('#mat-checkbox-7 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
-            //await this.page.locator('id=mat-checkbox-5-input').click();
          }
          else{
             //no need to check the box
          }
          //health history date
          await this.page.locator('mat-form-field').filter({hasText: 'Health History Date'}).getByLabel('Open calendar').click();
-         await this.page.getByLabel(hhMonthdd).click()
+         await this.page.getByText(hhMonthdd,{exact:true}).click()
          //checkmark button to close the calendar
          await this.page.locator('button').filter({hasText: 'done'}).click();
             }
@@ -347,9 +338,9 @@ export default class WorklistPage{
          //visit date (calendar and 24hr clock)
          await this.page.getByRole('button',{name:'Open calendar'}).click();
          await this.page.getByLabel('Choose month and year').click();
-         await this.page.getByRole('button',{name:pYear, exact:true}).click();
-         await this.page.getByRole('button',{name: pMonth, exact: false}).click();
-         await this.page.getByLabel(pDay).click();
+         await this.page.getByLabel(pYear).click();
+         await this.page.getByLabel(pMonth, {exact: false}).click();
+         await this.page.getByText(pDay).click();
          await this.page.getByLabel('expand_less icon').first().click({clickCount: pclickcount});
               /**Click Count Key for 24hr clock
                * 1 = 1am
@@ -445,20 +436,15 @@ export default class WorklistPage{
             //Delete Button
         //Surgeon (fillable required field)
         await this.page.getByLabel('Surgeon', {exact:true}).click();
-         await this.page.getByPlaceholder('Surgeon', {exact:true}).fill('Sur');
+         await this.page.getByPlaceholder('Surgeon', {exact:true}).fill(surgeon);
          await this.page.getByPlaceholder('Surgeon',{exact:true}).press('Enter');
          //await expect (this.page.locator('id=mat-autocomplete-1')).toBeVisible();
          await this.page.getByRole('option', {name: surgeon, exact: false}).click();
-         //PCP (fillabe not required field)
-         //Location(fillable not required field)
-         //Facility(pre populated)
     }
 
-    async scheduleChronicVisit(patienttype: string, fname?, lname?, email?, mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
+    async scheduleChronicVisit(patienttype: string, fname?, lname?, mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
         state?,zip?, gender?,race?,ethnicity?,hippa?,hhMonthdd?,edit?,editrace?,editethnicity?,changeDesc?,pYear?, pMonth?, pDay?, pclickcount?,
         procedure?, surgeon?){
-        //expect (this.page.locator('id=toast-container').getByText('Patients fetched successfully').isVisible);
-        //await this.page.waitFor(3000);
         await this.page.getByRole('button', {name:' Schedule Visit'}).waitFor({state:'attached'})
         await this.page.getByRole('button', {name:' Schedule Visit'}).click({delay:1000});//clicks the Schedule Visit button
         //Opens the patient schedule screen
@@ -474,9 +460,6 @@ export default class WorklistPage{
          //last name
          await this.page.getByLabel('Last Name').click();
          await this.page.getByLabel('Last Name').fill(lname);
-         //email
-         await this.page.getByLabel('Email').click();
-         await this.page.getByLabel('Email').fill(email);
          //MRN
          await this.page.getByPlaceholder('MRN',{exact:true}).click;
          await this.page.getByPlaceholder('MRN',{exact:true}).fill(mrn);
@@ -539,20 +522,11 @@ export default class WorklistPage{
          await this.page.getByText(hhMonthdd,{exact:true}).click()
          //checkmark button to close the calendar
          await this.page.locator('button').filter({hasText: 'done'}).click();
-         //prefix(optional)
-         //await this.page.getByLabel('Prefix').click();
-         //await this.page.getByLabel('Prefix').fill(prefix);
-         //suffix(optional)
-         //await this.page.getByLabel('Suffix').click();
-         //await this.page.getByLabel('Suffix').fill(suffix);
-         //credentials(optional)
-         //await this.page.getByLabel('Credentials').click();
-         //await this.page.getByLabel('Credentials').fill(credentials);
             }
             else{
          //*Existing */
          //select the existing check box
-         await this.page.locator('#mat-checkbox-6 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+         await this.page.getByLabel('Existing').click();
          //search field for patient or mrn
          await this.page.getByLabel('Patient / MRN').click();
          await this.page.getByRole('combobox', { name: 'Patient / MRN' }).fill(mrn);
@@ -574,7 +548,7 @@ export default class WorklistPage{
          await this.page.getByLabel('Choose month and year').click();
          await this.page.getByLabel(pYear).click();
          await this.page.getByLabel(pMonth, {exact: false}).click();
-         await this.page.getByLabel(pDay).click();
+         await this.page.getByText(pDay).click();
          await this.page.getByLabel('expand_less icon').first().click({clickCount: pclickcount});
               /**Click Count Key for 24hr clock
                * 1 = 1am
@@ -626,15 +600,12 @@ export default class WorklistPage{
             //Add button
             //Delete Button
         //Surgeon (fillable required field)
-        await this.page.getByLabel('Surgeon', {exact:true}).click();
-         await this.page.getByLabel('Surgeon', {exact:true}).fill('Sur');
-         await this.page.getByLabel('Surgeon', {exact:true}).press('Enter');
+        await this.page.getByText('Referring Provider', {exact:true}).click();
+         await this.page.getByText('Referring Provider', {exact:true}).fill(surgeon);
+         await this.page.getByText('Referring Provider', {exact:true}).press('Enter');
          //await this.page.getByLabel('Surgeon', {exact:true}).press('enter');
          //await expect (this.page.locator('id=mat-autocomplete-1')).toBeVisible();
          await this.page.getByRole('option', {name: surgeon, exact: false}).click();
-         //PCP (fillabe not required field)
-         //Location(fillable not required field)
-         //Facility(pre populated)
     }
     
 

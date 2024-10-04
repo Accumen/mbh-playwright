@@ -19,7 +19,7 @@ test('chronic visit', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.scheduleChronicVisit('New', 'June', 'Smith', '', '987654321','2000','JAN','18','5656678945','568 Willowbrook rd', 'Broomall',
+    await worklist.scheduleChronicVisit('New', 'June', 'Smith', '987654321','2000','JAN','18','5656678945','568 Willowbrook rd', 'Broomall',
     'PA','19008', 'Female','White','Not Hispanic','no','20', '2024','DEC', '25', 10,
         'CHRONIC MEDICAL', 'test')
     await worklist.saveScheduledVisit();
