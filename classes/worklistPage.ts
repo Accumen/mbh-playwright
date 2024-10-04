@@ -856,6 +856,21 @@ export default class WorklistPage{
         await this.page.getByLabel('Search').fill(doc);
         //await this.page.getByLabel('Search').press('Enter')
     }
+
+    //select document type
+    async selectDocumentType(documenttype){
+        await this.page.getByRole('option', { name: documenttype }).locator('div').first().click();
+        /**Document Type Key
+         * Patient Letter
+         * PCP Letter
+         * Surgeon Letter
+         * Assessment Template
+         * RCP Letter
+         * Medication Order
+         * Tools and References
+         */
+    }
+
     async addVisitDocuments(){
         await this.page.getByRole('row', { name: 'Add' }).getByRole('button').first().click();
     }

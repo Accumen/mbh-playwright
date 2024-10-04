@@ -22,6 +22,8 @@ test('document preview', async ({ page }) => {
     await worklist.searchMRN('Smith');
     await worklist.selectPatientfromSearch('Emily Smith');
     await worklist.visitDocumentsAdd();
+    await worklist.selectDocumentType('Assessment Template');
+    await worklist.worklistscreenshot(1);
     await worklist.addVisitDocuments();
     await worklist.closeVisitDocuments();
     await worklist.visitDocumentsPreview();
