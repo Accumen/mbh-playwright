@@ -152,7 +152,7 @@ export default class PatientsPage{
 
     //confirm Hgb badge
     async hgbWorklistBadge(){
-        await this.page.getByLabel('Latest Hgb').screenshot({path:'hgbWorklistBadge.png'});
+        await this.page.getByText('Latest Hgb').screenshot({path:'hgbWorklistBadge.png'});
     }
     
     //add labs

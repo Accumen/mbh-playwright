@@ -6,6 +6,8 @@ import PatientsPage from './classes/patientsPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 const nssnpv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalschnewptvisit.json")))
 const nssepv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalschexistingptvisit.json")))
+const nswfb = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalferritinbadge.json")))
+const nshim = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalhgbiconmatch.json")))
 
 test('Non-surgical schedule new patient visit', async ({ page }) => {
     test.slow();
@@ -43,7 +45,7 @@ test('Non-surgical schedule existing patient visit', async ({ page }) => {
   const worklist = new WorklistPage(page);
   await worklist.clickWorklist();
   await worklist.clickChronic();
-  await worklist.scheduleChronicVisit(nssepv.patienttype,'','','',nssepv.mrn,'','','','','','','','','','','',
+  await worklist.scheduleChronicVisit(nssepv.patienttype,'','',nssepv.mrn,'','','','','','','','','','','',
       '','',nssepv.edit,'','','',nssepv.pYear,nssepv.pMonth,nssepv.pDay,nssepv.pclickcount,nssepv.procedure,nssepv.provider);
   await worklist.saveScheduledVisit()
 })
@@ -58,7 +60,7 @@ test('export non-surgical worklist', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown('Jefferson Health');
     
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
@@ -76,20 +78,20 @@ test('export non-surgical worklist', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(nswfb.optionClient);
     
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('Smith');
-    await worklist.selectPatientfromSearch('August Smith');
+    await worklist.searchMRN(nswfb.searchInfo);
+    await worklist.selectPatientfromSearch(nswfb.patient);
     
     const patient = new PatientsPage(page);
-    await patient.viewAllLabs('Ferritin','NULL');
-    await patient.editSearchedLab('301','2024','SEP','1');
+    await patient.viewAllLabs(nswfb.labtype,nswfb.startyear);
+    await patient.editSearchedLab(nswfb.result,nswfb.resultyear,nswfb.resultmonth,nswfb.resultday);
     await patient.saveEditedLab();
     await patient.closeSearchListWindow();
-    await patient.ferritinWorklistBadge('301');
+    await patient.ferritinWorklistBadge(nswfb.result);
   })
 
   test('Non-surgical Hgb icon match', async ({ page }) => {
@@ -101,16 +103,16 @@ test('export non-surgical worklist', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(nshim.optionClient);
     
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('Betty');
-    await worklist.selectPatientfromSearch('Betty Rubble');
+    await worklist.searchMRN(nshim.searchInfo);
+    await worklist.selectPatientfromSearch(nshim.patient);
 
     const patients = new PatientsPage(page);
-    await patients.viewAllLabs('Hgb','NULL');
+    await patients.viewAllLabs(nshim.labtype,nshim.startyear);
     await patients.closeSearchListWindow();
     await patients.hgbWorklistBadge();
 })
