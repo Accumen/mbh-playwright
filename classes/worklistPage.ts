@@ -82,7 +82,7 @@ export default class WorklistPage{
     //Unselect Select All for Case Type
     async unselectAllCaseTypes(){
         await this.page.getByLabel('Case Type').locator('div').nth(3).click();//selects the case type drop down
-        await this.page.locator('.mat-checkbox-inner-container').click({delay:100}); //deselects the select all case type
+        await this.page.locator('id=mat-mdc-checkbox-3-input').click({delay:100}); //deselects the select all case type
     }
     //Select Case Type function
     async selectCaseType(casetype: string){
@@ -827,13 +827,13 @@ export default class WorklistPage{
 
     //Invasive Treatment Toggle
     async invasiveToggle(){
-        await this.page.locator('id=mat-slide-toggle-1').click()
+        await this.page.locator('id=mat-mdc-slide-toggle-1').click()
         await this.page.getByTitle('Invasive').screenshot({path:'invasive.png'});
     }
 
     //Bloodless Case Toggle
     async bloodlessToggle(){
-        await this.page.locator('id=mat-slide-toggle-2').click();
+        await this.page.locator('id=mat-mdc-slide-toggle-2').click();
         await this.page.getByTitle('Bloodless').screenshot({path:'bloodless.png'});
     }
 
@@ -878,30 +878,31 @@ export default class WorklistPage{
     }
 
     //add communication
-    async addcommunication(comtype,comment,priority,resultyear, resultmonth,resultday){ 
+    async addcommunication(comtype,comment,priority,resolveyear, resolvemonth,resolveday){ 
         await this.page.locator('app-communication-list').getByRole('button', { name: ' Add' }).click();
-        await this.page.getByLabel('Communication Type *').locator('span').click();
+        await this.page.getByText('Communication Type').click();
         await this.page.getByRole('option', {name:comtype, exact: true}).locator('span').click();
-        await this.page.getByLabel('Message *').click();
-        await this.page.getByLabel('Message *').fill(comment);
-        await this.page.getByLabel('Priority *').locator('div').nth(2).click();
+        await this.page.getByPlaceholder('Message').click();
+        await this.page.getByPlaceholder('Message').fill(comment);
+        await this.page.getByPlaceholder('Priority').locator('div').nth(2).click();
         await this.page.getByRole ('option', {name:priority}).locator('span').click();
         await this.page.getByLabel('Open calendar').click();
         await this.page.getByLabel('Choose month and year').click();
-        await this.page.getByLabel(resultyear).click();
-        await this.page.getByLabel(resultmonth).click();
-        await this.page.getByLabel(resultday).click();
+        await this.page.getByLabel(resolveyear).click();
+        await this.page.getByLabel(resolvemonth).click();
+        await this.page.getByLabel(resolveday).click();
         await this.page.locator('button').filter({ hasText: 'done' }).click();
         await this.page.getByRole('button', { name: 'Add Communication' }).click();
     }
 
     //edit communication
     async editcommunication(comtype,comment,priority,resultyear, resultmonth,resultday){ 
-        await this.page.getByRole('button', { name: ' Edit' }).click();
+        await this.page.getByText('COMMUNICATION',{exact:true}).scrollIntoViewIfNeeded();
+        await this.page.getByRole('button', { name: 'Edit' }).click();
         await this.page.locator('#mat-select-value-23').click();
         await this.page.getByRole('option', { name:comtype }).locator('span').click();
-        await this.page.getByLabel('Message *').click();
-        await this.page.getByLabel('Message *').fill(comment);
+        await this.page.getByLabel('Message').click();
+        await this.page.getByLabel('Message').fill(comment);
         await this.page.locator('#mat-select-value-25').click();
         await this.page.getByRole ('option', {name:priority}).locator('span').click();
         await this.page.getByLabel('Open calendar').click();

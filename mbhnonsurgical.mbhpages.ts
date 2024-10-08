@@ -8,6 +8,12 @@ const nssnpv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/non
 const nssepv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalschexistingptvisit.json")))
 const nswfb = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalferritinbadge.json")))
 const nshim = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalhgbiconmatch.json")))
+const nsepthtwt = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicaleditpthtwt.json")))
+const nset = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicaledittoggles.json")))
+const nsvpd = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalviewptdetails.json")))
+const fnsw = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/filternonsurgicalworklist.json")))
+const ansc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/addnonsurgicalcomm.json")))
+const ensc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editnonsurgicalcomm.json")))
 
 test('Non-surgical schedule new patient visit', async ({ page }) => {
     test.slow();
@@ -127,22 +133,22 @@ test('Non-Surgical edit patient height and weight', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(nsepthtwt.optionClient);
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('657984')
-    await worklist.selectPatientfromSearch('Jack Black');
-    await worklist.editPatientDetails('Updated Height and Weight')
-    await worklist.editPatientHeight('63.4');
-    await worklist.editPatientWeight('117.56');
+    await worklist.searchMRN(nsepthtwt.searchInfo);
+    await worklist.selectPatientfromSearch(nsepthtwt.patient);
+    await worklist.editPatientDetails(nsepthtwt.changeDesc);
+    await worklist.editPatientHeight(nsepthtwt.height);
+    await worklist.editPatientWeight(nsepthtwt.weight);
     await worklist.saveEditPatient();
-    await worklist.editPatientHeight('-63');
-    await worklist.editPatientWeight('-118');
+    await worklist.editPatientHeight(nsepthtwt.height2);
+    await worklist.editPatientWeight(nsepthtwt.weight2);
     await worklist.saveEditPatient();      
-    await worklist.editPatientHeight('63');
-    await worklist.editPatientWeight('118');
+    await worklist.editPatientHeight(nsepthtwt.height3);
+    await worklist.editPatientWeight(nsepthtwt.weight3);
     await worklist.saveEditPatient();   
 })
 
@@ -156,13 +162,13 @@ test('non-surgical edit toggles', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(nset.optionClient);
   
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('5554465')
-    await worklist.selectPatientfromSearch('Betsy Jones');
+    await worklist.searchMRN(nset.searchInfo)
+    await worklist.selectPatientfromSearch(nset.patient);
     await worklist.invasiveToggle();
     await worklist.bloodlessToggle();
   })
@@ -177,13 +183,13 @@ test('non-surgical edit toggles', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(nsvpd.optionClient);
   
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('789456123')
-    await worklist.selectPatientfromSearch('Emily Smith');
+    await worklist.searchMRN(nsvpd.searchInfo)
+    await worklist.selectPatientfromSearch(nsvpd.patient);
     await worklist.selectPatientDetails();
   })
 
@@ -197,14 +203,14 @@ test('non-surgical edit toggles', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(fnsw.optionClient);
     
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.unselectAllCaseTypes();
-    await worklist.selectCaseType('CHRONIC MEDICAL');
-    await worklist.selectFilter('Urgent');  
+    await worklist.selectCaseType(fnsw.casetype);
+    await worklist.selectFilter(fnsw.filter);  
   })
   
   test('add non-surgical communication', async ({ page }) => {
@@ -217,16 +223,14 @@ test('non-surgical edit toggles', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(ansc.optionClient);
   
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('1478523690')
-    await worklist.selectPatientfromSearch('Jerry Springer');
-    await worklist.addcommunication('Comment','Testing comment',
-      'Low','2024','JUN','14');
-  
+    await worklist.searchMRN(ansc.searchInfo)
+    await worklist.selectPatientfromSearch(ansc.patient);
+    await worklist.addcommunication(ansc.comtype,ansc.comment,ansc.priority,ansc.resolveyear,ansc.resolvemonth,ansc.resolveday);
   })
   
   test('edit non-surgical communication', async ({ page }) => {
@@ -239,16 +243,14 @@ test('non-surgical edit toggles', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(ensc.optionClient);
   
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('1478523690');
-    await worklist.selectPatientfromSearch('Jerry Springer');
-    await worklist.editcommunication('Task','edited communication',
-      'Medium','2024','OCT','12');
-  
+    await worklist.searchMRN(ensc.searchInfo);
+    await worklist.selectPatientfromSearch(ensc.patient);
+    await worklist.editcommunication(ensc.comtype,ensc.comment,ensc.priority,ensc.resolveyear,ensc.resolvemonth,ensc.resolveday);
     })
   
     test('delete non-surgical communication', async ({ page }) => {
