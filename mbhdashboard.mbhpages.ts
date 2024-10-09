@@ -2,6 +2,7 @@ import {test} from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const rct = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/resetcachetest.json")))
 
 //serial test for capturing baseline screenshot 
 /*
@@ -47,8 +48,8 @@ test('reset cache test',async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('Farmers Trauma Center');
-    await dashboard.clickDateRange('This Week');
+    await dashboard.clickClientDropDown(rct.optionClient);
+    await dashboard.clickDateRange(rct.selection);
     await dashboard.dataverify(2);
     await dashboard.resetCache();
     await dashboard.dataverify(3);
