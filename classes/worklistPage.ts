@@ -82,7 +82,7 @@ export default class WorklistPage{
     //Unselect Select All for Case Type
     async unselectAllCaseTypes(){
         await this.page.getByLabel('Case Type').locator('div').nth(3).click();//selects the case type drop down
-        await this.page.locator('id=mat-mdc-checkbox-3-input').click({delay:100}); //deselects the select all case type
+        await this.page.locator('id=mat-mdc-checkbox-6-input').click({delay:100}); //deselects the select all case type
     }
     //Select Case Type function
     async selectCaseType(casetype: string){
@@ -898,7 +898,7 @@ export default class WorklistPage{
     //edit communication
     async editcommunication(comtype,comment,priority,resultyear, resultmonth,resultday){ 
         await this.page.getByText('COMMUNICATION',{exact:true}).scrollIntoViewIfNeeded();
-        await this.page.getByRole('button', { name: 'Edit' }).click();
+        await this.page.getByLabel('communication-edit').click();
         await this.page.locator('#mat-select-value-23').click();
         await this.page.getByRole('option', { name:comtype }).locator('span').click();
         await this.page.getByLabel('Message').click();
@@ -916,6 +916,7 @@ export default class WorklistPage{
 
     //delete communication
     async deleteCommunication(){
+        await this.page.getByText('COMMUNICATION',{exact:true}).scrollIntoViewIfNeeded();
         this.page.once('dialog',dialog => dialog.accept());
         await this.page.getByLabel('communication-delete').click();
     }
