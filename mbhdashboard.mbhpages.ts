@@ -3,6 +3,10 @@ import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 const rct = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/resetcachetest.json")))
+const fdaete = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/filterdashboardandexporttoexcel.json")))
+const fdaetp = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/filterdashboardandexporttopdf.json")))
+const dpc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/dataperformancecalendar.json")))
+const gcnkt = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/ganzonicalcnegativekgtest.json")))
 
 //serial test for capturing baseline screenshot 
 /*
@@ -66,11 +70,11 @@ test('filter dashboard and export to excel',async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(fdaete.optionClient);
     await dashboard.unselectAllFacility();
-    await dashboard.clickFacility('QA Facility 1');
+    await dashboard.clickFacility(fdaete.facility);
     await dashboard.unselectAllCaseTypes();
-    await dashboard.clickCaseType('CARDIO');
+    await dashboard.clickCaseType(fdaete.casetype);
     await dashboard.applyFilters();
     await dashboard.exportToExcel();
 })
@@ -86,11 +90,11 @@ test('filter dashboard and export to pdf',async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(fdaetp.optionClient);
     await dashboard.unselectAllFacility();
-    await dashboard.clickFacility('QA Facility 2');
+    await dashboard.clickFacility(fdaetp.facility);
     await dashboard.unselectAllCaseTypes();
-    await dashboard.clickCaseType('THORACIC');
+    await dashboard.clickCaseType(fdaetp.casetype);
     await dashboard.applyFilters();
     await dashboard.exportToPdf();
 })
@@ -106,11 +110,11 @@ test('data performance calendar',async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
-    await dashboard.dataCalendar('2024','JUN');
-    await dashboard.changeMonthDC('Previous');
-    await dashboard.changeMonthDC('Next');
-    await dashboard.pickDayDC('12');
+    await dashboard.clickClientDropDown(dpc.optionClient);
+    await dashboard.dataCalendar(dpc.year,dpc.month);
+    await dashboard.changeMonthDC(dpc.nextchange);
+    await dashboard.changeMonthDC(dpc.previouschange);
+    await dashboard.pickDayDC(dpc.day);
 
 })
 
@@ -124,9 +128,11 @@ test('ganzoni calc negative kg test',async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
-    await dashboard.ganzoniCalculator('kgs','-258','-9');
+    await dashboard.clickClientDropDown(gcnkt.optionClient);
+    await dashboard.ganzoniCalculator(gcnkt.weightype,gcnkt.weight,gcnkt.curHgb);
     await dashboard.dataverify(1);
+  
+
 })
 
 test('ganzoni calc negative lbs test',async ({page})=>{
