@@ -172,6 +172,7 @@ export default class DashboardPage{
         //enter current hgb
         await this.page.getByText('Current HGB (g/dL)').click();
         await this.page.getByText('Current HGB (g/dL)').fill(curHgb);
+        await this.page.keyboard.press('Tab');
 
         //capture value
 

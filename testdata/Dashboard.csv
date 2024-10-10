@@ -1,0 +1,5 @@
+Date Range,User Login,Records Ingested,Patients Enrolled,Patient Completed,Treatment Volume,Anemic Patients,ROI Impact,Lab Completed,Lab Completion Rate,Patient Completion Rate,Prevalence Of Anemia
+Last 30 Days,2,,0,0,0,0,"$0 ",0,"0% ","0% ","0% "
+Last 3 Months,0,,0,0,0,0,"$0 ",0,"0% ","0% ","0% "
+Last 12 Months,104,,626,44,44,178,"$59,157 ",452,"72% ","25% ","39% "
+All Time,1535,,5491,332,328,1698,"$508,071 ",4483,"82% ","20% ","38% "
