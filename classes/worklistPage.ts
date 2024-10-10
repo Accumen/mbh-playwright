@@ -82,7 +82,8 @@ export default class WorklistPage{
     //Unselect Select All for Case Type
     async unselectAllCaseTypes(){
         await this.page.getByLabel('Case Type').locator('div').nth(3).click();//selects the case type drop down
-        await this.page.locator('id=mat-mdc-checkbox-6-input').click({delay:100}); //deselects the select all case type
+        await this.page.getByLabel('Select All').click();
+        //await this.page.locator('id=mat-mdc-checkbox-6-input').click({delay:100}); //deselects the select all case type
     }
     //Select Case Type function
     async selectCaseType(casetype: string){
@@ -106,8 +107,12 @@ export default class WorklistPage{
          * WOMEN\'S HEALTH-SURGICAL
          * 321 (ONLY LISTED IN CHRONIC)
          */
-        await this.page.getByRole('option', {name:casetype}).locator('mat-pseudo-checkbox').click();//selects the case type from the drop down
-        await this.page.getByRole('option', {name:casetype}).locator('mat-pseudo-checkbox').press('Tab');
+        await this.page.getByRole('option', {name:casetype,exact:true}).locator('mat-pseudo-checkbox').click();//selects the case type from the drop down
+        await this.page.getByRole('option', {name:casetype,exact:true}).locator('mat-pseudo-checkbox').press('Tab');
+    }
+    //verify case type filter saved
+    async verifyCaseType(casetype){
+        
     }
     //Select Status
     async selectStatus(status: string){
@@ -183,7 +188,10 @@ export default class WorklistPage{
                         await this.page.getByText('MRN').first().scrollIntoViewIfNeeded();
         }
                         
-                            
+    //client user save filter button (floppy disc) 
+    async saveFilters(){
+        await this.page.locator('button').filter({hasText:'save'}).click();
+    }                       
                             
            
     // select patient visit from worklist
@@ -220,7 +228,7 @@ export default class WorklistPage{
     //Clear Expired Visits
     async clearExpiredVisits(){
         this.page.on('dialog',dialog => dialog.accept());
-        await this.page.getByRole('button',{name:'Clear Expired Visits'}).nth(2).click();
+        await this.page.getByRole('button',{name:' Clear Expired Visits '}).click();
     }
     //Click Patient Details dropdown
     async selectPatientDetails(){

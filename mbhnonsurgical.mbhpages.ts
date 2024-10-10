@@ -4,6 +4,7 @@ import DashboardPage from './classes/dashboardPage';
 import WorklistPage from './classes/worklistPage';
 import PatientsPage from './classes/patientsPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const tccul = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/tcclientuserlogin.json")))
 const nssnpv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalschnewptvisit.json")))
 const nssepv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalschexistingptvisit.json")))
 const nswfb = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalferritinbadge.json")))
@@ -20,6 +21,11 @@ const nswf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsu
 const nswdf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalworklistdatefilter.json")))
 const nsctf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalcasetypefilter.json")))
 const nswsf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalworkliststatusfilter.json")))
+const nswfr = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalworklistfilterretention.json")))
+const nswpr = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalworklistpaginationretention.json")))
+const nswrc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalworklistrowcounter.json")))
+const nscev = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalclearexpiredvisits.json")))
+const nsctsf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalcasetypesavefilter.json")))
 
 test('Non-surgical schedule new patient visit', async ({ page }) => {
     test.slow();
@@ -379,13 +385,13 @@ test('non-surgical edit toggles', async ({ page }) => {
         await login.clickLoginBtn();
       
         const dashboard = new DashboardPage(page);
-        await dashboard.clickClientDropDown('QA Testing');
+        await dashboard.clickClientDropDown(nswfr.optionClient);
       
         const worklist = new WorklistPage(page);
         await worklist.clickWorklist();
         await worklist.clickChronic();
-        await worklist.selectFilter('Anemic');
-        await worklist.selectPatientfromSearch('Jacky Batcheldor');
+        await worklist.selectFilter(nswfr.filter);
+        await worklist.selectPatientfromSearch(nswfr.patient);
         await worklist.backarrow();
       })
       
@@ -399,13 +405,13 @@ test('non-surgical edit toggles', async ({ page }) => {
         await login.clickLoginBtn();
       
         const dashboard = new DashboardPage(page);
-        await dashboard.clickClientDropDown('QA Testing');
+        await dashboard.clickClientDropDown(nswpr.optionClient);
       
         const worklist = new WorklistPage(page);
         await worklist.clickWorklist();
-        await worklist.clickSurgical();  
-        await worklist.worklistPagination('3');
-        await worklist.selectPatientfromSearch('John Smith');
+        await worklist.clickChronic();  
+        await worklist.worklistPagination(nswpr.num);
+        await worklist.selectPatientfromSearch(nswpr.patient);
         await worklist.backarrow();
         await worklist.paginationCheck();
       })
@@ -420,16 +426,16 @@ test('non-surgical edit toggles', async ({ page }) => {
         await login.clickLoginBtn();
       
         const dashboard = new DashboardPage(page);
-        await dashboard.clickClientDropDown('QA Testing');
+        await dashboard.clickClientDropDown(nswrc.optionClient);
       
         const worklist = new WorklistPage(page);
         await worklist.clickWorklist();
         await worklist.clickChronic();
         await worklist.paginationCheck();
-        await worklist.adjustRowCount('15');
+        await worklist.adjustRowCount(nswrc.row);
       })
 
-      test('clear expired visits', async ({ page }) => {
+      test('non-surgical clear expired visits', async ({ page }) => {
       
         test.slow();
         const login = new LoginPage(page);
@@ -439,10 +445,31 @@ test('non-surgical edit toggles', async ({ page }) => {
         await login.clickLoginBtn();
       
         const dashboard = new DashboardPage(page);
-        await dashboard.clickClientDropDown('QA Testing');
+        await dashboard.clickClientDropDown(nscev.optionClient);
       
         const worklist = new WorklistPage(page);
         await worklist.clickWorklist();
         await worklist.clickChronic();
         await worklist.clearExpiredVisits();
+      })
+
+      test('client user case type save filter', async ({ page }) => {
+      
+        test.slow();
+        const login = new LoginPage(page);
+        await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+        await login.enterEmail(tccul.email);
+        await login.enterPassword(tccul.password);
+        await login.clickLoginBtn();
+
+        const worklist = new WorklistPage (page);
+        await worklist.clickWorklist();
+        await worklist.clickChronic();
+        await worklist.unselectAllCaseTypes();
+        await worklist.selectCaseType(nsctsf.casetype);
+        await worklist.saveFilters();
+        await worklist.clickSurgical();
+        await worklist.hoverSearch(nsctsf.search);
+        await worklist.clickChronic();
+        await worklist.selectPatientfromSearch(nsctsf.patient)              
       })
