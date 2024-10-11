@@ -452,24 +452,3 @@ test('non-surgical edit toggles', async ({ page }) => {
         await worklist.clickChronic();
         await worklist.clearExpiredVisits();
       })
-
-      test('client user case type save filter', async ({ page }) => {
-      
-        test.slow();
-        const login = new LoginPage(page);
-        await page.goto('https://qa-auto-base.mybloodhealth.com/login');
-        await login.enterEmail(tccul.email);
-        await login.enterPassword(tccul.password);
-        await login.clickLoginBtn();
-
-        const worklist = new WorklistPage (page);
-        await worklist.clickWorklist();
-        await worklist.clickChronic();
-        await worklist.unselectAllCaseTypes();
-        await worklist.selectCaseType(nsctsf.casetype);
-        await worklist.saveFilters();
-        await worklist.clickSurgical();
-        await worklist.hoverSearch(nsctsf.search);
-        await worklist.clickChronic();
-        await worklist.selectPatientfromSearch(nsctsf.patient)              
-      })

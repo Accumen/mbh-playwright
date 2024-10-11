@@ -1,0 +1,9 @@
+{
+    "fromfacility":"Deaconess Clinic",
+    "tofacility":"Test Facility",
+    "casetype":"NON-SURGICAL MEDICAL",
+    "filter":"Anemic",
+    "casetype2":"cosmetic surgery",
+    "patient":"Seymour Hersh",
+    "patient2":"Michael Moore"
+}

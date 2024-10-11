@@ -62,9 +62,9 @@ export default class WorklistPage{
         await this.page.getByRole('link', {name:'Non-Surgical', exact: true}).click({delay:1000}); // clicks the Chronic submenu from the worklist
     }
 
-    async clickFacility(facility){
-        await this.page.getByLabel('QA Facility').locator('svg').nth(2).click();
-        await this.page.getByRole('option',{name:facility,exact:true}).click();
+    async clickFacility(fromfacility, tofacility){
+        await this.page.getByLabel(fromfacility).locator('svg').click();
+        await this.page.getByRole('option',{name:tofacility,exact:true}).click();
     }
     async favoriteFacility(){
         await this.page.locator('app-page-header-content i').click();
@@ -129,10 +129,9 @@ export default class WorklistPage{
         await this.page.getByRole('option', { name: status}).locator('span').click();
     }
     //filter
-    //new field built for MBHS-662
     async selectFilter(filter: string){
         await this.page.getByLabel('Filter').locator('div').nth(3).click();
-        await this.page.getByText(filter,{exact: true}).click({delay: 90}); 
+        await this.page.getByRole('option',{name:filter,exact: true}).click({delay: 90}); 
      /**Filter Key
      * Anemic
      * Non-anemic
