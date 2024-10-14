@@ -6,7 +6,7 @@ const config: PlaywrightTestConfig = {
         name: "chrome",
         use: {
             ...devices['Desktop Chrome'],
-            viewport: {width: 1280, height: 1024},
+            //viewport: {width: 1280, height: 1024},
         }
     }, 
    
@@ -20,14 +20,6 @@ use: {
     launchOptions: { // tells it to perform the steps in a slow manner
         slowMo: 1000
     }
-    /*
-    launchPersistentContext:{
-        userDataDir: '/need data directory path',
-        args:[
-            '--disable-extensions-except=${path.join(_dirname, './my-extension')}',
-            '--load-extension=$path.joi(_dirname, './my-extension')}'
-        ]
-    }*/
 },
 //workers: ,
 retries: 0, //this will retry to run the test automatically 2x if the test fails the first time

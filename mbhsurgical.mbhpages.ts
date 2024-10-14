@@ -6,6 +6,8 @@ import PatientsPage from './classes/patientsPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 const ssnpv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicalschnewptvisit.json")))
 const ssepv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicalschexistingptvisit.json")))
+const sanvd = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicaladdnotifyvisitdocument.json")))
+
 
 test('surgical shedule new patient visit', async ({ page }) => {
     test.slow();
@@ -23,7 +25,7 @@ test('surgical shedule new patient visit', async ({ page }) => {
     await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.scheduleSurgicalVisit(ssnpv.patienttype, ssnpv.fname, ssnpv.lname, ssnpv.mrn,ssnpv.dobyear,ssnpv.dobMonth,ssnpv.dobDay,
-    ssnpv.phone,ssnpv.street,ssnpv.city,ssnpv.state,ssnpv.zipcode,ssnpv.gender,ssnpv.race,ssnpv.ethnicity,ssnpv.hippa,ssnpv.hhMonthdd,'','',
+    ssnpv.phone,ssnpv.street,ssnpv.city,ssnpv.state,ssnpv.zip,ssnpv.gender,ssnpv.race,ssnpv.ethnicity,ssnpv.hippa,ssnpv.hhMonthdd,'','',
     '','',ssnpv.pYear, ssnpv.pMonth, ssnpv.pDay, ssnpv.pclickcount,ssnpv.procedure, ssnpv.surgeon);
     await worklist.saveScheduledVisit();
 })
@@ -43,7 +45,7 @@ test('surgical schedule existing patient visit', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.scheduleSurgicalVisit(ssepv.patienttype,'','','',ssepv.mrn,'','','','','','','','','','','',
+    await worklist.scheduleSurgicalVisit(ssepv.patienttype,'','',ssepv.mrn,'','','','','','','','','','','',
         '','',ssepv.edit,'','','',ssepv.pYear,ssepv.pMonth,ssepv.pDay,ssepv.pclickcount,ssepv.procedure,ssepv.surgeon);
     await worklist.saveScheduledVisit()
 })
@@ -438,4 +440,30 @@ test('filter surgical worklist', async ({ page }) => {
     await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.clearExpiredVisits();
+  })
+
+  test('surgical worklist add notify visit document', async ({ page }) => {
+      
+    test.slow();
+    const login = new LoginPage(page);
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown(sanvd.optionClient);
+  
+    const worklist = new WorklistPage(page);
+    await worklist.clickWorklist();
+    await worklist.clickSurgical();
+    await worklist.clickFacility(sanvd.fromfacility,sanvd.tofacility);
+    await worklist.searchMRN(sanvd.searchInfo);
+    await worklist.selectPatientfromSearch(sanvd.patient);
+    await worklist.visitDocumentsAdd();
+    await worklist.searchdoc(sanvd.doc);
+    await worklist.addVisitDocuments();
+    await worklist.closeVisitDocuments();
+    await worklist.notifyVisitDocs(sanvd.user,sanvd.comment);
+    await worklist.visitDocumentsPreview();
   })

@@ -51,11 +51,13 @@ export default class WorklistPage{
     //click Worklist from Side navigation menu
     async clickWorklist(){
         await this.page.getByRole('button', {name: 'Worklist'}).click({delay:1000});//clicks the side menu worklist option
+       
     }
     
     //surgical menu option
     async clickSurgical(){
         await this.page.getByRole('link', {name: 'Surgical', exact:true}).click({delay:1000});// clicks the Surgical submenu from the worklist
+        
     }
     //chronic menu option
     async clickChronic(){ //change name to clickNonSurgical?
@@ -240,8 +242,8 @@ export default class WorklistPage{
         //Schedule Visit
         async scheduleSurgicalVisit(patienttype: string, fname?,lname?,mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
             state?,zip?, gender?,race?,ethnicity?,hippa?,hhMonthdd?,edit?,editrace?,editethnicity?,changeDesc?,pYear?, pMonth?, pDay?, pclickcount?,
-            procedure?, provider?){
-            await this.page.getByRole('button', {name:' Schedule Visit'}).waitFor({state:'attached'})
+            procedure?, provider?){    
+            await this.page.locator('id=toast-container',{hasText:'Patients Fetched Successfully'}).isVisible();
             await this.page.getByRole('button', {name:' Schedule Visit'}).click({delay:1000});//clicks the Schedule Visit button
             //Opens the patient schedule screen
              //check box for new or existing patient
@@ -266,8 +268,8 @@ export default class WorklistPage{
                 await this.page.getByLabel('Previous 24 years').click();
              }
                 await this.page.getByLabel(dobyear).click();
-                await this.page.getByLabel(dobMonth).click();
-                await this.page.getByLabel(dobDay).click();
+                await this.page.getByText(dobMonth,{exact:true}).click();
+                await this.page.getByText(dobDay,{exact:true}).click();
              //phone number
              await this.page.getByText('Phone No').click();
              await this.page.getByText('Phone No').fill(phone);
@@ -308,7 +310,7 @@ export default class WorklistPage{
               */
              //hippa checkbox
              if(hippa == 'yes'){
-                await this.page.locator('#mat-checkbox-7 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+                await this.page.getByLabel('Hipaa Received').check();
              }
              else{
                 //no need to check the box
@@ -516,7 +518,7 @@ export default class WorklistPage{
           */
          //hippa checkbox
          if(hippa == 'yes'){
-            await this.page.locator('#mat-checkbox-7 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+            await this.page.getByLabel('Hipaa Received').check();
          }
          else{
             //no need to check the box
@@ -851,7 +853,8 @@ export default class WorklistPage{
     //add visit documents
 
     async visitDocumentsAdd(){
-        await this.page.locator('app-document-list').getByRole('button', { name: 'Add' }).click();
+        await this.page.getByText('VISIT DOCUMENTS').scrollIntoViewIfNeeded();
+        await this.page.locator('app-document-list').getByRole('button', { name: 'Add '}).click();
     }
 
     //search visit documents
@@ -878,10 +881,20 @@ export default class WorklistPage{
 
     async visitDocumentsPreview(){
         await this.page.getByTitle('Document preview').first().click();
+        await this.page.waitForLoadState('domcontentloaded');
     }
 
     async visitDocumentsDelete(){ //WIP
         await this.page.getByTitle('Delete').first().click();
+    }
+
+    async notifyVisitDocs(user,comment){
+        await this.page.getByText('Notify').click()
+        await this.page.getByPlaceholder('Users List').click();
+        await this.page.getByRole('option',{name:user,exact:true}).click();
+        await this.page.getByPlaceholder('Comment').click();
+        await this.page.getByPlaceholder('Comment').fill(comment);
+        await this.page.getByRole('button',{name:'Notify'}).click();
     }
 
     //add communication
