@@ -57,7 +57,6 @@ export default class WorklistPage{
     //surgical menu option
     async clickSurgical(){
         await this.page.getByRole('link', {name: 'Surgical', exact:true}).click({delay:1000});// clicks the Surgical submenu from the worklist
-        
     }
     //chronic menu option
     async clickChronic(){ //change name to clickNonSurgical?
@@ -222,9 +221,10 @@ export default class WorklistPage{
     //export visits
     async exportVisits(){
         const downloadPromise = this.page.waitForEvent('download');
+        await this.page.getByRole('button', {name: 'Export Visits'}).focus();
         await this.page.getByRole('button', {name: 'Export Visits'}).click();
         const download = await downloadPromise;
-        await download.saveAs('./testdata/'+ download.suggestedFilename());
+        await download.saveAs('./testdata/csv files/'+ download.suggestedFilename());
     }
     //Clear Expired Visits
     async clearExpiredVisits(){
@@ -243,15 +243,15 @@ export default class WorklistPage{
         async scheduleSurgicalVisit(patienttype: string, fname?,lname?,mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
             state?,zip?, gender?,race?,ethnicity?,hippa?,hhMonthdd?,edit?,editrace?,editethnicity?,changeDesc?,pYear?, pMonth?, pDay?, pclickcount?,
             procedure?, provider?){    
-            await this.page.locator('id=toast-container',{hasText:'Patients Fetched Successfully'}).isVisible();
-            await this.page.getByRole('button', {name:' Schedule Visit'}).click({delay:1000});//clicks the Schedule Visit button
+            await this.page.getByRole('button', {name:'Schedule Visit'}).isEnabled();
+            await this.page.getByRole('button', {name:'Schedule Visit'}).click({delay:1000});//clicks the Schedule Visit button
             //Opens the patient schedule screen
              //check box for new or existing patient
              //if statement for new or existing patient
                 if(patienttype != 'Existing'){
               //*New */
              //select the new check box
-             await this.page.locator('id=mat-mdc-checkbox-4-input').click();
+             await this.page.getByLabel('New').check();
              //first name
              await this.page.getByLabel('First Name').click();
              await this.page.getByLabel('First Name').fill(fname);
@@ -459,7 +459,7 @@ export default class WorklistPage{
             if(patienttype != 'Existing'){
          //*New */
          //select the new check box
-         await this.page.locator('id=mat-mdc-checkbox-4-input').click();
+         await this.page.getByLabel('Existing').check();
          //first name
          await this.page.getByLabel('First Name').click();
          await this.page.getByLabel('First Name').fill(fname);
@@ -898,21 +898,27 @@ export default class WorklistPage{
     }
 
     //add communication
-    async addcommunication(comtype,comment,priority,resolveyear, resolvemonth,resolveday){ 
+    async addcommunication(comtype,comment,priority,resolveyear?, resolvemonth?,resolveday?){ 
         await this.page.locator('app-communication-list').getByRole('button', { name: ' Add' }).click();
-        await this.page.getByText('Communication Type').click();
+        await this.page.getByLabel('Communication Type').getByText('Communication Type').click();
         await this.page.getByRole('option', {name:comtype, exact: true}).locator('span').click();
         await this.page.getByPlaceholder('Message').click();
         await this.page.getByPlaceholder('Message').fill(comment);
         await this.page.getByPlaceholder('Priority').locator('div').nth(2).click();
         await this.page.getByRole ('option', {name:priority}).locator('span').click();
-        await this.page.getByLabel('Open calendar').click();
-        await this.page.getByLabel('Choose month and year').click();
-        await this.page.getByLabel(resolveyear).click();
-        await this.page.getByLabel(resolvemonth).click();
-        await this.page.getByLabel(resolveday).click();
-        await this.page.locator('button').filter({ hasText: 'done' }).click();
-        await this.page.getByRole('button', { name: 'Add Communication' }).click();
+        if(comtype != 'Comment'){
+            await this.page.getByLabel('Open calendar').click();
+            await this.page.getByLabel('Choose month and year').click();
+            await this.page.getByLabel(resolveyear).click();
+            await this.page.getByLabel(resolvemonth).click();
+            await this.page.getByLabel(resolveday).click();
+            await this.page.locator('button').filter({ hasText: 'done' }).click();
+            await this.page.getByRole('button', { name: 'Add Communication' }).click();
+        }
+        else{
+            
+            await this.page.getByRole('button', { name: 'Add Communication' }).click();
+        }
     }
 
     //edit communication

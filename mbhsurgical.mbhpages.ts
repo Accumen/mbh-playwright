@@ -6,6 +6,15 @@ import PatientsPage from './classes/patientsPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 const ssnpv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicalschnewptvisit.json")))
 const ssepv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicalschexistingptvisit.json")))
+const esw = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/exportsurgicalworklist.json")))
+const swfb = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicalworklistferritinbadge.json")))
+const shim = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicalhgbiconmatch.json")))
+const sephw = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicaleditpthtwt.json")))
+const set = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicaledittoggles.json")))
+const svpd = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicalviewptdetails.json")))
+const fsw = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/filtersurgicalworklist.json")))
+const asc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/addsurgicalcomm.json")))
+const esc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editsurgicalcomm.json")))
 const sanvd = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicaladdnotifyvisitdocument.json")))
 
 
@@ -60,7 +69,7 @@ test('export surgical worklist', async ({ page }) => {
   await login.clickLoginBtn();
 
   const dashboard = new DashboardPage(page);
-  await dashboard.clickClientDropDown('QA Testing');
+  await dashboard.clickClientDropDown(esw.optionClient);
   
   const worklist = new WorklistPage(page);
   await worklist.clickWorklist();
@@ -78,20 +87,20 @@ test('Surgical Worklist Ferritin Badge', async ({ page }) => {
   await login.clickLoginBtn();
 
   const dashboard = new DashboardPage(page);
-  await dashboard.clickClientDropDown('QA Testing');
+  await dashboard.clickClientDropDown(swfb.optionClient);
   
   const worklist = new WorklistPage(page);
   await worklist.clickWorklist();
-  await worklist.clickChronic();
-  await worklist.searchMRN('Smith');
-  await worklist.selectPatientfromSearch('August Smith');
+  await worklist.clickSurgical();
+  await worklist.searchMRN(swfb.searchInfo);
+  await worklist.selectPatientfromSearch(swfb.patient);
   
   const patient = new PatientsPage(page);
-  await patient.viewAllLabs('Ferritin','NULL');
-  await patient.editSearchedLab('301','2024','SEP','1');
+  await patient.viewAllLabs(swfb.labtype,swfb.startyear);
+  await patient.editSearchedLab(swfb.result,swfb.resultyear,swfb.resultmonth,swfb.resultday);
   await patient.saveEditedLab();
   await patient.closeSearchListWindow();
-  await patient.ferritinWorklistBadge('301');
+  await patient.ferritinWorklistBadge(swfb.result);
 })
 
 test('Surgical Hgb icon match', async ({ page }) => {
@@ -103,16 +112,16 @@ test('Surgical Hgb icon match', async ({ page }) => {
   await login.clickLoginBtn();
 
   const dashboard = new DashboardPage(page);
-  await dashboard.clickClientDropDown('QA Testing');
+  await dashboard.clickClientDropDown(shim.optionClient);
   
   const worklist = new WorklistPage(page);
   await worklist.clickWorklist();
   await worklist.clickSurgical();
-  await worklist.searchMRN('Betty');
-  await worklist.selectPatientfromSearch('Betty Rubble');
+  await worklist.searchMRN(shim.searchInfo);
+  await worklist.selectPatientfromSearch(shim.patient);
 
   const patients = new PatientsPage(page);
-  await patients.viewAllLabs('Hgb','NULL');
+  await patients.viewAllLabs(shim.labtype,shim.startyear);
   await patients.hgbWorklistBadge();
 })
 
@@ -126,22 +135,22 @@ test('Surgical edit patient height and weight', async ({ page }) => {
   await login.clickLoginBtn();
 
   const dashboard = new DashboardPage(page);
-  await dashboard.clickClientDropDown('QA Testing');
+  await dashboard.clickClientDropDown(sephw.optionClient);
 
   const worklist = new WorklistPage(page);
   await worklist.clickWorklist();
   await worklist.clickSurgical();
-  await worklist.searchMRN('657984')
-  await worklist.selectPatientfromSearch('Jack Black');
-  await worklist.editPatientDetails('Updated Height and Weight')
-  await worklist.editPatientHeight('63.4');
-  await worklist.editPatientWeight('117.56');
+  await worklist.searchMRN(sephw.searchInfo)
+  await worklist.selectPatientfromSearch(sephw.patient);
+  await worklist.editPatientDetails(sephw.changeDesc);
+  await worklist.editPatientHeight(sephw.height);
+  await worklist.editPatientWeight(sephw.weight);
   await worklist.saveEditPatient();
-  await worklist.editPatientHeight('-63');
-  await worklist.editPatientWeight('-118');
+  await worklist.editPatientHeight(sephw.height2);
+  await worklist.editPatientWeight(sephw.weight2);
   await worklist.saveEditPatient();      
-  await worklist.editPatientHeight('63');
-  await worklist.editPatientWeight('118');
+  await worklist.editPatientHeight(sephw.height3);
+  await worklist.editPatientWeight(sephw.weight3);
   await worklist.saveEditPatient();   
 })
 
@@ -155,13 +164,13 @@ await login.enterPassword(logindata.password);
 await login.clickLoginBtn();
 
 const dashboard = new DashboardPage(page);
-await dashboard.clickClientDropDown('QA Testing');
+await dashboard.clickClientDropDown(set.optionClient);
 
 const worklist = new WorklistPage(page);
 await worklist.clickWorklist();
 await worklist.clickSurgical();
-await worklist.searchMRN('5554465')
-await worklist.selectPatientfromSearch('Betsy Jones');
+await worklist.searchMRN(set.searchInfo)
+await worklist.selectPatientfromSearch(set.patient);
 await worklist.invasiveToggle();
 await worklist.bloodlessToggle();
 })
@@ -176,13 +185,13 @@ await login.enterPassword(logindata.password);
 await login.clickLoginBtn();
 
 const dashboard = new DashboardPage(page);
-await dashboard.clickClientDropDown('QA Testing');
+await dashboard.clickClientDropDown(svpd.optionClient);
 
 const worklist = new WorklistPage(page);
 await worklist.clickWorklist();
 await worklist.clickSurgical();
-await worklist.searchMRN('789456123')
-await worklist.selectPatientfromSearch('Emily Smith');
+await worklist.searchMRN(svpd.searchInfo)
+await worklist.selectPatientfromSearch(svpd.patient);
 await worklist.selectPatientDetails();
 })
 
@@ -196,16 +205,15 @@ test('filter surgical worklist', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(fsw.optionClient);
     
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.searchMRN('12655473');
     await worklist.unselectAllCaseTypes();
-    await worklist.selectCaseType('CARDIO');
-    await worklist.selectFilter('Urgent');
-    await dashboard.clickLogout();  
+    await worklist.selectCaseType(fsw.casetype);
+    await worklist.selectFilter(fsw.filter);
+      
   })
   
   test('add surgical communication', async ({ page }) => {
@@ -218,16 +226,14 @@ test('filter surgical worklist', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(asc.optionClient);
   
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.searchMRN('1478523690')
-    await worklist.selectPatientfromSearch('Jerry Springer');
-    await worklist.addcommunication('Comment','Testing for ticket MBHS-1187',
-      'Low',2024,'JUNE',14)
-  
+    await worklist.searchMRN(asc.searchInfo);
+    await worklist.selectPatientfromSearch(asc.patient);
+    await worklist.addcommunication(asc.comtype,asc.comment,asc.priority);
   })
   
   test('edit surgical communication', async ({ page }) => {
@@ -240,16 +246,14 @@ test('filter surgical worklist', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(esc.optionClient);
   
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.searchMRN('1478523690');
-    await worklist.selectPatientfromSearch('Jerry Springer');
-    await worklist.editcommunication('Comment','Testing for ticket MBHS-1187',
-      'Medium',2024,'JUNE',12)
-  
+    await worklist.searchMRN(esc.searchInfo);
+    await worklist.selectPatientfromSearch(esc.patient);
+    await worklist.editcommunication(esc.comtype,esc.comment,esc.priority,esc.resolveyear,esc.resolvemonth,esc.resolveday);
     })
   
     test('delete surgical communication', async ({ page }) => {

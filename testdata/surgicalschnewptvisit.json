@@ -1,5 +1,5 @@
 {
-    "optionClient":"Deaconess",
+    "optionClient":"Test Client",
     "patienttype":"New",
     "fname":"Tobias",
     "lname":"Carter",
@@ -22,5 +22,5 @@
     "pDay":"25",
     "pclickcount":8,
     "procedure":"ORTHO",
-    "surgeon":"Karl"
+    "surgeon":"Paul"
 }
