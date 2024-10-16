@@ -15,6 +15,15 @@ const svpd = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgi
 const fsw = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/filtersurgicalworklist.json")))
 const asc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/addsurgicalcomm.json")))
 const esc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editsurgicalcomm.json")))
+const dsc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/deletesurgicalcomm.json")))
+const ssw = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/searchsurgicalworklist.json")))
+const swf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicalworklistfilter.json")))
+const swdf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicalworklistdatefilter.json")))
+const sctf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicalcasetypefilter.json")))
+const swfr = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicalworklistfilterretention.json")))
+const swpr = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicalworklistpaginationretention.json")))
+const swrc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicalworklistrowcounter.json")))
+const scev = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicalclearexpiredvisits.json")))
 const sanvd = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicaladdnotifyvisitdocument.json")))
 
 
@@ -266,13 +275,13 @@ test('filter surgical worklist', async ({ page }) => {
       await login.clickLoginBtn();
     
       const dashboard = new DashboardPage(page);
-      await dashboard.clickClientDropDown('QA Testing');
+      await dashboard.clickClientDropDown(dsc.optionClient);
     
       const worklist = new WorklistPage(page);
       await worklist.clickWorklist();
       await worklist.clickSurgical();
-      await worklist.searchMRN('789456123');
-      await worklist.selectPatientfromSearch('Emily Smith');
+      await worklist.searchMRN(dsc.searchInfo);
+      await worklist.selectPatientfromSearch(dsc.patient);
       await worklist.deleteCommunication();    
       })
   
@@ -286,16 +295,17 @@ test('filter surgical worklist', async ({ page }) => {
       await login.clickLoginBtn();
     
       const dashboard = new DashboardPage(page);
-      await dashboard.clickClientDropDown('QA Testing');
+      await dashboard.clickClientDropDown(ssw.optionClient);
       
       const worklist = new WorklistPage(page);
       await worklist.clickWorklist();
       await worklist.clickSurgical();
-      await worklist.searchMRN('Rubble');
+      await worklist.searchMRN(ssw.searchInfo);
+      await worklist.selectPatientfromSearch(ssw.patient)
     })
     
     test('export surgical worklist after filter', async ({ page }) => {
-  
+      //contemplating the necessity of this one.
       test.slow();
       const login = new LoginPage(page);
       await page.goto('https://qa-auto-base.mybloodhealth.com/login');
@@ -322,12 +332,12 @@ test('filter surgical worklist', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage (page);
-    await dashboard.clickClientDropDown("QA Testing");
+    await dashboard.clickClientDropDown(swf.optionClient);
   
     const worklist = new WorklistPage (page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.selectFilter("Labs Missing");
+    await worklist.selectFilter(swf.filter);
   })
   
   test('surgical worklist date range filter', async ({ page }) => {
@@ -340,12 +350,12 @@ test('filter surgical worklist', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(swdf.optionClient);
   
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.sortByDateRange('2024','APR','12','2024','APR','13');
+    await worklist.sortByDateRange(swdf.startyear,swdf.startmonth,swdf.startday,swdf.endyear,swdf.endmonth,swdf.endday);
   })
   
   test('surgical worklist case type filter', async ({ page }) => {
@@ -358,13 +368,13 @@ test('filter surgical worklist', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(sctf.optionClient);
   
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.unselectAllCaseTypes();
-    await worklist.selectCaseType('THORACIC');
+    await worklist.selectCaseType(sctf.casetype);
   })
   
   test('surgical worklist filter retention', async ({ page }) => {
@@ -377,14 +387,14 @@ test('filter surgical worklist', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(swfr.optionClient);
   
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.unselectAllCaseTypes();
-    await worklist.selectCaseType('SPINE');
-    await worklist.selectPatientfromSearch('Barney Rubble');
+    await worklist.selectCaseType(swfr.casetype);
+    await worklist.selectPatientfromSearch(swfr.patient);
     await worklist.backarrow();
   })
   
@@ -398,13 +408,13 @@ test('filter surgical worklist', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(swpr.optionClient);
   
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();  
-    await worklist.worklistPagination('3');
-    await worklist.selectPatientfromSearch('John Smith');
+    await worklist.worklistPagination(swpr.num);
+    await worklist.selectPatientfromSearch(swpr.patient);
     await worklist.backarrow();
     await worklist.paginationCheck();
   })
@@ -419,13 +429,13 @@ test('filter surgical worklist', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(swrc.optionClient);
   
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.paginationCheck();
-    await worklist.adjustRowCount('30');
+    await worklist.adjustRowCount(swrc.row);
+    await worklist.selectPatientfromSearch(swrc.patient)
   })
 
   test('clear expired visits from surgical worklist', async ({ page }) => {
@@ -438,7 +448,7 @@ test('filter surgical worklist', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(scev.optionClient);
   
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();

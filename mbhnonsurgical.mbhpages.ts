@@ -301,6 +301,7 @@ test('non-surgical edit toggles', async ({ page }) => {
       await worklist.clickWorklist();
       await worklist.clickChronic();
       await worklist.searchMRN(snsw.searchInfo);
+      await worklist.selectPatientfromSearch(snsw.patient)
     })
 
     test("Non-surgical worklist filter", async({page})=>{
@@ -431,8 +432,8 @@ test('non-surgical edit toggles', async ({ page }) => {
         const worklist = new WorklistPage(page);
         await worklist.clickWorklist();
         await worklist.clickChronic();
-        await worklist.paginationCheck();
         await worklist.adjustRowCount(nswrc.row);
+        await worklist.selectPatientfromSearch(nswrc.patient);
       })
 
       test('non-surgical clear expired visits', async ({ page }) => {

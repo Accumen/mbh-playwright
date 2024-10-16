@@ -148,11 +148,11 @@ export default class WorklistPage{
         //expect(this.page.getByTitle(filter))
         if(filter != 'Non-anemic'){
             expect(this.page.getByTitle(filter))
-            await this.page.getByTitle(filter).first().screenshot({path: 'screenshot.png'});
+            await this.page.getByTitle(filter).first().screenshot({path: './test results/'+filter+'.png'});
         }
         else {
             expect(this.page.getByTitle(filter)).toBeHidden();
-            await this.page.getByTitle('Non-anemic').screenshot({path: 'screenshotshouldbeblank.png'})
+            await this.page.getByTitle('Non-anemic').screenshot({path: './test results/screenshotshouldbeblank.png'})
         }
     }
   
@@ -196,6 +196,7 @@ export default class WorklistPage{
            
     // select patient visit from worklist
     async selectPatientfromSearch(patient){
+        await this.page.getByText(patient,{exact:true}).first().scrollIntoViewIfNeeded();
         await this.page.getByText(patient,{exact:true}).first().focus();
         await this.page.getByText(patient,{exact:true}).first().click();
     }
@@ -209,6 +210,7 @@ export default class WorklistPage{
     }  
     // adjust number of rows visible on screen
     async adjustRowCount(row: string){
+        await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
         await this.page.getByLabel('5').locator('div').nth(2).click();//clicks the drop down for the row count
         /**Row Key
          * 15 (default)
@@ -944,7 +946,7 @@ export default class WorklistPage{
     async deleteCommunication(){
         await this.page.getByText('COMMUNICATION',{exact:true}).scrollIntoViewIfNeeded();
         this.page.once('dialog',dialog => dialog.accept());
-        await this.page.getByLabel('communication-delete').click();
+        await this.page.getByLabel('communication-delete').first().click();
     }
 
     async worklistPagination(num){
@@ -955,6 +957,7 @@ export default class WorklistPage{
     //page navigation
     async paginationCheck(){
         await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+        //await expect(this.page.locator('link',{hasText:num})).toBeFocused();
     }
 
     //latest labs screenshot
