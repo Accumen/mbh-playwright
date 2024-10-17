@@ -4,6 +4,8 @@ import DashboardPage from './classes/dashboardPage';
 import WorklistPage from './classes/worklistPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 const tccul = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/tcclientuserlogin.json")))
+const sw = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/switchworklist.json")))
+const swp = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/switchworklistpagination.json")))
 const swsf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/switchworklistsavedfilters.json")))
 
 test('switch worklist', async ({ page }) => {
@@ -16,7 +18,7 @@ test('switch worklist', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(sw.optionClient);
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
@@ -35,17 +37,14 @@ test('switch worklist pagination', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('Newlife hospital');
+    await dashboard.clickClientDropDown(swp.optionClient);
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.paginationCheck();
+    await worklist.clickFacility(swp.fromfacility,swp.tofacility)
+    await worklist.worklistPagination(swp.num);
     await worklist.clickChronic();
-    await worklist.worklistPagination(3);
-    await worklist.selectPatientfromSearch('Scarlett Langford Robert')
-    await worklist.backarrow();
-    await worklist.clickSurgical();
     await worklist.paginationCheck();
 })
 

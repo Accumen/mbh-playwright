@@ -1,0 +1,12 @@
+{
+    "fname":"First",
+    "lname":"Name",
+    "email":"fName2000@yahoo.com",
+    "cadmin":"no",
+    "contents":"yes",
+    "users":"no",
+    "clinical":"yes",
+    "reports":"yes",
+    "mapping":"yes",
+    "ustatus":"Active"
+}

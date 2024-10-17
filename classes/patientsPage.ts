@@ -283,7 +283,8 @@ export default class PatientsPage{
 
           //schedule surgical visit
           async patientschedulesurgical(pYear,pMonth,pDay,pclickcount,procedure,surgeon,pFacility){
-            await this.page.getByRole('button',{name:'Schedule Surgical Visit'}).click();
+            await this.page.getByTestId('scheduleSurgicalVisit').click();
+            //await this.page.getByRole('button',{name:'Schedule Surgical Visit'}).click();
                  //**Visit screen**
          //visit date (calendar and 24hr clock)
          await this.page.getByRole('button',{name:'Open calendar'}).click();
@@ -398,7 +399,8 @@ export default class PatientsPage{
         }
         //schedule chronic visit
         async patientsschedulechronic(pYear,pMonth,pDay,pclickcount,procedure,surgeon,pFacility){
-            await this.page.getByRole('button',{name:'Schedule Non-Surgical Visit'}).click();
+            await this.page.getByTestId('scheduleNonSurgicalVisit').click();
+            //await this.page.getByRole('button',{name:'Schedule Non-Surgical Visit'}).click();
              //**Visit screen**
          //visit date (calendar and 24hr clock)
          await this.page.getByRole('button',{name:'Open calendar'}).click();
@@ -470,7 +472,8 @@ export default class PatientsPage{
         }  
         //edit patient button
     async editPatientDetails(changeDesc){
-        await this.page.getByRole('button',{name:'Edit Patient'}).click();
+        await this.page.getByTestId('editPatient').click();
+        //await this.page.getByRole('button',{name:'Edit Patient'}).click();
          //change description note box
         await this.page.getByLabel('Change Description').click();
         await this.page.getByLabel('Change Description').fill(changeDesc)

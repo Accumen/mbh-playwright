@@ -13,7 +13,7 @@ export default class UsersPage{
 
     //search name, email (fillable)
     async searchUser(user){
-        await this.page.getByLabel('Search name, email').click();
+        await this.page.getByLabel('Search name , email').click();
         await this.page.getByLabel('Search name , email').fill(user);
         await this.page.getByLabel('Search name , email').press('Enter');
     }
@@ -21,7 +21,7 @@ export default class UsersPage{
     //status drop down
     async userStatus(ustatus){
         await this.page.getByLabel('Active').locator('div').nth(3).click();
-        await this.page.getByText(ustatus,{exact:true}).click();
+        await this.page.getByRole('option',{name:ustatus,exact:true}).click();
         /**ustatus key
          * active
          * inactive
@@ -103,7 +103,7 @@ export default class UsersPage{
 
     //back arrow button
     async backArrow(){
-        await this.page.getByRole('button',{name:''}).click()
+        await this.page.getByRole('button',{name:'Back'}).click()
     }
 
     //select user from search list
@@ -113,18 +113,18 @@ export default class UsersPage{
 
     //edit user information
     async editUserfName(fname){
-        await this.page.getByLabel('First Name *').click();
-        await this.page.getByLabel('First Name *').fill(fname);
+        await this.page.getByPlaceholder('First Name').click();
+        await this.page.getByPlaceholder('First Name').fill(fname);
     }
 
     async editUserlName(lname){
-        await this.page.getByLabel('Last Name *').click();
-        await this.page.getByLabel('Last Name *').fill(lname);
+        await this.page.getByPlaceholder('Last Name').click();
+        await this.page.getByPlaceholder('Last Name').fill(lname);
     }
 
     async editUserEmail(email){
-        await this.page.getByLabel('Email *').click();
-        await this.page.getByLabel('Email *').fill(email);
+        await this.page.getByPlaceholder('Email').click();
+        await this.page.getByPlaceholder('Email').fill(email);
     }
 
     async editUserCredentials(cadmin,contents,users,clinical,reports,mapping){
@@ -189,7 +189,7 @@ export default class UsersPage{
     
     //delete button
     async deleteUser(){
-        await this.page.getByTitle('Delete').click();
+        await this.page.getByTitle('Delete').first().click();
     }
 
           //pagination
