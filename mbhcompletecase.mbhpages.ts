@@ -3,6 +3,11 @@ import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import WorklistPage from './classes/worklistPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const cstwofu = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/completesurgicaltreatednofu.json")))
+const cstf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/completesurgicaltreatedfu.json")))
+const csntwofu = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/completesurgicalnottreatednofu.json")))
+const csntfu = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/completesurgicalnottreatedfu.json")))
+const cnstnfu = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/completenonsurgicaltreatednofu.json")))
 
 test('complete surgical treated no followup', async ({ page }) => {
 
@@ -15,17 +20,15 @@ test('complete surgical treated no followup', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(cstwofu.optionClient);
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.searchMRN('789456');
-    await worklist.selectPatientfromSearch('Emily Smith');
-    await worklist.completeSurgicalVisit('Treated','B12','','no','','','','');
+    await worklist.searchMRN(cstwofu.searchInfo);
+    await worklist.selectPatientfromSearch(cstwofu.patient);
+    await worklist.completeSurgicalVisit(cstwofu.completeType,cstwofu.treatment,'',cstwofu.followup,'','','','');
     await worklist.selectChainofCustody();
-
-
 })
 
 test('complete surgical treated followup', async ({ page }) => {
@@ -39,14 +42,14 @@ test('complete surgical treated followup', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(cstf.optionClient);
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.searchMRN('1597642388');
-    await worklist.selectPatientfromSearch('Frank Smith');
-    await worklist.completeSurgicalVisit('Treated','B12','','yes','321','2024','OCT','28')
+    await worklist.searchMRN(cstf.searchInfo);
+    await worklist.selectPatientfromSearch(cstf.patient);
+    await worklist.completeSurgicalVisit(cstf.completeType,cstf.treatment,'',cstf.followup,cstf.specialty,cstf.fyear,cstf.fmonth,cstf.fday)
 
 })
 
@@ -61,17 +64,15 @@ test('complete surgical not treated no followup', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(csntwofu.optionClient);
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.searchMRN('123456788');
-    await worklist.selectPatientfromSearch('Wilma Flinestone');
-    await worklist.completeSurgicalVisit('Not Treated','','Does not meet criteria for treatment','no','','','','');
+    await worklist.searchMRN(csntwofu.searchInfo);
+    await worklist.selectPatientfromSearch(csntwofu.patient);
+    await worklist.completeSurgicalVisit(csntwofu.completeType,'',csntwofu.untreatedtype,csntwofu.followup,'','','','');
     await worklist.selectChainofCustody();
-
-
 })
 
 test('complete surgical not treated followup', async ({ page }) => {
@@ -85,15 +86,15 @@ test('complete surgical not treated followup', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(csntfu.optionClient);
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.searchMRN('Emily Smith');
-    await worklist.selectPatientfromSearch('Emily Smith');
-    await worklist.completeSurgicalVisit('Not Treated','','Patient declines treatment','yes','321','2024','JUNE','28');
-
+    await worklist.searchMRN(csntfu.searchInfo);
+    await worklist.selectPatientfromSearch(csntfu.patient);
+    await worklist.completeSurgicalVisit(csntfu.completeType,'',csntfu.untreatedtype,csntfu.followup,csntfu.specialty,csntfu.fyear,
+    csntfu.fmonth,csntfu.fday);
 })
 
 test('complete nonsurgical treated no followup', async ({ page }) => {
@@ -107,14 +108,15 @@ test('complete nonsurgical treated no followup', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(cnstnfu.optionClient);
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('947128');
-    await worklist.selectPatientfromSearch('Chrystal Allison');
-    await worklist.completeNonSurgicalVisit('Treated','B12','','no','Patient declines treatment','test reason','','','','');
+    await worklist.clickFacility(cnstnfu.fromfacility,cnstnfu.tofacility)
+    await worklist.searchMRN(cnstnfu.searchInfo);
+    await worklist.selectPatientfromSearch(cnstnfu.patient);
+    await worklist.completeNonSurgicalVisit(cnstnfu.completedType,cnstnfu.treatment,'',cnstnfu.followup,cnstnfu.freason,cnstnfu.freasonfill,'','','','');
     await worklist.selectChainofCustody();
 
 
@@ -246,7 +248,7 @@ test('test nonsurgical followup icon', async ({ page }) => {
 })
 
 
-test('test nonsurgical number of doses autopopulates', async ({ page }) => {
+test('test nonsurgical edit number of doses', async ({ page }) => {
    
     test.slow();
     const login = new LoginPage(page);
@@ -265,15 +267,12 @@ test('test nonsurgical number of doses autopopulates', async ({ page }) => {
     await worklist.searchMRN('August Smith');
     await worklist.selectPatientfromSearch('August Smith');
     await worklist.clickCompleteCase();
-    await worklist.changeCompleteCaseType('Not Treated');
-    await worklist.notTreatedFollowUp();
     await worklist.changeCompleteCaseType('Treated')
-    await worklist.editTreatment('B12');
-    await worklist.editTreatment ('EPO');
     await worklist.editTreatment('IV Iron');
+    await worklist.editDosage(3);
 })
 
-test('test surgical number of doses autopopulates', async ({ page }) => {
+test('test surgical edit number of doses', async ({ page }) => {
    
     test.slow();
     const login = new LoginPage(page);
@@ -292,10 +291,7 @@ test('test surgical number of doses autopopulates', async ({ page }) => {
     await worklist.searchMRN('Emily Smith');
     await worklist.selectPatientfromSearch('Emily Smith');
     await worklist.clickCompleteCase();
-    await worklist.changeCompleteCaseType('Not Treated');
-    await worklist.notTreatedFollowUp();
     await worklist.changeCompleteCaseType('Treated');
     await worklist.editTreatment('B12');
-    await worklist.editTreatment ('EPO');
-    await worklist.editTreatment('IV Iron');
+    await worklist.editDosage(2)
 })

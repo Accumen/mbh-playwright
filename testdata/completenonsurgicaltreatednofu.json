@@ -1,0 +1,12 @@
+{
+    "optionClient":"Atrium Health Enterprise",
+    "fromfacility":"Atrium Health Cabarrus",
+    "tofacility":"Atrium Health Navicent Medical Center",
+    "searchInfo":"N19733801",
+    "patient":"Sierra H Wheeler",
+    "completeType":"Treated",
+    "treatment":"IV Iron",
+    "followup":"no",
+    "freason":"Insurance denied treatment",
+    "freasonfill":"This is a test reason."
+}

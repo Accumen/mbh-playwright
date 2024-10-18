@@ -691,13 +691,14 @@ export default class WorklistPage{
     //complete non-surgical visit
     async completeNonSurgicalVisit(completeType,treatment?,untreatedtype?,followup?,freason?,freasonfill?,specialty?,fyear?,fmonth?,fday?){
         await this.page.getByRole('button', {name: 'Complete Case'}).click();
+        if(completeType == 'Not Treated'){
         await this.page.locator('#mat-select-value-23').click();
-        await this.page.getByRole('option',{name:completeType,exact:true}).click();
+        await this.page.getByRole('option', { name: completeType, exact: true }).click();
         /**completeType
          * Treated
          * Not Treated
          */
-        if(completeType == 'Not Treated'){
+        //if(completeType == 'Not Treated'){
             await this.page.getByText(untreatedtype,{exact:true}).click();
             /**untreatedtype
              * Insurance denied treatment
@@ -770,6 +771,11 @@ export default class WorklistPage{
          * IV Iron
          * Oral Iron
          */
+    }
+    //edit dosage
+    async editDosage(doses){
+        await this.page.getByLabel('Number of Doses').click();
+        await this.page.getByLabel('Number of Doses').fill(doses);
     }
 
     //change Complete Case Type
