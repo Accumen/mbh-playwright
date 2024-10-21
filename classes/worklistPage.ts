@@ -78,7 +78,7 @@ export default class WorklistPage{
         
     }
     async hoverSearch(search){
-        await this.page.getByText(search).hover();
+        await this.page.getByText(search).first().hover();
     }
     //Unselect Select All for Case Type
     async unselectAllCaseTypes(){
@@ -117,7 +117,7 @@ export default class WorklistPage{
     }
     //Select Status
     async selectStatus(status: string){
-        await this.page.getByLabel('Active').locator('div').nth(2).click();//selects the drop down menu button for "select status"
+        await this.page.getByPlaceholder('Select Status').locator('div').nth(2).click();//selects the drop down menu button for "select status"
         /**Status Key
          * Active
          * My Assigned Visits
@@ -740,8 +740,7 @@ export default class WorklistPage{
             if(completeType == 'Not Treated'){
                 await this.page.getByLabel('Select an option').getByText('Yes').click();
                 await this.page.getByRole('button',{name:'Continue'}).click();
-
-                await this.page.getByText(specialty,{exact:true}).click();
+                await this.page.getByRole('option',{name:specialty,exact:true}).click();
                 /**specialty
                 * 321
                 * CHRONIC MEDICAL

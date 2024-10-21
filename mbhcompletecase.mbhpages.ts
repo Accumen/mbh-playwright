@@ -8,6 +8,11 @@ const cstf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/compl
 const csntwofu = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/completesurgicalnottreatednofu.json")))
 const csntfu = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/completesurgicalnottreatedfu.json")))
 const cnstnfu = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/completenonsurgicaltreatednofu.json")))
+const cnstfu = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/completenonsurgicaltreatedfu.json")))
+const cnsntnfu = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/completenonsurgicalnottreatedwofu.json")))
+const cnsntfu = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/completenonsurgicalnottreatedfu.json")))
+const ecnsv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editcompletenonsurgicalvisit.json")))
+const nsfui = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalfollowupicon.json")))
 
 test('complete surgical treated no followup', async ({ page }) => {
 
@@ -133,15 +138,16 @@ test('complete nonsurgical treated followup', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(cnstfu.optionClient);
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('741852963');
-    await worklist.selectPatientfromSearch('August Smith');
-    await worklist.completeNonSurgicalVisit('Treated','EPO','','yes','','','','2024','JULY','28');
-   
+    await worklist.clickFacility(cnstfu.fromfacility,cnstfu.tofacility)
+    await worklist.searchMRN(cnstfu.searchInfo);
+    await worklist.selectPatientfromSearch(cnstfu.patient);
+    await worklist.completeNonSurgicalVisit(cnstfu.completeType,cnstfu.treatment,'',cnstfu.followup,'','','',cnstfu.fyear,cnstfu.fmonth,cnstfu.fday);
+    await worklist.selectChainofCustody();
 })
 
 test('complete nonsurgical not treated no followup', async ({ page }) => {
@@ -155,14 +161,15 @@ test('complete nonsurgical not treated no followup', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(cnsntnfu.optionClient);
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('115495');
-    await worklist.selectPatientfromSearch('Trueman Jacklings');
-    await worklist.completeNonSurgicalVisit('Not Treated','','No contact from patient','no','','','','','','');
+    await worklist.clickFacility(cnsntnfu.fromfacility,cnsntnfu.tofacility);
+    await worklist.searchMRN(cnsntnfu.searchInfo);
+    await worklist.selectPatientfromSearch(cnsntnfu.patient);
+    await worklist.completeNonSurgicalVisit(cnsntnfu.completeType,'',cnsntnfu.untreatedtype,cnsntnfu.followup,'','','','','','');
     await worklist.selectChainofCustody();
 
 
@@ -179,18 +186,20 @@ test('complete nonsurgical not treated followup', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(cnsntfu.optionClient);
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('1270546');
-    await worklist.selectPatientfromSearch('Augustine Coye');
-    await worklist.completeNonSurgicalVisit('Not Treated','','No contact from patient','yes','','','321','2024','OCT','28')
+    await worklist.clickFacility(cnsntfu.fromfacility,cnsntfu.tofacility);
+    await worklist.searchMRN(cnsntfu.searchInfo);
+    await worklist.selectPatientfromSearch(cnsntfu.patient);
+    await worklist.completeNonSurgicalVisit(cnsntfu.completeType,'',cnsntfu.untreatedtype,cnsntfu.followup,'','',
+    cnsntfu.specialty,cnsntfu.fyear,cnsntfu.fmonth,cnsntfu.fday)
+    await worklist.selectChainofCustody();
 })
 
 test('edit complete non-surgical visit', async ({ page }) => {
-    //MBHS-1227
     test.slow();
     const login = new LoginPage(page);
 
@@ -200,21 +209,23 @@ test('edit complete non-surgical visit', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(ecnsv.optionClient);
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('3979531')
-    await worklist.selectPatientfromSearch('Laughton Spring');
+    await worklist.clickFacility(ecnsv.fromfacility,ecnsv.tofacility)
+    await worklist.searchMRN(ecnsv.searchInfo)
+    await worklist.selectPatientfromSearch(ecnsv.patient);
     await worklist.clickCompleteCase();
-    await worklist.changeCompleteCaseType('Not Treated');
+    await worklist.changeCompleteCaseType(ecnsv.completedType);
     await worklist.notTreatedFollowUp();
-    await worklist.changeCompleteCaseType('Treated');
+    await worklist.changeCompleteCaseType(ecnsv.completedType2);
+    await worklist.editTreatment(ecnsv.treatment);
 })
 
 test('test nonsurgical followup icon', async ({ page }) => {
-    //MBHS-1247
+    
     test.slow();
     const login = new LoginPage(page);
 
@@ -224,27 +235,25 @@ test('test nonsurgical followup icon', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(nsfui.optionClient);
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('651325');
-    await worklist.selectPatientfromSearch('Barney Rubble');
-    await worklist.selectChainofCustody();
-    await worklist.worklistscreenshot(1);
-    await worklist.completeNonSurgicalVisit('Treated','B12','','yes','','','','2024','NOV','29');
+    await worklist.clickFacility(nsfui.fromfacility,nsfui.tofacility)
+    await worklist.searchMRN(nsfui.searchInfo);
+    await worklist.selectPatientfromSearch(nsfui.patient);
+    await worklist.completeNonSurgicalVisit(nsfui.completedType,nsfui.treatment,'',nsfui.followup,'','','',nsfui.fyear,nsfui.fmonth,nsfui.fday);
     await worklist.backarrow();
-    await worklist.worklistscreenshot(2);
-    await worklist.selectPatientfromSearch('Barney Rubble');
+    await worklist.selectPatientfromSearch(nsfui.patient)
     await worklist.selectChainofCustody();
-    await worklist.worklistscreenshot(3);
     await worklist.backarrow();
-    await worklist.selectStatus('Completed');
-    await worklist.worklistscreenshot(4);
-    await worklist.selectPatientfromSearch('Barney Rubble');
+    await worklist.selectStatus(nsfui.status);
+    await worklist.selectPatientfromSearch(nsfui.patient);
     await worklist.selectChainofCustody();
-    await worklist.worklistscreenshot(5);
+    await worklist.backarrow();
+    await worklist.selectStatus(nsfui.status2);
+    await worklist.hoverSearch(nsfui.searchInfo);
 })
 
 
