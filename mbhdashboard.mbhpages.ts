@@ -7,6 +7,7 @@ const fdaete = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/fil
 const fdaetp = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/filterdashboardandexporttopdf.json")))
 const dpc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/dataperformancecalendar.json")))
 const gcnkt = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/ganzonicalcnegativekgtest.json")))
+const gcnlt = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/ganzonicalcnegativelbstest.json")))
 
 //serial test for capturing baseline screenshot 
 /*
@@ -145,8 +146,8 @@ test('ganzoni calc negative lbs test',async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
-    await dashboard.ganzoniCalculator('lbs','-153','-8');
+    await dashboard.clickClientDropDown(gcnlt.optionClient);
+    await dashboard.ganzoniCalculator(gcnlt.weightype,gcnlt.weight,gcnlt.curHgb);
     await dashboard.dataverify(2);
 })
 test('ganzoni calc decimal kg test',async ({page})=>{
