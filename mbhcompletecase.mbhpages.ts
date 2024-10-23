@@ -13,6 +13,8 @@ const cnsntnfu = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/c
 const cnsntfu = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/completenonsurgicalnottreatedfu.json")))
 const ecnsv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editcompletenonsurgicalvisit.json")))
 const nsfui = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalfollowupicon.json")))
+const nsend = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicaleditnumberofdoses.json")))
+const send = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicaleditnumberofdoses.json")))
 
 test('complete surgical treated no followup', async ({ page }) => {
 
@@ -55,7 +57,7 @@ test('complete surgical treated followup', async ({ page }) => {
     await worklist.searchMRN(cstf.searchInfo);
     await worklist.selectPatientfromSearch(cstf.patient);
     await worklist.completeSurgicalVisit(cstf.completeType,cstf.treatment,'',cstf.followup,cstf.specialty,cstf.fyear,cstf.fmonth,cstf.fday)
-
+    await worklist.selectChainofCustody
 })
 
 test('complete surgical not treated no followup', async ({ page }) => {
@@ -100,6 +102,7 @@ test('complete surgical not treated followup', async ({ page }) => {
     await worklist.selectPatientfromSearch(csntfu.patient);
     await worklist.completeSurgicalVisit(csntfu.completeType,'',csntfu.untreatedtype,csntfu.followup,csntfu.specialty,csntfu.fyear,
     csntfu.fmonth,csntfu.fday);
+    await worklist.selectChainofCustody();
 })
 
 test('complete nonsurgical treated no followup', async ({ page }) => {
@@ -257,7 +260,7 @@ test('test nonsurgical followup icon', async ({ page }) => {
 })
 
 
-test('test nonsurgical edit number of doses', async ({ page }) => {
+test('nonsurgical edit number of doses', async ({ page }) => {
    
     test.slow();
     const login = new LoginPage(page);
@@ -268,17 +271,20 @@ test('test nonsurgical edit number of doses', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(nsend.optionClient);
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.searchMRN('August Smith');
-    await worklist.selectPatientfromSearch('August Smith');
+    await worklist.clickFacility(nsend.fromfacility,nsend.tofacility)
+    await worklist.searchMRN(nsend.searchInfo);
+    await worklist.selectPatientfromSearch(nsend.patient);
     await worklist.clickCompleteCase();
-    await worklist.changeCompleteCaseType('Treated')
-    await worklist.editTreatment('IV Iron');
-    await worklist.editDosage(3);
+    await worklist.changeCompleteCaseType(nsend.completedType)
+    await worklist.editTreatment(nsend.treatment);
+    await worklist.editDosage(nsend.treatment,nsend.doses);
+    await worklist.confirmBtn();
+    await worklist.selectChainofCustody();
 })
 
 test('test surgical edit number of doses', async ({ page }) => {
@@ -292,15 +298,16 @@ test('test surgical edit number of doses', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(send.optionClient);
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.searchMRN('Emily Smith');
-    await worklist.selectPatientfromSearch('Emily Smith');
+    await worklist.searchMRN(send.searchInfo);
+    await worklist.selectPatientfromSearch(send.patient);
     await worklist.clickCompleteCase();
-    await worklist.changeCompleteCaseType('Treated');
-    await worklist.editTreatment('B12');
-    await worklist.editDosage(2)
+    await worklist.editTreatment(send.treatment);
+    await worklist.editDosage(send.treatment,send.doses)
+    await worklist.confirmBtn();
+    await worklist.selectChainofCustody();
 })

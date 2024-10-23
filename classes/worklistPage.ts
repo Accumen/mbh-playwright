@@ -772,15 +772,37 @@ export default class WorklistPage{
          */
     }
     //edit dosage
-    async editDosage(doses){
-        await this.page.getByLabel('Number of Doses').click();
-        await this.page.getByLabel('Number of Doses').fill(doses);
+    async editDosage(treatment,doses){
+        switch(treatment){
+            case 'B12':
+               await this.page.getByRole('listbox').locator('div').filter({hasText:'B12 Number of Doses'}).getByRole('textbox').click(); 
+               await this.page.getByRole('listbox').locator('div').filter({hasText:'B12 Number of Doses'}).getByRole('textbox').fill(doses);
+               break;
+            
+            case 'EPO':
+                await this.page.getByRole('listbox').locator('div').filter({hasText:'EPO Number of Doses'}).getByRole('textbox').click(); 
+                await this.page.getByRole('listbox').locator('div').filter({hasText:'EPO Number of Doses'}).getByRole('textbox').fill(doses);
+                break;
+
+            case 'IV Iron':
+                await this.page.getByRole('listbox').locator('div').filter({hasText:'IV Iron Number of Doses'}).getByRole('textbox').click(); 
+                await this.page.getByRole('listbox').locator('div').filter({hasText:'IV Iron Number of Doses'}).getByRole('textbox').fill(doses);
+                break;    
+            
+            default:
+                break;
+        }
+   
+    }
+    //confirm button to complete visit
+    async confirmBtn(){
+        await this.page.getByRole('button',{name:'Confirm'}).click();
     }
 
     //change Complete Case Type
     async changeCompleteCaseType(completeType){
-        await this.page.locator('#mat-select-value-23').click();
-        await this.page.getByRole('option',{name:completeType,exact:true}).click();
+        await this.page.getByPlaceholder('Complete Case Type').click();
+        await this.page.getByRole('listitem', { name: completeType, exact: true }).click();
     }
     //select yes follow up for Not Treated
     async notTreatedFollowUp(){
