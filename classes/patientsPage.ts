@@ -66,7 +66,7 @@ export default class PatientsPage{
     }
     //view all labs button
     async viewAllLabs(labtype?,startyear?,startmonth?, startday?,resultyear?,resultmonth?, resultday?){
-        await this.page.getByRole('button',{name:'View All'}).click();
+        await this.page.getByTestId('viewAll').click();
         //lab type fillable
         await this.page.getByLabel('Lab Type').click();
         await this.page.getByLabel('Lab Type').fill(labtype);

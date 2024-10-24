@@ -110,6 +110,7 @@ test('export non-surgical worklist', async ({ page }) => {
     await patient.saveEditedLab();
     await patient.closeSearchListWindow();
     await patient.ferritinWorklistBadge(nswfb.result);
+    await worklist.selectChainofCustody();
   })
 
   test('Non-surgical Hgb icon match', async ({ page }) => {
@@ -161,7 +162,8 @@ test('Non-Surgical edit patient height and weight', async ({ page }) => {
     await worklist.saveEditPatient();      
     await worklist.editPatientHeight(nsepthtwt.height3);
     await worklist.editPatientWeight(nsepthtwt.weight3);
-    await worklist.saveEditPatient();   
+    await worklist.saveEditPatient(); 
+    await worklist.selectChainofCustody();  
 })
 
 test('non-surgical edit toggles', async ({ page }) => {
@@ -183,6 +185,7 @@ test('non-surgical edit toggles', async ({ page }) => {
     await worklist.selectPatientfromSearch(nset.patient);
     await worklist.invasiveToggle();
     await worklist.bloodlessToggle();
+    await worklist.selectChainofCustody();
   })
   
   test('Non-surgical view patient details dropdown', async ({ page }) => {

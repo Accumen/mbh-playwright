@@ -110,6 +110,7 @@ test('Surgical Worklist Ferritin Badge', async ({ page }) => {
   await patient.saveEditedLab();
   await patient.closeSearchListWindow();
   await patient.ferritinWorklistBadge(swfb.result);
+  await worklist.selectChainofCustody();
 })
 
 test('Surgical Hgb icon match', async ({ page }) => {
@@ -161,6 +162,7 @@ test('Surgical edit patient height and weight', async ({ page }) => {
   await worklist.editPatientHeight(sephw.height3);
   await worklist.editPatientWeight(sephw.weight3);
   await worklist.saveEditPatient();   
+  await worklist.selectChainofCustody();
 })
 
 test('Surgical edit toggles', async ({ page }) => {
@@ -182,6 +184,7 @@ await worklist.searchMRN(set.searchInfo)
 await worklist.selectPatientfromSearch(set.patient);
 await worklist.invasiveToggle();
 await worklist.bloodlessToggle();
+await worklist.selectChainofCustody
 })
 
 test('view surgical patient details dropdown', async ({ page }) => {

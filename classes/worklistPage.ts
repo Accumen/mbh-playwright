@@ -628,13 +628,13 @@ export default class WorklistPage{
          //Back Arrow (takes you back to the worklist)
     
     async worklistscreenshot(num){
-        await this.page.screenshot({path:'worklistscreenshot'+ num +'.png',fullPage:true});
+        await this.page.screenshot({path:'./test results/worklistscreenshot'+ num +'.png',fullPage:true});
     }
 
     //complete surgical visit
     async completeSurgicalVisit(completeType,treatment?,untreatedtype?,followup?,specialty?,fyear?,fmonth?,fday?){
-        await this.page.getByRole('button', {name: 'Complete Case'}).click();
-        await this.page.locator('#mat-select-value-23').click();
+        await this.page.getByRole('button', {name: 'Complete Case'}).click({delay:1000});
+        await this.page.locator('#mat-select-value-23').click({delay:1000});
         await this.page.getByRole('option',{name:completeType,exact:true}).click();
         /**completeType
          * Treated
@@ -686,7 +686,6 @@ export default class WorklistPage{
             await this.page.getByRole('button',{name:'Confirm'}).click();
         }
 
-        //await this.page.getByRole('button',{name:'Activate'}).click();
     }
     //complete non-surgical visit
     async completeNonSurgicalVisit(completeType,treatment?,untreatedtype?,followup?,freason?,freasonfill?,specialty?,fyear?,fmonth?,fday?){
@@ -754,8 +753,6 @@ export default class WorklistPage{
             await this.page.getByLabel(fday).click();
             await this.page.getByRole('button',{name:'Confirm'}).click();
         }
-
-        //await this.page.getByRole('button',{name:'Activate'}).click();
     }
     //click Complete Case
     async clickCompleteCase(){
@@ -802,7 +799,7 @@ export default class WorklistPage{
     //change Complete Case Type
     async changeCompleteCaseType(completeType){
         await this.page.getByPlaceholder('Complete Case Type').click();
-        await this.page.getByRole('listitem', { name: completeType, exact: true }).click();
+        await this.page.getByRole('option', { name: completeType, exact: true }).click();
     }
     //select yes follow up for Not Treated
     async notTreatedFollowUp(){
@@ -994,17 +991,22 @@ export default class WorklistPage{
 
     //add labs
     async addlab(labtype,labvalue,resultyear,resultmonth,resultday){
-        await this.page.locator('app-latest-lab').getByRole('button', { name: ' Add' }).click();
-        await this.page.getByLabel('Choose Lab Type *').locator('span').click();
-        await this.page.getByRole('option', {name:labtype, exact: true}).locator('span').click();
-        await this.page.getByLabel('Result Value *').click();
-        await this.page.getByLabel('Result Value *').fill(labvalue);
+        await this.page.getByTestId('addLabs').click();
+        await this.page.getByLabel('Choose Lab Type').click();
+        await this.page.getByRole('option', {name:labtype, exact: true}).click();
+        await this.page.getByPlaceholder('Result Value').click();
+        await this.page.getByPlaceholder('Result Value').fill(labvalue);
         await this.page.getByLabel('Open calendar').click();
         await this.page.getByLabel('Choose month and year').click();
         await this.page.getByLabel(resultyear).click();
         await this.page.getByLabel(resultmonth).click();
-        await this.page.getByLabel(resultday).click();
+        await this.page.getByText(resultday,{exact:true}).click();
         await this.page.locator('button').filter({ hasText: 'done' }).click();
-        await this.page.getByRole('button', { name: ' Add Lab' }).click();
+        await this.page.getByRole('button', { name: ' Add Lab' }).click();
+    }
+
+    //Activate button on cancelled visits
+    async activateBtn(){
+        await this.page.getByRole('button',{name:'Activate'}).click();
     }
 }

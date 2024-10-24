@@ -4,8 +4,11 @@ import DashboardPage from './classes/dashboardPage';
 import WorklistPage from './classes/worklistPage';
 import PatientsPage from './classes/patientsPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const elv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editlabvalue.json")))
+const altpv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/addlabtopatientvisit.json")))
+const dlfpv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/deletelabfrompatientvisit.json")))
 
-test('labvalue', async ({ page }) => {
+test('edit lab value', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
     await page.goto('https://qa-auto-base.mybloodhealth.com/login');
@@ -14,24 +17,68 @@ test('labvalue', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(elv.optionClient);
     
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.searchMRN('Betty');
-    await worklist.selectPatientfromSearch('Betty Rubble');
+    await worklist.searchMRN(elv.searchInfo);
+    await worklist.selectPatientfromSearch(elv.patient);
     
     const patients = new PatientsPage(page);
-    await patients.viewAllLabs('Hgb','NULL');
-    await patients.editSearchedLab('2.49999', '2024','DEC','27');
-    await patients.patientVerify(1);
+    await patients.viewAllLabs(elv.labtype,elv.startyear);
+    await patients.editSearchedLab(elv.result, elv.resultyear,elv.resultmonth,elv.resultday);
     await patients.saveEditedLab();
     await patients.closeSearchListWindow();
+    await worklist.selectChainofCustody();
+    await worklist.worklistscreenshot(1);
     await patients.selectPatients();
-    await patients.searchPatient('Betty');
-    await patients.selectPatientfromSearch('Betty Rubble');
+    await patients.searchPatient(elv.patient);
+    await patients.selectPatientfromSearch(elv.patient);
     await patients.latestLabs();
-    await patients.patientVerify(2);
+})
+
+test('add lab to patient visit', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+  
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown(altpv.optionClient);
+    
+    const worklist = new WorklistPage(page);
+    await worklist.clickWorklist();
+    await worklist.clickSurgical();
+    await worklist.searchMRN(altpv.searchInfo);
+    await worklist.selectPatientfromSearch(altpv.patient);
+    await worklist.addlab(altpv.labtype,altpv.result,altpv.resultyear,altpv.resultmonth,altpv.resultday);
+    await worklist.selectChainofCustody();
+})
+
+test('delete lab from patient visit', async ({page}) => {
+    test.slow();
+    const login = new LoginPage(page);
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+  
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown(dlfpv.optionClient);
+    
+    const worklist = new WorklistPage(page);
+    await worklist.clickWorklist();
+    await worklist.clickSurgical();
+    await worklist.searchMRN(dlfpv.searchInfo);
+    await worklist.selectPatientfromSearch(dlfpv.patient);
+    
+    const patients = new PatientsPage (page);
+    await patients.viewAllLabs(dlfpv.labtype,dlfpv.startyear);
+    await patients.deleteSearchedLab(dlfpv.labtype);
+    await patients.closeSearchListWindow();
+    await worklist.selectChainofCustody();
 
 })

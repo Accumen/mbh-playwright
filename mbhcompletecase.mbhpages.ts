@@ -15,6 +15,7 @@ const ecnsv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/edit
 const nsfui = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalfollowupicon.json")))
 const nsend = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicaleditnumberofdoses.json")))
 const send = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicaleditnumberofdoses.json")))
+const rpcv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/reactivateprevcancelledvisit.json")))
 
 test('complete surgical treated no followup', async ({ page }) => {
 
@@ -309,5 +310,28 @@ test('test surgical edit number of doses', async ({ page }) => {
     await worklist.editTreatment(send.treatment);
     await worklist.editDosage(send.treatment,send.doses)
     await worklist.confirmBtn();
+    await worklist.selectChainofCustody();
+})
+
+test('reactivate previously cancelled visit', async ({page}) => {
+
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown(rpcv.optionClient);
+
+    const worklist = new WorklistPage(page);
+    await worklist.clickWorklist();
+    await worklist.clickSurgical();
+    await worklist.selectStatus(rpcv.status);
+    await worklist.searchMRN(rpcv.searchInfo);
+    await worklist.selectPatientfromSearch(rpcv.patient);
+    await worklist.activateBtn();
     await worklist.selectChainofCustody();
 })
