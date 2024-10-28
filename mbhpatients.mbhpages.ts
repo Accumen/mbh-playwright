@@ -4,8 +4,13 @@ import DashboardPage from './classes/dashboardPage';
 import PatientsPage from './classes/patientsPage';
 import WorklistPage from './classes/worklistPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const fpl = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/filterpatientslab.json")))
 const apl = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/addpatientslab.json")))
-
+const dpl = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/deletepatientslabs.json")))
+const psv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/patientsurgicalvisit.json")))
+const pnsv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/patientsnonsurgicalvisit.json")))
+const pav = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/patientassignvisit.json")))
+const puav = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/patientunassignvisit.json")))
 
 test('filter patients labs', async ({ page }) => {
 
@@ -17,13 +22,13 @@ test('filter patients labs', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(fpl.optionClient);
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.searchPatient('Rubble');
-    await patients.selectPatientfromSearch('Betty Rubble');
-    await patients.viewAllLabs('Hgb','2023','Dec','28','2024','Mar','7');
+    await patients.searchPatient(fpl.patient);
+    await patients.selectPatientfromSearch(fpl.patient);
+    await patients.viewAllLabs(fpl.labtype,fpl.startyear,fpl.startmonth,fpl.startday,fpl.endyear,fpl.endmonth,fpl.endday);
 
 })
 
@@ -56,18 +61,16 @@ test('delete patients lab', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(dpl.optionClient);
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.searchPatient('Terrell');
-    await patients.selectPatientfromSearch('Terrell Jack');
-    await patients.viewAllLabs('test lab type','NULL');
-    await patients.deleteSearchedLab('test lab type');
+    await patients.searchPatient(dpl.patient);
+    await patients.selectPatientfromSearch(dpl.patient);
+    await patients.viewAllLabs(dpl.labtype,dpl.startyear);
+    await patients.deleteSearchedLab();
     await patients.closeSearchListWindow();
-    await patients.viewAllLabs('test lab type','NULL');
-    await patients.seeChainofCustody();
-
+    await patients.viewAllLabs(dpl.labtype,dpl.startyear);
 })
 
 test('patient surgical visit', async ({ page }) => {
@@ -80,13 +83,13 @@ test('patient surgical visit', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(psv.optionClient);
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.searchPatient('Emily');
-    await patients.selectPatientfromSearch('Emily Smith');
-    await patients.patientschedulesurgical('2024','SEP','28',8,'ORTHO','test','QA Facility 1');
+    await patients.searchPatient(psv.patient);
+    await patients.selectPatientfromSearch(psv.patient);
+    await patients.patientschedulesurgical(psv.pYear,psv.pMonth,psv.pDay,psv.pclickcount,psv.procedure,psv.surgeon,psv.pFacility);
 })
 
 test('patients non-surgical visit', async ({ page }) => {
@@ -99,17 +102,17 @@ test('patients non-surgical visit', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(pnsv.optionClient);
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.searchPatient('Emily');
-    await patients.selectPatientfromSearch('Emily Smith');
-    await patients.patientsschedulechronic('2024','SEP','28',15,'CHRONIC MEDICAL FOLLOW UP','test','QA Facility 1');
+    await patients.searchPatient(pnsv.patient);
+    await patients.selectPatientfromSearch(pnsv.patient);
+    await patients.patientsschedulechronic(pnsv.pYear,pnsv.pMonth,pnsv.pDay,pnsv.pclickcount,pnsv.procedure,pnsv.surgeon,pnsv.pFacility);
    
 })
 
-test('view / assign visit', async ({page})=> {
+test('patient assign visit', async ({page})=> {
     test.slow();
     const login = new LoginPage(page);
 
@@ -119,24 +122,20 @@ test('view / assign visit', async ({page})=> {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(pav.optionClient);
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.searchPatient('Rubble');
-    await patients.selectPatientfromSearch('Barney Rubble');
-    await patients.backarrow();
-    await patients.clearSelections();
-    await patients.searchPatient('Rubble');
-    await patients.selectPatientfromSearch('Barney Rubble');
+    await patients.searchPatient(pav.patient);
+    await patients.selectPatientfromSearch(pav.patient2);
     await patients.viewVisit();
     await patients.assignButton();
-    await patients.assignVisit('Test User');
+    await patients.assignVisit(pav.user);
     await patients.saveAssigned();
     await patients.seeChainofCustody();
 })
 
-test('unassign visit', async ({page})=>{
+test('patient unassign visit', async ({page})=>{
     test.slow();
     const login = new LoginPage(page);
 
@@ -146,12 +145,12 @@ test('unassign visit', async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(puav.optionClient);
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.searchPatient('Rubble');
-    await patients.selectPatientfromSearch('Barney Rubble');
+    await patients.searchPatient(puav.patient);
+    await patients.selectPatientfromSearch(puav.patient);
     await patients.viewVisit();
     await patients.assignButton();
     await patients.unAssign();
