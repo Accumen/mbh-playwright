@@ -11,6 +11,11 @@ const psv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/patien
 const pnsv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/patientsnonsurgicalvisit.json")))
 const pav = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/patientassignvisit.json")))
 const puav = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/patientunassignvisit.json")))
+const pevd = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/patienteditvisitdetails.json")))
+const pvdd = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/patientvisitdropdowns.json")))
+const pac = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/patientaddcommunication.json")))
+const pec = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/patienteditcomm.json")))
+const prtc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/patientreplytocomm.json")))
 
 test('filter patients labs', async ({ page }) => {
 
@@ -152,12 +157,11 @@ test('patient unassign visit', async ({page})=>{
     await patients.searchPatient(puav.patient);
     await patients.selectPatientfromSearch(puav.patient);
     await patients.viewVisit();
-    await patients.assignButton();
     await patients.unAssign();
     await patients.seeChainofCustody();
 })
 
-test('edit visit pcp/surgeon/treatment center/facility', async ({page})=>{
+test('patient edit visit details', async ({page})=>{
 
     test.slow();
     const login = new LoginPage(page);
@@ -168,22 +172,21 @@ test('edit visit pcp/surgeon/treatment center/facility', async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(pevd.optionClient);
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.searchPatient('Rubble');
-    await patients.selectPatientfromSearch('Barney Rubble');
+    await patients.searchPatient(pevd.patient);
+    await patients.selectPatientfromSearch(pevd.patient);
     await patients.viewVisit();
-    await patients.editPCP('test');
-    await patients.editSurgeon('test');
-    await patients.editFacility('QA Facility 2');
-    await patients.editCenter('test location (QA1)');
-    await patients.seeChainofCustody();
-    
+    await patients.editPCP(pevd.provider);
+    await patients.editSurgeon(pevd.surgeon);
+    await patients.editFacility(pevd.facility);
+    await patients.editCenter(pevd.center);
+    await patients.seeChainofCustody();   
 })
 
-test ('open drop downs on patient visit', async ({page})=>{
+test ('patient visit drop downs', async ({page})=>{
 
     test.slow();
     const login = new LoginPage(page);
@@ -194,12 +197,12 @@ test ('open drop downs on patient visit', async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(pvdd.optionClient);
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.searchPatient('Rubble');
-    await patients.selectPatientfromSearch('Barney Rubble');
+    await patients.searchPatient(pvdd.patient);
+    await patients.selectPatientfromSearch(pvdd.patient);
     await patients.viewVisit();
     await patients.seePatientDetails();
     await patients.seeMedications();
@@ -208,7 +211,7 @@ test ('open drop downs on patient visit', async ({page})=>{
     await patients.seeChainofCustody();
 })
 
-test('add communication', async({page})=>{
+test('patient add communication', async({page})=>{
     test.slow();
     const login = new LoginPage(page);
 
@@ -218,18 +221,18 @@ test('add communication', async({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(pac.optionClient);
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.searchPatient('Rubble');
-    await patients.selectPatientfromSearch('Barney Rubble');
+    await patients.searchPatient(pac.patient);
+    await patients.selectPatientfromSearch(pac.patient2);
     await patients.viewVisit();
-    await patients.addCommunication('Task','Playwright Test','Low','June 28');
+    await patients.addCommunication(pac.commType,pac.message,pac.priority,pac.resolveYear,pac.resolveMonth,pac.resolveDay);
     await patients.seeChainofCustody();
 })
 
-test('edit communication', async({page})=>{
+test('patient edit communication', async({page})=>{
     test.slow();
     const login = new LoginPage(page);
 
@@ -239,24 +242,23 @@ test('edit communication', async({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(pec.optionClient);
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.searchPatient('Rubble');
-    await patients.selectPatientfromSearch('Barney Rubble');
+    await patients.searchPatient(pec.patient);
+    await patients.selectPatientfromSearch(pec.patient);
     await patients.viewVisit();
     await patients.editCommunication();
-    await patients.editCommType('Task');
-    await patients.editMessage('edited playwright test message');
-    await patients.editPriority('Medium');
-    await patients.editResolveDate('September 29');
+    await patients.editCommType(pec.commType);
+    await patients.editMessage(pec.message);
+    await patients.editPriority(pec.priority);
+    await patients.editResolveDate(pec.resolveYear,pec.resolveMonth,pec.resolveDay);
     await patients.saveCommEdits();
-    await patients.replyCommunication('This reply is a playwright test.','yes');
     await patients.seeChainofCustody();
     })
 
-    test('reply to communication', async({page})=>{
+    test('patient reply to communication', async({page})=>{
         test.slow();
         const login = new LoginPage(page);
     
@@ -266,14 +268,14 @@ test('edit communication', async({page})=>{
         await login.clickLoginBtn();
     
         const dashboard = new DashboardPage(page);
-        await dashboard.clickClientDropDown('QA Testing');
+        await dashboard.clickClientDropDown(prtc.optionClient);
     
         const patients = new PatientsPage(page);
         await patients.selectPatients();
-        await patients.searchPatient('Rubble');
-        await patients.selectPatientfromSearch('Barney Rubble');
+        await patients.searchPatient(prtc.patient);
+        await patients.selectPatientfromSearch(prtc.patient);
         await patients.viewVisit();
-        await patients.replyCommunication('This reply is a playwright test.','yes');
+        await patients.replyCommunication(prtc.comment,prtc.resolved);
         await patients.seeChainofCustody();
         })
 

@@ -678,13 +678,14 @@ export default class PatientsPage{
     //save assigned user
     async saveAssigned(){
         await this.page.getByRole('button',{name:'Save'}).click();
-        await this.page.locator('id=toast-container',{hasText:'User was assigned successfully'}).isVisible();
+        await expect(this.page.locator('id=toast-container',{hasText:'User Assigned successfully'})).toBeInViewport();
+        
     }
     //unassign user
     async unAssign(){
         await this.page.getByRole('button',{name:'Assign'}).click();
         await this.page.getByRole('button',{name:'UnAssign'}).click();
-        await this.page.locator('id=toast-container',{hasText:'User Unassigned successfully'}).isVisible();
+        await expect(this.page.locator('id=toast-container',{hasText:'User Unassigned successfully'})).toBeInViewport();
     }
     //back arrow
     async backarrow(){
@@ -716,8 +717,8 @@ export default class PatientsPage{
         
     }
     //add communication
-    async addCommunication(commType, message,priority,resolveDate){
-        await this.page.locator('app-communication-list').getByRole('button', { name: ' Add' }).click();
+    async addCommunication(commType, message,priority,resolveYear?,resolveMonth?,resolveDay?){
+        await this.page.getByTestId('addCommunication').click();
         await this.page.getByPlaceholder('Communication Type').click();
         await this.page.getByText(commType).click();
         /**commType Key
@@ -735,13 +736,22 @@ export default class PatientsPage{
          * Medium
          * High
          */
+     if(commType != 'Comment'){
         await this.page.getByLabel('Open calendar').click();
-        await this.page.getByLabel(resolveDate).click();
-        /**resolveDate
-         * Month day,
-         */
-        await this.page.locator('button').filter({ hasText: 'done' }).click();
-        await this.page.getByRole('button', { name: 'Add Communication' }).click();
+        await this.page.getByLabel('Choose month and year').click();
+        while(await this.page.getByRole('button', {name:resolveYear, exact:false}).isHidden()){
+           await this.page.getByLabel('Previous 24 years').click();
+        }
+           await this.page.getByLabel(resolveYear,{exact:true}).click();
+           await this.page.getByLabel(resolveMonth).click();
+           await this.page.getByText(resolveDay,{exact:true}).click();
+           await this.page.locator('button').filter({ hasText: 'done' }).click();
+           await this.page.getByRole('button', { name: 'Add Communication' }).click();
+           await expect(this.page.locator('id=toast-container',{hasText:'Communication added successfully'})).toBeInViewport();
+    }
+
+           await this.page.getByRole('button', { name: 'Add Communication' }).click();
+           await expect(this.page.locator('id=toast-container',{hasText:'Communication added successfully'})).toBeInViewport();
     } 
     //sort communication
     async sortCommunication(sortby){
@@ -764,7 +774,8 @@ export default class PatientsPage{
     }
     //edit communication
     async editCommunication(){
-        await this.page.getByRole('button',{name:' Edit',exact:true}).last().click();
+        await this.page.getByText('COMMUNICATION').scrollIntoViewIfNeeded();
+        await this.page.getByLabel('communication-edit').last().click();
     }
     //edit commtype
     async editCommType(commType){
@@ -793,17 +804,21 @@ export default class PatientsPage{
          */
     }
     //edit resolve date
-    async editResolveDate(resolveDate){
+    async editResolveDate(resolveYear,resolveMonth,resolveDay){
         await this.page.getByLabel('Open calendar').click();
-        await this.page.getByLabel(resolveDate).click();
-        /**resolveDate
-         * Month day,
-         */
-        await this.page.locator('button').filter({ hasText: 'done' }).click();
+        await this.page.getByLabel('Choose month and year').click();
+        while(await this.page.getByRole('button', {name:resolveYear, exact:false}).isHidden()){
+           await this.page.getByLabel('Previous 24 years').click();
+        }
+           await this.page.getByLabel(resolveYear,{exact:true}).click();
+           await this.page.getByLabel(resolveMonth).click();
+           await this.page.getByText(resolveDay,{exact:true}).click();
+           await this.page.locator('button').filter({ hasText: 'done' }).click();
     }
     //edit communication button
     async saveCommEdits(){
         await this.page.getByRole('button',{name:'Edit Communication'}).click();
+        await expect(this.page.locator('id=toast-container',{hasText:'Communication edited successfully'})).toBeInViewport();
     }
     //reply to communication
     async replyCommunication(comment,resolved){
