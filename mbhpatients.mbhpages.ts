@@ -16,6 +16,7 @@ const pvdd = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/patie
 const pac = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/patientaddcommunication.json")))
 const pec = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/patienteditcomm.json")))
 const prtc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/patientreplytocomm.json")))
+const plvi = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/patientlastvisitinfo.json")))
 
 test('filter patients labs', async ({ page }) => {
 
@@ -279,4 +280,21 @@ test('patient edit communication', async({page})=>{
         await patients.seeChainofCustody();
         })
 
+        test('patient last visit info', async ({ page }) => {
+            test.slow();
+            const login = new LoginPage(page);
+        
+            await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+            await login.enterEmail(logindata.email);
+            await login.enterPassword(logindata.password);
+            await login.clickLoginBtn();
+        
+            const dashboard = new DashboardPage(page);
+            await dashboard.clickClientDropDown(plvi.optionClient);
+        
+            const patients = new PatientsPage(page);
+            await patients.selectPatients();
+            await patients.searchPatient(plvi.patient);
+            await patients.verifyVisitInfo(plvi.patient2,plvi.location,plvi.dateTime);
+        })
 

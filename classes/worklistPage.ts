@@ -384,7 +384,7 @@ export default class WorklistPage{
              await this.page.getByText(procedure,{exact:true}).click()
              /**Surgical Procedure key
               * ORTHO
-              * CARDIO
+              * CARDIAC
               * SPINE
               * WOMEN'S HEALTH-SURGICAL
               * GASTRO INTESTINAL

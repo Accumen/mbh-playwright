@@ -52,7 +52,7 @@ export default class PatientsPage{
  
     //search patient name (fillable)
     async searchPatient(patient){
-        await this.page.locator('mat-label').click();
+        await this.page.locator('mat-label').getByText('Search Patient name , mrn').click({delay:1000});
         await this.page.getByPlaceholder('Search Patient name , mrn').fill(patient);
         await this.page.getByPlaceholder('Search Patient name , mrn').press('Enter');
     }
@@ -63,6 +63,12 @@ export default class PatientsPage{
     //select patient from search list
     async selectPatientfromSearch(patient){
         await this.page.getByRole('link',{name:patient}).first().click();
+    }
+    //verify last visit date and location on patient search screen
+    async verifyVisitInfo(patient,location,dateTime){
+        await this.page.getByText(patient).waitFor({state:'visible'});
+        await this.page.getByText(location).waitFor({state:'visible'});
+        await this.page.getByText(dateTime).waitFor({state:'visible'});
     }
     //view all labs button
     async viewAllLabs(labtype?,startyear?,startmonth?, startday?,endyear?,endmonth?, endday?){
