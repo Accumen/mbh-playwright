@@ -898,7 +898,7 @@ export default class WorklistPage{
     }
 
     async visitDocumentsEdit(){ //WIP
-        await this.page.getByTitle('Edit').click();
+        await this.page.getByTitle('Edit').first().click();
     }
 
     async documentEditSaveAll(){ //WIP

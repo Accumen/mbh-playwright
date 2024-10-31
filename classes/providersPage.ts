@@ -70,9 +70,14 @@ export default class ProvidersPage{
         await this.page.getByLabel('NPI').click();
         await this.page.getByLabel('NPI').fill(npi);
     }
+    //provider npi error check
+    async npiErrorCheck(){
+        await this.page.getByText('NPI should be 10 digit number').isVisible();
+    }
             //save provider button
     async saveProvider(){
         await this.page.getByRole('button', {name:'Save Provider'}).click();
+        await this.page.locator('id=toast-container',{hasText:'Provider Updated successfully'}).isVisible();
     }        
             //back button
     async backArrow(){
@@ -82,6 +87,7 @@ export default class ProvidersPage{
     async searchProvider(provider:string){
         await this.page.getByText('Search provider name, npi').click();
         await this.page.getByText('Search provider name, npi').fill(provider);
+        await this.page.getByText('Search provider name, npi').press('Enter');
     }
     //status drop down
     async providerStatus(status:string){
@@ -101,6 +107,7 @@ export default class ProvidersPage{
         //await this.page.getByTitle('Delete').click();
         this.page.once('dialog',dialog => dialog.accept());
         await this.page.getByTitle('Delete').last().click();
+        await this.page.locator('id-toast-container',{hasText:'Provider deleted successfully'}).isVisible();
     }
     // adjust number of rows visible on screen
     async adjustRowCount(row: string){
