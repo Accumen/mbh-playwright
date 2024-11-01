@@ -4,6 +4,9 @@ import DashboardPage from './classes/dashboardPage';
 import DocumentsPage from './classes/documentsPage';
 import WorklistPage from './classes/worklistPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const ud = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/uploaddocument.json")))
+const pd = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/previewdocument.json")))
+const vdr = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/visitdocumentretention.json")))
 
 test('upload document', async ({ page }) => {
     test.slow();
@@ -15,12 +18,12 @@ test('upload document', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(ud.optionClient);
 
     const document = new DocumentsPage (page);
     await document.selectDocuments();
     await document.uploadDocBtn();
-    await document.newStaticDoc('Playwright Test Document','Playwright placed this document as a test.','Patient Letter','Surgical','Active');
+    await document.newStaticDoc(ud.docname,ud.desc,ud.doctype,ud.casetype,ud.docstat);
     await document.saveDoc();
 })
 
@@ -34,16 +37,15 @@ test('preview document', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(pd.optionClient);
 
     const document = new DocumentsPage (page);
     await document.selectDocuments();
-    await document.searchDoc('Invasive Anemia Treatment');
-    await document.selectDocFromList('Invasive Anemia Treatment');
+    await document.searchDoc(pd.document);
+    await document.selectDocFromList(pd.docname);
     await document.previewdoc();
 })
-
-test('add/edit/delete document', async ({ page }) => {
+test('add document', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
@@ -62,19 +64,63 @@ test('add/edit/delete document', async ({ page }) => {
     await document.addDocBtn();
     await document.addEditDoc('Second Test Document','Playwrights second test document','Assessment Template','Non-Surgical','Active')
     await document.saveDoc();
-    await document.searchDoc('Second Test Document');
-    await document.docStatusdropdown('Inactive');
-    await document.clearSelections();
-    await document.searchDoc('Second Test Document');
-    await document.selectDocFromList('Second Test Document');
+})
+test('edit document', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const document = new DocumentsPage (page);
+    await document.selectDocuments();
+    await document.searchDoc('Iron Patient Letter');
+    await document.selectDocFromList('Iron Patient Letter');
     await document.addSmartSection('Test Smart Section');
     await document.addDocBtn();
     await document.smartSecInfo('Test Smart Section','This is a test of smart.');
     await document.addTextSection('Text Section Name','Playwright text section','This is a test for playwright.');
     await document.saveDoc();
+})
+test('delete document', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const document = new DocumentsPage (page);
+    await document.selectDocuments();
     await document.searchDoc('Second Test Document');
     await document.delete();
+})
+test('document search feature', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const document = new DocumentsPage (page);
+    await document.selectDocuments();
     await document.searchDoc('Second Test Document');
+    await document.docStatusdropdown('Inactive');
+    await document.clearSelections();
 })
 
 test('document pagination', async ({ page }) => {
@@ -115,7 +161,8 @@ test('document pagination dropdown', async ({ page }) => {
 })
 
 test('visit document retention', async ({page}) =>{
-    test.slow();
+    //test.slow();
+    test.setTimeout(120000);
     const login = new LoginPage(page);
 
     await page.goto('https://qa-auto-base.mybloodhealth.com/login');
@@ -124,30 +171,29 @@ test('visit document retention', async ({page}) =>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('Accumen Hospital System');
+    await dashboard.clickClientDropDown(vdr.optionClient);
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.searchMRN('ZZ940308943');
-    await worklist.selectPatientfromSearch("Kenya O'Reilly");
-    await worklist.completeSurgicalVisit('Not Treated','','Patient has not received pre-admission testing','no');
+    await worklist.searchMRN(vdr.searchInfo);
+    await worklist.selectPatientfromSearch(vdr.patient);
+    await worklist.completeSurgicalVisit(vdr.completeType,'',vdr.untreatedtype,vdr.followup);
 
-    await dashboard.changeClient('Accumen Hospital System','MBH');
+    await dashboard.changeClient(vdr.currentClient,vdr.newClient);
     const documents = new DocumentsPage(page);
-    await documents.selectDocuments();
-    await documents.searchDoc('Treatment');
-    await documents.selectDocFromList('Treatment Orders: Medication Options');
-    await documents.addSmartSection('Medication Order - Provider Signature');
+    await  documents.selectDocuments();
+    await documents.searchDoc(vdr.document);
+    await documents.selectDocFromList(vdr.docname);
+    await documents.addSmartSection(vdr.smartdoctype);
     await documents.addSmartSecDocBtn();
     await documents.saveDoc();
 
-    await dashboard.changeClient('MBH','Accumen Hospital System');
+    await dashboard.changeClient(vdr.currentClient2,vdr.newClient2);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.searchMRN('ZZ940308943');
-    await worklist.status('Completed');
-    await worklist.selectPatientfromSearch("Kenya O'Reilly");
-    await worklist.visitDocumentsEdit();
-    await page.getByText('Footer').scrollIntoViewIfNeeded();   
+    await worklist.searchMRN(vdr.searchInfo);
+    await worklist.selectStatus(vdr.status);
+    await worklist.selectPatientfromSearch(vdr.patient);
+    await worklist.visitDocumentsPreview();
 })

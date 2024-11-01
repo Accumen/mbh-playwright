@@ -36,10 +36,10 @@ export default class DashboardPage{
         //await this.page.waitForLoadState();// call to wait for the page to load after the change button is selected
     }
     //change from one client to another
-    async changeClient(currentClient: string, optionClient){
+    async changeClient(currentClient: string, newClient){
         await this.page.getByRole('button', {name: currentClient,exact:true}).click() //this selects the client drop down for current client
         await this.page.getByLabel(currentClient).locator('div').nth(3).click(); //this selects the "drop down" for the client list
-        await this.page.getByRole('option',{name: optionClient,exact:true}).click(); //selects the client from the drop down list
+        await this.page.getByRole('option',{name: newClient,exact:true}).click(); //selects the client from the drop down list
         await this.page.getByRole('button', {name: 'Change'}).click({delay:90}); //this clicks the change button to "select" the client for MBH.
     }
     //User Button (label=icon-button with share icon)

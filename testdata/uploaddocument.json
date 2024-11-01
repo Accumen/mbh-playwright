@@ -1,0 +1,8 @@
+{
+    "optionClient":"Test Client",
+    "docname":"Playwright Test Document",
+    "desc":"Playwright placed this document as a test.",
+    "doctype":"Patient Letter",
+    "casetype":"Surgical",
+    "docstat":"Active"
+}

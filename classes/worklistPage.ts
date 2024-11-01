@@ -906,6 +906,7 @@ export default class WorklistPage{
     }
 
     async visitDocumentsPreview(){
+        await this.page.getByText('VISIT DOCUMENTS').scrollIntoViewIfNeeded();
         await this.page.getByTitle('Document preview').first().click();
         await this.page.waitForLoadState('domcontentloaded');
     }
