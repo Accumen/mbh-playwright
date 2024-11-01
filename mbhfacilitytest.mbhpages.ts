@@ -3,6 +3,8 @@ import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import FacilityPage from './classes/facilitiesPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const albn = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/facilitytestaddlocationbasicnavigation.json")))
+const etm = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/facilitytesterrortoastmessage.json")))
 
 /**test coverage
  * add/edit/save/delete facility
@@ -24,18 +26,18 @@ test("add location and basic navigation", async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(albn.optionClient);
 
     const facility = new FacilityPage(page);
     await facility.selectFacilityMenu();
-    await facility.facilitySearch('QA Facility 1');
-    await facility.selectFacility('QA Facility 1');
+    await facility.facilitySearch(albn.facilityName);
+    await facility.selectFacility(albn.facilityName);
     await facility.addLocation();
     await facility.close(); //close window
     await facility.addLocation();
-    await facility.newLocation('test location','Others','Active'); //add & save location
+    await facility.newLocation(albn.locationName,albn.locationType,albn.locationStatus); //add & save location
     await facility.saveFacility(); //save facility
-    await facility.selectStatus('Inactive'); //status dropdown
+    await facility.selectStatus(albn.listStatus); //status dropdown
     await facility.clearSelections();
 })
 
@@ -51,18 +53,18 @@ test("facility error toast message", async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(etm.optionClient);
 
     const facility = new FacilityPage(page); 
     await facility.selectFacilityMenu();
-    await facility.addFacility('QA Facility 1','QA3','301203','','',
-    '','','','','Blood Center','Test','Inactive');
+    await facility.addFacility(etm.facilityName,etm.shortName,etm.code,'','',
+    '','','','',etm.type,etm.region,etm.status);
     await facility.saveFacility();
     await facility.facilityScreenshot(1);
-    await facility.editFacility('QA Facility 3','QA1','','','','','','','','','','');
+    await facility.editFacility(etm.facilityName2,etm.shortName2,'','','','','','','','','','');
     await facility.saveFacility();
     await facility.facilityScreenshot(2);
-    await facility.editFacility('','QA3','301202','','','','','','','','','');
+    await facility.editFacility('',etm.shortName,etm.code2,'','','','','','','','','');
     await facility.saveFacility();
 })
 
