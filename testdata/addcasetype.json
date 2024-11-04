@@ -1,0 +1,9 @@
+{
+    "optionClient":"Memorial Healthcare System",
+    "name":"Playwright Test",
+    "bloodloss":"3mL/h",
+    "description":"Test case for playwright.",
+    "worklisttype":"Surgical",
+    "parentcasetype":"CARDIAC",
+    "status":"Active"
+}

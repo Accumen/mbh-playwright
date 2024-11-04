@@ -1,0 +1,12 @@
+{
+    "optionClient":"Test Client",
+    "document":"Iron",
+    "docname":"Iron Patient Letter",
+    "smartdoctype":"Surgical Abnormal Letter",
+    "smartsecname":"Test Smart Section",
+    "smartsecdesc":"This is a test of smart",
+    "secname":"Test Text Section",
+    "secdesc":"This is a test of text",
+    "seccontent":"This is a test for playwright."
+
+}
