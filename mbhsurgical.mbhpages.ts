@@ -484,3 +484,68 @@ test('filter surgical worklist', async ({ page }) => {
     await worklist.notifyVisitDocs(sanvd.user,sanvd.comment);
     await worklist.visitDocumentsPreview();
   })
+
+  test('edit existing surgical', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown('QA Testing');
+
+    const worklist = new WorklistPage(page);
+    await worklist.clickWorklist();
+    await worklist.clickSurgical();
+    await worklist.scheduleSurgicalVisit('Existing','','','','','651324','','','','','','','','','','','','','',
+    'yes','White','Not Hispanic','Changed Race and Ethnicity','2024','NOV','12',7,'CARDIO','test');
+    await worklist.saveScheduledVisit();
+})
+
+test('edit patient surgical', async ({ page }) => {
+  test.slow();
+  const login = new LoginPage(page);
+
+  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+  await login.enterEmail(logindata.email);
+  await login.enterPassword(logindata.password);
+  await login.clickLoginBtn();
+
+  const dashboard = new DashboardPage(page);
+  await dashboard.clickClientDropDown('QA Testing');
+
+  const worklist = new WorklistPage(page);
+  await worklist.clickWorklist();
+  await worklist.clickSurgical();
+  await worklist.searchMRN('5554465')
+  await worklist.selectPatientfromSearch('Betsy Jones');
+  await worklist.editPatientDetails('Changed Race and Ethinicity')
+  await worklist.editPatientRace('White');
+  await worklist.editPatientEthnicity('Not Hispanic');
+  await worklist.saveEditPatient();
+  await worklist.selectPatientDetails();
+  await worklist.selectChainofCustody(); 
+})
+
+test('verify latest labs', async ({ page }) => {
+  test.slow();
+  const login = new LoginPage(page);
+
+  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+  await login.enterEmail(logindata.email);
+  await login.enterPassword(logindata.password);
+  await login.clickLoginBtn();
+
+  const dashboard = new DashboardPage(page);
+  await dashboard.clickClientDropDown('QA Testing');
+
+  const worklist = new WorklistPage(page);
+  await worklist.clickWorklist();
+  await worklist.clickSurgical();
+  await worklist.searchMRN('5554465')
+  await worklist.selectPatientfromSearch('Betsy Jones');
+  await worklist.latestlabs()
+})
