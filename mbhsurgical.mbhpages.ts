@@ -25,7 +25,8 @@ const swpr = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgi
 const swrc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicalworklistrowcounter.json")))
 const scev = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicalclearexpiredvisits.json")))
 const sanvd = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicaladdnotifyvisitdocument.json")))
-
+const rscc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/replysurgcommcomment.json")))
+const rscfc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/replysurgcommcall.json")))
 
 test('surgical shedule new patient visit', async ({ page }) => {
     test.slow();
@@ -500,7 +501,7 @@ test('filter surgical worklist', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.scheduleSurgicalVisit('Existing','','','','','651324','','','','','','','','','','','','','',
+    await worklist.scheduleSurgicalVisit('Existing','','','651324','','','','','','','','','','','','','',
     'yes','White','Not Hispanic','Changed Race and Ethnicity','2024','NOV','12',7,'CARDIO','test');
     await worklist.saveScheduledVisit();
 })
@@ -548,4 +549,45 @@ test('verify latest labs', async ({ page }) => {
   await worklist.searchMRN('5554465')
   await worklist.selectPatientfromSearch('Betsy Jones');
   await worklist.latestlabs()
+})
+
+test('reply surgical communication comment', async ({ page }) => {
+  test.slow();
+  const login = new LoginPage(page);
+
+  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+  await login.enterEmail(logindata.email);
+  await login.enterPassword(logindata.password);
+  await login.clickLoginBtn();
+
+  const dashboard = new DashboardPage(page);
+  await dashboard.clickClientDropDown(rscc.optionClient);
+
+  const worklist = new WorklistPage(page);
+  await worklist.clickWorklist();
+  await worklist.clickSurgical();
+  await worklist.searchMRN(rscc.searchInfo)
+  await worklist.selectPatientfromSearch(rscc.patient);
+  await worklist.replyCommunication(rscc.commtype,rscc.message,'');
+
+})
+
+test('reply surgical communication call', async ({ page }) => {
+  test.slow();
+  const login = new LoginPage(page);
+
+  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+  await login.enterEmail(logindata.email);
+  await login.enterPassword(logindata.password);
+  await login.clickLoginBtn();
+
+  const dashboard = new DashboardPage(page);
+  await dashboard.clickClientDropDown(rscfc.optionClient);
+
+  const worklist = new WorklistPage(page);
+  await worklist.clickWorklist();
+  await worklist.clickSurgical();
+  await worklist.searchMRN(rscfc.searchInfo)
+  await worklist.selectPatientfromSearch(rscfc.patient);
+  await worklist.replyCommunication(rscfc.commtype,rscfc.message,rscfc.resolved);
 })

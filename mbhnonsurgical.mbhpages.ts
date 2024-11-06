@@ -26,6 +26,10 @@ const nswpr = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nons
 const nswrc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalworklistrowcounter.json")))
 const nscev = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalclearexpiredvisits.json")))
 const nsctsf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalcasetypesavefilter.json")))
+const esensp = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editschexistingnspatient.json")))
+const epns = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editpatientnonsurgical.json")))
+const rnscc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/replynscommcomment.json")))
+const rnscfc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/replynscommcall.json")))
 
 test('Non-surgical schedule new patient visit', async ({ page }) => {
     test.slow();
@@ -467,13 +471,14 @@ test('non-surgical edit toggles', async ({ page }) => {
         await login.clickLoginBtn();
     
         const dashboard = new DashboardPage(page);
-        await dashboard.clickClientDropDown('QA Testing');
+        await dashboard.clickClientDropDown(esensp.optionClient);
     
         const worklist = new WorklistPage(page);
         await worklist.clickWorklist();
         await worklist.clickChronic();
-        await worklist.scheduleChronicVisit('Existing','','','','10226347','','','','','','','','','','','','','',
-        'yes','White','Not Hispanic','Changed Race and Ethnicity','2024','APR','30',5,'CHRONIC MEDICAL','test');
+        await worklist.scheduleChronicVisit(esensp.patienttype,'','',esensp.mrn,'','','','','','','','','','','','','',
+        esensp.edit,esensp.editrace,esensp.editethnicity,esensp.changeDesc,esensp.pYear,
+        esensp.pMonth,esensp.pDay,esensp.pclickcount,esensp.procedure,esensp.surgeon);
         await worklist.saveScheduledVisit();
     })
 
@@ -487,17 +492,58 @@ test('non-surgical edit toggles', async ({ page }) => {
       await login.clickLoginBtn();
   
       const dashboard = new DashboardPage(page);
-      await dashboard.clickClientDropDown('QA Testing');
+      await dashboard.clickClientDropDown(epns.optionClient);
   
       const worklist = new WorklistPage(page);
       await worklist.clickWorklist();
       await worklist.clickChronic();
-      await worklist.searchMRN('58585')
-      await worklist.selectPatientfromSearch('Clark Kent');
-      await worklist.editPatientDetails('Changed Race and Ethnicity')
-      await worklist.editPatientRace('White');
-      await worklist.editPatientEthnicity('Not Hispanic');
+      await worklist.searchMRN(epns.searchInfo)
+      await worklist.selectPatientfromSearch(epns.patient);
+      await worklist.editPatientDetails(epns.changeDesc)
+      await worklist.editPatientRace(epns.race);
+      await worklist.editPatientEthnicity(epns.ethnicity);
       await worklist.saveEditPatient();
       await worklist.selectPatientDetails();
       await worklist.selectChainofCustody();
+  })
+
+  test('reply nonsurgical communication comment', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown(rnscc.optionClient);
+
+    const worklist = new WorklistPage(page);
+    await worklist.clickWorklist();
+    await worklist.clickChronic();
+    await worklist.searchMRN(rnscc.searchInfo)
+    await worklist.selectPatientfromSearch(rnscc.patient);
+    await worklist.replyCommunication(rnscc.commtype,rnscc.message,'');
+  
+  })
+
+  test('reply nonsurgical communication call', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+  
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+  
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown(rnscfc.optionClient);
+  
+    const worklist = new WorklistPage(page);
+    await worklist.clickWorklist();
+    await worklist.clickChronic();
+    await worklist.searchMRN(rnscfc.searchInfo)
+    await worklist.selectPatientfromSearch(rnscfc.patient);
+    await worklist.replyCommunication(rnscfc.commtype,rnscfc.message,rnscfc.resolved);
   })
