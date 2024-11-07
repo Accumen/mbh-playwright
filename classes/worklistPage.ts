@@ -245,7 +245,7 @@ export default class WorklistPage{
         async scheduleSurgicalVisit(patienttype: string, fname?,lname?,mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
             state?,zip?, gender?,race?,ethnicity?,hippa?,hhMonthdd?,edit?,editrace?,editethnicity?,changeDesc?,pYear?, pMonth?, pDay?, pclickcount?,
             procedure?, provider?){    
-            await this.page.getByRole('button', {name:'Schedule Visit'}).isEnabled();
+            await this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'}).isVisible();
             await this.page.getByRole('button', {name:'Schedule Visit'}).click({delay:1000});//clicks the Schedule Visit button
             //Opens the patient schedule screen
              //check box for new or existing patient
@@ -453,7 +453,7 @@ export default class WorklistPage{
     async scheduleChronicVisit(patienttype: string, fname?, lname?, mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
         state?,zip?, gender?,race?,ethnicity?,hippa?,hhMonthdd?,edit?,editrace?,editethnicity?,changeDesc?,pYear?, pMonth?, pDay?, pclickcount?,
         procedure?, surgeon?){
-        await this.page.getByRole('button', {name:' Schedule Visit'}).waitFor({state:'attached'})
+        await this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'}).isVisible();
         await this.page.getByRole('button', {name:' Schedule Visit'}).click({delay:1000});//clicks the Schedule Visit button
         //Opens the patient schedule screen
          //check box for new or existing patient
@@ -624,8 +624,8 @@ export default class WorklistPage{
          //Schedule Visit Button
     async saveScheduledVisit(){
         await this.page.getByRole('button',{name: 'Schedule Visit'}).click();
+        await this.page.locator('id=toast-container',{hasText:'Visit created successfully'}).isVisible();
     }     
-         //Back Arrow (takes you back to the worklist)
     
     async worklistscreenshot(num){
         await this.page.screenshot({path:'./test results/worklistscreenshot'+ num +'.png',fullPage:true});
@@ -875,6 +875,7 @@ export default class WorklistPage{
     async saveEditPatient(){      
     //save button
     await this.page.getByRole('button',{name:'Save'}).click();
+    await this.page.locator('id=toast-container',{hasText:'Patient updated successfully'}).isVisible();
     }
     //add visit documents
 
@@ -972,6 +973,37 @@ export default class WorklistPage{
         await this.page.getByText('COMMUNICATION',{exact:true}).scrollIntoViewIfNeeded();
         this.page.once('dialog',dialog => dialog.accept());
         await this.page.getByLabel('communication-delete').first().click();
+    }
+
+    //reply to communication
+    async replyCommunication(commtype,message,resolved?){
+        await this.page.getByText('COMMUNICATION',{exact:true}).scrollIntoViewIfNeeded();
+        await this.page.getByText("Reply ", {exact:true}).click();
+        await this.page.getByPlaceholder('Message').click();
+        await this.page.getByPlaceholder('Message').fill(message);
+
+        if(commtype == 'comment'){
+            //hit reply button within popup
+            await this.page.getByRole('button', { name: ' Reply' }).click();;
+            await this.page.locator('id=toast-container',{hasText:'Reply added successfully'}).isVisible();
+        }
+        else{
+            //if resolved is yes then mark box for mark as resolved and hit reply button
+            if(resolved != 'no'){
+                await this.page.getByLabel('Mark as Resolved').check();
+                await this.page.getByRole('button', { name: ' Reply' }).click();
+                await this.page.locator('id=toast-container',{hasText:'Reply added successfully'}).isVisible();
+            }
+            //else hit reply button
+            else{
+                
+                await this.page.getByRole('button', { name: ' Reply' }).click();
+                await this.page.locator('id=toast-container',{hasText:'Reply added successfully'}).isVisible();
+            }
+
+            
+        }
+
     }
 
     async worklistPagination(num){
