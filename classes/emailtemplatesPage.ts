@@ -18,7 +18,7 @@ export default class EmailtemplatesPage{
     }
 
     //search email template (fillable)
-    async searchEmailTemplate(templateName){
+    async searchEmailTemplate(templateName: string){
         await this.page.getByText('Search email template').click();
         await this.page.getByText('Search email template').fill(templateName);
         await this.page.getByText('Search email template').press('Enter');
@@ -29,7 +29,7 @@ export default class EmailtemplatesPage{
         await this.page.getByRole('link',{name:templateName,exact:false}).click();
     }
     //edit email template
-    async editTemplate(templateName,templateType,userFullname?,visitUrl?,visitDocuments?,comment?){
+    async editTemplate(templateName,templateType,userFullname: string,visitUrl: string,visitDocuments: string,comment: string){
         //template name (fillable)
         await this.page.getByPlaceholder('Template Name').click();
         await this.page.getByPlaceholder('Template Name').fill(templateName);
