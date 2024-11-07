@@ -3,6 +3,11 @@ import LoginPage from "./classes/loginPage";
 import DashboardPage from "./classes/dashboardPage";
 import SmartsectionsPage from "./classes/smartsectionsPage";
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const ass = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/addsmartsection.json")))
+const ao = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/addoption.json")))
+const aso = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/addsuboption.json")))
+const ess = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editsmartsection.json")))
+const dsso = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/deletesmartsectoption.json")))
 
 test("add smart section", async({page})=>{
 
@@ -14,16 +19,16 @@ test("add smart section", async({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage (page);
-    await dashboard.clickClientDropDown("QA Testing");
+    await dashboard.clickClientDropDown(ass.optionClient);
 
     const smart = new SmartsectionsPage (page);
     await smart.selectSmartSections();
     await smart.addSmartSection();
-    await smart.editSmartSection('Test Name for Smart Section','This is a test','Active');
+    await smart.editSmartSection(ass.smartname,ass.smartdesc,ass.smartstatus);
     await smart.saveSmartOption();
 })
 
-test("add option to smart section", async({page})=>{
+test("add option", async({page})=>{
 
     test.slow();
     const login = new LoginPage (page);
@@ -33,17 +38,17 @@ test("add option to smart section", async({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage (page);
-    await dashboard.clickClientDropDown("QA Testing");
+    await dashboard.clickClientDropDown(ao.optionClient);
 
     const smart = new SmartsectionsPage (page);
     await smart.selectSmartSections();
-    await smart.searchSmartSection('Test Name for Smart Section');
-    await smart.selectSearchResult('Test Name for Smart Section');
-    await smart.addSmartOption('Test Smart Option 1','This is a test of adding an option.','testing');
+    await smart.searchSmartSection(ao.smartname);
+    await smart.selectSearchResult(ao.smartname);
+    await smart.addSmartOption(ao.smartoption,ao.smartoptdesc,ao.smartcomment);
     await smart.saveSmartOption();
 })
 
-test("add sub-option to smart option", async({page})=>{
+test("add sub-option", async({page})=>{
 
     test.slow();
     const login = new LoginPage (page);
@@ -53,13 +58,13 @@ test("add sub-option to smart option", async({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage (page);
-    await dashboard.clickClientDropDown("QA Testing");
+    await dashboard.clickClientDropDown(aso.optionClient);
 
     const smart = new SmartsectionsPage (page);
     await smart.selectSmartSections();
-    await smart.searchSmartSection('Test Name for Smart Section');
-    await smart.selectSearchResult('Test Name for Smart Section');
-    await smart.addSubOption('Test subopt1','This is a test suboption','test1');
+    await smart.searchSmartSection(aso.smartname);
+    await smart.selectSearchResult(aso.smartname);
+    await smart.addSubOption(aso.suboption,aso.suboptdesc,aso.suboptcomment);
     await smart.saveSmartOption();
 })
 
@@ -73,13 +78,13 @@ test("edit smart section", async({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage (page);
-    await dashboard.clickClientDropDown("QA Testing");
+    await dashboard.clickClientDropDown(ess.optionClient);
 
     const smart = new SmartsectionsPage (page);
     await smart.selectSmartSections();
-    await smart.searchSmartSection('Test Name for Smart Section');
-    await smart.selectSearchResult('Test Name for Smart Section');
-    await smart.editSmartSection('Test Name for Smart Sections','This is an editing test','Inactive');
+    await smart.searchSmartSection(ess.smartname);
+    await smart.selectSearchResult(ess.smartname);
+    await smart.editSmartSection(ess.smartname2,ess.smartdesc,ess.smartstatus);
     await smart.saveSmartOption();
 })
 
@@ -93,13 +98,14 @@ test("delete smart section option", async({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage (page);
-    await dashboard.clickClientDropDown("QA Testing");
+    await dashboard.clickClientDropDown(dsso.optionClient);
 
     const smart = new SmartsectionsPage (page);
     await smart.selectSmartSections();
-    await smart.searchSmartSection('Test');
-    await smart.selectSearchResult('Test Smart Section');
+    await smart.searchSmartSection(dsso.smartname);
+    await smart.selectSearchResult(dsso.smartname);
     await smart.delete();
+    await smart.saveSmartOption();
 })
 
 test("smart section pagination", async({page})=>{

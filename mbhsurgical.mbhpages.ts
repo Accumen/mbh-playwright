@@ -27,6 +27,8 @@ const scev = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgi
 const sanvd = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicaladdnotifyvisitdocument.json")))
 const rscc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/replysurgcommcomment.json")))
 const rscfc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/replysurgcommcall.json")))
+const eses = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editschexistingsurgical.json")))
+const eps = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editpatientsurgical.json")))
 
 test('surgical shedule new patient visit', async ({ page }) => {
     test.slow();
@@ -486,7 +488,7 @@ test('filter surgical worklist', async ({ page }) => {
     await worklist.visitDocumentsPreview();
   })
 
-  test('edit existing surgical', async ({ page }) => {
+  test('edit/sch existing surgical', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
@@ -496,13 +498,13 @@ test('filter surgical worklist', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(eses.optionClient);
 
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickSurgical();
-    await worklist.scheduleSurgicalVisit('Existing','','','651324','','','','','','','','','','','','','',
-    'yes','White','Not Hispanic','Changed Race and Ethnicity','2024','NOV','12',7,'CARDIO','test');
+    await worklist.scheduleSurgicalVisit(eses.patienttype,'','',eses.mrn,'','','','','','','','','','','','','',
+    eses.edit,eses.editrace,eses.editethnicity,eses.changeDesc,eses.pYear,eses.pMonth,eses.pDay,eses.pclickcount,eses.procedure,eses.surgeon);
     await worklist.saveScheduledVisit();
 })
 
@@ -516,39 +518,19 @@ test('edit patient surgical', async ({ page }) => {
   await login.clickLoginBtn();
 
   const dashboard = new DashboardPage(page);
-  await dashboard.clickClientDropDown('QA Testing');
+  await dashboard.clickClientDropDown(eps.optionClient);
 
   const worklist = new WorklistPage(page);
   await worklist.clickWorklist();
   await worklist.clickSurgical();
-  await worklist.searchMRN('5554465')
-  await worklist.selectPatientfromSearch('Betsy Jones');
-  await worklist.editPatientDetails('Changed Race and Ethinicity')
-  await worklist.editPatientRace('White');
-  await worklist.editPatientEthnicity('Not Hispanic');
+  await worklist.searchMRN(eps.searchInfo)
+  await worklist.selectPatientfromSearch(eps.patient);
+  await worklist.editPatientDetails(eps.changeDesc)
+  await worklist.editPatientRace(eps.race);
+  await worklist.editPatientEthnicity(eps.ethnicity);
   await worklist.saveEditPatient();
   await worklist.selectPatientDetails();
   await worklist.selectChainofCustody(); 
-})
-
-test('verify latest labs', async ({ page }) => {
-  test.slow();
-  const login = new LoginPage(page);
-
-  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
-  await login.enterEmail(logindata.email);
-  await login.enterPassword(logindata.password);
-  await login.clickLoginBtn();
-
-  const dashboard = new DashboardPage(page);
-  await dashboard.clickClientDropDown('QA Testing');
-
-  const worklist = new WorklistPage(page);
-  await worklist.clickWorklist();
-  await worklist.clickSurgical();
-  await worklist.searchMRN('5554465')
-  await worklist.selectPatientfromSearch('Betsy Jones');
-  await worklist.latestlabs()
 })
 
 test('reply surgical communication comment', async ({ page }) => {

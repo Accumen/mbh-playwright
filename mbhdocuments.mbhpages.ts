@@ -51,6 +51,7 @@ test('preview document', async ({ page }) => {
     await document.selectDocFromList(pd.docname);
     await document.previewdoc();
 })
+
 test('add document', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);

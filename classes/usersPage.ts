@@ -13,9 +13,9 @@ export default class UsersPage{
 
     //search name, email (fillable)
     async searchUser(user){
-        await this.page.getByLabel('Search name , email').click();
-        await this.page.getByLabel('Search name , email').fill(user);
-        await this.page.getByLabel('Search name , email').press('Enter');
+        await this.page.getByText('Search name , email').click();
+        await this.page.getByText('Search name , email').fill(user);
+        await this.page.getByText('Search name , email').press('Enter');
     }
 
     //status drop down
@@ -99,6 +99,7 @@ export default class UsersPage{
     //save user button
     async saveUser(){
         await this.page.getByRole('button',{name:'Save User'}).click();
+        await this.page.locator('id=toast-container',{hasText:'User saved successfully'}).isVisible();
     }
 
     //back arrow button
@@ -216,12 +217,12 @@ export default class UsersPage{
 
     //add region(s)
     async addregion(region){
-        await this.page.getByLabel(region).check();
+        await this.page.getByLabel(region,{exact:true}).check();
     }
 
     //add facility(s)
     async addFacility(facility){
-        await this.page.getByLabel(facility).check();
+        await this.page.getByLabel(facility,{exact:true}).check();
     }
 
 }

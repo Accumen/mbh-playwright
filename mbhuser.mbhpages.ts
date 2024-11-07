@@ -8,6 +8,9 @@ const eu = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/edituse
 const du = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/deleteuser.json")))
 const rup = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/resetuserpassword.json")))
 const un = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/usernavigation.json")))
+const autr = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/assignusertoregion.json")))
+const autf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/assignusertofacility.json")))
+const urc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/userrowcount.json")))
 
 /**test coverage
  * adding a user
@@ -127,12 +130,15 @@ const un = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/usernav
          await login.enterEmail(logindata.email)
          await login.enterPassword(logindata.password)
          await login.clickLoginBtn()
+
+        const dashboard = new DashboardPage(page)
+        await dashboard.clickClientDropDown(autr.optionClient);
         
         const user = new UsersPage(page)
         await user.selectUsers();
-        await user.searchUser('Fred');
-        await user.selectUserfromSearch('Fred Smith');
-        await user.addregion('Texas');
+        await user.searchUser(autr.user);
+        await user.selectUserfromSearch(autr.user);
+        await user.addregion(autr.region);
         await user.saveUser();
     })
 
@@ -144,12 +150,15 @@ const un = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/usernav
          await login.enterEmail(logindata.email)
          await login.enterPassword(logindata.password)
          await login.clickLoginBtn()
+
+         const dashboard = new DashboardPage(page)
+         await dashboard.clickClientDropDown(autf.optionClient);
         
         const user = new UsersPage(page)
         await user.selectUsers();
-        await user.searchUser('Fred');
-        await user.selectUserfromSearch('Fred Smith');
-        await user.addFacility('QA Facility 1');
+        await user.searchUser(autf.user);
+        await user.selectUserfromSearch(autf.user);
+        await user.addFacility(autf.facility);
         await user.saveUser();
     })
 
@@ -164,5 +173,6 @@ const un = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/usernav
         
         const user = new UsersPage(page)
         await user.selectUsers();
-        await user.adjustRowCount('30');
+        await user.adjustRowCount(urc.row);
+        await user.selectUserfromSearch(urc.user);
     })

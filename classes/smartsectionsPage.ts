@@ -63,8 +63,10 @@ export default class SmartsectionsPage{
         await this.page.getByRole('button',{name:'Add Smart Section'}).click();
     }
 
-    //edit/add smart section
+    //edit smart section
     async editSmartSection(smartname, smartdesc, smartstatus){
+        //edit button
+        //await this.page.getByRole('button', { name: ' Edit' }).last().click();
         //smart section name (fillable)
         await this.page.getByLabel('Smart Section Name').click();
         await this.page.getByLabel('Smart Section Name').fill(smartname);
@@ -96,11 +98,27 @@ export default class SmartsectionsPage{
                 //close button
                 await this.page.getByRole('button',{name:'Close'}).click();
         }
+        //edit option
+           //add option
+           async editSmartOption(smartoption,smartoptdesc, smartcomment){
+            await this.page.getByRole('button',{name:'Edit'}).last().click();
+                //new option name (fillable)
+                await this.page.getByLabel('Smart Option Name').click();
+                await this.page.getByLabel('Smart Option Name').fill(smartoption);
+                //smart option description (fillable)
+                await this.page.getByLabel('Smart Option Description').click();
+                await this.page.getByLabel('Smart Option Description').fill(smartoptdesc);
+                //smart option content text box (formatable)
+                await this.page.getByRole('paragraph').click();
+                await this.page.locator('quill-editor div').nth(2).fill(smartcomment);
+                //close button
+                await this.page.getByRole('button',{name:'Close'}).click();
+        }
 
         //add suboption
         async addSubOption(suboption,suboptdesc, suboptcomment){
             await this.page.getByRole('button',{name:'Add Sub-Option'}).last().click();
-            await this.page.locator('.smart-option-toggle > .fas').click();
+            await this.page.locator('.smart-option-toggle > .fas').last().click();
             await this.page.getByRole('button',{name:'Edit'}).last().click();
                 //new option name (fillable)
                 await this.page.getByLabel('Smart Option Name').click();
@@ -118,6 +136,7 @@ export default class SmartsectionsPage{
         //save smart option button
         async saveSmartOption(){
             await this.page.getByRole('button',{name:'Save Smart Section'}).click();
+            await this.page.locator('id=toast-container',{hasText:'Smart Section saved successfully'}).isVisible();
         }
 
         //back arrow button
@@ -128,7 +147,7 @@ export default class SmartsectionsPage{
         //delete
         async delete(){
             this.page.on('dialog',dialog => dialog.accept());
-            await this.page.getByTitle('Delete').click();
+            await this.page.getByTitle('Delete').last().click();
         }
 
           //pagination
