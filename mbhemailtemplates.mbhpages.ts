@@ -3,6 +3,8 @@ import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import EmailtemplatesPage from './classes/emailtemplatesPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")));
+const semt = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/searcheditemailtemplate.json")))
+const semte = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/searcheditemailtemplateedit.json")))
 
 test('search,edit email template', async ({ page }) => {
 
@@ -14,16 +16,16 @@ test('search,edit email template', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(semt.optionClient);
 
     const emailtemp = new EmailtemplatesPage(page);
     await emailtemp.clickEmailTemplate();
-    await emailtemp.searchEmailTemplate('Assign Visit Notification');
-    await emailtemp.selectEmailtemplate('Assign Visit Notification');
+    await emailtemp.searchEmailTemplate(semt.templateName);
+    await emailtemp.selectEmailtemplate(semt.templateName);
     await emailtemp.backArrow();
-    await emailtemp.selectEmailtemplate('Assign Visit Notification');
-    await emailtemp.editTemplate('Test Assign Visit Notification','Assignment','Test User','www.visiturl.com/testuservisit');
+    await emailtemp.selectEmailtemplate(semt.templateName);
+    await emailtemp.editTemplate(semte.templateName,semt.templateType,semt.userFullname,semt.visitUrl);
     await emailtemp.saveTemplate();
-    await emailtemp.searchEmailTemplate('Assign Visit Notification');
-    await emailtemp.selectEmailtemplate('Assign Visit Notification');
+    await emailtemp.searchEmailTemplate(semte.templateName);
+    await emailtemp.selectEmailtemplate(semte.templateName);
 })

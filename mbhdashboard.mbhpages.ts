@@ -8,6 +8,10 @@ const fdaetp = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/fil
 const dpc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/dataperformancecalendar.json")))
 const gcnkt = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/ganzonicalcnegativekgtest.json")))
 const gcnlt = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/ganzonicalcnegativelbstest.json")))
+const gcdkt = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/ganzonicalcdeckgtest.json")))
+const gcdlt = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/ganzonicalcdeclbstest.json")))
+const gchkt = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/ganzonicalchcurhgbforkgtest.json")))
+const gchlt = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/ganzonicalchcurhgbforlbstest.json")))
 
 //serial test for capturing baseline screenshot 
 /*
@@ -160,8 +164,8 @@ test('ganzoni calc decimal kg test',async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
-    await dashboard.ganzoniCalculator('kgs','258.5','9.1');
+    await dashboard.clickClientDropDown(gcdkt.optionClient);
+    await dashboard.ganzoniCalculator(gcdkt.weightype, gcdkt.weight, gcdkt.curHgb);
     await dashboard.dataverify(3);
 })
 test('ganzoni calc decimal lbs test',async ({page})=>{
@@ -174,8 +178,8 @@ test('ganzoni calc decimal lbs test',async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
-    await dashboard.ganzoniCalculator('lbs','153.6','8.7');
+    await dashboard.clickClientDropDown(gcdlt.optionClient);
+    await dashboard.ganzoniCalculator(gcdlt.weightype, gcdlt.weight, gcdlt.curHgb);
     await dashboard.dataverify(4);
 })
 test('ganzoni calc higher current hgb for kg test',async ({page})=>{
@@ -188,8 +192,8 @@ test('ganzoni calc higher current hgb for kg test',async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
-    await dashboard.ganzoniCalculator('kgs','258','15');
+    await dashboard.clickClientDropDown(gchkt.optionClient);
+    await dashboard.ganzoniCalculator(gchkt.weightype, gchkt.weight, gchkt.curHgb);
     await dashboard.dataverify(5);
 })
 test('ganzoni calc higher current hgb for lbs test',async ({page})=>{
@@ -202,7 +206,7 @@ test('ganzoni calc higher current hgb for lbs test',async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
-    await dashboard.ganzoniCalculator('lbs','153','16');
+    await dashboard.clickClientDropDown(gchlt.optionClient);
+    await dashboard.ganzoniCalculator(gchlt.weightype, gchlt.weight, gchlt.curHgb);
     await dashboard.dataverify(6);
 })
