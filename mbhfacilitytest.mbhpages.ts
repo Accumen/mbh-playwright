@@ -5,6 +5,10 @@ import FacilityPage from './classes/facilitiesPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
 const albn = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/facilitytestaddlocationbasicnavigation.json")))
 const etm = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/facilitytesterrortoastmessage.json")))
+const af = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/facilitytestaddfacility.json")))
+const ef = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/facilitytesteditfacility.json")))
+const df = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/facilitytestdeletefacility.json")))
+const fpd = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/facilitytestfacilitypaginationdropdown.json")))
 
 /**test coverage
  * add/edit/save/delete facility
@@ -79,12 +83,12 @@ test("add facility", async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(af.optionClient);
 
     const facility = new FacilityPage(page);
     await facility.selectFacilityMenu();
-    await facility.addFacility('QA Facility 3','QA3','301203','','',
-    '','','','','Blood Center','Test','Active');
+    await facility.addFacility(af.facilityName,af.shortName,af.code,'','',
+    '','','','',af.type,af.region,af.status);
     await facility.saveFacility();
 })
 
@@ -99,14 +103,14 @@ test("edit facility", async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(ef.optionClient);
 
     const facility = new FacilityPage(page);
     await facility.selectFacilityMenu();
-    await facility.selectFacility('QA Facility 3');
+    await facility.selectFacility(ef.facilityName);
     await facility.facilityBackArrow();
-    await facility.selectFacility('QA Facility 3');
-    await facility.editFacility('QA Facility 4','','','','','','','','','','',''); //edit facility
+    await facility.selectFacility(ef.facilityName);
+    await facility.editFacility(ef.facilityName2,'','','','','','','','','','',''); //edit facility
     await facility.saveFacility();
 })
 
@@ -121,11 +125,12 @@ test("delete facility", async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(df.optionClient);
 
     const facility = new FacilityPage(page);
     await facility.selectFacilityMenu();
-    await facility.facilitySearch('QA Facility 4')
+    await facility.facilitySearch(df.facilityName);
+    await facility.hoverSearch(df.facilityName);
     await facility.trashButton(); 
     
 })
@@ -140,10 +145,10 @@ test('facility pagination dropdown', async ({ page }) => {
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(fpd.optionClient);
   
     const facility = new FacilityPage(page);
     await facility.selectFacilityMenu();
-    await facility.adjustRowCount('30');
+    await facility.adjustRowCount(fpd.rowCount);
 
   })

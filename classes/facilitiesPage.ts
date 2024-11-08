@@ -30,6 +30,10 @@ export default class FacilitiesPage{
         await this.page.getByText('Search Facility name , code,').fill(facility);
         await this.page.getByText('Search Facility name , code,').press('Enter');
     }
+    
+    async hoverSearch(search){
+        await this.page.getByText(search).first().hover();
+    }
 
     //status drop down (not labeled)
     async selectStatus(status: string){
