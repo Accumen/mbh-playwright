@@ -8,6 +8,9 @@ const ao = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/addopti
 const aso = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/addsuboption.json")))
 const ess = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editsmartsection.json")))
 const dsso = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/deletesmartsectoption.json")))
+const ssp = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/smartsectionpagination.json")))
+const ssn = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/smartsectionnavigation.json")))
+const ssrc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/smartsectionrowcount.json")))
 
 test("add smart section", async({page})=>{
 
@@ -118,12 +121,12 @@ test("smart section pagination", async({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage (page);
-    await dashboard.clickClientDropDown("QA Testing");
+    await dashboard.clickClientDropDown(ssp.optionClient);
 
     const smart = new SmartsectionsPage (page);
     await smart.selectSmartSections();
-    await smart.smartSectionPagination(3);
-    await smart.selectSearchResult('Medication Order-MONOFERRIC');
+    await smart.smartSectionPagination(ssp.num);
+    await smart.selectSearchResult(ssp.smartname);
     await smart.backArrow();
     await smart.paginationCheck();
 })
@@ -138,17 +141,17 @@ test("smart section navigation", async({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage (page);
-    await dashboard.clickClientDropDown("QA Testing");
+    await dashboard.clickClientDropDown(ssn.optionClient);
 
     const smart = new SmartsectionsPage (page);
     await smart.selectSmartSections();
-    await smart.smartstatus('Inactive');
+    await smart.selectSmartStatus(ssn.smartstatus);
     await smart.clearSelections();
-    await smart.searchSmartSection('Test Smart Section');
-    await smart.selectSearchResult('Test Smart Section');
-    await smart.backArrow();
+    await smart.searchSmartSection(ssn.smartname);
+    await smart.selectSearchResult(ssn.smartname);
+    await smart.delete();
+    await smart.saveSmartOption();
     await smart.syncSection();
-
 })
 
 test("smart section items per page", async({page})=>{
@@ -161,9 +164,10 @@ test("smart section items per page", async({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage (page);
-    await dashboard.clickClientDropDown("QA Testing");
+    await dashboard.clickClientDropDown(ssrc.optionClient);
 
     const smart = new SmartsectionsPage (page);
     await smart.selectSmartSections();
-    await smart.adjustRowCount('30');
+    await smart.adjustRowCount(ssrc.row);
+    await smart.selectSearchResult(ssrc.smartname)
 })

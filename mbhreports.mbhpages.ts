@@ -3,8 +3,13 @@ import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import ReportsPage from './classes/reportsPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const sr = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/searchreports.json")))
+const rcdf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/reportcustomdatefilter.json")))
+const rff = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/reportfacilityfilter.json")))
+const rctf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/reportcasetypefilter.json")))
+const rpf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/reportproviderfilter.json")))
 
-test('search/select report', async ({ page }) => {
+test('search reports', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
@@ -14,17 +19,17 @@ test('search/select report', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(sr.optionClient);
 
     const reports = new ReportsPage(page);
     await reports.selectReports();
-    await reports.searchReport('Chronic');
+    await reports.searchReport(sr.reportName);
     await reports.clearSelections();
-    await reports.searchReport('Non-Surgical');
-    await reports.chooseReport('Non-Surgical: Total Enrolled Report');
+    await reports.searchReport(sr.reportName2);
+    await reports.chooseReport(sr.reportName3);
 })
 
-test('Custom Date Range Filter', async ({ page }) => {
+test('Report Custom Date Filter', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
@@ -34,17 +39,17 @@ test('Custom Date Range Filter', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(rcdf.optionClient);
 
     const reports = new ReportsPage(page);
     await reports.selectReports();
-    await reports.searchReport('Patient Enroll Report');
-    await reports.chooseReport('Patient Enroll Report');
-    await reports.selectDateRange('Custom', '2024','MAY','5','2024','JUL','5'); 
+    await reports.searchReport(rcdf.reportName);
+    await reports.chooseReport(rcdf.reportName);
+    await reports.selectDateRange(rcdf.dateRange, rcdf.startyear,rcdf.startMonth,rcdf.startDay,rcdf.endyear,rcdf.endMonth,rcdf.endDay); 
     await reports.applyChanges(); 
 })
 
-test('Facility Report Filter', async ({ page }) => {
+test('Report Facility Filter', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
@@ -54,17 +59,17 @@ test('Facility Report Filter', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(rff.optionClient);
 
     const reports = new ReportsPage(page);
     await reports.selectReports();
-    await reports.searchReport('LOS Impact');
-    await reports.chooseReport('LOS Impact');
-    await reports.selectFacility('QA Facility 2')
+    await reports.searchReport(rff.reportName);
+    await reports.chooseReport(rff.reportName);
+    await reports.selectFacility(rff.facility)
     await reports.applyChanges();
 })
 
-test('Case Type Report Filter', async ({ page }) => {
+test('Report Case Type Filter', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
@@ -74,18 +79,17 @@ test('Case Type Report Filter', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(rctf.optionClient);
 
     const reports = new ReportsPage(page);
     await reports.selectReports();
-    await reports.searchReport('Total Completed');
-    await reports.chooseReport('Total Completed Cases');
-    await reports.selectCaseType('Select All');
-    await reports.selectCaseType('CARDIO');
+    await reports.searchReport(rctf.reportName);
+    await reports.chooseReport(rctf.reportName);
+    await reports.selectCaseType(rctf.casetype);
     await reports.applyChanges();
 })
 
-test('Provider Report Filter', async ({ page }) => {
+test('Report Provider Filter', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
@@ -95,13 +99,13 @@ test('Provider Report Filter', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(rpf.optionClient);
 
     const reports = new ReportsPage(page);
     await reports.selectReports();
-    await reports.searchReport('Total Patient');
-    await reports.chooseReport('Total Patient Qualified Report');
-    await reports.selectProvider('Surgeon Test');
+    await reports.searchReport(rpf.reportName);
+    await reports.chooseReport(rpf.reportName);
+    await reports.selectProvider(rpf.provider);
     await reports.applyChanges();
 })
 

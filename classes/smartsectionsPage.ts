@@ -57,6 +57,7 @@ export default class SmartsectionsPage{
     async syncSection(){
         this.page.on('dialog',dialog => dialog.accept());
         await this.page.getByTitle('Sync').first().click();
+        await this.page.locator('id=toast-container',{hasText:'Smart Section successfully synced'}).isVisible();
     }
     //add smart section button
     async addSmartSection(){
@@ -146,8 +147,8 @@ export default class SmartsectionsPage{
 
         //delete
         async delete(){
-            this.page.on('dialog',dialog => dialog.accept());
-            await this.page.getByTitle('Delete').last().click();
+            //this.page.on('dialog',dialog => dialog.accept());
+            await this.page.getByText('Delete').last().click();
         }
 
           //pagination

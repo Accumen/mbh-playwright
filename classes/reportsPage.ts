@@ -40,24 +40,24 @@ export default class ReportsPage{
 
         //select facility (drop down)
     async selectFacility(facility){
-        await this.page.getByLabel('Select Facility *').locator('div').nth(3).click();
-        await this.page.getByRole('listbox', {name:'Select Facility'}).locator('label').click();
+        await this.page.getByLabel('Select Facilities').locator('path').click();
+        //await this.page.getByRole('listbox', {name:'Select Facility'}).locator('label').click();
         await this.page.getByRole('option',{name:facility,exact:true}).locator('mat-pseudo-checkbox').click();
         await this.page.getByRole('option',{name:facility,exact:true}).locator('mat-pseudo-checkbox').press('Tab');
     }
         //select provider (fillable)
     async selectProvider(provider){
-        await this.page.getByPlaceholder('Select Provider').click();
-        await this.page.getByPlaceholder('Select Provider').fill(provider);
-        await this.page.getByPlaceholder('Select Provider').press('Enter');
+        await this.page.getByText('Select Provider').click();
+        await this.page.getByText('Select Provider').fill(provider);
+        await this.page.getByText(provider,{exact:false}).click();
 
     }
     //unselect all case types
     
         //select case type (drop down)
     async selectCaseType(caseType){
-        await this.page.getByText('AllSelect Case Type *').click();
-        await this.page.locator('.mat-checkbox-inner-container').click();//unselect all
+        await this.page.getByLabel('Select Case Type').locator('svg').click();
+        await this.page.getByLabel('Select All').click();//unselect all
         await this.page.getByRole('option', {name:caseType}).locator('mat-pseudo-checkbox').click();
             /**case type key
              * 123
