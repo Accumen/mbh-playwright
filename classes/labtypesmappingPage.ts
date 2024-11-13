@@ -73,14 +73,15 @@ export default class LabtypesmappingPage{
         const downloadPromise = this.page.waitForEvent('download');
         await this.page.getByRole('button', {name: 'Download Mappings'}).click();
         const download = await downloadPromise;
-        await download.saveAs('./testdata/'+ download.suggestedFilename());
+        await download.saveAs('./testdata/xlsx files/'+ download.suggestedFilename());
     }
 
     //upload mappings button
     async uploadLabTypeMappings(){
         await this.page.getByRole('button', {name:'Upload Mappings'}).click();
-        await this.page.locator("input[type=file]").setInputFiles("./labTypeMapping_1234567.xlsx");
+        await this.page.locator("input[type=file]").setInputFiles("./testdata/xlsx files/LabTypeMapping_1717071520581.xlsx");
         await this.page.getByRole('button',{name:'Upload Mappings'}).click();
+        await this.page.locator('id=toast-container',{hasText:'Mappings uploaded successfully'}).isVisible();
     }
 
     //page navigation

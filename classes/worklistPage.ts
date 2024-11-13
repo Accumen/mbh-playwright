@@ -1042,4 +1042,49 @@ export default class WorklistPage{
     async activateBtn(){
         await this.page.getByRole('button',{name:'Activate'}).click();
     }
+
+    //interpret labs button
+    async interpretLabs(interpret){
+        await this.page.getByText('LAB INTERPRETATION',{exact:true}).scrollIntoViewIfNeeded();
+        await this.page.getByTestId('interpretLabs').click();
+        /**interpret key
+         * Iron
+         * Thyroid
+         * Anemia
+         */
+        switch(interpret){
+            case 'Iron':{
+                await this.page.getByText('Iron deficiency-patient has').click();
+                await this.page.locator('#mat-radio-2-input').click();
+                break;
+            }
+            case 'Thyroid':{
+                await this.page.getByText('Thyroid function studies suggest hyperthyroid state').click();
+                await this.page.locator('#mat-radio-6-input').click();
+                break;
+            }
+            case 'Anemia':{
+                await this.page.getByText('Anemia mild').click();
+                await this.page.locator('#mat-radio-12-input').click();
+                break;
+            }
+            default:{
+                break;
+            }
+        }
+
+    }
+
+    //reset button
+    async resetInterpretation(){
+        await this.page.getByRole('button',{name:'+ Reset'}).click();
+    }
+
+    //save lab interpretation button
+    async saveInterpretation(){
+        await this.page.getByRole('button',{name:'+ Save Lab Interpretation'}).click();
+        await this.page.getByText('Do you attest to performing patient identification verifying name and date of birth, and confirming all lab data has been reported correctly?').isVisible();
+        await this.page.getByRole('button',{name:'+ Confirm'}).click();
+        await this.page.locator('id=toast-container',{hasText:'Lab Interpretation saved successfully'}).isVisible();
+    }
 }

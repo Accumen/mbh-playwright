@@ -29,6 +29,7 @@ const rscc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/reply
 const rscfc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/replysurgcommcall.json")))
 const eses = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editschexistingsurgical.json")))
 const eps = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editpatientsurgical.json")))
+const sli = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicallabinterpretation.json")))
 
 test('surgical shedule new patient visit', async ({ page }) => {
     test.slow();
@@ -539,7 +540,7 @@ test('reply surgical communication comment', async ({ page }) => {
 
   await page.goto('https://qa-auto-base.mybloodhealth.com/login');
   await login.enterEmail(logindata.email);
-  await login.enterPassword(logindata.password);
+  await login.enterPassword(logindata.password);5
   await login.clickLoginBtn();
 
   const dashboard = new DashboardPage(page);
@@ -572,4 +573,25 @@ test('reply surgical communication call', async ({ page }) => {
   await worklist.searchMRN(rscfc.searchInfo)
   await worklist.selectPatientfromSearch(rscfc.patient);
   await worklist.replyCommunication(rscfc.commtype,rscfc.message,rscfc.resolved);
+})
+
+test('surgical lab interpretation', async ({ page }) => {
+  test.slow();
+  const login = new LoginPage(page);
+
+  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+  await login.enterEmail(logindata.email);
+  await login.enterPassword(logindata.password);
+  await login.clickLoginBtn();
+
+  const dashboard = new DashboardPage(page);
+  await dashboard.clickClientDropDown(sli.optionClient);
+
+  const worklist = new WorklistPage(page);
+  await worklist.clickWorklist();
+  await worklist.clickSurgical();
+  await worklist.searchMRN(sli.searchInfo)
+  await worklist.selectPatientfromSearch(sli.patient);
+  await worklist.interpretLabs(sli.interpret);
+  await worklist.saveInterpretation();
 })

@@ -81,7 +81,6 @@ test('upload mappings', async ({ page }) => {
     const labtypesmap = new LabTypesMappingPage(page);
     await labtypesmap.selectLabTypesMapping();
     await labtypesmap.uploadLabTypeMappings();  
-    await labtypesmap.searchLabCode('1234567');
 })
 
 test('map lab type', async ({page}) => {

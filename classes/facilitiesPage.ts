@@ -69,6 +69,7 @@ export default class FacilitiesPage{
     //save facility button
     async saveFacility(){
         await this.page.getByRole('button',{name:'Save Facility'}).click();
+        await this.page.locator('id=toast-container',{hasText:'Facility successfully updated'}).isVisible();
     }
     //back arrow button
     async facilityBackArrow(){
@@ -167,9 +168,10 @@ export default class FacilitiesPage{
     }
     
     //delete button (trash can icon)    
-    async trashButton(){
+    async deleteFacility(){
         this.page.once('dialog',dialog => dialog.accept());
         await this.page.getByTitle('Delete').last().click();
+        await this.page.locator('id=toast-container',{hasText:'Facility deleted successfully'}).isVisible();
     }
     //edit facility
     async editFacility(facility?,shortname?,facilitycode?,address?,city?,state?,zip?, 
@@ -240,6 +242,11 @@ export default class FacilitiesPage{
         }
         //save location
         await this.page.getByRole('button',{name:'Save Location'}).click();
+    }
+    async deleteLocation(){
+        this.page.once('dialog',dialog => dialog.accept());
+        await this.page.getByTitle('Delete').last().click();
+        await this.page.locator('id=toast-container',{hasText:'Location deleted successfully'}).isVisible();
     }
     //screenshot
     async facilityScreenshot(num){

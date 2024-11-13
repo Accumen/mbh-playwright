@@ -3,6 +3,9 @@ import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import RegionPage from './classes/regionsPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const ar = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/addregion.json")))
+const er = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editregion.json")))
+const ndr = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/navigatedeleteregion.json")))
 
 /**test coverage
  * add/edit/save/delete region
@@ -20,13 +23,13 @@ test("add region", async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(ar.optionClient);
 
     const region = new RegionPage(page);
     await region.selectRegionsMenu();
     await region.addRegion();
-    await region.newRegion('Test 2','218','InActive'); //add region
-    await region.saveRegion(); //save region
+    await region.newRegion(ar.regionName,ar.regionCode,ar.regionStatus); 
+    await region.saveNewRegion(); 
 })
 
 test("edit region", async ({page})=>{
@@ -40,15 +43,15 @@ test("edit region", async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(er.optionClient);
 
     const region = new RegionPage(page);
-
-    await region.selectRegion('Test 2');
-    await region.editRegionName('Test 3'); //edit region
-    await region.editRegionCode('219');
-    await region.editRegionStatus('Active');
-    await region.saveRegion();
+    await region.selectRegionsMenu();
+    await region.selectRegion(er.regionName);
+    await region.editRegionName(er.regionName2); 
+    await region.editRegionCode(er.regionCode);
+    await region.editRegionStatus(er.regionStatus);
+    await region.save();
 })
 
 test("navigate/delete region", async ({page})=>{
@@ -62,11 +65,12 @@ test("navigate/delete region", async ({page})=>{
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(ndr.optionClient);
 
     const region = new RegionPage(page);
-    await region.selectRegion('Test 3');
-    await region.backArrow(); //back arrow
-    await region.deleteRegion(); //delete region
+    await region.selectRegionsMenu();
+    await region.selectRegion(ndr.regionName);
+    await region.backArrow(); 
+    await region.deleteRegion(); 
 
 })

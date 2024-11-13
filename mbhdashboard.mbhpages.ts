@@ -46,7 +46,6 @@ test('filter screenshot comparison',async ({page})=>{
     await dashboard.datacomparison();
 })
     */
-//reset cache 
 test('reset cache test',async ({page})=>{
     test.slow();
     const login = new LoginPage(page);
@@ -64,7 +63,6 @@ test('reset cache test',async ({page})=>{
     await dashboard.dataverify(3);
 })
 
-//filters export to excel
 test('filter dashboard and export to excel',async ({page})=>{
     test.slow();
     const login = new LoginPage(page);
@@ -84,7 +82,6 @@ test('filter dashboard and export to excel',async ({page})=>{
     await dashboard.exportToExcel();
 })
 
-//filters export to pdf
 test('filter dashboard and export to pdf',async ({page})=>{
     test.slow();
     const login = new LoginPage(page);
@@ -104,7 +101,6 @@ test('filter dashboard and export to pdf',async ({page})=>{
     await dashboard.exportToPdf();
 })
 
-//test dashboard data performance calendar
 test('data performance calendar',async ({page})=>{
     test.slow();
     const login = new LoginPage(page);
@@ -136,7 +132,6 @@ test('ganzoni calc negative kg test',async ({page})=>{
     await dashboard.clickClientDropDown(gcnkt.optionClient);
     await dashboard.ganzoniCalculator(gcnkt.weightype,gcnkt.weight,gcnkt.curHgb);
     await dashboard.dataverify(1);
-  
 
 })
 

@@ -146,7 +146,7 @@ export default class DashboardPage{
     }  
     
     async dataverify(num){
-        await this.page.screenshot({path:'dataverify' + num + '.png'}); 
+        await this.page.screenshot({path:'./test results/dataverify' + num + '.png'}); 
     }
 
     async datacomparison(){
@@ -182,14 +182,14 @@ export default class DashboardPage{
         const downloadPromise = this.page.waitForEvent('download');
         await this.page.getByRole('button', {name: 'Export Excel'}).click();
         const download = await downloadPromise;
-        await download.saveAs('./testdata/'+ download.suggestedFilename());
+        await download.saveAs('./testdata/xlsx files/'+ download.suggestedFilename());
     }
     //export to pdf
     async exportToPdf(){
         const downloadPromise = this.page.waitForEvent('download');
         await this.page.getByRole('button', {name: 'Export PDF'}).click();
         const download = await downloadPromise;
-        await download.saveAs('./testdata/'+ download.suggestedFilename());
+        await download.saveAs('./testdata/pdf files/'+ download.suggestedFilename());
     }
     //APPLY FILTERS
     async applyFilters(){
