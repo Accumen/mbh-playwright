@@ -3,6 +3,11 @@ import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import LabtypesPage from './classes/labtypesPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const alt = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/addlabtype.json")))
+const elt = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editlabtype.json")))
+const dlt = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/deletelabtype.json")))
+const ltn = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/labtypenavigation.json")))
+const ltrc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/labtyperowcounter.json")))
 
 test('add lab type', async ({ page }) => {
     test.slow();
@@ -14,13 +19,13 @@ test('add lab type', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(alt.optionClient);
 
     const labtypes = new LabtypesPage(page);
     await labtypes.selectLabTypes();
-    await labtypes.addLabType('testtype','x10(9)/L','1','125','tstp','ACTIVE','Gendered','','','','','','',
-    '5','10','10','above','5','below','8','12','12','above','8','below');
-    await labtypes.saveLabType();
+    await labtypes.addLabType(alt.testname,alt.unitOfMeasure,alt.minValue,alt.maxValue,alt.uniqueCode,alt.labtypestatus,alt.gendered,'','','','','','',
+    alt.mRefMin,alt.mRefMax,alt.mAbnormalAbove,alt.mAboveReportLabel,alt.mAbnormalBelow,alt.mBelowReportLabel,alt.fRefMin,alt.fRefMax,alt.fAbnormalAbove,alt.fAboveReportLabel,alt.fAbnormalBelow,alt.fBelowReportLabel);
+    await labtypes.saveNewLabType();
 })
 
 test('edit lab type', async ({ page }) => {
@@ -33,18 +38,14 @@ test('edit lab type', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(elt.optionClient);
 
     const labtypes = new LabtypesPage(page);
     await labtypes.selectLabTypes();
-    await labtypes.searchLabType('test');
-    await labtypes.clickLabTypeList('test lab type');
-    await labtypes.editLabTypeStatus('Inactive');
+    await labtypes.searchLabType(elt.labtype);
+    await labtypes.selectLabType(elt.labtype);
+    await labtypes.editLabTypeStatus(elt.labtypestatus);
     await labtypes.saveLabType();
-    await labtypes.clearLabTypesSelection();
-    await labtypes.searchLabType('test lab type');
-    await labtypes.searchStatus('Inactive');
-    await labtypes.clickLabTypeList('test lab type')
 })
 
 test('delete lab type', async ({ page }) => {
@@ -57,15 +58,15 @@ test('delete lab type', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(dlt.optionClient);
 
     const labtypes = new LabtypesPage(page);
     await labtypes.selectLabTypes();
-    await labtypes.searchLabType('testtype');
+    await labtypes.searchLabType(dlt.labtype);
     await labtypes.deleteLabType();
 })
 
-test('lab type pagination', async ({ page }) => {
+test('lab type navigation', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 
@@ -75,14 +76,14 @@ test('lab type pagination', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(ltn.optionClient);
 
     const labtypes = new LabtypesPage(page);
     await labtypes.selectLabTypes();
-    await labtypes.labTypePagination(2);
-    await labtypes.clickLabTypeList('Testing 12231');
+    await labtypes.searchStatus(ltn.labtypestatus);
+    await labtypes.clearLabTypesSelection();
+    await labtypes.selectLabType(ltn.labtype);
     await labtypes.labTypeBackArrow();
-    await labtypes.paginationCheck();
 })
 
 test('adjust row count', async ({ page }) => {
@@ -95,9 +96,9 @@ test('adjust row count', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(ltrc.optionClient);
 
     const labtypes = new LabtypesPage(page);
     await labtypes.selectLabTypes();
-    await labtypes.adjustRowCount('30');
+    await labtypes.adjustRowCount(ltrc.row);
 })

@@ -1,0 +1,22 @@
+{
+    "optionClient":"Test Client",
+    "testname":"testtype",
+    "unitOfMeasure":"x10(9)/L",
+    "minValue":"1",
+    "maxValue":"125",
+    "uniqueCode":"tstp",
+    "labtypestatus":"Active",
+    "gendered":"Gendered",
+    "mRefMin":"5",
+    "mRefMax":"10",
+    "mAbnormalAbove":"10",
+    "mAboveReportLabel":"Male Above",
+    "mAbnormalBelow":"5",
+    "mBelowReportLabel":"Male Below",
+    "fRefMin":"8",
+    "fRefMax":"12",
+    "fAbnormalAbove":"12",
+    "fAboveReportLabel":"Female Above",
+    "fAbnormalBelow":"8",
+    "fBelowReportLabel":"Female Below"
+}

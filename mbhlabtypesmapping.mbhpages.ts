@@ -3,8 +3,12 @@ import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import LabTypesMappingPage from './classes/labtypesmappingPage'
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const ltmpas = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/ltmpaginationaftersearch.json")))
+const ltmpaf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/ltmpaginationafterfilter.json")))
+const dltm = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/downloadlabtypemappings.json")))
+const ultm = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/downloadlabtypemappings.json")))
 
-test('pagination after search', async ({ page }) => {
+test('ltm pagination after search', async ({ page }) => {
 
     test.slow();
     const login = new LoginPage(page);
@@ -15,18 +19,18 @@ test('pagination after search', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(ltmpas.optionClient);
 
     const labtypesmap = new LabTypesMappingPage(page);
     await labtypesmap.selectLabTypesMapping();
     await labtypesmap.paginationCheck();
-    await labtypesmap.searchLabCode("1525952");
+    await labtypesmap.searchLabCode(ltmpas.labcode);
     await labtypesmap.clearSelections();
     await labtypesmap.paginationCheck();
     
 })
 
-test('pagination after filter', async ({ page }) => {
+test('ltm pagination after filter', async ({ page }) => {
 
     test.slow();
     const login = new LoginPage(page);
@@ -37,17 +41,17 @@ test('pagination after filter', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(ltmpaf.optionClient);
 
     const labtypesmap = new LabTypesMappingPage(page);
     await labtypesmap.selectLabTypesMapping();
     await labtypesmap.paginationCheck();
-    await labtypesmap.searchLabTypeDropDown("WBC")
+    await labtypesmap.searchLabTypeDropDown(ltmpaf.labtype)
     await labtypesmap.clearSelections();
     await labtypesmap.paginationCheck();  
 })
 
-test('download mappings', async ({ page }) => {
+test('download lab type mappings', async ({ page }) => {
 
     test.slow();
     const login = new LoginPage(page);
@@ -58,14 +62,14 @@ test('download mappings', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(dltm.optionClient);
 
     const labtypesmap = new LabTypesMappingPage(page);
     await labtypesmap.selectLabTypesMapping();
     await labtypesmap.downloadLabTypeMappings();    
 })
 
-test('upload mappings', async ({ page }) => {
+test('upload lab type mappings', async ({ page }) => {
 
     test.slow();
     const login = new LoginPage(page);
@@ -76,7 +80,7 @@ test('upload mappings', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(ultm.optionClient);
 
     const labtypesmap = new LabTypesMappingPage(page);
     await labtypesmap.selectLabTypesMapping();
@@ -120,7 +124,7 @@ test('unmap lab type', async ({page}) => {
     await labtypesmap.clickToMap('1234567','Hgb','UNMAPPED');
 })
 
-test('adjust row count', async ({ page }) => {
+test('ltm row counter', async ({ page }) => {
     test.slow();
     const login = new LoginPage(page);
 

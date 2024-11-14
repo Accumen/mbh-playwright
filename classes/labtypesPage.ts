@@ -61,7 +61,7 @@ export default class LabtypesPage{
         await this.page.getByText('Unique Code').fill(uniqueCode);//tstp
         //Status (drop down) - active and inactive
         await this.page.getByLabel('Status').locator('div').nth(2).click();
-        await this.page.getByText(labtypestatus,{exact: true}).click();//active
+        await this.page.getByRole('option',{name:labtypestatus,exact: true}).click();//active
         //Gendered(drop down) - gendered and not gendered
         await this.page.getByLabel('Gendered').locator('div').nth(2).click();
         await this.page.getByRole('option',{name:gendered, exact: true}).locator('span').click();//gendered
@@ -75,39 +75,39 @@ export default class LabtypesPage{
             //await this.page.locator('#mat-input-6').click();
             await this.page.locator('#mat-input-6').fill(mRefMin);//4.00
        //Reference Max (fillable)
-            await this.page.locator('#mat-input-7').click();
+            //await this.page.locator('#mat-input-7').click();
             await this.page.locator('#mat-input-7').fill(mRefMax);//11.00
        //Abnormal Above (fillable)
-            await this.page.locator('#mat-input-8').click();
+            //await this.page.locator('#mat-input-8').click();
             await this.page.locator('#mat-input-8').fill(mAbnormalAbove);//11.25
        //Above Report Label (fillable)
-            await this.page.locator('#mat-input-9').click();
+            //await this.page.locator('#mat-input-9').click();
             await this.page.locator('#mat-input-9').fill(mAboveReportLabel);//2.50
        //Abnormal Below (fillable)
-            await this.page.locator('#mat-input-10').click();
+            //await this.page.locator('#mat-input-10').click();
             await this.page.locator('#mat-input-10').fill(mAbnormalBelow);
        //Below Report Label (fillable)
-            await this.page.locator('#mat-input-11').click();
+            //await this.page.locator('#mat-input-11').click();
             await this.page.locator('#mat-input-11').fill(mBelowReportLabel);
 
        //** Female section**
        //Reference Min (fillable)
-            await this.page.locator('#mat-input-12').click();
+            //await this.page.locator('#mat-input-12').click();
             await this.page.locator('#mat-input-12').fill(fRefMin);
        //Reference Max (fillable)
-            await this.page.locator('#mat-input-13').click();
+            //await this.page.locator('#mat-input-13').click();
             await this.page.locator('#mat-input-13').fill(fRefMax);
        //Abnormal Above (fillable)
-            await this.page.locator('#mat-input-14').click();
+            //await this.page.locator('#mat-input-14').click();
             await this.page.locator('#mat-input-14').fill(fAbnormalAbove);
        //Above Report Label (fillable)
-            await this.page.locator('#mat-input-15').click();
+            //await this.page.locator('#mat-input-15').click();
             await this.page.locator('#mat-input-15').fill(fAboveReportLabel);
        //Abnormal Below (fillable)
-            await this.page.locator('#mat-input-16').click();
+            //await this.page.locator('#mat-input-16').click();
             await this.page.locator('#mat-input-16').fill(fAbnormalBelow);
        //Below Report Label (fillable)
-            await this.page.locator('#mat-input-17').click();
+            //await this.page.locator('#mat-input-17').click();
             await this.page.locator('#mat-input-17').fill(fBelowReportLabel);
         }
         else{
@@ -133,12 +133,17 @@ export default class LabtypesPage{
        await this.page.getByLabel('Below Report Label').fill(refreportlabel);
         }
     }
-
+     //Save Lab Type Button
+     async saveNewLabType(){
+          await this.page.getByRole('button', {name: 'Save Lab Type'}).click();
+          await this.page.locator('id=toast-container',{hasText:'Lab type Created successfully'}).isVisible();
+         }
 
        //Save Lab Type Button
        async saveLabType(){
-        await this.page.getByRole('button', {name: 'Save Lab Type'}).click();
-       }
+          await this.page.getByRole('button', {name: 'Save Lab Type'}).click();
+          await this.page.locator('id=toast-container',{hasText:'Lab type updated successfully'}).isVisible();
+         }
 
        //Back Arrow
        async labTypeBackArrow(){
@@ -160,13 +165,16 @@ export default class LabtypesPage{
          * Active
          * Inactive
          */
-        
+       }
+       async selectLabType(labtype){
+          await this.page.getByText(labtype,{exact:true}).click();
        }
 
        //delete lab type
        async deleteLabType(){
           this.page.on('dialog',dialog => dialog.accept());
           await this.page.getByTitle('Delete').click();
+          await this.page.locator('id=toast-container',{hasText:'Lab Type was deleted successfully'}).isVisible();
        }
 
         //Clear Selections button
@@ -176,7 +184,7 @@ export default class LabtypesPage{
 
         //Lab Type List (clickable)
         async clickLabTypeList(labtype: string){
-            await this.page.getByRole('link', {name:labtype}).click();
+            await this.page.getByRole('cell', {name:labtype}).click();
         /**Lab Type Key
          * WBC
          * RBC

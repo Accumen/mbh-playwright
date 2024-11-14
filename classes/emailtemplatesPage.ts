@@ -54,6 +54,7 @@ export default class EmailtemplatesPage{
         //save template button
     async saveTemplate(){
         await this.page.getByRole('button',{name:'Save Template'}).click();
+        await this.page.locator('id=toast-container',{hasText:'Email Template updated successfully'}).isVisible();
     }    
         //back arrow button
     async backArrow(){

@@ -2,6 +2,7 @@
 
 "optionClient": "Conemaugh",
 "templateName": "Assign Visit Notification",
+"templateName2":"Test Assign Visit Notification",
 "templateType": "Assignment",
 "userFullname": "Test User",
 "visitUrl": "www.visiturl.com/testuservisit"
