@@ -7,6 +7,9 @@ const ltmpas = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/ltm
 const ltmpaf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/ltmpaginationafterfilter.json")))
 const dltm = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/downloadlabtypemappings.json")))
 const ultm = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/downloadlabtypemappings.json")))
+const mlt = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/maplabtype.json")))
+const umlt = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/unmaplabtype.json")))
+const ltmrc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/ltmrowcounter.json")))
 
 test('ltm pagination after search', async ({ page }) => {
 
@@ -97,12 +100,12 @@ test('map lab type', async ({page}) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(mlt.optionClient);
 
     const labtypesmap = new LabTypesMappingPage(page);
     await labtypesmap.selectLabTypesMapping();    
-    await labtypesmap.searchLabCode('1525952');
-    await labtypesmap.clickToMap('1525952','UNMAPPED','EXCLUDE');
+    await labtypesmap.searchLabCode(mlt.labcode);
+    await labtypesmap.clickToMap(mlt.labcode,mlt.labtype,mlt.labtype2);
 
 })
 
@@ -116,12 +119,12 @@ test('unmap lab type', async ({page}) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(umlt.optionClient);
 
     const labtypesmap = new LabTypesMappingPage(page);
     await labtypesmap.selectLabTypesMapping();
-    await labtypesmap.searchLabCode('1234567');
-    await labtypesmap.clickToMap('1234567','Hgb','UNMAPPED');
+    await labtypesmap.searchLabCode(umlt.labcode);
+    await labtypesmap.clickToMap(umlt.labcode,umlt.labtype,umlt.labtype2);
 })
 
 test('ltm row counter', async ({ page }) => {
@@ -134,9 +137,9 @@ test('ltm row counter', async ({ page }) => {
     await login.clickLoginBtn();
 
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(ltmrc.optionClient);
 
     const labtypesmap = new LabTypesMappingPage(page);
     await labtypesmap.selectLabTypesMapping();
-    await labtypesmap.adjustRowCount('30');
+    await labtypesmap.adjustRowCount(ltmrc.row);
 })

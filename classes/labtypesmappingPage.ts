@@ -59,8 +59,7 @@ export default class LabtypesmappingPage{
         await this.page.getByText(labcode).hover();
         await this.page.getByText(labtype, {exact:true}).click();
         await this.page.getByText(labtype2, {exact:true}).click();
-        //await this.page.locator('#mat-select-14 div').nth(3).click({delay:1000});
-        //await this.page.getByText(labtype,{exact:true}).first().click();
+        await this.page.locator('id=toast-container',{hasText:'Lab Type mapping successfully updated'}).isVisible();
     
     }
     //clear button
