@@ -8,6 +8,7 @@ const elt = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editla
 const dlt = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/deletelabtype.json")))
 const ltn = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/labtypenavigation.json")))
 const ltrc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/labtyperowcounter.json")))
+const slt = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/synclabtype.json")))
 
 test('add lab type', async ({ page }) => {
     test.slow();
@@ -101,4 +102,28 @@ test('adjust row count', async ({ page }) => {
     const labtypes = new LabtypesPage(page);
     await labtypes.selectLabTypes();
     await labtypes.adjustRowCount(ltrc.row);
+})
+
+test('sync lab type', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+
+    const labtypes = new LabtypesPage(page);
+    await labtypes.selectLabTypes();
+    await labtypes.selectLabType(slt.labtype);
+    await labtypes.hideFromUI();
+    await labtypes.saveLabType();
+    
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown(slt.optionClient);
+
+    await labtypes.selectLabTypes();
+    await labtypes.searchLabType(slt.labtype);
+    await labtypes.syncLabType();
+
 })

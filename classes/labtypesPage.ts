@@ -359,5 +359,15 @@ export default class LabtypesPage{
      await this.page.getByText(row,{exact:true}).click();//selects the row count in the []
      
  }
+ //hide from ui (mbh admin)
+ async hideFromUI(){
+     await this.page.getByLabel('Hide from UI').check();
+ }
+
+ //sync lab type
+ async syncLabType(){
+     await this.page.getByTitle('Sync').click();
+     await this.page.locator('id=toast-container',{hasText:'Lab type successfully updated'}).isVisible();
+ }
 
 }
