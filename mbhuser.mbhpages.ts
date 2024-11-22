@@ -40,6 +40,7 @@ const urc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/userro
         await user.addUser();
         await user.newUser(au.fname,au.lname,au.email,au.cadmin,au.contents,au.users,au.clinical,au.reports,au.mapping,au.ustatus);
         await user.saveUser();
+        await user.searchUser(au.fname);
     })
 
     test("edit user", async({page})=>{

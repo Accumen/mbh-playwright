@@ -99,7 +99,7 @@ export default class UsersPage{
     //save user button
     async saveUser(){
         await this.page.getByRole('button',{name:'Save User'}).click();
-        await this.page.locator('id=toast-container',{hasText:'User saved successfully'}).isVisible();
+        await this.page.locator('id=toast-container',{hasText:'User successfully saved'}).isVisible();
     }
 
     //back arrow button
