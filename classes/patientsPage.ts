@@ -752,8 +752,6 @@ export default class PatientsPage{
            await this.page.getByLabel(resolveMonth).click();
            await this.page.getByText(resolveDay,{exact:true}).click();
            await this.page.locator('button').filter({ hasText: 'done' }).click();
-           await this.page.getByRole('button', { name: 'Add Communication' }).click();
-           await expect(this.page.locator('id=toast-container',{hasText:'Communication added successfully'})).toBeInViewport();
     }
 
            await this.page.getByRole('button', { name: 'Add Communication' }).click();

@@ -461,7 +461,7 @@ export default class WorklistPage{
             if(patienttype != 'Existing'){
          //*New */
          //select the new check box
-         await this.page.getByLabel('Existing').check();
+         await this.page.getByLabel('New').check();
          //first name
          await this.page.getByLabel('First Name').click();
          await this.page.getByLabel('First Name').fill(fname);
@@ -478,8 +478,8 @@ export default class WorklistPage{
             await this.page.getByLabel('Previous 24 years').click();
          }
             await this.page.getByLabel(dobyear).click();
-            await this.page.getByLabel(dobMonth).click();
-            await this.page.getByLabel(dobDay).click();
+            await this.page.getByText(dobMonth,{exact:true}).click();
+            await this.page.getByText(dobDay,{exact:true}).click();
          //phone number
          await this.page.getByText('Phone No').click();
          await this.page.getByText('Phone No').fill(phone);
@@ -927,7 +927,7 @@ export default class WorklistPage{
 
     //add communication
     async addcommunication(comtype,comment,priority,resolveyear?, resolvemonth?,resolveday?){ 
-        await this.page.locator('app-communication-list').getByRole('button', { name: ' Add' }).click();
+        await this.page.getByTestId('addCommunication').click();
         await this.page.getByLabel('Communication Type').getByText('Communication Type').click();
         await this.page.getByRole('option', {name:comtype, exact: true}).locator('span').click();
         await this.page.getByPlaceholder('Message').click();

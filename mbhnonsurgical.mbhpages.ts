@@ -46,7 +46,7 @@ test('Non-surgical schedule new patient visit', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.scheduleChronicVisit(nssnpv.patienttype, nssnpv.fname, nssnpv.lname, nssnpv.email, nssnpv.mrn,nssnpv.dobyear,nssnpv.dobMonth,nssnpv.dobDay,
+    await worklist.scheduleChronicVisit(nssnpv.patienttype, nssnpv.fname, nssnpv.lname, nssnpv.mrn,nssnpv.dobyear,nssnpv.dobMonth,nssnpv.dobDay,
       nssnpv.phone,nssnpv.street, nssnpv.city,nssnpv.state,nssnpv.zip,nssnpv.gender,nssnpv.race,nssnpv.ethnicity,nssnpv.hippa,nssnpv.hhMonthdd,
       nssnpv.pYear,nssnpv.pMonth,nssnpv.pDay,nssnpv.pclickcount,nssnpv.procedure,nssnpv.provider)
     await worklist.saveScheduledVisit();
