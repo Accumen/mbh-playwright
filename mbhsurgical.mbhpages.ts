@@ -30,6 +30,7 @@ const rscfc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/repl
 const eses = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editschexistingsurgical.json")))
 const eps = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editpatientsurgical.json")))
 const sli = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicallabinterpretation.json")))
+const saf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicalallfacilities.json")))
 
 test('surgical shedule new patient visit', async ({ page }) => {
     test.slow();
@@ -594,4 +595,29 @@ test('surgical lab interpretation', async ({ page }) => {
   await worklist.selectPatientfromSearch(sli.patient);
   await worklist.interpretLabs(sli.interpret);
   await worklist.saveInterpretation();
+})
+
+test('surgical all facilities worklist', async ({ page }) => {
+  test.slow();
+  const login = new LoginPage(page);
+
+  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+  await login.enterEmail(logindata.email);
+  await login.enterPassword(logindata.password);
+  await login.clickLoginBtn();
+
+  const dashboard = new DashboardPage(page);
+  await dashboard.clickClientDropDown(saf.optionClient);
+
+  const worklist = new WorklistPage(page);
+  await worklist.clickWorklist();
+  await worklist.clickSurgical();
+  await worklist.searchMRN(saf.searchInfo);
+  await worklist.paginationCheck();
+  await worklist.clickFacility(saf.fromfacility,saf.tofacility);
+  await worklist.paginationCheck();
+  await worklist.clearSelections();
+  await worklist.unselectAllCaseTypes();
+  await worklist.selectCaseType(saf.casetype);
+  await worklist.selectFilter(saf.filter);
 })

@@ -65,8 +65,8 @@
       "line": 0,
       "specs": [
         {
-          "title": "Non-surgical schedule new patient visit",
-          "ok": false,
+          "title": "nonsurgical all facilities worklist",
+          "ok": true,
           "tags": [],
           "tests": [
             {
@@ -82,64 +82,45 @@
               "results": [
                 {
                   "workerIndex": 0,
-                  "status": "failed",
-                  "duration": 52559,
-                  "error": {
-                    "message": "Error: locator.click: Target page, context or browser has been closed",
-                    "stack": "Error: locator.click: Target page, context or browser has been closed\n    at WorklistPage.scheduleChronicVisit (c:\\Users\\mperez\\OneDrive - Accumen Inc\\Desktop\\playwright learning\\mbh-playwright\\classes\\worklistPage.ts:501:58)\n    at c:\\Users\\mperez\\OneDrive - Accumen Inc\\Desktop\\playwright learning\\mbh-playwright\\mbhnonsurgical.mbhpages.ts:49:5",
-                    "location": {
-                      "file": "c:\\Users\\mperez\\OneDrive - Accumen Inc\\Desktop\\playwright learning\\mbh-playwright\\classes\\worklistPage.ts",
-                      "column": 58,
-                      "line": 501
-                    },
-                    "snippet": "\u001b[90m   at \u001b[39mclasses\\worklistPage.ts:501\n\n\u001b[0m \u001b[90m 499 |\u001b[39m          \u001b[90m//gender (drop down)\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 500 |\u001b[39m          \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgetByLabel(\u001b[32m'Gender'\u001b[39m)\u001b[33m.\u001b[39mlocator(\u001b[32m'div'\u001b[39m)\u001b[33m.\u001b[39mnth(\u001b[35m2\u001b[39m)\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 501 |\u001b[39m          \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgetByText(gender\u001b[33m,\u001b[39m {exact\u001b[33m:\u001b[39m\u001b[36mtrue\u001b[39m})\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     |\u001b[39m                                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 502 |\u001b[39m          \u001b[90m//race (drop down)\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 503 |\u001b[39m          \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgetByLabel(\u001b[32m'Race'\u001b[39m)\u001b[33m.\u001b[39mlocator(\u001b[32m'div'\u001b[39m)\u001b[33m.\u001b[39mnth(\u001b[35m2\u001b[39m)\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 504 |\u001b[39m          \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgetByRole(\u001b[32m'option'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m race\u001b[33m,\u001b[39m exact\u001b[33m:\u001b[39m\u001b[36mtrue\u001b[39m })\u001b[33m.\u001b[39mlocator(\u001b[32m'span'\u001b[39m)\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m"
-                  },
-                  "errors": [
-                    {
-                      "location": {
-                        "file": "c:\\Users\\mperez\\OneDrive - Accumen Inc\\Desktop\\playwright learning\\mbh-playwright\\classes\\worklistPage.ts",
-                        "column": 58,
-                        "line": 501
-                      },
-                      "message": "Error: locator.click: Target page, context or browser has been closed\n\n\u001b[90m   at \u001b[39mclasses\\worklistPage.ts:501\n\n\u001b[0m \u001b[90m 499 |\u001b[39m          \u001b[90m//gender (drop down)\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 500 |\u001b[39m          \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgetByLabel(\u001b[32m'Gender'\u001b[39m)\u001b[33m.\u001b[39mlocator(\u001b[32m'div'\u001b[39m)\u001b[33m.\u001b[39mnth(\u001b[35m2\u001b[39m)\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 501 |\u001b[39m          \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgetByText(gender\u001b[33m,\u001b[39m {exact\u001b[33m:\u001b[39m\u001b[36mtrue\u001b[39m})\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     |\u001b[39m                                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 502 |\u001b[39m          \u001b[90m//race (drop down)\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 503 |\u001b[39m          \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgetByLabel(\u001b[32m'Race'\u001b[39m)\u001b[33m.\u001b[39mlocator(\u001b[32m'div'\u001b[39m)\u001b[33m.\u001b[39mnth(\u001b[35m2\u001b[39m)\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 504 |\u001b[39m          \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgetByRole(\u001b[32m'option'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m race\u001b[33m,\u001b[39m exact\u001b[33m:\u001b[39m\u001b[36mtrue\u001b[39m })\u001b[33m.\u001b[39mlocator(\u001b[32m'span'\u001b[39m)\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m\n\n\u001b[2m    at WorklistPage.scheduleChronicVisit (c:\\Users\\mperez\\OneDrive - Accumen Inc\\Desktop\\playwright learning\\mbh-playwright\\classes\\worklistPage.ts:501:58)\u001b[22m\n\u001b[2m    at c:\\Users\\mperez\\OneDrive - Accumen Inc\\Desktop\\playwright learning\\mbh-playwright\\mbhnonsurgical.mbhpages.ts:49:5\u001b[22m"
-                    }
-                  ],
+                  "status": "passed",
+                  "duration": 40446,
+                  "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2024-11-26T15:16:59.888Z",
+                  "startTime": "2024-11-26T20:28:20.478Z",
                   "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "c:\\Users\\mperez\\OneDrive - Accumen Inc\\Desktop\\playwright learning\\test-results\\mbhnonsurgical.mbhpages.ts-nonsurgical-all-facilities-worklist-chrome\\test-finished-1.png"
+                    },
                     {
                       "name": "video",
                       "contentType": "video/webm",
-                      "path": "c:\\Users\\mperez\\OneDrive - Accumen Inc\\Desktop\\playwright learning\\test-results\\mbhnonsurgical.mbhpages.ts-Non-surgical-schedule-new-patient-visit-chrome\\video.webm"
+                      "path": "c:\\Users\\mperez\\OneDrive - Accumen Inc\\Desktop\\playwright learning\\test-results\\mbhnonsurgical.mbhpages.ts-nonsurgical-all-facilities-worklist-chrome\\video.webm"
                     }
-                  ],
-                  "errorLocation": {
-                    "file": "c:\\Users\\mperez\\OneDrive - Accumen Inc\\Desktop\\playwright learning\\mbh-playwright\\classes\\worklistPage.ts",
-                    "column": 58,
-                    "line": 501
-                  }
+                  ]
                 }
               ],
-              "status": "unexpected"
+              "status": "expected"
             }
           ],
-          "id": "3d485d1c11e996ba2d95-0e9c87b793aa08e27a7e",
+          "id": "3d485d1c11e996ba2d95-6a678acd6d2e39e31fa4",
           "file": "mbhnonsurgical.mbhpages.ts",
-          "line": 34,
-          "column": 5
+          "line": 552,
+          "column": 7
         }
       ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2024-11-26T15:16:58.119Z",
-    "duration": 57668.02,
-    "expected": 0,
+    "startTime": "2024-11-26T20:28:18.188Z",
+    "duration": 111835.454,
+    "expected": 1,
     "skipped": 0,
-    "unexpected": 1,
+    "unexpected": 0,
     "flaky": 0
   }
 }
