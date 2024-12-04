@@ -54,6 +54,7 @@ test('edit provider', async ({ page }) => {
     await providers.searchProvider(ep.provider);
     await providers.selectProvider(ep.provider);
     await providers.editProviderEmail(ep.email);
+    await providers.editPostalCode(ep.zipcode)
     await providers.saveProvider();
 })
 

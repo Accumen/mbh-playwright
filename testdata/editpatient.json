@@ -5,5 +5,7 @@
     "race":"Other Race",
     "ethnicity":"Not Hispanic",
     "height":"69",
-    "weight":"157"
+    "weight":"157",
+    "street":"56 Allison Way",
+    "zipcode":"65432"
 }

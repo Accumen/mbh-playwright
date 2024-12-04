@@ -70,6 +70,10 @@ export default class ProvidersPage{
         await this.page.getByLabel('NPI').click();
         await this.page.getByLabel('NPI').fill(npi);
     }
+    //edit provider postal code
+    async editPostalCode(zipcode){
+        await this.page.getByPlaceholder('PostalCode').fill(zipcode);
+    }
     //provider npi error check
     async npiErrorCheck(){
         await this.page.getByText('NPI should be 10 digit number').isVisible();

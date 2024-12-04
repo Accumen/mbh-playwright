@@ -73,6 +73,8 @@ test('edit patient', async ({ page }) => {
     await patients.editPatientEthnicity(ep.ethnicity);
     await patients.editPatientHeight(ep.height);
     await patients.editPatientWeight(ep.weight);
+    await patients.editPatientStreet(ep.street);
+    await patients.editPatientZipcode(ep.zipcode);
     await patients.savePatient();
 })
 

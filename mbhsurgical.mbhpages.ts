@@ -4,6 +4,7 @@ import DashboardPage from './classes/dashboardPage';
 import WorklistPage from './classes/worklistPage';
 import PatientsPage from './classes/patientsPage';
 const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const tccl = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/tcclientuserlogin.json")))
 const ssnpv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicalschnewptvisit.json")))
 const ssepv = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicalschexistingptvisit.json")))
 const esw = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/exportsurgicalworklist.json")))
@@ -31,6 +32,7 @@ const eses = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/edits
 const eps = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editpatientsurgical.json")))
 const sli = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicallabinterpretation.json")))
 const saf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/surgicalallfacilities.json")))
+const csaf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/clientsurgicalallfacilities.json")))
 
 test('surgical shedule new patient visit', async ({ page }) => {
     test.slow();
@@ -620,4 +622,24 @@ test('surgical all facilities worklist', async ({ page }) => {
   await worklist.unselectAllCaseTypes();
   await worklist.selectCaseType(saf.casetype);
   await worklist.selectFilter(saf.filter);
+})
+
+test('client surgical all facilities worklist', async ({ page }) => {
+  test.slow();
+  const login = new LoginPage(page);
+
+  await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+  await login.enterEmail(tccl.email);
+  await login.enterPassword(tccl.password);
+  await login.clickLoginBtn();
+
+  const worklist = new WorklistPage(page);
+  await worklist.clickWorklist();
+  await worklist.clickSurgical();
+  await worklist.clickFacility(csaf.fromfacility,csaf.tofacility);
+  await worklist.searchMRN(csaf.searchInfo);
+  await worklist.clearSelections();
+  await worklist.unselectAllCaseTypes();
+  await worklist.selectCaseType(csaf.casetype);
+  await worklist.selectFilter(csaf.filter);
 })
