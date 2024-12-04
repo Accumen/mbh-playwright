@@ -24,8 +24,6 @@ use: {
 //workers: ,
 retries: 0, //this will retry to run the test automatically 2x if the test fails the first time
 reporter: [["dot"], ["json", { //This tells it to run reports
-    outputFile: "test-results.json", 
-    outputFolder:'./test-results'
 }],["html"]]
 };
 

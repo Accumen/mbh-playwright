@@ -1,4 +1,4 @@
-import { Page} from "@playwright/test";
+import { expect,Page} from "@playwright/test";
 
 export default class EmailtemplatesPage{
 
@@ -54,7 +54,7 @@ export default class EmailtemplatesPage{
         //save template button
     async saveTemplate(){
         await this.page.getByRole('button',{name:'Save Template'}).click();
-        await this.page.locator('id=toast-container',{hasText:'Email Template updated successfully'}).isVisible();
+        await expect(this.page.locator('id=toast-container',{hasText:'Email Template updated successfully'})).toBeInViewport();
     }    
         //back arrow button
     async backArrow(){

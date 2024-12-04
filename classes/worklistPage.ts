@@ -1,6 +1,4 @@
 import {expect,Page} from "@playwright/test";
-import DashboardPage from "./dashboardPage";
-
 
 export default class WorklistPage{
 
@@ -57,15 +55,18 @@ export default class WorklistPage{
     //surgical menu option
     async clickSurgical(){
         await this.page.getByRole('link', {name: 'Surgical', exact:true}).click({delay:1000});// clicks the Surgical submenu from the worklist
+        await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).toBeInViewport
     }
     //chronic menu option
     async clickChronic(){ //change name to clickNonSurgical?
         await this.page.getByRole('link', {name:'Non-Surgical', exact: true}).click({delay:1000}); // clicks the Chronic submenu from the worklist
+        await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).toBeInViewport
     }
 
     async clickFacility(fromfacility, tofacility){
         await this.page.getByLabel(fromfacility).locator('svg').click();
         await this.page.getByRole('option',{name:tofacility,exact:true}).click();
+        await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).toBeInViewport
     }
     async favoriteFacility(){
         await this.page.locator('app-page-header-content i').click();
@@ -111,10 +112,7 @@ export default class WorklistPage{
         await this.page.getByRole('option', {name:casetype,exact:true}).locator('mat-pseudo-checkbox').click();//selects the case type from the drop down
         await this.page.getByRole('option', {name:casetype,exact:true}).locator('mat-pseudo-checkbox').press('Tab');
     }
-    //verify case type filter saved
-    async verifyCaseType(casetype){
-        
-    }
+   
     //Select Status
     async selectStatus(status: string){
         await this.page.getByPlaceholder('Select Status').locator('div').nth(2).click();//selects the drop down menu button for "select status"
@@ -191,6 +189,7 @@ export default class WorklistPage{
     //client user save filter button (floppy disc) 
     async saveFilters(){
         await this.page.locator('button').filter({hasText:'save'}).click();
+        await expect(this.page.locator('id=toast-container',{hasText:'Filters saved successfully'})).toBeInViewport
     }                       
                             
            
@@ -245,7 +244,6 @@ export default class WorklistPage{
         async scheduleSurgicalVisit(patienttype: string, fname?,lname?,mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
             state?,zip?, gender?,race?,ethnicity?,hippa?,hhMonthdd?,edit?,editrace?,editethnicity?,changeDesc?,pYear?, pMonth?, pDay?, pclickcount?,
             procedure?, provider?){    
-            await this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'}).isVisible();
             await this.page.getByRole('button', {name:'Schedule Visit'}).click({delay:1000});//clicks the Schedule Visit button
             //Opens the patient schedule screen
              //check box for new or existing patient
@@ -453,7 +451,7 @@ export default class WorklistPage{
     async scheduleChronicVisit(patienttype: string, fname?, lname?, mrn?,dobyear?,dobMonth?,dobDay?,phone?,street?, city?,
         state?,zip?, gender?,race?,ethnicity?,hippa?,hhMonthdd?,edit?,editrace?,editethnicity?,changeDesc?,pYear?, pMonth?, pDay?, pclickcount?,
         procedure?, surgeon?){
-        await this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'}).isVisible();
+        //await this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'}).isVisible();
         await this.page.getByRole('button', {name:' Schedule Visit'}).click({delay:1000});//clicks the Schedule Visit button
         //Opens the patient schedule screen
          //check box for new or existing patient
@@ -624,7 +622,7 @@ export default class WorklistPage{
          //Schedule Visit Button
     async saveScheduledVisit(){
         await this.page.getByRole('button',{name: 'Schedule Visit'}).click();
-        await this.page.locator('id=toast-container',{hasText:'Visit created successfully'}).isVisible();
+        await expect(this.page.locator('id=toast-container',{hasText:'Visit created successfully'})).toBeInViewport();
     }     
     
     async worklistscreenshot(num){
@@ -875,7 +873,7 @@ export default class WorklistPage{
     async saveEditPatient(){      
     //save button
     await this.page.getByRole('button',{name:'Save'}).click();
-    await this.page.locator('id=toast-container',{hasText:'Patient updated successfully'}).isVisible();
+    await expect(this.page.locator('id=toast-container',{hasText:'Patient updated successfully'})).toBeInViewport();
     }
     //add visit documents
 
@@ -985,20 +983,20 @@ export default class WorklistPage{
         if(commtype == 'comment'){
             //hit reply button within popup
             await this.page.getByRole('button', { name: ' Reply' }).click();;
-            await this.page.locator('id=toast-container',{hasText:'Reply added successfully'}).isVisible();
+            await expect(this.page.locator('id=toast-container',{hasText:'Reply added successfully'})).toBeInViewport();
         }
         else{
             //if resolved is yes then mark box for mark as resolved and hit reply button
             if(resolved != 'no'){
                 await this.page.getByLabel('Mark as Resolved').check();
                 await this.page.getByRole('button', { name: ' Reply' }).click();
-                await this.page.locator('id=toast-container',{hasText:'Reply added successfully'}).isVisible();
+                await expect(this.page.locator('id=toast-container',{hasText:'Reply added successfully'})).toBeInViewport();
             }
             //else hit reply button
             else{
                 
                 await this.page.getByRole('button', { name: ' Reply' }).click();
-                await this.page.locator('id=toast-container',{hasText:'Reply added successfully'}).isVisible();
+                await expect(this.page.locator('id=toast-container',{hasText:'Reply added successfully'})).toBeInViewport();
             }
 
             
@@ -1085,6 +1083,6 @@ export default class WorklistPage{
         await this.page.getByRole('button',{name:'+ Save Lab Interpretation'}).click();
         await this.page.getByText('Do you attest to performing patient identification verifying name and date of birth, and confirming all lab data has been reported correctly?').isVisible();
         await this.page.getByRole('button',{name:'+ Confirm'}).click();
-        await this.page.locator('id=toast-container',{hasText:'Lab Interpretation saved successfully'}).isVisible();
+        await expect(this.page.locator('id=toast-container',{hasText:'Lab Interpretation saved successfully'})).toBeInViewport();
     }
 }

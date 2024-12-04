@@ -1,6 +1,5 @@
 import { Page} from "@playwright/test";
 import {expect} from "@playwright/test";
-import WorklistPage from "./worklistPage";
 
 export default class PatientsPage{
 

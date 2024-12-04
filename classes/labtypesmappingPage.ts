@@ -1,4 +1,4 @@
-import { Page} from "@playwright/test";
+import { expect,Page} from "@playwright/test";
 
 export default class LabtypesmappingPage{
 
@@ -59,7 +59,7 @@ export default class LabtypesmappingPage{
         await this.page.getByText(labcode).hover();
         await this.page.getByText(labtype, {exact:true}).click();
         await this.page.getByText(labtype2, {exact:true}).click();
-        await this.page.locator('id=toast-container',{hasText:'Lab Type mapping successfully updated'}).isVisible();
+        await expect(this.page.locator('id=toast-container',{hasText:'Lab Type mapping successfully updated'})).toBeInViewport();
     
     }
     //clear button
@@ -80,7 +80,7 @@ export default class LabtypesmappingPage{
         await this.page.getByRole('button', {name:'Upload Mappings'}).click();
         await this.page.locator("input[type=file]").setInputFiles("./testdata/xlsx files/LabTypeMapping_1717071520581.xlsx");
         await this.page.getByRole('button',{name:'Upload Mappings'}).click();
-        await this.page.locator('id=toast-container',{hasText:'Mappings uploaded successfully'}).isVisible();
+        await expect(this.page.locator('id=toast-container',{hasText:'Mappings uploaded successfully'})).toBeInViewport();
     }
 
     //page navigation

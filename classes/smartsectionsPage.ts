@@ -1,4 +1,4 @@
-import { Page} from "@playwright/test";
+import {expect, Page} from "@playwright/test";
 
 export default class SmartsectionsPage{
 
@@ -57,7 +57,7 @@ export default class SmartsectionsPage{
     async syncSection(){
         this.page.on('dialog',dialog => dialog.accept());
         await this.page.getByTitle('Sync').first().click();
-        await this.page.locator('id=toast-container',{hasText:'Smart Section successfully synced'}).isVisible();
+        await expect(this.page.locator('id=toast-container',{hasText:'Smart Section successfully synced'})).toBeInViewport();
     }
     //add smart section button
     async addSmartSection(){
@@ -137,7 +137,7 @@ export default class SmartsectionsPage{
         //save smart option button
         async saveSmartOption(){
             await this.page.getByRole('button',{name:'Save Smart Section'}).click();
-            await this.page.locator('id=toast-container',{hasText:'Smart Section saved successfully'}).isVisible();
+            await expect(this.page.locator('id=toast-container',{hasText:'Smart Section saved successfully'})).toBeInViewport();
         }
 
         //back arrow button
@@ -147,7 +147,6 @@ export default class SmartsectionsPage{
 
         //delete
         async delete(){
-            //this.page.on('dialog',dialog => dialog.accept());
             await this.page.getByText('Delete').last().click();
         }
 

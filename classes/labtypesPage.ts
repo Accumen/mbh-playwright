@@ -1,4 +1,4 @@
-import { Page} from "@playwright/test";
+import {expect, Page} from "@playwright/test";
 
 export default class LabtypesPage{
 
@@ -136,13 +136,13 @@ export default class LabtypesPage{
      //Save Lab Type Button
      async saveNewLabType(){
           await this.page.getByRole('button', {name: 'Save Lab Type'}).click();
-          await this.page.locator('id=toast-container',{hasText:'Lab type Created successfully'}).isVisible();
+          await expect(this.page.locator('id=toast-container',{hasText:'Lab type Created successfully'})).toBeInViewport();
          }
 
        //Save Lab Type Button
        async saveLabType(){
           await this.page.getByRole('button', {name: 'Save Lab Type'}).click();
-          await this.page.locator('id=toast-container',{hasText:'Lab type updated successfully'}).isVisible();
+          await expect (this.page.locator('id=toast-container',{hasText:'Lab type updated successfully'})).toBeInViewport();
          }
 
        //Back Arrow
@@ -174,7 +174,7 @@ export default class LabtypesPage{
        async deleteLabType(){
           this.page.on('dialog',dialog => dialog.accept());
           await this.page.getByTitle('Delete').click();
-          await this.page.locator('id=toast-container',{hasText:'Lab Type was deleted successfully'}).isVisible();
+          await expect(this.page.locator('id=toast-container',{hasText:'Lab Type was deleted successfully'})).toBeInViewport();
        }
 
         //Clear Selections button
@@ -367,7 +367,7 @@ export default class LabtypesPage{
  //sync lab type
  async syncLabType(){
      await this.page.getByTitle('Sync').click();
-     await this.page.locator('id=toast-container',{hasText:'Lab type successfully updated'}).isVisible();
+     await expect(this.page.locator('id=toast-container',{hasText:'Lab type successfully updated'})).toBeInViewport();
  }
 
 }

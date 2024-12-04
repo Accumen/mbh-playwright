@@ -1,4 +1,4 @@
-import { Page} from "@playwright/test";
+import {expect, Page} from "@playwright/test";
 
 export default class ProvidersPage{
 
@@ -81,7 +81,7 @@ export default class ProvidersPage{
             //save provider button
     async saveProvider(){
         await this.page.getByRole('button', {name:'Save Provider'}).click();
-        await this.page.locator('id=toast-container',{hasText:'Provider Updated successfully'}).isVisible();
+        await expect(this.page.locator('id=toast-container',{hasText:'Provider Updated successfully'})).toBeInViewport();
     }        
             //back button
     async backArrow(){
@@ -111,7 +111,7 @@ export default class ProvidersPage{
         //await this.page.getByTitle('Delete').click();
         this.page.once('dialog',dialog => dialog.accept());
         await this.page.getByTitle('Delete').last().click();
-        await this.page.locator('id-toast-container',{hasText:'Provider deleted successfully'}).isVisible();
+        await expect(this.page.locator('id-toast-container',{hasText:'Provider deleted successfully'})).toBeInViewport();
     }
     // adjust number of rows visible on screen
     async adjustRowCount(row: string){

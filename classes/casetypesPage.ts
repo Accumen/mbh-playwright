@@ -55,7 +55,7 @@ export default class CasetypesPage{
         //Save Case Type button
         async saveCaseType(){
             await this.page.getByRole('button', {name: 'Save Case Type'}).click();
-            await this.page.locator('id=toast-container',{hasText:'case type successfully saved'}).isVisible();
+            await expect(this.page.locator('id=toast-container',{hasText:'case type successfully saved'})).toBeInViewport();
         }
 
         //back arrow button
@@ -73,7 +73,7 @@ export default class CasetypesPage{
         async deleteCaseType(){
             this.page.on('dialog',dialog => dialog.accept());
             await this.page.getByTitle('Delete').first().click();
-            await this.page.locator('id=toast-container',{hasText:'Case Type deleted successfully'}).isVisible();
+            await expect(this.page.locator('id=toast-container',{hasText:'Case Type deleted successfully'})).toBeInViewport();
             }
         
 

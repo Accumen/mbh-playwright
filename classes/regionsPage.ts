@@ -1,4 +1,4 @@
-import { Page} from "@playwright/test";
+import {expect,Page} from "@playwright/test";
 
 export default class CasetypesmappingPage{
 
@@ -43,12 +43,12 @@ export default class CasetypesmappingPage{
     //save for editing region
     async save(){
         await this.page.getByRole('button',{name:'Save'}).click();
-        await this.page.locator('id=toast-container',{hasText:'Successfully Saved Region'}).isVisible();
+        await expect(this.page.locator('id=toast-container',{hasText:'Successfully Saved Region'})).toBeInViewport();
     }
     //Save for new region
     async saveNewRegion(){
         await this.page.getByRole('button',{name:'Save'}).click();
-        await this.page.locator('id=toast-container',{hasText:'Successfully Added Region'}).isVisible();
+        await expect(this.page.locator('id=toast-container',{hasText:'Successfully Added Region'})).toBeInViewport();
     }
     //add region button
     async addRegion(){
@@ -80,7 +80,7 @@ export default class CasetypesmappingPage{
     async deleteRegion(){
         this.page.once('dialog',dialog => dialog.accept());
         await this.page.getByTitle('Delete').last().click();
-        await this.page.locator('id=toast-container',{hasText:'Region deleted successfully'}).isVisible();
+        await expect(this.page.locator('id=toast-container',{hasText:'Region deleted successfully'})).toBeInViewport();
     }
 
 }

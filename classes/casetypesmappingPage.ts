@@ -1,6 +1,5 @@
 import {Page} from "@playwright/test";
 import {expect} from "@playwright/test";
-import path from "path/win32";
 
 export default class CasetypesmappingPage{
 
@@ -31,7 +30,7 @@ export default class CasetypesmappingPage{
         await this.page.getByRole('button', {name: 'Upload Mappings'}).click();
         await this.page.locator("input[type=file]").setInputFiles("./testdata/xlsx files/CaseTypeMapping_1718978762916.xlsx");
         await this.page.getByRole('button',{name:'Upload Mappings'}).click();
-        await this.page.locator('id=toast-container',{hasText:'Mappings uploaded successfully'}).isVisible();
+        await expect(this.page.locator('id=toast-container',{hasText:'Mappings uploaded successfully'})).toBeInViewport();
     }
 
     //search code, description (fillable field)
@@ -135,7 +134,7 @@ export default class CasetypesmappingPage{
     await this.page.getByText(searchCaseCode).hover();
     await this.page.getByText(casetype, {exact:true}).click();
     await this.page.getByText(casetype2, {exact:true}).click();
-    await this.page.locator('id=toast-container',{hasText:'Case Type Mapping successfully updated'}).isVisible();
+    await expect(this.page.locator('id=toast-container',{hasText:'Case Type Mapping successfully updated'})).toBeInViewport();
    }
 
     //clear button
@@ -148,7 +147,7 @@ export default class CasetypesmappingPage{
         await this.page.getByText('No override').click();
         await this.page.getByRole('option',{name:casetype}).click();
         await this.page.getByRole('button',{name:'Save Overrides'}).click();
-        await this.page.getByTitle("Mapping Overrides: 1").isVisible();
+        await expect(this.page.getByTitle("Mapping Overrides: 1")).toBeInViewport();
     }
     
     async caseVerify(casecode, num){

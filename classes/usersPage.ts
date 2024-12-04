@@ -1,4 +1,4 @@
-import { Page} from "@playwright/test";
+import { expect,Page} from "@playwright/test";
 
 export default class UsersPage{
 
@@ -99,7 +99,7 @@ export default class UsersPage{
     //save user button
     async saveUser(){
         await this.page.getByRole('button',{name:'Save User'}).click();
-        await this.page.locator('id=toast-container',{hasText:'User successfully saved'}).isVisible();
+        await expect(this.page.locator('id=toast-container',{hasText:'User successfully saved'})).toBeInViewport();
     }
 
     //back arrow button
@@ -190,7 +190,9 @@ export default class UsersPage{
     
     //delete button
     async deleteUser(){
+        this.page.once('dialog',dialog => dialog.accept());
         await this.page.getByTitle('Delete').first().click();
+        await expect(this.page.locator('id=toast-container',{hasText:'User deleted successfully'})).toBeInViewport();
     }
 
           //pagination
