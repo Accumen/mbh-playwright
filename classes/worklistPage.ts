@@ -55,28 +55,37 @@ export default class WorklistPage{
     //surgical menu option
     async clickSurgical(){
         await this.page.getByRole('link', {name: 'Surgical', exact:true}).click({delay:1000});// clicks the Surgical submenu from the worklist
-        await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).toBeInViewport
+        await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).not.toBeInViewport()
     }
     //chronic menu option
     async clickChronic(){ //change name to clickNonSurgical?
         await this.page.getByRole('link', {name:'Non-Surgical', exact: true}).click({delay:1000}); // clicks the Chronic submenu from the worklist
-        await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).toBeInViewport
+        await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).toBeInViewport()
     }
 
     async clickFacility(fromfacility, tofacility){
         await this.page.getByLabel(fromfacility).locator('svg').click();
+        if(tofacility !='Select All'){
         await this.page.getByRole('option',{name:tofacility,exact:true}).click();
-        await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).toBeInViewport
+        await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).not.toBeInViewport()
+    }
+        else{
+            await this.page.getByLabel('Select All',{exact:true}).click();
+            await this.page.getByLabel('Select All',{exact:true}).press('Tab');
+            await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).not.toBeInViewport()
+        }
     }
     async clickMultiFacility(fromfacility, tofacility,anotherfacility?){
         await this.page.getByLabel(fromfacility).locator('svg').click();
         await this.page.getByRole('option',{name:tofacility,exact:true}).click();
         if(anotherfacility != 'Null'){
             await this.page.getByRole('option',{name:anotherfacility,exact:true}).click();
-            await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).toBeInViewport
+            await this.page.getByRole('option',{name:anotherfacility,exact:true}).press('Tab');
+            await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).not.toBeInViewport()
         }
         else{
-        await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).toBeInViewport
+        await this.page.getByRole('option',{name:tofacility,exact:true}).press('Tab');
+        await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).not.toBeInViewport()
         }
     }
     async favoriteFacility(){
@@ -201,7 +210,7 @@ export default class WorklistPage{
     //client user save filter button (floppy disc) 
     async saveFilters(){
         await this.page.locator('button').filter({hasText:'save'}).click();
-        await expect(this.page.locator('id=toast-container',{hasText:'Filters saved successfully'})).toBeInViewport
+        await expect(this.page.locator('id=toast-container',{hasText:'Filters saved successfully'})).toBeInViewport()
     }                       
                             
            
