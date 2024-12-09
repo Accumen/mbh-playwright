@@ -567,8 +567,8 @@ export default class PatientsPage{
     }
     async editPatientStreet(street){
         //street address
-        await this.page.getByLabel('Street *').click();
-        await this.page.getByLabel('Street *').fill(street);
+        await this.page.getByPlaceholder('Street').click();
+        await this.page.getByPlaceholder('Street').fill(street);
     }
     async editPatientCity(city){
         //city
@@ -582,8 +582,8 @@ export default class PatientsPage{
     }
     async editPatientZipcode(zipcode){
         //zipcode
-        await this.page.getByLabel('PostalCode *').click();
-        await this.page.getByLabel('PostalCode *').fill(zipcode);
+        await this.page.getByPlaceholder('PostalCode').click();
+        await this.page.getByPlaceholder('PostalCode').fill(zipcode);
     }
     async editPatientPhone(phone){
         //primary phone
@@ -621,7 +621,7 @@ export default class PatientsPage{
         await this.page.getByLabel('Surgeon Name / NPI').click();
         await this.page.getByPlaceholder('Surgeon Name / NPI').fill(surgeon);
         await this.page.getByPlaceholder('Surgeon Name / NPI').press('Enter');
-        await this.page.getByRole('option',{name:surgeon,exact:false}).click();
+        await this.page.getByRole('option',{name:surgeon,exact:true}).click();
         //save button
         await this.page.getByRole('button',{name:'Save'}).click();
     }

@@ -68,9 +68,21 @@ export default class WorklistPage{
         await this.page.getByRole('option',{name:tofacility,exact:true}).click();
         await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).toBeInViewport
     }
+    async clickMultiFacility(fromfacility, tofacility,anotherfacility?){
+        await this.page.getByLabel(fromfacility).locator('svg').click();
+        await this.page.getByRole('option',{name:tofacility,exact:true}).click();
+        if(anotherfacility != 'Null'){
+            await this.page.getByRole('option',{name:anotherfacility,exact:true}).click();
+            await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).toBeInViewport
+        }
+        else{
+        await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).toBeInViewport
+        }
+    }
     async favoriteFacility(){
         await this.page.locator('app-page-header-content i').click();
     }
+
     /* The rest of the functions are the same no matter which menu is chosen (surgical or chronic) */
     //Search Name, MRN
     async searchMRN(searchInfo: string){
