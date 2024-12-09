@@ -1,4 +1,4 @@
-import { Page} from "@playwright/test";
+import {expect,Page} from "@playwright/test";
 
 export default class CasetypesmappingPage{
 
@@ -16,7 +16,7 @@ export default class CasetypesmappingPage{
    
     //select region from screen
     async selectRegion(regionName){
-        await this.page.getByText(regionName).click();
+        await this.page.getByRole('table').getByText(regionName).click();
     }
     //edit region name
     async editRegionName(regionName){
@@ -33,16 +33,22 @@ export default class CasetypesmappingPage{
     //edit region status
     async editRegionStatus(regionStatus){
         await this.page.getByLabel('Active').locator('div').nth(2).click();
-        await this.page.getByText(regionStatus,{exact:true}).click();
+        await this.page.getByRole('option',{name:regionStatus, exact:true}).click();
         /**
          * Active
          * Inactive
          */
 
     }
-    //Save
-    async saveRegion(){
+    //save for editing region
+    async save(){
         await this.page.getByRole('button',{name:'Save'}).click();
+        await expect(this.page.locator('id=toast-container',{hasText:'Successfully Saved Region'})).toBeInViewport();
+    }
+    //Save for new region
+    async saveNewRegion(){
+        await this.page.getByRole('button',{name:'Save'}).click();
+        await expect(this.page.locator('id=toast-container',{hasText:'Successfully Added Region'})).toBeInViewport();
     }
     //add region button
     async addRegion(){
@@ -65,15 +71,16 @@ export default class CasetypesmappingPage{
          * InActive
          */
     }
+    
     //back arrow
     async backArrow(){
         await this.page.getByRole('button',{name:''}).click();
     }
     //delete (trash can)
     async deleteRegion(){
-        //await this.page.getByTitle('Delete').click();
         this.page.once('dialog',dialog => dialog.accept());
         await this.page.getByTitle('Delete').last().click();
+        await expect(this.page.locator('id=toast-container',{hasText:'Region deleted successfully'})).toBeInViewport();
     }
 
 }

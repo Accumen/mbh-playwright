@@ -1,0 +1,23 @@
+{
+    "optionClient": "Conemaugh",
+    "fname": "Donald",
+     "lname": "Duck",
+     "mrn": "859423",
+     "hhYear": "2024",
+     "hhMonth": "JUN",
+     "hhDay": "25",
+     "gender": "Male",
+     "race": "White",
+     "ethnicity": "Not Hispanic",
+     "dobyear": "1987",
+     "dobmonth": "MAY",
+     "dobday": "16",
+     "hippa": "yes",
+     "phone": "2548879845",
+     "street": "543 Waddle Way",
+     "city": "Bedrock",
+     "state": "CA",
+     "zipcode": "56795",
+     "height": "68",
+     "weight": "156"
+}

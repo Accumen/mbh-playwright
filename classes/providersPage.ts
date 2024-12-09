@@ -1,4 +1,4 @@
-import { Page} from "@playwright/test";
+import {expect, Page} from "@playwright/test";
 
 export default class ProvidersPage{
 
@@ -31,61 +31,25 @@ export default class ProvidersPage{
         await this.page.getByRole('link', {name: provider, exact: false}).click();
     }
     //Enter/Edit Provider Information
-    async editAddProviderInfo(fname, mname, lname, prefix, suffix, cred, desc, address, city, state, zip, email, phone, fax, npi, clinic, status){
+    async editAddProviderInfo(fname, lname, email, npi, status){
     //all fillable fields
             
         //first name (required)
         await this.page.getByLabel('First Name').click();
         await this.page.getByLabel('First Name').fill(fname);     
-        //middle name
-        await this.page.getByLabel('Middle Name').click();
-        await this.page.getByLabel('Middle Name').fill(mname); 
         //last name (required)
         await this.page.getByLabel('Last Name').click();
         await this.page.getByLabel('Last Name').fill(lname);     
-        //prefix
-        await this.page.getByLabel('Prefix').click();
-        await this.page.getByLabel('Prefix').fill(prefix); 
-        //suffix
-        await this.page.getByLabel('Suffix').click();
-        await this.page.getByLabel('Suffix').fill(suffix);
-        //credentials
-        await this.page.getByLabel('Credentials').click();
-        await this.page.getByLabel('Credentials').fill(cred);
-        //description
-        await this.page.getByPlaceholder('Description').click();
-        await this.page.getByPlaceholder('Description').fill(desc);
-        //address
-        await this.page.getByLabel('Address').click();
-        await this.page.getByLabel('Address').fill(address);
-        //city
-        await this.page.getByLabel('City').click();
-        await this.page.getByLabel('City').fill(city); 
-        //state
-        await this.page.getByLabel('State').click();
-        await this.page.getByLabel('State').fill(state);
-        //postal code
-        await this.page.getByText('PostalCode').click();
-        await this.page.getByText('PostalCode').fill(zip);
         //email (required)
         await this.page.getByLabel('Email').click();
         await this.page.getByLabel('Email').fill(email);     
-        //office phone
-        await this.page.getByText('Office Phone').click();
-        await this.page.getByText('Office Phone').fill(phone);
-        //office fax
-        await this.page.getByLabel('Office Fax').click();
-        await this.page.getByLabel('Office Fax').fill(fax);
         //NPI (required)
         await this.page.getByLabel('NPI').click();
         await this.page.getByLabel('NPI').fill(npi);     
-        //Clinic
-        await this.page.getByLabel('Clinic').click();
-        await this.page.getByLabel('Clinic').fill(clinic);
-             
         //call to status drop down
         this.providerStatus(status);
     }
+
     //edit provider's first name
     async editProviderFirstName(fname){
         await this.page.getByLabel('First Name').click();
@@ -106,9 +70,18 @@ export default class ProvidersPage{
         await this.page.getByLabel('NPI').click();
         await this.page.getByLabel('NPI').fill(npi);
     }
+    //edit provider postal code
+    async editPostalCode(zipcode){
+        await this.page.getByPlaceholder('PostalCode').fill(zipcode);
+    }
+    //provider npi error check
+    async npiErrorCheck(){
+        await this.page.getByText('NPI should be 10 digit number').isVisible();
+    }
             //save provider button
     async saveProvider(){
         await this.page.getByRole('button', {name:'Save Provider'}).click();
+        await expect(this.page.locator('id=toast-container',{hasText:'Provider Updated successfully'})).toBeInViewport();
     }        
             //back button
     async backArrow(){
@@ -116,8 +89,9 @@ export default class ProvidersPage{
     }        
     //search provider (fillable)
     async searchProvider(provider:string){
-        await this.page.getByLabel('Search provider name, npi').click();
-        await this.page.getByLabel('Search provider name, npi').fill(provider);
+        await this.page.getByText('Search provider name, npi').click();
+        await this.page.getByText('Search provider name, npi').fill(provider);
+        await this.page.getByText('Search provider name, npi').press('Enter');
     }
     //status drop down
     async providerStatus(status:string){
@@ -137,6 +111,7 @@ export default class ProvidersPage{
         //await this.page.getByTitle('Delete').click();
         this.page.once('dialog',dialog => dialog.accept());
         await this.page.getByTitle('Delete').last().click();
+        await expect(this.page.locator('id-toast-container',{hasText:'Provider deleted successfully'})).toBeInViewport();
     }
     // adjust number of rows visible on screen
     async adjustRowCount(row: string){

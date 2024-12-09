@@ -1,6 +1,5 @@
-import {Page} from "@playwright/test";
-import{expect}from"@playwright/test";
-import WorklistPage from "./worklistPage";
+import { Page} from "@playwright/test";
+import {expect} from "@playwright/test";
 
 export default class PatientsPage{
 
@@ -52,7 +51,7 @@ export default class PatientsPage{
  
     //search patient name (fillable)
     async searchPatient(patient){
-        await this.page.locator('mat-label').click();
+        await this.page.locator('mat-label').getByText('Search Patient name , mrn').click({delay:1000});
         await this.page.getByPlaceholder('Search Patient name , mrn').fill(patient);
         await this.page.getByPlaceholder('Search Patient name , mrn').press('Enter');
     }
@@ -64,9 +63,15 @@ export default class PatientsPage{
     async selectPatientfromSearch(patient){
         await this.page.getByRole('link',{name:patient}).first().click();
     }
+    //verify last visit date and location on patient search screen
+    async verifyVisitInfo(patient,location,dateTime){
+        await this.page.getByText(patient).waitFor({state:'visible'});
+        await this.page.getByText(location).waitFor({state:'visible'});
+        await this.page.getByText(dateTime).waitFor({state:'visible'});
+    }
     //view all labs button
-    async viewAllLabs(labtype?,startyear?,startmonth?, startday?,resultyear?,resultmonth?, resultday?){
-        await this.page.getByRole('button',{name:'View All'}).click();
+    async viewAllLabs(labtype?,startyear?,startmonth?, startday?,endyear?,endmonth?, endday?){
+        await this.page.getByTestId('viewAll').click();
         //lab type fillable
         await this.page.getByLabel('Lab Type').click();
         await this.page.getByLabel('Lab Type').fill(labtype);
@@ -79,40 +84,40 @@ export default class PatientsPage{
             while(await this.page.getByRole('button', {name:startyear, exact:false}).isHidden()){
                await this.page.getByLabel('Previous 24 years').click();
             }
-               await this.page.getByLabel(startyear).click();
+               await this.page.getByRole('button',{name:startyear,exact:true}).click();
                await this.page.getByLabel(startmonth).click();
                await this.page.getByText(startday,{exact:true}).click();    
             //end date    (calendar) 
             await this.page.getByLabel('Choose month and year').click();
-            while(await this.page.getByRole('button', {name:resultyear, exact:false}).isHidden()){
+            while(await this.page.getByRole('button', {name:endyear, exact:false}).isHidden()){
                await this.page.getByLabel('Previous 24 years').click();
             }
-               await this.page.getByLabel(resultyear,{exact:true}).click();
-               await this.page.getByLabel(resultmonth).click();
-               await this.page.getByText(resultday,{exact:true}).click();}
+               await this.page.getByLabel(endyear,{exact:true}).click();
+               await this.page.getByLabel(endmonth).click();
+               await this.page.getByText(endday,{exact:true}).click();}
                
         }        
-        //select from lab search results list
-        async editSearchedLab(result?,resultyear?,resultmonth?,resultday?){
-            //edit pencil
-            await this.page.getByRole('link',{name:'Edit Lab'}).first().click();//edit button with aria-label
-                //result value
-                await this.page.getByPlaceholder('Result Value').click();
-                await this.page.getByPlaceholder('Result Value').fill(result);
-                if(resultyear != 'NULL'){
-                //result date (calendar)
-                await this.page.locator('#mat-mdc-dialog-2').getByLabel('Open calendar').click();
-                //
-                await this.page.getByLabel('Choose month and year').click();
-                while(await this.page.getByRole('button', {name:resultyear, exact:false}).isHidden()){
-                    await this.page.getByLabel('Previous 24 years').click();
-                 }
-                    await this.page.getByLabel(resultyear).click();
-                    await this.page.getByLabel(resultmonth).click();
-                    await this.page.getByText(resultday,{exact:true}).click(); 
-                    await this.page.getByRole('button').filter({hasText:'done'}).click(); 
-                }
-        }  
+	  //select from lab search results list
+      async editSearchedLab(result?,resultyear?,resultmonth?,resultday?){
+        //edit pencil
+        await this.page.getByRole('link',{name:'Edit Lab'}).first().click();//edit button with aria-label
+            //result value
+            await this.page.getByPlaceholder('Result Value').click();
+            await this.page.getByPlaceholder('Result Value').fill(result);
+            if(resultyear != 'NULL'){
+            //result date (calendar)
+            await this.page.locator('#mat-mdc-dialog-2').getByLabel('Open calendar').click();
+            //
+            await this.page.getByLabel('Choose month and year').click();
+            while(await this.page.getByRole('button', {name:resultyear, exact:false}).isHidden()){
+                await this.page.getByLabel('Previous 24 years').click();
+             }
+                await this.page.getByLabel(resultyear).click();
+                await this.page.getByLabel(resultmonth).click();
+                await this.page.getByText(resultday,{exact:true}).click(); 
+                await this.page.getByRole('button').filter({hasText:'done'}).click(); 
+            }
+    }    
             //delete prepopulated result date for edit result value
             async deleteResultDate(){
                 await this.page.getByPlaceholder('Result Date').click();
@@ -125,7 +130,7 @@ export default class PatientsPage{
                 await this.page.getByRole('button', {name:'Save'}).click();
             }     
             //delete trash can    
-            async deleteSearchedLab(labtype){
+            async deleteSearchedLab(){
                 this.page.on('dialog',dialog => dialog.accept());
                 await this.page.getByRole('link',{name:'Delete Lab'}).first().click();
                 
@@ -139,16 +144,6 @@ export default class PatientsPage{
         await this.page.getByText('LATEST LABS').scrollIntoViewIfNeeded();
     }
     
-    //confirm Ferritin badge
-    async worklistBadge(result){
-        await this.page.locator('app-basic-visit-info-page').getByText(result).screenshot({path:'worklistBadge.png'});
-        if(result != '300'){
-            await expect (this.page.locator('app-basic-visit-info-page').getByText(result)).toHaveCSS('color','rgb(255, 0, 0)');
-        }
-        else{
-            await expect (this.page.locator('app-basic-visit-info-page').getByText(result)).toHaveCSS('color','rgb(51, 51, 51)')
-        }
-    }
     //add labs
     async addLabs(labtype,labvalue,resultyear,resultmonth,resultday){
         await this.page.getByRole('button',{name: 'Add'}).click();
@@ -185,7 +180,7 @@ export default class PatientsPage{
          await this.page.getByPlaceholder('MRN',{exact:true}).click();
          await this.page.getByPlaceholder('MRN',{exact:true}).fill(mrn);
         //health history (calendar)
-        await this.page.getByPlaceholder('Health History Date').getByLabel('Open calendar').click();
+        await this.page.locator('mat-form-field').filter({ hasText: 'Health History Date' }).getByLabel('Open calendar').click();
         await this.page.getByLabel('Choose month and year').click();
         while(await this.page.getByRole('button', {name:hhYear, exact:true}).isHidden()){
            await this.page.getByLabel('Previous 24 years').click();
@@ -223,7 +218,7 @@ export default class PatientsPage{
          * Not Hispanic
          */
         //date of birth (calendar)
-        await this.page.locator('mat-form-field').filter({hasText: 'Date of birth *'}).getByLabel('Open calendar').click();
+        await this.page.locator('mat-form-field').filter({hasText: 'Date of birth'}).getByLabel('Open calendar').click();
         await this.page.getByLabel('Choose month and year').click();
         while(await this.page.getByRole('button', {name:dobyear, exact:true}).isHidden()){
            await this.page.getByLabel('Previous 24 years').click();
@@ -257,17 +252,17 @@ export default class PatientsPage{
         await this.page.getByPlaceholder('City', { exact: true }).click();
         await this.page.getByPlaceholder('City', { exact: true }).fill(city);
         //state
-        await this.page.getByPlaceholder('State').click();
-        await this.page.getByPlaceholder('State').fill(state);
+        await this.page.locator('id=mat-mdc-form-field-label-52').click();
+        await this.page.locator('id=mat-mdc-form-field-label-52').fill(state);
         //zip
-        await this.page.getByPlaceholder('PostalCode').click();
-        await this.page.getByPlaceholder('PostalCode').fill(zipcode);
+        await this.page.locator('id=mat-mdc-form-field-label-54').click();
+        await this.page.locator('id=mat-mdc-form-field-label-54').fill(zipcode);
         //height
-        await this.page.getByPlaceholder('Height(inches)').click();
-        await this.page.getByPlaceholder('Height(inches)').fill(height);
+        await this.page.locator('id=mat-mdc-form-field-label-36').click();
+        await this.page.locator('id=mat-mdc-form-field-label-36').fill(height);
         //weight
-        await this.page.getByPlaceholder('Weight (lbs)').click();
-        await this.page.getByPlaceholder('Weight (lbs)').fill(weight);
+        await this.page.locator('id=mat-mdc-form-field-label-38').click();
+        await this.page.locator('id=mat-mdc-form-field-label-38').fill(weight);
 
     }
         //save patient button
@@ -277,14 +272,14 @@ export default class PatientsPage{
 
           //schedule surgical visit
           async patientschedulesurgical(pYear,pMonth,pDay,pclickcount,procedure,surgeon,pFacility){
-            await this.page.getByRole('button',{name:'Schedule Surgical Visit'}).click();
+            await this.page.getByTestId('scheduleSurgicalVisit').click();
                  //**Visit screen**
          //visit date (calendar and 24hr clock)
          await this.page.getByRole('button',{name:'Open calendar'}).click();
          await this.page.getByLabel('Choose month and year').click();
          await this.page.getByRole('button',{name:pYear, exact:true}).click();
          await this.page.getByRole('button',{name: pMonth, exact: false}).click();
-         await this.page.getByLabel(pDay).click();
+         await this.page.getByText(pDay,{exact:true}).click();
          await this.page.getByLabel('expand_less icon').first().click({clickCount: pclickcount});
               /**Click Count Key for 24hr clock
                * 1 = 1am
@@ -380,7 +375,7 @@ export default class PatientsPage{
             //Delete Button
         //Surgeon (fillable required field)
         await this.page.getByLabel('Surgeon', {exact:true}).click();
-         await this.page.getByPlaceholder('Surgeon', {exact:true}).fill('Sur');
+         await this.page.getByPlaceholder('Surgeon', {exact:true}).fill(surgeon);
          await this.page.getByPlaceholder('Surgeon',{exact:true}).press('Enter');
          //await expect (this.page.locator('id=mat-autocomplete-1')).toBeVisible();
          await this.page.getByRole('option', {name: surgeon, exact: false}).click();
@@ -389,10 +384,13 @@ export default class PatientsPage{
          await this.page.getByPlaceholder('Facility',{exact:true}).press('Enter');
          await this.page.getByRole('option',{name:pFacility,exact:true}).click();
          await this.page.getByRole('button',{name:'Schedule Visit'}).click();
+         await this.page.locator('id=toast-container',{hasText:'visit scheduled successfully'}).isVisible();
+
         }
         //schedule chronic visit
         async patientsschedulechronic(pYear,pMonth,pDay,pclickcount,procedure,surgeon,pFacility){
-            await this.page.getByRole('button',{name:'Schedule Non-Surgical Visit'}).click();
+            await this.page.getByTestId('scheduleNonSurgicalVisit').click();
+            //await this.page.getByRole('button',{name:'Schedule Non-Surgical Visit'}).click();
              //**Visit screen**
          //visit date (calendar and 24hr clock)
          await this.page.getByRole('button',{name:'Open calendar'}).click();
@@ -452,7 +450,7 @@ export default class PatientsPage{
             //Delete Button
         //Surgeon (fillable required field)
      await this.page.getByText('Referring Provider', {exact:true}).click();
-         await this.page.getByPlaceholder('Referring Provider', {exact:true}).fill('Sur');
+         await this.page.getByPlaceholder('Referring Provider', {exact:true}).fill(surgeon);
          await this.page.getByPlaceholder('Referring Provider', {exact:true}).press('Enter');
          await this.page.getByRole('option', {name: surgeon, exact: false}).click();
          //Facility
@@ -461,13 +459,15 @@ export default class PatientsPage{
          await this.page.getByPlaceholder('Treatment Facility',{exact:true}).press('Enter');
          await this.page.getByRole('option',{name:pFacility,exact:true}).click();
          await this.page.getByRole('button',{name:'Schedule Visit'}).click();
+         await this.page.locator('id=toast-container',{hasText:'visit scheduled successfully'}).isVisible();
         }  
         //edit patient button
     async editPatientDetails(changeDesc){
-        await this.page.getByRole('button',{name:'Edit Patient'}).click();
+        await this.page.getByTestId('editPatient').click();
+        //await this.page.getByRole('button',{name:'Edit Patient'}).click();
          //change description note box
-        await this.page.getByLabel('Change Description *').click();
-        await this.page.getByLabel('Change Description *').fill(changeDesc)
+        await this.page.getByLabel('Change Description').click();
+        await this.page.getByLabel('Change Description').fill(changeDesc)
     }
     async hoverPatientDetails(){
         await this.page.getByText('Patient Details').hover();
@@ -508,7 +508,7 @@ export default class PatientsPage{
     }
     async editPatientRace(race){
         //race
-        await this.page.getByLabel('Race *').locator('div').nth(2).click();
+        await this.page.getByPlaceholder('Race').locator('div').nth(2).click();
         await this.page.getByRole('option', { name: race, exact:true }).locator('span').click();
         /** Race Key
          * American Indian or Alaska Native
@@ -521,7 +521,7 @@ export default class PatientsPage{
     }
     async editPatientEthnicity(ethnicity){
         //ethinicity
-        await this.page.getByLabel('Ethnicity *').locator('div').nth(2).click();
+        await this.page.getByPlaceholder('Ethnicity').locator('div').nth(2).click();
         await this.page.getByRole('option', { name: ethnicity, exact:true }).locator('span').click();
         /** Ethnicity Key
          * Unknown
@@ -551,8 +551,8 @@ export default class PatientsPage{
     }
     async editPatientStreet(street){
         //street address
-        await this.page.getByLabel('Street *').click();
-        await this.page.getByLabel('Street *').fill(street);
+        await this.page.getByPlaceholder('Street').click();
+        await this.page.getByPlaceholder('Street').fill(street);
     }
     async editPatientCity(city){
         //city
@@ -566,8 +566,8 @@ export default class PatientsPage{
     }
     async editPatientZipcode(zipcode){
         //zipcode
-        await this.page.getByLabel('PostalCode *').click();
-        await this.page.getByLabel('PostalCode *').fill(zipcode);
+        await this.page.getByPlaceholder('PostalCode').click();
+        await this.page.getByPlaceholder('PostalCode').fill(zipcode);
     }
     async editPatientPhone(phone){
         //primary phone
@@ -576,13 +576,13 @@ export default class PatientsPage{
     }
     //edit height
     async editPatientHeight(height){
-     await this.page.locator('id=mat-input-10').click();
-     await this.page.locator('id=mat-input-10').fill(height);
+     await this.page.getByPlaceholder('Height(inches)').click();
+     await this.page.getByPlaceholder('Height(inches)').fill(height);
     }
     //edit weight
     async editPatientWeight(weight){
-    await this.page.locator('id=mat-input-11').click();
-    await this.page.locator('id=mat-input-11').fill(weight);   
+    await this.page.getByPlaceholder('Weight (lbs)').click();
+    await this.page.getByPlaceholder('Weight (lbs)').fill(weight);   
 
     }
     //edit pcp
@@ -605,7 +605,7 @@ export default class PatientsPage{
         await this.page.getByLabel('Surgeon Name / NPI').click();
         await this.page.getByPlaceholder('Surgeon Name / NPI').fill(surgeon);
         await this.page.getByPlaceholder('Surgeon Name / NPI').press('Enter');
-        await this.page.getByRole('option',{name:surgeon,exact:false}).click();
+        await this.page.getByRole('option',{name:surgeon,exact:true}).click();
         //save button
         await this.page.getByRole('button',{name:'Save'}).click();
     }
@@ -655,21 +655,26 @@ export default class PatientsPage{
     async viewVisit(){
         await this.page.getByRole('button',{name:'View Visit'}).last().click();//chooses most recent visit
     }
+    //Assign visit button
+    async assignButton(){
+        await this.page.getByRole('button',{name:'Assign'}).click();
+    }
     //assign visit
     async assignVisit(user){
-        await this.page.getByRole('button',{name:'Assign'}).click();
         await this.page.getByLabel('Users list').locator('div').nth(3).click();
         await this.page.getByRole('option',{name:user,exact:true}).click();
     }
     //save assigned user
     async saveAssigned(){
         await this.page.getByRole('button',{name:'Save'}).click();
-        //await this.page.locator('app-basic-visit-info-page div').getByText('Assigned To | Test User').focus();
+        await expect(this.page.locator('id=toast-container',{hasText:'User Assigned successfully'})).toBeInViewport();
+        
     }
     //unassign user
     async unAssign(){
         await this.page.getByRole('button',{name:'Assign'}).click();
         await this.page.getByRole('button',{name:'UnAssign'}).click();
+        await expect(this.page.locator('id=toast-container',{hasText:'User Unassigned successfully'})).toBeInViewport();
     }
     //back arrow
     async backarrow(){
@@ -687,6 +692,10 @@ export default class PatientsPage{
     async seeMedications(){
         await this.page.getByRole('button',{name:'MEDICATIONS'}).click();
     }
+    //Anemia Management Treatment drop down
+    async seeAnemiaManagement(){
+        await this.page.getByRole('button',{name:'ANEMIA MANAGEMENT TREATMENT'}).click();
+    }
     //allergies drop down
     async seeAllergies(){
         await this.page.getByRole('button',{name:'ALLERGIES'}).click();
@@ -697,8 +706,8 @@ export default class PatientsPage{
         
     }
     //add communication
-    async addCommunication(commType, message,priority,resolveDate){
-        await this.page.locator('app-communication-list').getByRole('button', { name: ' Add' }).click();
+    async addCommunication(commType, message,priority,resolveYear?,resolveMonth?,resolveDay?){
+        await this.page.getByTestId('addCommunication').click();
         await this.page.getByPlaceholder('Communication Type').click();
         await this.page.getByText(commType).click();
         /**commType Key
@@ -716,13 +725,20 @@ export default class PatientsPage{
          * Medium
          * High
          */
+     if(commType != 'Comment'){
         await this.page.getByLabel('Open calendar').click();
-        await this.page.getByLabel(resolveDate).click();
-        /**resolveDate
-         * Month day,
-         */
-        await this.page.locator('button').filter({ hasText: 'done' }).click();
-        await this.page.getByRole('button', { name: 'Add Communication' }).click();
+        await this.page.getByLabel('Choose month and year').click();
+        while(await this.page.getByRole('button', {name:resolveYear, exact:false}).isHidden()){
+           await this.page.getByLabel('Previous 24 years').click();
+        }
+           await this.page.getByLabel(resolveYear,{exact:true}).click();
+           await this.page.getByLabel(resolveMonth).click();
+           await this.page.getByText(resolveDay,{exact:true}).click();
+           await this.page.locator('button').filter({ hasText: 'done' }).click();
+    }
+
+           await this.page.getByRole('button', { name: 'Add Communication' }).click();
+           await expect(this.page.locator('id=toast-container',{hasText:'Communication added successfully'})).toBeInViewport();
     } 
     //sort communication
     async sortCommunication(sortby){
@@ -745,7 +761,8 @@ export default class PatientsPage{
     }
     //edit communication
     async editCommunication(){
-        await this.page.getByRole('button',{name:' Edit',exact:true}).last().click();
+        await this.page.getByText('COMMUNICATION').scrollIntoViewIfNeeded();
+        await this.page.getByLabel('communication-edit').last().click();
     }
     //edit commtype
     async editCommType(commType){
@@ -774,17 +791,21 @@ export default class PatientsPage{
          */
     }
     //edit resolve date
-    async editResolveDate(resolveDate){
+    async editResolveDate(resolveYear,resolveMonth,resolveDay){
         await this.page.getByLabel('Open calendar').click();
-        await this.page.getByLabel(resolveDate).click();
-        /**resolveDate
-         * Month day,
-         */
-        await this.page.locator('button').filter({ hasText: 'done' }).click();
+        await this.page.getByLabel('Choose month and year').click();
+        while(await this.page.getByRole('button', {name:resolveYear, exact:false}).isHidden()){
+           await this.page.getByLabel('Previous 24 years').click();
+        }
+           await this.page.getByLabel(resolveYear,{exact:true}).click();
+           await this.page.getByLabel(resolveMonth).click();
+           await this.page.getByText(resolveDay,{exact:true}).click();
+           await this.page.locator('button').filter({ hasText: 'done' }).click();
     }
     //edit communication button
     async saveCommEdits(){
         await this.page.getByRole('button',{name:'Edit Communication'}).click();
+        await expect(this.page.locator('id=toast-container',{hasText:'Communication edited successfully'})).toBeInViewport();
     }
     //reply to communication
     async replyCommunication(comment,resolved){

@@ -1,4 +1,4 @@
-import { Page} from "@playwright/test";
+import {expect, Page} from "@playwright/test";
 
 export default class DocumentsPage{
 
@@ -62,6 +62,7 @@ export default class DocumentsPage{
     //save document button
     async saveDoc(){
         await this.page.getByRole('button',{name:'Save Document'}).click();
+        await expect(this.page.locator('id=toast-container',{hasText:'Treatment Document Saved successfully'})).toBeInViewport();
     }
     //fillable fields for adding or editing a document
     async addEditDoc(docname,desc,doctype,casetype,docstat){
@@ -214,7 +215,7 @@ export default class DocumentsPage{
         }
         //status drop down
         await this.page.getByLabel('Status').click();
-        await this.page.getByText(docstat,{exact:true}).click();
+        await this.page.getByRole('option',{name:docstat,exact:true}).click();
             /**docstat key
              * active
              * inactive
@@ -233,6 +234,7 @@ export default class DocumentsPage{
       async delete(){
         this.page.on('dialog',dialog => dialog.accept());
         await this.page.getByTitle('Delete').click();
+        await expect(this.page.locator('id=toast-container',{hasText:'Document deleted successfully'})).toBeInViewport();
     }
     
      //pagination

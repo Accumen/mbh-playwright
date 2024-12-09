@@ -1,5 +1,5 @@
-import { Page} from "@playwright/test";
-import path from "path/win32";
+import {Page} from "@playwright/test";
+import {expect} from "@playwright/test";
 
 export default class CasetypesmappingPage{
 
@@ -8,6 +8,7 @@ export default class CasetypesmappingPage{
     //variables
     public searchCaseCode;
     public casetype;
+    public casetype2;
 
     //select case types mapping from navigation menu
     async selectCaseTypesMapping (){
@@ -21,15 +22,15 @@ export default class CasetypesmappingPage{
         const downloadPromise = this.page.waitForEvent('download');
         await this.page.getByRole('button', {name:'Download Mappings'}).click();
         const download = await downloadPromise;
-        await download.saveAs('../testdata/'+ download.suggestedFilename());
+        await download.saveAs('./testdata/xlsx files/'+ download.suggestedFilename());
     }
 
     //upload mappings button
     async uploadCaseTypeMappings(){
         await this.page.getByRole('button', {name: 'Upload Mappings'}).click();
-        await this.page.locator("input[type=file]").setInputFiles("./caseTypeMapping.xlsx");
+        await this.page.locator("input[type=file]").setInputFiles("./testdata/xlsx files/CaseTypeMapping_1718978762916.xlsx");
         await this.page.getByRole('button',{name:'Upload Mappings'}).click();
-        
+        await expect(this.page.locator('id=toast-container',{hasText:'Mappings uploaded successfully'})).toBeInViewport();
     }
 
     //search code, description (fillable field)
@@ -37,10 +38,6 @@ export default class CasetypesmappingPage{
         await this.page.getByText('Search Code, Description').click();
         await this.page.getByPlaceholder('Search Code, Description').fill(searchCaseCode);
         await this.page.getByPlaceholder('Search Code, Description').press('Enter');
-    }
-
-    async hoverSearch(search){
-        await this.page.getByText(search).hover();
     }
 
     //case type drop down  (74 items)
@@ -133,10 +130,11 @@ export default class CasetypesmappingPage{
    }
 
    //click mapping dropdown
-   async clickToMap(searchCaseCode: string, casetype: string){
-    await this.page.getByText(searchCaseCode)
-    await this.page.locator('#mat-select-value-115').click();
-    await this.page.getByText(casetype).click();
+   async clickToMap(searchCaseCode: string, casetype: string, casetype2: string){
+    await this.page.getByText(searchCaseCode).hover();
+    await this.page.getByText(casetype, {exact:true}).click();
+    await this.page.getByText(casetype2, {exact:true}).click();
+    await expect(this.page.locator('id=toast-container',{hasText:'Case Type Mapping successfully updated'})).toBeInViewport();
    }
 
     //clear button
@@ -149,21 +147,23 @@ export default class CasetypesmappingPage{
         await this.page.getByText('No override').click();
         await this.page.getByRole('option',{name:casetype}).click();
         await this.page.getByRole('button',{name:'Save Overrides'}).click();
-
+        await expect(this.page.getByTitle("Mapping Overrides: 1")).toBeInViewport();
     }
-    async caseVerify(casecode){
+    
+    async caseVerify(casecode, num){
         await this.page.getByText(casecode,{exact:true}).scrollIntoViewIfNeeded();
-        await this.page.screenshot({path:'casetype.png'})
+        await this.page.screenshot({path:'casetype'+ num + '.png'})
     }
 
     async fullPageVerify(){
         await this.page.screenshot({path:'verification.png'});
     }
-
+ 
 
     //page navigation
     async paginationCheck(){
         await this.page.getByText('›',{exact:true}).scrollIntoViewIfNeeded();
+     
     }
        // adjust number of rows visible on screen
        async adjustRowCount(row: string){

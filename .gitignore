@@ -8,3 +8,6 @@ tests/
 /playwright/.cache/
 *.png
 *.win32
+package-lock.json
+package.json
+test-results.json

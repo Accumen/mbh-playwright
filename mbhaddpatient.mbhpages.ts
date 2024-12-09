@@ -1,80 +1,54 @@
-import { test, expect } from '@playwright/test';
+import { test} from '@playwright/test';
 import LoginPage from './classes/loginPage';
 import DashboardPage from './classes/dashboardPage';
 import PatientsPage from './classes/patientsPage';
-const logindata = JSON.parse(JSON.stringify(require("./testdata/login.json")))
+const logindata = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/login.json")))
+const ap = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/addpatient.json")))
+const ep = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editpatient.json")))
+const nphw = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/newpatienthw.json")))
+const vpd = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/viewpatientdetails.json")))
 
-
-test('addpatient', async ({ page }) => {
+test('add patient', async ({ page }) => {
 
     test.slow();
     const login = new LoginPage(page);
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(ap.optionClient);
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.addPatient('Donald','Duck','859423','2024','June','25','Male','White','Not Hispanic','1987','May','16','yes','2548879845',
-    '543 Waddle Way','Bedrock','CA','56795','68','156');
+    await patients.addPatient(ap.fname,ap.lname,ap.mrn,ap.hhYear,ap.hhMonth,ap.hhDay,
+        ap.gender,ap.race,ap.ethnicity,ap.dobyear,ap.dobmonth,ap.dobday,ap.hippa,ap.phone,
+    ap.street,ap.city,ap.state,ap.zipcode,ap.height,ap.weight);
     await patients.savePatient();
-    await patients.searchPatient('859423');
-    await patients.selectPatientfromSearch('Donald Duck');
-    await patients.patientschedulesurgical('2024','July','12',13,'SPINE','test','QA Facility 1');
-
 })
 
-test('add edit patient', async ({ page }) => {
+test('new patient height and weight', async ({ page }) => {
 
     test.slow();
     const login = new LoginPage(page);
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(nphw.optionClient);
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.addPatient('Emily','Smith','789456123','2024','April','25','Female','Other Race','Unknown','1999','October','18','no','7539511234',
-    '568 Willowbrook rd','Broomall','PA','19008','76','256');
-    await patients.savePatient();
-
-    await patients.searchPatient('789456123');
-    await patients.selectPatientfromSearch('Emily Smith');
-    await patients.editPatientDetails('Changed Race and Ethnicity');
-    await patients.editPatientRace('White');
-    await patients.editPatientEthnicity('Not Hispanic')
-    await patients.saveEditPatient();
-
-})
-
-test('new patient height and weight test', async ({ page }) => {
-
-    test.slow();
-    const login = new LoginPage(page);
-    await page.goto('https://qa.mybloodhealth.com/login');
-    await login.enterEmail(logindata.email);
-    await login.enterPassword(logindata.password);
-    await login.clickLoginBtn();
-  
-    const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
-
-    const patients = new PatientsPage(page);
-    await patients.selectPatients();
-    await patients.addPatient('Nacho','Libre','365524987','2024','April','25','Male','Other Race','Hispanic','1988','January','18','no','2673196195',
-    '123 Monk House rd','Nowhere','MX','19008','63.4','117.56');
-    await patients.editPatientHeight('-63');
-    await patients.editPatientWeight('-117')
-    await patients.editPatientHeight('63');
-    await patients.editPatientWeight('117');
+    await patients.addPatient(nphw.fname,nphw.lname,nphw.mrn,nphw.hhYear,nphw.hhMonth,nphw.hhDay,
+    nphw.gender,nphw.race,nphw.ethnicity,nphw.dobyear,nphw.dobmonth,nphw.dobday,nphw.hippa,
+    nphw.phone,nphw.street,nphw.city,nphw.state,nphw.zipcode,nphw.height,nphw.weight);
+    await patients.editPatientHeight(nphw.height2);
+    await patients.editPatientWeight(nphw.weight2)
+    await patients.editPatientHeight(nphw.height3);
+    await patients.editPatientWeight(nphw.weight3);
     await patients.savePatient();
 })
 
@@ -82,42 +56,43 @@ test('edit patient', async ({ page }) => {
 
     test.slow();
     const login = new LoginPage(page);
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(ep.optionClient);
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.searchPatient('Black');
-    await patients.selectPatientfromSearch('Jack Black');
-    await patients.editPatientDetails('playwright edit');
-    await patients.editPatientRace('White');
-    await patients.editPatientHeight('63');
-    await patients.editPatientWeight('117');
+    await patients.searchPatient(ep.patient);
+    await patients.selectPatientfromSearch(ep.patient);
+    await patients.editPatientDetails(ep.changeDesc);
+    await patients.editPatientRace(ep.race);
+    await patients.editPatientEthnicity(ep.ethnicity);
+    await patients.editPatientHeight(ep.height);
+    await patients.editPatientWeight(ep.weight);
+    await patients.editPatientStreet(ep.street);
+    await patients.editPatientZipcode(ep.zipcode);
     await patients.savePatient();
 })
 
-test('check patient details page', async ({ page }) => {
+test('view patient details', async ({ page }) => {
 
     test.slow();
     const login = new LoginPage(page);
-    await page.goto('https://qa.mybloodhealth.com/login');
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
     await login.enterEmail(logindata.email);
     await login.enterPassword(logindata.password);
     await login.clickLoginBtn();
   
     const dashboard = new DashboardPage(page);
-    await dashboard.clickClientDropDown('QA Testing');
+    await dashboard.clickClientDropDown(vpd.optionClient);
 
     const patients = new PatientsPage(page);
     await patients.selectPatients();
-    await patients.searchPatient('Jack');
-    await patients.selectPatientfromSearch('Jack Black');
+    await patients.searchPatient(vpd.patient);
+    await patients.selectPatientfromSearch(vpd.patient);
     await patients.hoverPatientDetails();
-    await patients.patientVerify(1);
-
 })

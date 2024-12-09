@@ -1,4 +1,4 @@
-import { Page} from "@playwright/test";
+import { expect,Page} from "@playwright/test";
 
 export default class UsersPage{
 
@@ -13,15 +13,15 @@ export default class UsersPage{
 
     //search name, email (fillable)
     async searchUser(user){
-        await this.page.getByLabel('Search name, email').click();
-        await this.page.getByLabel('Search name , email').fill(user);
-        await this.page.getByLabel('Search name , email').press('Enter');
+        await this.page.getByText('Search name , email').click();
+        await this.page.getByText('Search name , email').fill(user);
+        await this.page.getByText('Search name , email').press('Enter');
     }
 
     //status drop down
     async userStatus(ustatus){
         await this.page.getByLabel('Active').locator('div').nth(3).click();
-        await this.page.getByText(ustatus,{exact:true}).click();
+        await this.page.getByRole('option',{name:ustatus,exact:true}).click();
         /**ustatus key
          * active
          * inactive
@@ -59,32 +59,32 @@ export default class UsersPage{
             //contents (checkbox)
             if(contents == 'yes'){
                 //check box for contents
-                await this.page.locator('#mat-checkbox-5 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+                await this.page.locator('id=mat-mdc-checkbox-3-input').click();
             }
             //users (checkbox)
             if (users == 'yes'){
                 //check box for users
-                await this.page.locator('#mat-checkbox-6 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+                await this.page.locator('id=mat-mdc-checkbox-4-input').click();
             }
             //clinical navigation (checkbox)
             if (clinical == 'yes'){
                 //check box for clinical navigation
-                await this.page.locator('#mat-checkbox-7 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+                await this.page.locator('id=mat-mdc-checkbox-5-input').click();
             }
             //reports (checkbox)
             if(reports == 'yes'){
                 //check box for reports
-                await this.page.locator('#mat-checkbox-8 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+                await this.page.locator('id=mat-mdc-checkbox-6-input').click();
             }
             //mapping (checkbox)
             if(mapping == 'yes'){
                 //check box for mapping
-                await this.page.locator('#mat-checkbox-9 > .mat-checkbox-layout > .mat-checkbox-inner-container').click();
+                await this.page.locator('id=mat-mdc-checkbox-7-input').click();
             }
         }
         else{
             //check the client admin box and all other boxes are checked automatically
-            await this.page.locator('#mat-checkbox-4').click();
+            await this.page.locator('id=mat-mdc-checkbox-1-input').click();
         }
         //status drop down
         await this.page.getByLabel('Status').locator('div').nth(3).click();
@@ -99,11 +99,12 @@ export default class UsersPage{
     //save user button
     async saveUser(){
         await this.page.getByRole('button',{name:'Save User'}).click();
+        await expect(this.page.locator('id=toast-container',{hasText:'User successfully saved'})).toBeInViewport();
     }
 
     //back arrow button
     async backArrow(){
-        await this.page.getByRole('button',{name:''}).click()
+        await this.page.getByRole('button',{name:'Back'}).click()
     }
 
     //select user from search list
@@ -113,18 +114,18 @@ export default class UsersPage{
 
     //edit user information
     async editUserfName(fname){
-        await this.page.getByLabel('First Name *').click();
-        await this.page.getByLabel('First Name *').fill(fname);
+        await this.page.getByPlaceholder('First Name').click();
+        await this.page.getByPlaceholder('First Name').fill(fname);
     }
 
     async editUserlName(lname){
-        await this.page.getByLabel('Last Name *').click();
-        await this.page.getByLabel('Last Name *').fill(lname);
+        await this.page.getByPlaceholder('Last Name').click();
+        await this.page.getByPlaceholder('Last Name').fill(lname);
     }
 
     async editUserEmail(email){
-        await this.page.getByLabel('Email *').click();
-        await this.page.getByLabel('Email *').fill(email);
+        await this.page.getByPlaceholder('Email').click();
+        await this.page.getByPlaceholder('Email').fill(email);
     }
 
     async editUserCredentials(cadmin,contents,users,clinical,reports,mapping){
@@ -189,7 +190,9 @@ export default class UsersPage{
     
     //delete button
     async deleteUser(){
-        await this.page.getByTitle('Delete').click();
+        this.page.once('dialog',dialog => dialog.accept());
+        await this.page.getByTitle('Delete').first().click();
+        await expect(this.page.locator('id=toast-container',{hasText:'User deleted successfully'})).toBeInViewport();
     }
 
           //pagination
@@ -215,14 +218,13 @@ export default class UsersPage{
     }
 
     //add region(s)
-    async addregion(){
-        await this.page.getByLabel('Texas').check();
-            /*List
-            * Texas
-            * Test
-            */
-        await this.page.getByLabel('Texas').uncheck();
-        await this.page.getByRole( 'checkbox', {name: 'QA Facility 1' }).check();
+    async addregion(region){
+        await this.page.getByLabel(region,{exact:true}).check();
+    }
+
+    //add facility(s)
+    async addFacility(facility){
+        await this.page.getByLabel(facility,{exact:true}).check();
     }
 
 }

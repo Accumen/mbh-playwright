@@ -1,0 +1,11 @@
+{
+    "optionClient":"Atrium Health Enterprise",
+    "reportName":"Patient Enroll Report",
+    "dateRange":"Custom",
+    "startyear":"2024",
+    "startMonth":"MAY",
+    "startDay":"5",
+    "endyear":"2024",
+    "endMonth":"JUL",
+    "endDay":"5"
+}
