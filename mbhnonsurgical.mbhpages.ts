@@ -31,6 +31,7 @@ const epns = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/editp
 const rnscc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/replynscommcomment.json")))
 const rnscfc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/replynscommcall.json")))
 const nsaf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalallfacilities.json")))
+const nsmf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/nonsurgicalmultifacilities.json")))
 
 test('Non-surgical schedule new patient visit', async ({ page }) => {
     test.slow();
@@ -570,4 +571,27 @@ test('non-surgical edit toggles', async ({ page }) => {
     await worklist.unselectAllCaseTypes();
     await worklist.selectCaseType(nsaf.casetype);
     await worklist.selectFilter(nsaf.filter);
+  })
+
+  test('nonsurgical multi facilities worklist', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+  
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+    await login.enterEmail(logindata.email);
+    await login.enterPassword(logindata.password);
+    await login.clickLoginBtn();
+  
+    const dashboard = new DashboardPage(page);
+    await dashboard.clickClientDropDown(nsmf.optionClient);
+  
+    const worklist = new WorklistPage(page);
+    await worklist.clickWorklist();
+    await worklist.clickChronic();
+    await worklist.searchMRN(nsmf.searchInfo);
+    await worklist.clickMultiFacility(nsmf.fromfacility,nsmf.tofacility,nsmf.anotherfacility);
+    await worklist.clearSelections();
+    await worklist.unselectAllCaseTypes();
+    await worklist.selectCaseType(nsmf.casetype);
+    await worklist.selectFilter(nsmf.filter);
   })
