@@ -653,14 +653,15 @@ export default class WorklistPage{
     //complete surgical visit
     async completeSurgicalVisit(completeType,treatment?,untreatedtype?,followup?,specialty?,fyear?,fmonth?,fday?){
         await this.page.getByRole('button', {name: 'Complete Case'}).click({delay:1000});
-        await this.page.locator('#mat-select-value-23').click({delay:1000});
+        await this.page.locator('div').filter({hasText:/^Treated$/}).nth(2).click({delay:1000});
         await this.page.getByRole('option',{name:completeType,exact:true}).click();
         /**completeType
          * Treated
          * Not Treated
          */
         if(completeType == 'Not Treated'){
-            await this.page.getByText(untreatedtype,{exact:true}).click();
+            await this.page.getByLabel('Reason for No Treatment').locator('span').click();
+            await this.page.getByRole('option',{name:untreatedtype,exact:true}).click();
             /**untreatedtype
              * Cancelled/Postponed surgery
              * Does not meet criteria for treatment
@@ -673,6 +674,8 @@ export default class WorklistPage{
              * Scheduling delayed for infusion
              * Timing too close to surgery date
              */
+            await this.page.getByLabel('Cancellation Notes').click();
+            await this.page.getByLabel('Cancellation Notes').fill('playwright note') 
         
         }
         else{
@@ -709,21 +712,23 @@ export default class WorklistPage{
     //complete non-surgical visit
     async completeNonSurgicalVisit(completeType,treatment?,untreatedtype?,followup?,freason?,freasonfill?,specialty?,fyear?,fmonth?,fday?){
         await this.page.getByRole('button', {name: 'Complete Case'}).click();
-        if(completeType == 'Not Treated'){
-        await this.page.locator('#mat-select-value-23').click();
-        await this.page.getByRole('option', { name: completeType, exact: true }).click();
+        await this.page.locator('div').filter({hasText:/^Treated$/}).nth(2).click({delay:1000});
+        await this.page.getByRole('option',{name:completeType,exact:true}).click();
         /**completeType
          * Treated
          * Not Treated
          */
-        //if(completeType == 'Not Treated'){
-            await this.page.getByText(untreatedtype,{exact:true}).click();
+        if(completeType == 'Not Treated'){
+            await this.page.getByLabel('Reason for No Treatment').locator('span').click();
+            await this.page.getByRole('option',{name:untreatedtype,exact:true}).click();
             /**untreatedtype
              * Insurance denied treatment
              * No contact from patient
              * Patient declines treatment
              * Patient treatment plan complete
              */
+            await this.page.getByLabel('Cancellation Notes').click();
+            await this.page.getByLabel('Cancellation Notes').fill('playwright note') 
         
         }
         else{
