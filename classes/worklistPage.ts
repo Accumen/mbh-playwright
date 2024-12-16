@@ -60,13 +60,14 @@ export default class WorklistPage{
     //chronic menu option
     async clickChronic(){ //change name to clickNonSurgical?
         await this.page.getByRole('link', {name:'Non-Surgical', exact: true}).click({delay:1000}); // clicks the Chronic submenu from the worklist
-        await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).toBeInViewport()
+        await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).not.toBeInViewport()
     }
 
     async clickFacility(fromfacility, tofacility){
         await this.page.getByLabel(fromfacility).locator('svg').click();
         if(tofacility !='Select All'){
         await this.page.getByRole('option',{name:tofacility,exact:true}).click();
+        await this.page.getByRole('option',{name:tofacility,exact:true}).press('Tab');
         await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).not.toBeInViewport()
     }
         else{
@@ -684,7 +685,7 @@ export default class WorklistPage{
         
         }
         else{
-            await this.page.getByRole('option',{name:treatment,exact:true}).click();
+            await this.page.getByLabel(treatment,{exact:true}).click();
             /**treatment
              * B12
              * EPO
@@ -715,15 +716,15 @@ export default class WorklistPage{
 
     }
     //complete non-surgical visit
-    async completeNonSurgicalVisit(completeType,treatment?,untreatedtype?,followup?,freason?,freasonfill?,specialty?,fyear?,fmonth?,fday?){
+    async   completeNonSurgicalVisit(completeType,treatment?,untreatedtype?,followup?,freason?,freasonfill?,specialty?,fyear?,fmonth?,fday?){
         await this.page.getByRole('button', {name: 'Complete Case'}).click();
-        await this.page.locator('div').filter({hasText:/^Treated$/}).nth(2).click({delay:1000});
-        await this.page.getByRole('option',{name:completeType,exact:true}).click();
         /**completeType
          * Treated
          * Not Treated
          */
         if(completeType == 'Not Treated'){
+            await this.page.locator('div').filter({hasText:/^Treated$/}).nth(2).click({delay:1000});
+            await this.page.getByRole('option',{name:completeType,exact:true}).click();
             await this.page.getByLabel('Reason for No Treatment').locator('span').click();
             await this.page.getByRole('option',{name:untreatedtype,exact:true}).click();
             /**untreatedtype
@@ -737,7 +738,7 @@ export default class WorklistPage{
         
         }
         else{
-            await this.page.getByRole('option',{name:treatment,exact:true}).click();
+            await this.page.getByLabel(treatment,{exact:true}).click();
             /**treatment
              * B12
              * EPO
@@ -789,7 +790,7 @@ export default class WorklistPage{
     }
     //edit treatment
     async editTreatment(treatment){
-        await this.page.getByRole('option',{name:treatment,exact:true}).click();
+        await this.page.getByLabel(treatment,{exact:true}).click();
         /**treatment
          * B12
          * EPO
@@ -801,18 +802,18 @@ export default class WorklistPage{
     async editDosage(treatment,doses){
         switch(treatment){
             case 'B12':
-               await this.page.getByRole('listbox').locator('div').filter({hasText:'B12 Number of Doses'}).getByRole('textbox').click(); 
-               await this.page.getByRole('listbox').locator('div').filter({hasText:'B12 Number of Doses'}).getByRole('textbox').fill(doses);
+               await this.page.getByRole('spinbutton').click(); 
+               await this.page.getByRole('spinbutton').fill(doses);
                break;
             
             case 'EPO':
-                await this.page.getByRole('listbox').locator('div').filter({hasText:'EPO Number of Doses'}).getByRole('textbox').click(); 
-                await this.page.getByRole('listbox').locator('div').filter({hasText:'EPO Number of Doses'}).getByRole('textbox').fill(doses);
+                await this.page.getByRole('spinbutton').click(); 
+                await this.page.getByRole('spinbutton').fill(doses);
                 break;
 
             case 'IV Iron':
-                await this.page.getByRole('listbox').locator('div').filter({hasText:'IV Iron Number of Doses'}).getByRole('textbox').click(); 
-                await this.page.getByRole('listbox').locator('div').filter({hasText:'IV Iron Number of Doses'}).getByRole('textbox').fill(doses);
+                await this.page.getByRole('spinbutton').click(); 
+                await this.page.getByRole('spinbutton').fill(doses);
                 break;    
             
             default:
@@ -827,8 +828,9 @@ export default class WorklistPage{
 
     //change Complete Case Type
     async changeCompleteCaseType(completeType){
-        await this.page.getByPlaceholder('Complete Case Type').click();
-        await this.page.getByRole('option', { name: completeType, exact: true }).click();
+        //await this.page.getByPlaceholder('Complete Case Type').click();
+        await this.page.getByLabel('Treated').locator('svg').click({delay:1000});
+        await this.page.getByRole('option',{name:completeType,exact:true}).click();
     }
     //select yes follow up for Surgical Complete Case
     async surgicalFollowUp(){

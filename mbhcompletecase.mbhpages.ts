@@ -122,7 +122,7 @@ test('complete nonsurgical treated no followup', async ({ page }) => {
     const worklist = new WorklistPage(page);
     await worklist.clickWorklist();
     await worklist.clickChronic();
-    await worklist.clickFacility(cnstnfu.fromfacility,cnstnfu.tofacility)
+    await worklist.clickMultiFacility(cnstnfu.fromfacility,cnstnfu.tofacility,cnstnfu.anotherfacility)
     await worklist.searchMRN(cnstnfu.searchInfo);
     await worklist.selectPatientfromSearch(cnstnfu.patient);
     await worklist.completeNonSurgicalVisit(cnstnfu.completedType,cnstnfu.treatment,'',cnstnfu.followup,cnstnfu.freason,cnstnfu.freasonfill,'','','','');
@@ -281,7 +281,6 @@ test('nonsurgical edit number of doses', async ({ page }) => {
     await worklist.searchMRN(nsend.searchInfo);
     await worklist.selectPatientfromSearch(nsend.patient);
     await worklist.clickCompleteCase();
-    await worklist.changeCompleteCaseType(nsend.completedType)
     await worklist.editTreatment(nsend.treatment);
     await worklist.editDosage(nsend.treatment,nsend.doses);
     await worklist.confirmBtn();
