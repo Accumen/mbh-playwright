@@ -81,15 +81,20 @@ export default class WorklistPage{
         if(anotherfacility != 'Null'){
             await this.page.getByRole('option',{name:anotherfacility,exact:true}).click();
             await this.page.getByRole('option',{name:anotherfacility,exact:true}).press('Tab');
-            await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).not.toBeInViewport()
+            await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).not.toBeInViewport();
         }
         else{
         await this.page.getByRole('option',{name:tofacility,exact:true}).press('Tab');
-        await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).not.toBeInViewport()
+        await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).not.toBeInViewport();
         }
     }
     async favoriteFacility(){
         await this.page.locator('app-page-header-content i').click();
+        await expect(this.page.locator('id=toast-container',{hasText:'Favorite facility is successfully selected.'})).toBeVisible();
+    }
+    async clearFavoriteFacility(){
+        await this.page.locator('app-page-header-content i').click();
+        await expect(this.page.locator('id=toast-container',{hasText:'Cleared favorite facility.'})).toBeVisible();
     }
 
     /* The rest of the functions are the same no matter which menu is chosen (surgical or chronic) */
@@ -653,14 +658,15 @@ export default class WorklistPage{
     //complete surgical visit
     async completeSurgicalVisit(completeType,treatment?,untreatedtype?,followup?,specialty?,fyear?,fmonth?,fday?){
         await this.page.getByRole('button', {name: 'Complete Case'}).click({delay:1000});
-        await this.page.locator('#mat-select-value-23').click({delay:1000});
+        await this.page.locator('div').filter({hasText:/^Treated$/}).nth(2).click({delay:1000});
         await this.page.getByRole('option',{name:completeType,exact:true}).click();
         /**completeType
          * Treated
          * Not Treated
          */
         if(completeType == 'Not Treated'){
-            await this.page.getByText(untreatedtype,{exact:true}).click();
+            await this.page.getByLabel('Reason for No Treatment').locator('span').click();
+            await this.page.getByRole('option',{name:untreatedtype,exact:true}).click();
             /**untreatedtype
              * Cancelled/Postponed surgery
              * Does not meet criteria for treatment
@@ -673,6 +679,8 @@ export default class WorklistPage{
              * Scheduling delayed for infusion
              * Timing too close to surgery date
              */
+            await this.page.getByLabel('Cancellation Notes').click();
+            await this.page.getByLabel('Cancellation Notes').fill('playwright note') 
         
         }
         else{
@@ -709,21 +717,23 @@ export default class WorklistPage{
     //complete non-surgical visit
     async completeNonSurgicalVisit(completeType,treatment?,untreatedtype?,followup?,freason?,freasonfill?,specialty?,fyear?,fmonth?,fday?){
         await this.page.getByRole('button', {name: 'Complete Case'}).click();
-        if(completeType == 'Not Treated'){
-        await this.page.locator('#mat-select-value-23').click();
-        await this.page.getByRole('option', { name: completeType, exact: true }).click();
+        await this.page.locator('div').filter({hasText:/^Treated$/}).nth(2).click({delay:1000});
+        await this.page.getByRole('option',{name:completeType,exact:true}).click();
         /**completeType
          * Treated
          * Not Treated
          */
-        //if(completeType == 'Not Treated'){
-            await this.page.getByText(untreatedtype,{exact:true}).click();
+        if(completeType == 'Not Treated'){
+            await this.page.getByLabel('Reason for No Treatment').locator('span').click();
+            await this.page.getByRole('option',{name:untreatedtype,exact:true}).click();
             /**untreatedtype
              * Insurance denied treatment
              * No contact from patient
              * Patient declines treatment
              * Patient treatment plan complete
              */
+            await this.page.getByLabel('Cancellation Notes').click();
+            await this.page.getByLabel('Cancellation Notes').fill('playwright note') 
         
         }
         else{
