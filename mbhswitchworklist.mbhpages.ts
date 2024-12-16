@@ -7,6 +7,7 @@ const tccul = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/tccl
 const sw = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/switchworklist.json")))
 const swp = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/switchworklistpagination.json")))
 const swsf = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/switchworklistsavedfilters.json")))
+const tccl = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/tcclientuserlogin.json")))
 
 test('switch worklist', async ({ page }) => {
     test.slow();
@@ -98,4 +99,22 @@ test('switch worklist saved filters', async ({ page }) => {
     await worklist.selectPatientfromSearch(swsf.patient2);
     await worklist.backarrow(); 
     await worklist.clearSelections();
+  })
+
+test('favorite facility switch worklist', async ({ page }) => {
+    test.slow();
+    const login = new LoginPage(page);
+  
+    await page.goto('https://qa-auto-base.mybloodhealth.com/login');
+    await login.enterEmail(tccl.email);
+    await login.enterPassword(tccl.password);
+    await login.clickLoginBtn();
+  
+    const worklist = new WorklistPage(page);
+    await worklist.clickWorklist();
+    await worklist.clickSurgical();
+    await worklist.favoriteFacility();
+    await worklist.clickChronic();
+    await worklist.clickSurgical();
+    await worklist.clearFavoriteFacility();
   })

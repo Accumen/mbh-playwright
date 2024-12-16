@@ -81,15 +81,20 @@ export default class WorklistPage{
         if(anotherfacility != 'Null'){
             await this.page.getByRole('option',{name:anotherfacility,exact:true}).click();
             await this.page.getByRole('option',{name:anotherfacility,exact:true}).press('Tab');
-            await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).not.toBeInViewport()
+            await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).not.toBeInViewport();
         }
         else{
         await this.page.getByRole('option',{name:tofacility,exact:true}).press('Tab');
-        await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).not.toBeInViewport()
+        await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).not.toBeInViewport();
         }
     }
     async favoriteFacility(){
         await this.page.locator('app-page-header-content i').click();
+        await expect(this.page.locator('id=toast-container',{hasText:'Favorite facility is successfully selected.'})).toBeVisible();
+    }
+    async clearFavoriteFacility(){
+        await this.page.locator('app-page-header-content i').click();
+        await expect(this.page.locator('id=toast-container',{hasText:'Cleared favorite facility.'})).toBeVisible();
     }
 
     /* The rest of the functions are the same no matter which menu is chosen (surgical or chronic) */
