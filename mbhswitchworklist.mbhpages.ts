@@ -116,5 +116,5 @@ test('favorite facility switch worklist', async ({ page }) => {
     await worklist.favoriteFacility();
     await worklist.clickChronic();
     await worklist.clickSurgical();
-    await worklist.clearFavoriteFacility();
+    await worklist.clearFavoriteFacility();!
   })
