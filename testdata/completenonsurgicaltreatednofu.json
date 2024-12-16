@@ -2,6 +2,7 @@
     "optionClient":"Atrium Health Enterprise",
     "fromfacility":"Atrium Health Cabarrus",
     "tofacility":"Atrium Health Navicent Medical Center",
+    "anotherfacility":"Null",
     "searchInfo":"N19733801",
     "patient":"Sierra H Wheeler",
     "completeType":"Treated",
