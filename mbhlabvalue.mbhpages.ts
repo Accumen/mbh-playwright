@@ -77,7 +77,7 @@ test('delete lab from patient visit', async ({page}) => {
     
     const patients = new PatientsPage (page);
     await patients.viewAllLabs(dlfpv.labtype,dlfpv.startyear);
-    await patients.deleteSearchedLab(dlfpv.labtype);
+    await patients.deleteSearchedLab();
     await patients.closeSearchListWindow();
     await worklist.selectChainofCustody();
 
