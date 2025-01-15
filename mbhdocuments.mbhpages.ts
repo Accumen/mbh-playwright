@@ -182,7 +182,7 @@ test('visit document retention', async ({page}) =>{
     await dashboard.clickClientDropDown(vdr.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.searchMRN(vdr.searchInfo);
     await worklist.selectPatientfromSearch(vdr.patient);
@@ -198,7 +198,7 @@ test('visit document retention', async ({page}) =>{
     await documents.saveDoc();
 
     await dashboard.changeClient(vdr.currentClient2,vdr.newClient2);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.searchMRN(vdr.searchInfo);
     await worklist.selectStatus(vdr.status);

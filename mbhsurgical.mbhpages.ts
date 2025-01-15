@@ -47,7 +47,7 @@ test('surgical shedule new patient visit', async ({ page }) => {
     await dashboard.clickClientDropDown(ssnpv.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.scheduleSurgicalVisit(ssnpv.patienttype, ssnpv.fname, ssnpv.lname, ssnpv.mrn,ssnpv.dobyear,ssnpv.dobMonth,ssnpv.dobDay,
     ssnpv.phone,ssnpv.street,ssnpv.city,ssnpv.state,ssnpv.zip,ssnpv.gender,ssnpv.race,ssnpv.ethnicity,ssnpv.hippa,ssnpv.hhMonthdd,'','',
@@ -68,7 +68,7 @@ test('surgical schedule existing patient visit', async ({ page }) => {
     await dashboard.clickClientDropDown(ssepv.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.scheduleSurgicalVisit(ssepv.patienttype,'','',ssepv.mrn,'','','','','','','','','','','',
         '','',ssepv.edit,'','','',ssepv.pYear,ssepv.pMonth,ssepv.pDay,ssepv.pclickcount,ssepv.procedure,ssepv.surgeon);
@@ -88,7 +88,7 @@ test('export surgical worklist', async ({ page }) => {
   await dashboard.clickClientDropDown(esw.optionClient);
   
   const worklist = new WorklistPage(page);
-  await worklist.clickWorklist();
+  //await worklist.clickWorklist();
   await worklist.clickSurgical();
   await worklist.exportVisits();
 })
@@ -106,7 +106,7 @@ test('Surgical Worklist Ferritin Badge', async ({ page }) => {
   await dashboard.clickClientDropDown(swfb.optionClient);
   
   const worklist = new WorklistPage(page);
-  await worklist.clickWorklist();
+  //await worklist.clickWorklist();
   await worklist.clickSurgical();
   await worklist.searchMRN(swfb.searchInfo);
   await worklist.selectPatientfromSearch(swfb.patient);
@@ -132,7 +132,7 @@ test('Surgical Hgb icon match', async ({ page }) => {
   await dashboard.clickClientDropDown(shim.optionClient);
   
   const worklist = new WorklistPage(page);
-  await worklist.clickWorklist();
+  //await worklist.clickWorklist();
   await worklist.clickSurgical();
   await worklist.searchMRN(shim.searchInfo);
   await worklist.selectPatientfromSearch(shim.patient);
@@ -155,7 +155,7 @@ test('Surgical edit patient height and weight', async ({ page }) => {
   await dashboard.clickClientDropDown(sephw.optionClient);
 
   const worklist = new WorklistPage(page);
-  await worklist.clickWorklist();
+  //await worklist.clickWorklist();
   await worklist.clickSurgical();
   await worklist.searchMRN(sephw.searchInfo)
   await worklist.selectPatientfromSearch(sephw.patient);
@@ -185,7 +185,7 @@ const dashboard = new DashboardPage(page);
 await dashboard.clickClientDropDown(set.optionClient);
 
 const worklist = new WorklistPage(page);
-await worklist.clickWorklist();
+//await worklist.clickWorklist();
 await worklist.clickSurgical();
 await worklist.searchMRN(set.searchInfo)
 await worklist.selectPatientfromSearch(set.patient);
@@ -207,7 +207,7 @@ const dashboard = new DashboardPage(page);
 await dashboard.clickClientDropDown(svpd.optionClient);
 
 const worklist = new WorklistPage(page);
-await worklist.clickWorklist();
+//await worklist.clickWorklist();
 await worklist.clickSurgical();
 await worklist.searchMRN(svpd.searchInfo)
 await worklist.selectPatientfromSearch(svpd.patient);
@@ -227,7 +227,7 @@ test('filter surgical worklist', async ({ page }) => {
     await dashboard.clickClientDropDown(fsw.optionClient);
     
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.unselectAllCaseTypes();
     await worklist.selectCaseType(fsw.casetype);
@@ -248,7 +248,7 @@ test('filter surgical worklist', async ({ page }) => {
     await dashboard.clickClientDropDown(asc.optionClient);
   
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.searchMRN(asc.searchInfo);
     await worklist.selectPatientfromSearch(asc.patient);
@@ -268,7 +268,7 @@ test('filter surgical worklist', async ({ page }) => {
     await dashboard.clickClientDropDown(esc.optionClient);
   
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.searchMRN(esc.searchInfo);
     await worklist.selectPatientfromSearch(esc.patient);
@@ -288,7 +288,7 @@ test('filter surgical worklist', async ({ page }) => {
       await dashboard.clickClientDropDown(dsc.optionClient);
     
       const worklist = new WorklistPage(page);
-      await worklist.clickWorklist();
+      //await worklist.clickWorklist();
       await worklist.clickSurgical();
       await worklist.searchMRN(dsc.searchInfo);
       await worklist.selectPatientfromSearch(dsc.patient);
@@ -308,7 +308,7 @@ test('filter surgical worklist', async ({ page }) => {
       await dashboard.clickClientDropDown(ssw.optionClient);
       
       const worklist = new WorklistPage(page);
-      await worklist.clickWorklist();
+      //await worklist.clickWorklist();
       await worklist.clickSurgical();
       await worklist.searchMRN(ssw.searchInfo);
       await worklist.selectPatientfromSearch(ssw.patient)
@@ -327,7 +327,7 @@ test('filter surgical worklist', async ({ page }) => {
       await dashboard.clickClientDropDown('QA Testing');
       
       const worklist = new WorklistPage(page);
-      await worklist.clickWorklist();
+      //await worklist.clickWorklist();
       await worklist.clickSurgical();
       await worklist.sortByDateRange('2024','NOV','12','2024','NOV','12');
       await worklist.exportVisits();
@@ -345,7 +345,7 @@ test('filter surgical worklist', async ({ page }) => {
     await dashboard.clickClientDropDown(swf.optionClient);
   
     const worklist = new WorklistPage (page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.selectFilter(swf.filter);
   })
@@ -363,7 +363,7 @@ test('filter surgical worklist', async ({ page }) => {
     await dashboard.clickClientDropDown(swdf.optionClient);
   
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.sortByDateRange(swdf.startyear,swdf.startmonth,swdf.startday,swdf.endyear,swdf.endmonth,swdf.endday);
   })
@@ -381,7 +381,7 @@ test('filter surgical worklist', async ({ page }) => {
     await dashboard.clickClientDropDown(sctf.optionClient);
   
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.unselectAllCaseTypes();
     await worklist.selectCaseType(sctf.casetype);
@@ -400,7 +400,7 @@ test('filter surgical worklist', async ({ page }) => {
     await dashboard.clickClientDropDown(swfr.optionClient);
   
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.unselectAllCaseTypes();
     await worklist.selectCaseType(swfr.casetype);
@@ -421,7 +421,7 @@ test('filter surgical worklist', async ({ page }) => {
     await dashboard.clickClientDropDown(swpr.optionClient);
   
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();  
     await worklist.worklistPagination(swpr.num);
     await worklist.selectPatientfromSearch(swpr.patient);
@@ -442,7 +442,7 @@ test('filter surgical worklist', async ({ page }) => {
     await dashboard.clickClientDropDown(swrc.optionClient);
   
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.adjustRowCount(swrc.row);
     await worklist.selectPatientfromSearch(swrc.patient)
@@ -461,7 +461,7 @@ test('filter surgical worklist', async ({ page }) => {
     await dashboard.clickClientDropDown(scev.optionClient);
   
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.clearExpiredVisits();
   })
@@ -479,7 +479,7 @@ test('filter surgical worklist', async ({ page }) => {
     await dashboard.clickClientDropDown(sanvd.optionClient);
   
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.clickFacility(sanvd.fromfacility,sanvd.tofacility);
     await worklist.searchMRN(sanvd.searchInfo);
@@ -505,7 +505,7 @@ test('filter surgical worklist', async ({ page }) => {
     await dashboard.clickClientDropDown(eses.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.scheduleSurgicalVisit(eses.patienttype,'','',eses.mrn,'','','','','','','','','','','','','',
     eses.edit,eses.editrace,eses.editethnicity,eses.changeDesc,eses.pYear,eses.pMonth,eses.pDay,eses.pclickcount,eses.procedure,eses.surgeon);
@@ -525,7 +525,7 @@ test('edit patient surgical', async ({ page }) => {
   await dashboard.clickClientDropDown(eps.optionClient);
 
   const worklist = new WorklistPage(page);
-  await worklist.clickWorklist();
+  //await worklist.clickWorklist();
   await worklist.clickSurgical();
   await worklist.searchMRN(eps.searchInfo)
   await worklist.selectPatientfromSearch(eps.patient);
@@ -550,7 +550,7 @@ test('reply surgical communication comment', async ({ page }) => {
   await dashboard.clickClientDropDown(rscc.optionClient);
 
   const worklist = new WorklistPage(page);
-  await worklist.clickWorklist();
+  //await worklist.clickWorklist();
   await worklist.clickSurgical();
   await worklist.searchMRN(rscc.searchInfo)
   await worklist.selectPatientfromSearch(rscc.patient);
@@ -571,7 +571,7 @@ test('reply surgical communication call', async ({ page }) => {
   await dashboard.clickClientDropDown(rscfc.optionClient);
 
   const worklist = new WorklistPage(page);
-  await worklist.clickWorklist();
+  //await worklist.clickWorklist();
   await worklist.clickSurgical();
   await worklist.searchMRN(rscfc.searchInfo)
   await worklist.selectPatientfromSearch(rscfc.patient);
@@ -591,7 +591,7 @@ test('surgical lab interpretation', async ({ page }) => {
   await dashboard.clickClientDropDown(sli.optionClient);
 
   const worklist = new WorklistPage(page);
-  await worklist.clickWorklist();
+  //await worklist.clickWorklist();
   await worklist.clickSurgical();
   await worklist.searchMRN(sli.searchInfo)
   await worklist.selectPatientfromSearch(sli.patient);
@@ -612,7 +612,7 @@ test('surgical all facilities worklist', async ({ page }) => {
   await dashboard.clickClientDropDown(saf.optionClient);
 
   const worklist = new WorklistPage(page);
-  await worklist.clickWorklist();
+  //await worklist.clickWorklist();
   await worklist.clickSurgical();
   await worklist.searchMRN(saf.searchInfo);
   await worklist.paginationCheck();
@@ -634,7 +634,7 @@ test('client surgical all facilities worklist', async ({ page }) => {
   await login.clickLoginBtn();
 
   const worklist = new WorklistPage(page);
-  await worklist.clickWorklist();
+  //await worklist.clickWorklist();
   await worklist.clickSurgical();
   await worklist.clickFacility(csaf.fromfacility,csaf.tofacility);
   await worklist.searchMRN(csaf.searchInfo);

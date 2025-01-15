@@ -22,7 +22,7 @@ test('switch worklist', async ({ page }) => {
     await dashboard.clickClientDropDown(sw.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.clickChronic();
     await worklist.clickSurgical();
@@ -41,7 +41,7 @@ test('switch worklist pagination', async ({ page }) => {
     await dashboard.clickClientDropDown(swp.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.clickFacility(swp.fromfacility,swp.tofacility)
     await worklist.worklistPagination(swp.num);
@@ -62,7 +62,7 @@ test('switch worklist change filter', async ({ page }) => {
     await dashboard.clickClientDropDown('QA Testing');
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.selectFilter('Bloodless');
     await worklist.clickChronic();
@@ -80,7 +80,7 @@ test('switch worklist saved filters', async ({ page }) => {
     await login.clickLoginBtn();
 
     const worklist = new WorklistPage (page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.clickFacility(swsf.fromfacility,swsf.tofacility);
     await worklist.unselectAllCaseTypes();
@@ -111,7 +111,7 @@ test('favorite facility switch worklist', async ({ page }) => {
     await login.clickLoginBtn();
   
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.favoriteFacility();
     await worklist.clickChronic();

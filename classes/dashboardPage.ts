@@ -13,7 +13,7 @@ export default class DashboardPage{
     //select client drop down
     //change button
     async clickClientDropDown(optionClient: string){
-        await this.page.getByRole('button', {name:'MBH'}).click()
+        await this.page.getByTestId('client-toggle').getByText('MBH').click();
         await this.page.getByLabel('MBH').locator('div').nth(3).click();//this selects the "drop down" for the client list
         /**
          * optionClient key for below 

@@ -18,7 +18,7 @@ test('test assign visit', async ({ page }) => {
     await dashboard.clickClientDropDown(tav.optionClient);
     
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.searchMRN(tav.searchInfo);
     await worklist.selectPatientfromSearch(tav.patient);
@@ -42,7 +42,7 @@ test('test unassign visit', async ({ page }) => {
     await dashboard.clickClientDropDown(tav.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.searchMRN(tav.searchInfo);
     await worklist.selectPatientfromSearch(tav.patient);
