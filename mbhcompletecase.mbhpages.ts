@@ -31,7 +31,7 @@ test('complete surgical treated no followup', async ({ page }) => {
     await dashboard.clickClientDropDown(cstwofu.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.searchMRN(cstwofu.searchInfo);
     await worklist.selectPatientfromSearch(cstwofu.patient);
@@ -53,7 +53,7 @@ test('complete surgical treated followup', async ({ page }) => {
     await dashboard.clickClientDropDown(cstf.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.searchMRN(cstf.searchInfo);
     await worklist.selectPatientfromSearch(cstf.patient);
@@ -75,7 +75,7 @@ test('complete surgical not treated no followup', async ({ page }) => {
     await dashboard.clickClientDropDown(csntwofu.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.searchMRN(csntwofu.searchInfo);
     await worklist.selectPatientfromSearch(csntwofu.patient);
@@ -97,7 +97,7 @@ test('complete surgical not treated followup', async ({ page }) => {
     await dashboard.clickClientDropDown(csntfu.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.searchMRN(csntfu.searchInfo);
     await worklist.selectPatientfromSearch(csntfu.patient);
@@ -120,7 +120,7 @@ test('complete nonsurgical treated no followup', async ({ page }) => {
     await dashboard.clickClientDropDown(cnstnfu.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.clickMultiFacility(cnstnfu.fromfacility,cnstnfu.tofacility,cnstnfu.anotherfacility)
     await worklist.searchMRN(cnstnfu.searchInfo);
@@ -145,7 +145,7 @@ test('complete nonsurgical treated followup', async ({ page }) => {
     await dashboard.clickClientDropDown(cnstfu.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.clickFacility(cnstfu.fromfacility,cnstfu.tofacility)
     await worklist.searchMRN(cnstfu.searchInfo);
@@ -168,7 +168,7 @@ test('complete nonsurgical not treated no followup', async ({ page }) => {
     await dashboard.clickClientDropDown(cnsntnfu.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.clickFacility(cnsntnfu.fromfacility,cnsntnfu.tofacility);
     await worklist.searchMRN(cnsntnfu.searchInfo);
@@ -193,7 +193,7 @@ test('complete nonsurgical not treated followup', async ({ page }) => {
     await dashboard.clickClientDropDown(cnsntfu.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.clickFacility(cnsntfu.fromfacility,cnsntfu.tofacility);
     await worklist.searchMRN(cnsntfu.searchInfo);
@@ -216,7 +216,7 @@ test('edit complete non-surgical visit', async ({ page }) => {
     await dashboard.clickClientDropDown(ecnsv.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.clickFacility(ecnsv.fromfacility,ecnsv.tofacility)
     await worklist.searchMRN(ecnsv.searchInfo)
@@ -242,7 +242,7 @@ test('test nonsurgical followup icon', async ({ page }) => {
     await dashboard.clickClientDropDown(nsfui.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.clickFacility(nsfui.fromfacility,nsfui.tofacility)
     await worklist.searchMRN(nsfui.searchInfo);
@@ -275,7 +275,7 @@ test('nonsurgical edit number of doses', async ({ page }) => {
     await dashboard.clickClientDropDown(nsend.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.clickFacility(nsend.fromfacility,nsend.tofacility)
     await worklist.searchMRN(nsend.searchInfo);
@@ -301,7 +301,7 @@ test('test surgical edit number of doses', async ({ page }) => {
     await dashboard.clickClientDropDown(send.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.searchMRN(send.searchInfo);
     await worklist.selectPatientfromSearch(send.patient);
@@ -326,7 +326,7 @@ test('reactivate previously cancelled visit', async ({page}) => {
     await dashboard.clickClientDropDown(rpcv.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.selectStatus(rpcv.status);
     await worklist.searchMRN(rpcv.searchInfo);

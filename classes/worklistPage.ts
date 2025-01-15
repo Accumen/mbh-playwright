@@ -54,12 +54,12 @@ export default class WorklistPage{
     
     //surgical menu option
     async clickSurgical(){
-        await this.page.getByRole('link', {name: 'Surgical', exact:true}).click({delay:1000});// clicks the Surgical submenu from the worklist
+        await this.page.getByTestId('menu-surgical').click({delay:1000});// clicks the Surgical submenu from the worklist
         await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).not.toBeInViewport()
     }
     //chronic menu option
     async clickChronic(){ //change name to clickNonSurgical?
-        await this.page.getByRole('link', {name:'Non-Surgical', exact: true}).click({delay:1000}); // clicks the Chronic submenu from the worklist
+        await this.page.getByTestId('menu-non-surgical').click({delay:1000});// clicks the Chronic submenu from the worklist
         await expect(this.page.locator('id=toast-container',{hasText:'Patients fetched successfully'})).not.toBeInViewport()
     }
 

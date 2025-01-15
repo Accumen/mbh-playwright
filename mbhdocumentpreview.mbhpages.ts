@@ -18,7 +18,7 @@ test('document preview', async ({ page }) => {
     await dashboard.clickClientDropDown(dp.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.searchMRN(dp.searchInfo);
     await worklist.selectPatientfromSearch(dp.patient);

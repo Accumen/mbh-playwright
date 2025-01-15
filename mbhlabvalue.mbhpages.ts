@@ -20,7 +20,7 @@ test('edit lab value', async ({ page }) => {
     await dashboard.clickClientDropDown(elv.optionClient);
     
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.searchMRN(elv.searchInfo);
     await worklist.selectPatientfromSearch(elv.patient);
@@ -50,7 +50,7 @@ test('add lab to patient visit', async ({ page }) => {
     await dashboard.clickClientDropDown(altpv.optionClient);
     
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.searchMRN(altpv.searchInfo);
     await worklist.selectPatientfromSearch(altpv.patient);
@@ -70,7 +70,7 @@ test('delete lab from patient visit', async ({page}) => {
     await dashboard.clickClientDropDown(dlfpv.optionClient);
     
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickSurgical();
     await worklist.searchMRN(dlfpv.searchInfo);
     await worklist.selectPatientfromSearch(dlfpv.patient);

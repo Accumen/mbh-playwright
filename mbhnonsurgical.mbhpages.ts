@@ -46,10 +46,10 @@ test('Non-surgical schedule new patient visit', async ({ page }) => {
     await dashboard.clickClientDropDown(nssnpv.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.scheduleChronicVisit(nssnpv.patienttype, nssnpv.fname, nssnpv.lname, nssnpv.mrn,nssnpv.dobyear,nssnpv.dobMonth,nssnpv.dobDay,
-      nssnpv.phone,nssnpv.street, nssnpv.city,nssnpv.state,nssnpv.zip,nssnpv.gender,nssnpv.race,nssnpv.ethnicity,nssnpv.hippa,nssnpv.hhMonthdd,
+      nssnpv.phone,nssnpv.street, nssnpv.city,nssnpv.state,nssnpv.zip,nssnpv.gender,nssnpv.race,nssnpv.ethnicity,nssnpv.hippa,nssnpv.hhMonthdd,'','','','',
       nssnpv.pYear,nssnpv.pMonth,nssnpv.pDay,nssnpv.pclickcount,nssnpv.procedure,nssnpv.provider)
     await worklist.saveScheduledVisit();
 })
@@ -67,7 +67,7 @@ test('Non-surgical schedule existing patient visit', async ({ page }) => {
   await dashboard.clickClientDropDown(nssepv.optionClient);
 
   const worklist = new WorklistPage(page);
-  await worklist.clickWorklist();
+  //await worklist.clickWorklist();
   await worklist.clickChronic();
   await worklist.scheduleChronicVisit(nssepv.patienttype,'','',nssepv.mrn,'','','','','','','','','','','',
       '','',nssepv.edit,'','','',nssepv.pYear,nssepv.pMonth,nssepv.pDay,nssepv.pclickcount,nssepv.procedure,nssepv.provider);
@@ -87,7 +87,7 @@ test('export non-surgical worklist', async ({ page }) => {
     await dashboard.clickClientDropDown('Jefferson Health');
     
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.exportVisits();
   })
@@ -105,7 +105,7 @@ test('export non-surgical worklist', async ({ page }) => {
     await dashboard.clickClientDropDown(nswfb.optionClient);
     
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.searchMRN(nswfb.searchInfo);
     await worklist.selectPatientfromSearch(nswfb.patient);
@@ -131,7 +131,7 @@ test('export non-surgical worklist', async ({ page }) => {
     await dashboard.clickClientDropDown(nshim.optionClient);
     
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.searchMRN(nshim.searchInfo);
     await worklist.selectPatientfromSearch(nshim.patient);
@@ -155,7 +155,7 @@ test('Non-Surgical edit patient height and weight', async ({ page }) => {
     await dashboard.clickClientDropDown(nsepthtwt.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.searchMRN(nsepthtwt.searchInfo);
     await worklist.selectPatientfromSearch(nsepthtwt.patient);
@@ -185,7 +185,7 @@ test('non-surgical edit toggles', async ({ page }) => {
     await dashboard.clickClientDropDown(nset.optionClient);
   
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.searchMRN(nset.searchInfo)
     await worklist.selectPatientfromSearch(nset.patient);
@@ -207,7 +207,7 @@ test('non-surgical edit toggles', async ({ page }) => {
     await dashboard.clickClientDropDown(nsvpd.optionClient);
   
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.searchMRN(nsvpd.searchInfo)
     await worklist.selectPatientfromSearch(nsvpd.patient);
@@ -227,7 +227,7 @@ test('non-surgical edit toggles', async ({ page }) => {
     await dashboard.clickClientDropDown(fnsw.optionClient);
     
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.unselectAllCaseTypes();
     await worklist.selectCaseType(fnsw.casetype);
@@ -247,7 +247,7 @@ test('non-surgical edit toggles', async ({ page }) => {
     await dashboard.clickClientDropDown(ansc.optionClient);
   
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.searchMRN(ansc.searchInfo)
     await worklist.selectPatientfromSearch(ansc.patient);
@@ -267,7 +267,7 @@ test('non-surgical edit toggles', async ({ page }) => {
     await dashboard.clickClientDropDown(ensc.optionClient);
   
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.searchMRN(ensc.searchInfo);
     await worklist.selectPatientfromSearch(ensc.patient);
@@ -287,7 +287,7 @@ test('non-surgical edit toggles', async ({ page }) => {
       await dashboard.clickClientDropDown(dnsc.optionClient);
     
       const worklist = new WorklistPage(page);
-      await worklist.clickWorklist();
+      //await worklist.clickWorklist();
       await worklist.clickChronic();
       await worklist.searchMRN(dnsc.searchInfo);
       await worklist.selectPatientfromSearch(dnsc.patient);
@@ -307,7 +307,7 @@ test('non-surgical edit toggles', async ({ page }) => {
       await dashboard.clickClientDropDown(snsw.optionClient);
       
       const worklist = new WorklistPage(page);
-      await worklist.clickWorklist();
+      //await worklist.clickWorklist();
       await worklist.clickChronic();
       await worklist.searchMRN(snsw.searchInfo);
       await worklist.selectPatientfromSearch(snsw.patient)
@@ -325,7 +325,7 @@ test('non-surgical edit toggles', async ({ page }) => {
         await dashboard.clickClientDropDown(nswf.optionClient);
       
         const worklist = new WorklistPage (page);
-        await worklist.clickWorklist();
+        //await worklist.clickWorklist();
         await worklist.clickChronic();
         await worklist.selectFilter(nswf.filter);
       })
@@ -343,7 +343,7 @@ test('non-surgical edit toggles', async ({ page }) => {
         await dashboard.clickClientDropDown(nswdf.optionClient);
       
         const worklist = new WorklistPage(page);
-        await worklist.clickWorklist();
+        //await worklist.clickWorklist();
         await worklist.clickChronic();
         await worklist.sortByDateRange(nswdf.startyear,nswdf.startmonth,nswdf.startday,nswdf.endyear,nswdf.endmonth,nswdf.endday);
       })
@@ -361,7 +361,7 @@ test('non-surgical edit toggles', async ({ page }) => {
         await dashboard.clickClientDropDown(nsctf.optionClient);
       
         const worklist = new WorklistPage(page);
-        await worklist.clickWorklist();
+        //await worklist.clickWorklist();
         await worklist.clickChronic();
         await worklist.unselectAllCaseTypes();
         await worklist.selectCaseType(nsctf.casetype);
@@ -380,7 +380,7 @@ test('non-surgical edit toggles', async ({ page }) => {
         await dashboard.clickClientDropDown(nswsf.optionClient);
       
         const worklist = new WorklistPage(page);
-        await worklist.clickWorklist();
+        //await worklist.clickWorklist();
         await worklist.clickChronic();
         await worklist.selectStatus(nswsf.status);
       })
@@ -398,7 +398,7 @@ test('non-surgical edit toggles', async ({ page }) => {
         await dashboard.clickClientDropDown(nswfr.optionClient);
       
         const worklist = new WorklistPage(page);
-        await worklist.clickWorklist();
+        //await worklist.clickWorklist();
         await worklist.clickChronic();
         await worklist.selectFilter(nswfr.filter);
         await worklist.selectPatientfromSearch(nswfr.patient);
@@ -418,7 +418,7 @@ test('non-surgical edit toggles', async ({ page }) => {
         await dashboard.clickClientDropDown(nswpr.optionClient);
       
         const worklist = new WorklistPage(page);
-        await worklist.clickWorklist();
+        //await worklist.clickWorklist();
         await worklist.clickChronic();  
         await worklist.worklistPagination(nswpr.num);
         await worklist.selectPatientfromSearch(nswpr.patient);
@@ -439,7 +439,7 @@ test('non-surgical edit toggles', async ({ page }) => {
         await dashboard.clickClientDropDown(nswrc.optionClient);
       
         const worklist = new WorklistPage(page);
-        await worklist.clickWorklist();
+        //await worklist.clickWorklist();
         await worklist.clickChronic();
         await worklist.adjustRowCount(nswrc.row);
         await worklist.selectPatientfromSearch(nswrc.patient);
@@ -458,7 +458,7 @@ test('non-surgical edit toggles', async ({ page }) => {
         await dashboard.clickClientDropDown(nscev.optionClient);
       
         const worklist = new WorklistPage(page);
-        await worklist.clickWorklist();
+        //await worklist.clickWorklist();
         await worklist.clickChronic();
         await worklist.clearExpiredVisits();
       })
@@ -476,7 +476,7 @@ test('non-surgical edit toggles', async ({ page }) => {
         await dashboard.clickClientDropDown(esensp.optionClient);
     
         const worklist = new WorklistPage(page);
-        await worklist.clickWorklist();
+        //await worklist.clickWorklist();
         await worklist.clickChronic();
         await worklist.scheduleChronicVisit(esensp.patienttype,'','',esensp.mrn,'','','','','','','','','','','','','',
         esensp.edit,esensp.editrace,esensp.editethnicity,esensp.changeDesc,esensp.pYear,
@@ -497,7 +497,7 @@ test('non-surgical edit toggles', async ({ page }) => {
       await dashboard.clickClientDropDown(epns.optionClient);
   
       const worklist = new WorklistPage(page);
-      await worklist.clickWorklist();
+      //await worklist.clickWorklist();
       await worklist.clickChronic();
       await worklist.searchMRN(epns.searchInfo)
       await worklist.selectPatientfromSearch(epns.patient);
@@ -522,7 +522,7 @@ test('non-surgical edit toggles', async ({ page }) => {
     await dashboard.clickClientDropDown(rnscc.optionClient);
 
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.searchMRN(rnscc.searchInfo)
     await worklist.selectPatientfromSearch(rnscc.patient);
@@ -543,7 +543,7 @@ test('non-surgical edit toggles', async ({ page }) => {
     await dashboard.clickClientDropDown(rnscfc.optionClient);
   
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.searchMRN(rnscfc.searchInfo)
     await worklist.selectPatientfromSearch(rnscfc.patient);
@@ -563,7 +563,7 @@ test('non-surgical edit toggles', async ({ page }) => {
     await dashboard.clickClientDropDown(nsaf.optionClient);
   
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.searchMRN(nsaf.searchInfo);
     await worklist.clickFacility(nsaf.fromfacility,nsaf.tofacility);
@@ -586,7 +586,7 @@ test('non-surgical edit toggles', async ({ page }) => {
     await dashboard.clickClientDropDown(nsmf.optionClient);
   
     const worklist = new WorklistPage(page);
-    await worklist.clickWorklist();
+    //await worklist.clickWorklist();
     await worklist.clickChronic();
     await worklist.searchMRN(nsmf.searchInfo);
     await worklist.clickMultiFacility(nsmf.fromfacility,nsmf.tofacility,nsmf.anotherfacility);
