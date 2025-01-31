@@ -99,7 +99,7 @@ const urc = JSON.parse(JSON.stringify(require("../mbh-playwright/testdata/userro
         const user = new UsersPage(page)
         await user.selectUsers();
         await user.searchUser(du.user);
-        await user.deleteUser();
+        await user.deleteUser(du.user);
     })
 
     test("user navigation", async({page})=>{

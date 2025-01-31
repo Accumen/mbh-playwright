@@ -71,6 +71,6 @@ test("navigate/delete region", async ({page})=>{
     await region.selectRegionsMenu();
     await region.selectRegion(ndr.regionName);
     await region.backArrow(); 
-    await region.deleteRegion(); 
+    await region.deleteRegion(ndr.regionName); 
 
 })

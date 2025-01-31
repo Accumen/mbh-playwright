@@ -131,7 +131,7 @@ test("delete facility", async ({page})=>{
     await facility.selectFacilityMenu();
     await facility.facilitySearch(df.facilityName);
     await facility.hoverSearch(df.facilityName);
-    await facility.deleteFacility(); 
+    await facility.deleteFacility(df.facilityName); 
     
 })
 

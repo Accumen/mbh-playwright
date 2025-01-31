@@ -26,9 +26,8 @@ export default class FacilitiesPage{
     }
     //search facility name (fillable)
     async facilitySearch(facility: string){
-        await this.page.getByText('Search Facility name , code,').click();
-        await this.page.getByText('Search Facility name , code,').fill(facility);
-        await this.page.getByText('Search Facility name , code,').press('Enter');
+        await this.page.getByText('Search Facility Name, Code,').click();
+        await this.page.getByText('Search Facility Name, Code,').fill(facility);
     }
     
     async hoverSearch(search){
@@ -168,10 +167,10 @@ export default class FacilitiesPage{
     }
     
     //delete button (trash can icon)    
-    async deleteFacility(){
-        this.page.once('dialog',dialog => dialog.accept());
+    async deleteFacility(facility){
         await this.page.getByTitle('Delete').last().click();
-        await expect(this.page.locator('id=toast-container',{hasText:'Facility deleted successfully'})).toBeInViewport();
+        await this.page.getByTestId('confirm').click();
+        await expect(this.page.locator('id=toast-container',{hasText:'Facility "'+facility+'" deleted successfully'})).toBeInViewport();
     }
     //edit facility
     async editFacility(facility?,shortname?,facilitycode?,address?,city?,state?,zip?, 
