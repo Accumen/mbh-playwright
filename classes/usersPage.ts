@@ -13,9 +13,9 @@ export default class UsersPage{
 
     //search name, email (fillable)
     async searchUser(user){
-        await this.page.getByText('Search name , email').click();
-        await this.page.getByText('Search name , email').fill(user);
-        await this.page.getByText('Search name , email').press('Enter');
+        await this.page.getByText('Search Client Name , Short').click();
+        await this.page.getByText('Search Client Name , Short').fill(user);
+        await this.page.getByText(user).hover();
     }
 
     //status drop down
@@ -35,7 +35,7 @@ export default class UsersPage{
    
     //add users button
     async addUser(){
-        await this.page.getByRole('button',{name:'Add Users'}).click();
+        await this.page.getByTestId('addClient').click()
     }
 
     //new user screen
@@ -88,7 +88,7 @@ export default class UsersPage{
         }
         //status drop down
         await this.page.getByLabel('Status').locator('div').nth(3).click();
-        await this.page.getByText(ustatus,{exact: true}).click();
+        await this.page.getByRole('option', { name: ustatus, exact: true }).click();
             /**ustatus key
              * Active
              * Inactive
@@ -99,12 +99,12 @@ export default class UsersPage{
     //save user button
     async saveUser(){
         await this.page.getByRole('button',{name:'Save User'}).click();
-        await expect(this.page.locator('id=toast-container',{hasText:'User successfully saved'})).toBeInViewport();
+        await expect(this.page.locator('id=toast-container',{hasText:'Users successfully saved'})).toBeInViewport();
     }
 
     //back arrow button
     async backArrow(){
-        await this.page.getByRole('button',{name:'Back'}).click()
+        await this.page.locator('mat-toolbar i').first().click();
     }
 
     //select user from search list
@@ -189,10 +189,10 @@ export default class UsersPage{
     }
     
     //delete button
-    async deleteUser(){
-        this.page.once('dialog',dialog => dialog.accept());
+    async deleteUser(user){
         await this.page.getByTitle('Delete').first().click();
-        await expect(this.page.locator('id=toast-container',{hasText:'User deleted successfully'})).toBeInViewport();
+        await this.page.getByTestId('confirm').click();
+        await expect(this.page.locator('id=toast-container',{hasText:'User "'+user+'" deleted successfully'})).toBeInViewport();
     }
 
           //pagination
@@ -207,14 +207,13 @@ export default class UsersPage{
 
        // adjust number of rows visible on screen
        async adjustRowCount(row: string){
-        await this.page.getByLabel('15').locator('div').nth(2).scrollIntoViewIfNeeded();
-        await this.page.getByLabel('15').locator('div').nth(2).click();//clicks the drop down for the row count
+        await this.page.getByLabel('dropdown trigger').click();//clicks the drop down for the row count
             /**Row Key
              * 15 (default)
              * 30
              * 50
              */
-        await this.page.getByText(row,{exact:true}).click();//selects the row count in the []
+        await this.page.getByLabel(row,{exact:true}).click();//selects the row count in the []
     }
 
     //add region(s)

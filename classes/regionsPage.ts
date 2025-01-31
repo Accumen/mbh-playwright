@@ -16,7 +16,7 @@ export default class CasetypesmappingPage{
    
     //select region from screen
     async selectRegion(regionName){
-        await this.page.getByRole('table').getByText(regionName).click();
+        await this.page.getByRole('link', { name: 'Atrium' }).click();
     }
     //edit region name
     async editRegionName(regionName){
@@ -74,13 +74,13 @@ export default class CasetypesmappingPage{
     
     //back arrow
     async backArrow(){
-        await this.page.getByRole('button',{name:''}).click();
+        await this.page.locator('mat-toolbar i').first().click();
     }
     //delete (trash can)
-    async deleteRegion(){
-        this.page.once('dialog',dialog => dialog.accept());
-        await this.page.getByTitle('Delete').last().click();
-        await expect(this.page.locator('id=toast-container',{hasText:'Region deleted successfully'})).toBeInViewport();
+    async deleteRegion(region){
+        await this.page.getByTitle('Delete').first().click();
+        await this.page.getByTestId('confirm').click();
+        await expect(this.page.locator('id=toast-container',{hasText:'Region "'+region+'" deleted successfully'})).toBeInViewport();
     }
 
 }
